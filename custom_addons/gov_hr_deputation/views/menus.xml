@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_gov_hr_root" name="Administrative Transactions" sequence="180" groups="base.group_user"/>
+    <menuitem id="menu_gov_hr_deputation_root" name="Deputations" parent="menu_gov_hr_root" sequence="10"/>
+    <menuitem id="menu_gov_hr_my_deputations" name="My Deputations" parent="menu_gov_hr_deputation_root"
+              action="action_gov_hr_deputation_my" sequence="10" groups="gov_hr_base.group_gov_hr_user"/>
+    <menuitem id="menu_gov_hr_pending" name="Waiting for My Approval" parent="menu_gov_hr_deputation_root"
+              action="action_gov_hr_deputation_pending" sequence="20"/>
+    <menuitem id="menu_gov_hr_review" name="Waiting for My Review" parent="menu_gov_hr_deputation_root"
+              action="action_gov_hr_deputation_review" sequence="30" groups="gov_hr_base.group_gov_hr_admin_officer"/>
+    <menuitem id="menu_gov_hr_outgoing" name="Waiting for Outgoing Registration" parent="menu_gov_hr_deputation_root"
+              action="action_gov_hr_deputation_outgoing" sequence="40" groups="gov_hr_base.group_gov_hr_admin_officer"/>
+    <menuitem id="menu_gov_hr_all" name="All Deputations" parent="menu_gov_hr_deputation_root"
+              action="action_gov_hr_deputation_all" sequence="50"
+              groups="gov_hr_base.group_gov_hr_admin_manager,gov_hr_base.group_gov_hr_director_general,gov_hr_base.group_gov_hr_manager"/>
+
+    <menuitem id="menu_gov_hr_reporting" name="Reporting" parent="menu_gov_hr_root" sequence="30"
+              groups="gov_hr_base.group_gov_hr_admin_manager,gov_hr_base.group_gov_hr_director_general,gov_hr_base.group_gov_hr_manager"/>
+    <menuitem id="menu_gov_hr_analysis" name="Deputation Analysis" parent="menu_gov_hr_reporting"
+              action="action_gov_hr_deputation_analysis" sequence="10"/>
+    <menuitem id="menu_gov_hr_register" name="Government Deputation Register" parent="menu_gov_hr_reporting"
+              action="action_gov_hr_deputation_register" sequence="20"/>
+
+    <menuitem id="menu_gov_hr_configuration" name="Configuration" parent="menu_gov_hr_root" sequence="90"
+              groups="gov_hr_base.group_gov_hr_manager"/>
+    <menuitem id="menu_gov_hr_basis_types" name="Basis and Document Types" parent="menu_gov_hr_configuration"
+              action="gov_hr_base.action_gov_hr_basis_types" sequence="10"/>
+    <menuitem id="menu_gov_hr_activity_types" name="Deputation Activity Types" parent="menu_gov_hr_configuration"
+              action="action_gov_hr_deputation_activity_types" sequence="20"/>
+    <menuitem id="menu_gov_hr_case_types" name="Government Case Types" parent="menu_gov_hr_configuration"
+              action="gov_hr_base.action_gov_hr_case_types" sequence="25"/>
+    <menuitem id="menu_gov_hr_routes" name="Approval Routes" parent="menu_gov_hr_configuration"
+              action="gov_hr_base.action_gov_hr_routes" sequence="30"/>
+    <menuitem id="menu_gov_hr_sequences" name="Internal Sequences" parent="menu_gov_hr_configuration"
+              action="gov_hr_base.action_gov_hr_sequences" sequence="35"/>
+    <menuitem id="menu_gov_hr_settings" name="Deputation Settings" parent="menu_gov_hr_configuration"
+              action="gov_hr_base.action_gov_hr_settings" sequence="40"/>
+</odoo>

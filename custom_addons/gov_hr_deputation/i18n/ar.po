@@ -1,0 +1,1609 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gov_hr_deputation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-20 10:07+0000\n"
+"PO-Revision-Date: 2026-08-20 10:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "%(verified)s of %(total)s verified"
+msgstr "%(verified)s من %(total)s مدقق"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.report,print_report_name:gov_hr_deputation.action_report_deputation_memorandum_final
+msgid "'Memorandum-%s' % object.name.replace('/', '-')"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.actions.report,print_report_name:gov_hr_deputation.action_report_deputation_memorandum_draft
+msgid "'Memorandum-Draft-%s' % object.name.replace('/', '-')"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.actions.report,print_report_name:gov_hr_deputation.action_report_deputation_mission_order_final
+msgid "'Mission-Order-%s' % object.name.replace('/', '-')"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.actions.report,print_report_name:gov_hr_deputation.action_report_deputation_mission_order_draft
+msgid "'Mission-Order-Draft-%s' % object.name.replace('/', '-')"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "<strong>استناداً إلى:</strong>"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "<strong>الأوليات المعتمدة:</strong>"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "<strong>التاريخ:</strong>"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "<strong>القسم المعني:</strong>"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "<strong>المدير العام</strong>"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "<strong>النشاط:</strong>"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "<strong>رقم الصادر:</strong>"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "A concise subject for the official correspondence"
+msgstr "موضوع موجز للمخاطبة الرسمية"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_needaction
+msgid "Action Needed"
+msgstr "يتطلب إجراء"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Activity"
+msgstr "النشاط"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_description
+msgid "Activity Description"
+msgstr "وصف النشاط"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: gov_hr_deputation
+#: model:ir.model.constraint,message:gov_hr_deputation.constraint_gov_hr_deputation_activity_type_unique_code_company
+msgid "Activity type codes must be unique per company."
+msgstr "يجب أن يكون رمز نوع النشاط فريداً داخل الجهة."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Activity, activity description, and destination are required."
+msgstr "النشاط ووصفه والوجهة حقول مطلوبة."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Add at least one deputed employee before submission."
+msgstr "أضف موظفاً موفداً واحداً على الأقل قبل الإرسال."
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,name:gov_hr_deputation.step_memo_admin_manager
+#: model:gov.hr.approval.step,name:gov_hr_deputation.step_mission_admin_manager
+msgid "Administrative Department Manager"
+msgstr "مدير القسم الإداري"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__administrative_officer_id
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Administrative Officer"
+msgstr "الموظف الإداري"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,name:gov_hr_deputation.step_issuance_admin_officer
+msgid "Administrative Officer Issuance"
+msgstr "إصدار الموظف الإداري"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,name:gov_hr_deputation.step_memo_admin_officer_review
+msgid "Administrative Officer Review"
+msgstr "تدقيق الموظف الإداري"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__administrative_officer_user_id
+msgid "Administrative Officer User"
+msgstr "مستخدم الموظف الإداري"
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_root
+msgid "Administrative Transactions"
+msgstr "المعاملات الإدارية"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_all
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_all
+msgid "All Deputations"
+msgstr "جميع الإيفادات"
+
+#. module: gov_hr_deputation
+#: model:ir.model.constraint,message:gov_hr_deputation.constraint_gov_hr_deputation_participant_unique_employee_deputation
+msgid "An employee can only be added once to the same deputation."
+msgstr "لا يمكن إضافة الموظف أكثر من مرة إلى الإيفاد نفسه."
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__approval_log_ids
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Approval History"
+msgstr "مسار الموافقات"
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_routes
+msgid "Approval Routes"
+msgstr "مسارات الموافقة"
+
+#. module: gov_hr_deputation
+#. odoo-javascript
+#: code:addons/gov_hr_deputation/static/src/components/workflow_overview/workflow_overview.js:0
+msgid "Approval Workflow"
+msgstr "مسار الموافقات"
+
+#. module: gov_hr_deputation
+#. odoo-javascript
+#: code:addons/gov_hr_deputation/static/src/components/workflow_overview/workflow_overview.xml:0
+msgid "Approval workflow"
+msgstr "مسار الموافقات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Approve"
+msgstr "موافقة"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,activity_summary:gov_hr_deputation.step_memo_department_manager
+#: model:gov.hr.approval.step,activity_summary:gov_hr_deputation.step_memo_director_general
+msgid "Approve deputation memorandum"
+msgstr "موافقة على مذكرة الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,activity_summary:gov_hr_deputation.step_memo_admin_manager
+msgid "Approve deputation memorandum for administrative review"
+msgstr "موافقة على مذكرة الإيفاد وإرسالها للتدقيق الإداري"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,activity_summary:gov_hr_deputation.step_mission_admin_manager
+msgid "Approve the mission-order draft"
+msgstr "موافقة على مسودة أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_audit_committee
+msgid "Audit Committee"
+msgstr "لجنة تدقيقية"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__average_duration_days
+msgid "Average Duration Days"
+msgstr "متوسط عدد الأيام"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__basis_missing_count
+msgid "Basis Missing Count"
+msgstr "عدد الأوليات الناقصة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__basis_progress_label
+msgid "Basis Progress Label"
+msgstr "تقدم تدقيق الأوليات"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__basis_required_count
+msgid "Basis Required Count"
+msgstr "عدد الأوليات المطلوبة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__basis_verified_count
+msgid "Basis Verified Count"
+msgstr "عدد الأوليات المدققة"
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_basis_types
+msgid "Basis and Document Types"
+msgstr "أنواع الأوليات"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__business_model
+msgid "Business Model"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__business_res_id
+msgid "Business Res"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__can_current_user_act
+msgid "Can Current User Act"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__can_edit_basis
+msgid "Can Edit Basis"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__can_edit_business
+msgid "Can Edit Business"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__can_manage_configuration
+msgid "Can Manage Configuration"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__case_id
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__case_id
+msgid "Case"
+msgstr "المعاملة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__name
+msgid "Case Reference"
+msgstr "رقم المعاملة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__case_type_id
+msgid "Case Type"
+msgstr "نوع المعاملة"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "City or official destination"
+msgstr "المدينة أو الجهة الرسمية"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_committee_order
+msgid "Committee Order"
+msgstr "أمر لجنة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__company_id
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__company_id
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__company_id
+msgid "Company"
+msgstr "الجهة"
+
+#. module: gov_hr_deputation
+#. odoo-javascript
+#: code:addons/gov_hr_deputation/static/src/components/workflow_overview/workflow_overview.js:0
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Completed"
+msgstr "مكتمل"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__completed_at
+msgid "Completed At"
+msgstr "وقت الاكتمال"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,name:gov_hr_deputation.step_memo_department_manager
+msgid "Concerned Department Manager"
+msgstr "مدير القسم المعني"
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_configuration
+msgid "Configuration"
+msgstr "الإعدادات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Confirm Supporting Documents"
+msgstr "تأكيد تدقيق الأوليات"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__correction_user_id
+msgid "Correction User"
+msgstr "مستخدم التصحيح"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__create_uid
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__create_uid
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__create_uid
+msgid "Created by"
+msgstr "أنشأه"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__create_date
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__create_date
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__current_activity_id
+msgid "Current Activity"
+msgstr "النشاط الحالي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__current_approver_user_id
+msgid "Current Approver User"
+msgstr "الموافق الحالي"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Current Stage"
+msgstr "المرحلة الحالية"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__current_step_id
+msgid "Current Step"
+msgstr "الخطوة الحالية"
+
+#. module: gov_hr_deputation
+#. odoo-javascript
+#: code:addons/gov_hr_deputation/static/src/components/workflow_overview/workflow_overview.js:0
+msgid "Current step"
+msgstr "المرحلة الحالية"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__date_from
+msgid "Date From"
+msgstr "من"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__date_to
+msgid "Date To"
+msgstr "إلى"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__department_id
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Department"
+msgstr "القسم"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__department_name
+msgid "Department Name"
+msgstr "اسم القسم"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__department_id
+msgid "Department at Submission"
+msgstr "القسم عند الإرسال"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__deputation_id
+msgid "Deputation"
+msgstr "الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model,name:gov_hr_deputation.model_gov_hr_deputation_activity_type
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__deputation_activity_type_id
+msgid "Deputation Activity Type"
+msgstr "نوع نشاط الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_activity_types
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_activity_types
+msgid "Deputation Activity Types"
+msgstr "أنواع نشاط الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_analysis
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_analysis
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_graph
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_pivot
+msgid "Deputation Analysis"
+msgstr "تحليل الإيفادات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Deputation Information"
+msgstr "معلومات الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model,name:gov_hr_deputation.model_gov_hr_deputation_participant
+msgid "Deputation Participant"
+msgstr "الموظف الموفد"
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_settings
+msgid "Deputation Settings"
+msgstr "إعدادات الإيفادات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Deputation Subject"
+msgstr "موضوع الإيفاد"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Deputation information is locked after submission."
+msgstr "تُقفل معلومات الإيفاد بعد الإرسال."
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_deputation_root
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_list
+msgid "Deputations"
+msgstr "الإيفادات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Deputed Employees"
+msgstr "الموظفون الموفدون"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Describe the official activity and purpose..."
+msgstr "صف النشاط الرسمي والغرض من الإيفاد..."
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__destination
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Destination"
+msgstr "المكان"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,name:gov_hr_deputation.step_memo_director_general
+msgid "Director General"
+msgstr "المدير العام"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,name:gov_hr_deputation.step_mission_director_general
+msgid "Director General Final Approval"
+msgstr "الاعتماد النهائي للمدير العام"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__display_name
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__display_name
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__display_name
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_report_gov_hr_deputation_report_deputation_memorandum_final__display_name
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_report_gov_hr_deputation_report_deputation_mission_order_final__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Document verification fields can only be changed by protected actions."
+msgstr "لا تتغير حقول تدقيق المستندات إلا من خلال الإجراءات المحمية."
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__documents_verified_at
+msgid "Documents Verified At"
+msgstr "وقت تدقيق الأوليات"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__documents_verified_by
+msgid "Documents Verified By"
+msgstr "مدقق الأوليات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__duration_days
+msgid "Duration Days"
+msgstr "عدد الأيام"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__employee_public_id
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.case.type,name:gov_hr_deputation.case_type_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Employee Deputation"
+msgstr "إيفاد موظفين"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__employee_identifier
+msgid "Employee Identifier"
+msgstr "الرقم الوظيفي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__employee_name
+msgid "Employee Name"
+msgstr "اسم الموظف"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Enter a valid deputation period."
+msgstr "أدخل مدة إيفاد صحيحة."
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,activity_summary:gov_hr_deputation.step_issuance_admin_officer
+msgid "Enter outgoing registration and issue the mission order"
+msgstr "إدخال رقم الصادر وإصدار أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Enter the outgoing number and outgoing date before issuance."
+msgstr "أدخل رقم الصادر وتاريخ الصادر قبل الإصدار."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/participant.py:0
+msgid "Every participant must belong to the deputation company."
+msgstr "يجب أن ينتمي كل موفد إلى جهة الإيفاد."
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "File"
+msgstr "الملف"
+
+#. module: gov_hr_deputation
+#: model:ir.model,name:gov_hr_deputation.model_report_gov_hr_deputation_report_deputation_memorandum_final
+msgid "Final Deputation Memorandum Report"
+msgstr "تقرير مذكرة الإيفاد النهائية"
+
+#. module: gov_hr_deputation
+#: model:ir.model,name:gov_hr_deputation.model_report_gov_hr_deputation_report_deputation_mission_order_final
+msgid "Final Deputation Mission Order Report"
+msgstr "تقرير أمر الإيفاد النهائي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__final_dg_approval_log_id
+msgid "Final Dg Approval Log"
+msgstr "سجل الاعتماد النهائي للمدير العام"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Final Director General approval is missing."
+msgstr "الاعتماد النهائي للمدير العام غير موجود."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Final Director General approval is required before issuance."
+msgstr "الاعتماد النهائي للمدير العام مطلوب قبل الإصدار."
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__final_document_available
+msgid "Final Document Available"
+msgstr "النسخة الرسمية متاحة"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+#: model:ir.actions.report,name:gov_hr_deputation.action_report_deputation_mission_order_final
+msgid "Final Mission Order"
+msgstr "أمر الإيفاد النهائي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__final_order_attachment_id
+msgid "Final Order Attachment"
+msgstr "مرفق أمر الإيفاد النهائي"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,activity_summary:gov_hr_deputation.step_mission_director_general
+msgid "Final approval of the mission order"
+msgstr "الاعتماد النهائي لأمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.route,name:gov_hr_deputation.route_deputation_default
+msgid "Government Deputation Default Route"
+msgstr "المسار الافتراضي للإيفادات الحكومية"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_register
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_register
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_register_list
+msgid "Government Deputation Register"
+msgstr "سجل الإيفادات"
+
+#. module: gov_hr_deputation
+#: model:ir.model,name:gov_hr_deputation.model_gov_hr_deputation
+msgid "Government Employee Deputation"
+msgstr "إيفاد موظفين حكومي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__has_official_stamp
+msgid "Has Official Stamp"
+msgstr "الختم الرسمي مهيأ"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__id
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__id
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__id
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_report_gov_hr_deputation_report_deputation_memorandum_final__id
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_report_gov_hr_deputation_report_deputation_mission_order_final__id
+msgid "ID"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__message_has_error
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "In Approval"
+msgstr "قيد الموافقة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__employee_id
+msgid "Internal Employee Reference"
+msgstr "مرجع الموظف الداخلي"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_investigation_committee
+msgid "Investigation Committee"
+msgstr "لجنة تحقيقية"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Issue Mission Order"
+msgstr "إصدار أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__issued_at
+msgid "Issued At"
+msgstr "وقت الإصدار"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__job_title
+msgid "Job Title"
+msgstr "العنوان الوظيفي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__job_id
+msgid "Job at Submission"
+msgstr "الوظيفة عند الإرسال"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__write_uid
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__write_uid
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__write_date
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__write_date
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:gov.hr.deputation.activity.type,name:gov_hr_deputation.activity_type_meeting
+msgid "Meeting or Committee"
+msgstr "اجتماع أو لجنة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__memo_completed_at
+msgid "Memo Completed At"
+msgstr "وقت اكتمال المذكرة"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_memorandum
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Memorandum"
+msgstr "المذكرة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__memorandum_attachment_id
+msgid "Memorandum Attachment"
+msgstr "مرفق المذكرة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__memorandum_available
+msgid "Memorandum Available"
+msgstr "المذكرة متاحة"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.report,name:gov_hr_deputation.action_report_deputation_memorandum_draft
+msgid "Memorandum Preview"
+msgstr "معاينة المذكرة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Mission Order"
+msgstr "أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__mission_order_approved_at
+msgid "Mission Order Approved At"
+msgstr "وقت اعتماد أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.report,name:gov_hr_deputation.action_report_deputation_mission_order_draft
+msgid "Mission Order Draft"
+msgstr "مسودة أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__mission_order_notes
+msgid "Mission Order Notes"
+msgstr "ملاحظات أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Mission order %(number)s was issued and its official PDF was archived."
+msgstr "أُصدر أمر الإيفاد %(number)s وأُرشف ملفه الرسمي بصيغة PDF."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Mission order %(number)s was issued successfully."
+msgstr "تم إصدار أمر الإيفاد رقم %(number)s بنجاح."
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Month"
+msgstr "الشهر"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نشاطي"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_my
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_my_deputations
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "My Deputations"
+msgstr "إيفاداتي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__current_stage_name
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__name
+msgid "Name"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "موعد النشاط التالي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Odoo did not create the expected archived PDF attachment."
+msgstr "لم ينشئ أودو مرفق PDF المؤرشف المتوقع."
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Official Documents"
+msgstr "المستندات الرسمية"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_official_letter
+msgid "Official Letter"
+msgstr "كتاب رسمي"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+#: model:ir.actions.report,name:gov_hr_deputation.action_report_deputation_memorandum_final
+msgid "Official Memorandum"
+msgstr "المذكرة الرسمية"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.deputation.activity.type,name:gov_hr_deputation.activity_type_official_mission
+msgid "Official Mission"
+msgstr "مهمة رسمية"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.deputation.activity.type,name:gov_hr_deputation.activity_type_review
+msgid "Official Review"
+msgstr "مراجعة رسمية"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Official outgoing number"
+msgstr "رقم الصادر الرسمي"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid ""
+"Only the assigned administrative officer can edit mission-order notes at "
+"this stage."
+msgstr ""
+"الموظف الإداري المكلف وحده يستطيع تعديل ملاحظات أمر الإيفاد في هذه المرحلة."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Only the requester can delete this draft deputation."
+msgstr "مقدم الطلب وحده يستطيع حذف مسودة الإيفاد."
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_other
+#: model:gov.hr.deputation.activity.type,name:gov_hr_deputation.activity_type_other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__outgoing_date
+msgid "Outgoing Date"
+msgstr "تاريخ الصادر"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__outgoing_number
+msgid "Outgoing Number"
+msgstr "رقم الصادر"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Outgoing number and date are required for the final mission order."
+msgstr "رقم الصادر وتاريخه مطلوبان لأمر الإيفاد النهائي."
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__participant_count
+msgid "Participant Count"
+msgstr "عدد الموفدين"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__participant_user_ids
+msgid "Participant Users"
+msgstr "المستخدمون المشاركون"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__participant_ids
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Participants"
+msgstr "الموفدون"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/participant.py:0
+msgid "Participants are locked after submission."
+msgstr "تُقفل قائمة الموفدين بعد الإرسال."
+
+#. module: gov_hr_deputation
+#. odoo-javascript
+#: code:addons/gov_hr_deputation/static/src/components/workflow_overview/workflow_overview.js:0
+msgid "Pending"
+msgstr "بانتظار التدقيق"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__phase
+msgid "Phase"
+msgstr "المرحلة"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Prepare Mission Order"
+msgstr "إعداد أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__processing_duration_hours
+msgid "Processing Duration Hours"
+msgstr "مدة المعالجة بالساعات"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__administrative_officer_user_id
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__requester_user_id
+msgid "Related user name for the resource to manage its access."
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_reporting
+msgid "Reporting"
+msgstr "التقارير"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Requester"
+msgstr "مقدم الطلب"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__requester_employee_id
+msgid "Requester Employee"
+msgstr "الموظف مقدم الطلب"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__requester_user_id
+msgid "Requester User"
+msgstr "مقدم الطلب"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Resolve documents marked incomplete before continuing: %(documents)s"
+msgstr "أكمل المستندات الموسومة كناقصة قبل المتابعة: %(documents)s"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Return for Correction"
+msgstr "إرجاع للتصحيح"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__returned_from_phase
+msgid "Returned From Phase"
+msgstr "مرحلة الإرجاع"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__returned_from_step_id
+msgid "Returned From Step"
+msgstr "خطوة الإرجاع"
+
+#. module: gov_hr_deputation
+#. odoo-javascript
+#: code:addons/gov_hr_deputation/static/src/components/workflow_overview/workflow_overview.js:0
+msgid "Returned for correction"
+msgstr "معاد للتصحيح"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Returned or Rejected"
+msgstr "معاد أو مرفوض"
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_review
+msgid "Review"
+msgstr "مراجعة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__current_step_role_code
+msgid "Role Code"
+msgstr "الدور"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__role_note
+msgid "Role Note"
+msgstr "الدور أو الملاحظة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__round_number
+msgid "Round Number"
+msgstr "رقم الجولة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Search Deputations"
+msgstr "البحث في الإيفادات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Send for Approval"
+msgstr "إرسال للموافقة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_activity_type__sequence
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation_participant__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__current_step_kind
+msgid "Step Kind"
+msgstr "نوع الخطوة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__subject
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__submitted_at
+msgid "Submitted At"
+msgstr "وقت الإرسال"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Submitted or issued deputations cannot be deleted."
+msgstr "لا يمكن حذف الإيفادات المرسلة أو الصادرة."
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__basis_line_ids
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Supporting Documents"
+msgstr "الأوليات"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Supporting documents were verified."
+msgstr "تم تدقيق الأوليات."
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Supporting-document checklist"
+msgstr "قائمة تدقيق الأوليات"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid ""
+"Supporting-document verification cannot be completed.\n"
+"The following documents are incomplete:\n"
+"- %(documents)s"
+msgstr ""
+"لا يمكن إكمال تدقيق الأوليات.\n"
+"المستندات التالية غير مكتملة:\n"
+"- %(documents)s"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__task_instruction
+msgid "Task Instruction"
+msgstr "التوجيه الحالي"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__task_title
+msgid "Task Title"
+msgstr "المطلوب الآن"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "The archived official document is not available."
+msgstr "المستند الرسمي المؤرشف غير متاح."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid ""
+"The assigned administrative officer must have the Administrative Officer "
+"role."
+msgstr "يجب أن يحمل الموظف الإداري المكلف صلاحية الموظف الإداري."
+
+#. module: gov_hr_deputation
+#: model:ir.model.constraint,message:gov_hr_deputation.constraint_gov_hr_deputation_date_order
+msgid "The deputation end date must be on or after the start date."
+msgstr "يجب أن يكون تاريخ انتهاء الإيفاد مساوياً لتاريخ البدء أو بعده."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "The final mission order cannot be generated before final approval."
+msgstr "لا يمكن إنشاء أمر الإيفاد النهائي قبل الاعتماد النهائي."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid ""
+"The following required supporting documents are missing:\n"
+"- %(documents)s"
+msgstr ""
+"الأوليات المطلوبة التالية مفقودة:\n"
+"- %(documents)s"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "The official electronic stamp is not configured for this company."
+msgstr "الختم الإلكتروني الرسمي غير مهيأ لهذه الجهة."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid ""
+"The official memorandum cannot be generated before document verification."
+msgstr "لا يمكن إنشاء المذكرة الرسمية قبل تدقيق الأوليات."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "The official stamp is not configured."
+msgstr "الختم الرسمي غير مهيأ."
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "The official stamp will be included automatically after issuance."
+msgstr "سيتم تضمين الختم الرسمي تلقائياً عند الإصدار."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/participant.py:0
+msgid ""
+"The public and internal employee references must identify the same employee."
+msgstr "يجب أن يشير مرجعا الموظف العام والداخلي إلى الموظف نفسه."
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "The requester employee must be linked to an active Odoo user."
+msgstr "يجب ربط الموظف مقدم الطلب بمستخدم أودو نشط."
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "This Month"
+msgstr "هذا الشهر"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "This Year"
+msgstr "هذه السنة"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:gov.hr.approval.step,activity_summary:gov_hr_deputation.step_memo_admin_officer_review
+msgid "Verify deputation supporting documents"
+msgstr "تدقيق أوليات الإيفاد"
+
+#. module: gov_hr_deputation
+#. odoo-python
+#: code:addons/gov_hr_deputation/models/deputation.py:0
+msgid "Verify the supporting documents before preparing the mission order."
+msgstr "دقق الأوليات قبل إعداد أمر الإيفاد."
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "View Archived Memorandum"
+msgstr "عرض المذكرة المؤرشفة"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "View Draft"
+msgstr "عرض المسودة"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "View Memorandum"
+msgstr "عرض المذكرة"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "View Mission Order Draft"
+msgstr "عرض مسودة أمر الإيفاد"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "View Official Copy"
+msgstr "عرض النسخة الرسمية"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Waiting for Administration"
+msgstr "بانتظار القسم الإداري"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Waiting for Director General"
+msgstr "بانتظار المدير العام"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Waiting for Document Review"
+msgstr "بانتظار تدقيق الأوليات"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_pending
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_pending
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Waiting for My Approval"
+msgstr "بانتظار موافقتي"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_review
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_review
+msgid "Waiting for My Review"
+msgstr "بانتظار تدقيقي"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_search
+msgid "Waiting for Outgoing Number"
+msgstr "بانتظار رقم الصادر"
+
+#. module: gov_hr_deputation
+#: model:ir.actions.act_window,name:gov_hr_deputation.action_gov_hr_deputation_outgoing
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_outgoing
+msgid "Waiting for Outgoing Registration"
+msgstr "بانتظار رقم الصادر"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,help:gov_hr_deputation.field_gov_hr_deputation__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:gov.hr.basis.type,name:gov_hr_deputation.basis_type_work_order
+msgid "Work Order"
+msgstr "أمر عمل"
+
+#. module: gov_hr_deputation
+#: model:ir.model.fields,field_description:gov_hr_deputation.field_gov_hr_deputation__workflow_display
+msgid "Workflow Display"
+msgstr "عرض مسار الموافقات"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "employees"
+msgstr "موظفين"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.view_gov_hr_deputation_form
+msgid "Waiting for:"
+msgstr "بانتظار:"
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid ""
+"،\n"
+"                    وبمدة مقدارها"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "أمر إيفاد"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "إلى"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "إلى /"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "اسم الموظف"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "التاريخ"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "الجهة المصدرة"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "الختم الرسمي"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "الرقم"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "السيد المدير العام المحترم"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "العنوان الوظيفي"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "القسم"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "الموضوع /"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "بتاريخ"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid ""
+"بناءً على الموافقات الأصولية والمذكرة الخاصة بالمعاملة المشار إليها أعلاه،\n"
+"                    تقرر إيفاد الموظفين المدرجة أسماؤهم أدناه من"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "توقيع المدير العام"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "رقم"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "رقم المعاملة"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "رقم المعاملة:"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "شعار الجهة"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "على الجهات ذات العلاقة تنفيذ هذا الأمر كلٌ حسب اختصاصه."
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "لتنفيذ نشاط"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "للمدة من"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "مدة الإيفاد:"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "مدير"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "مذكرة"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "مرجع المذكرة:"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "مسودة"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "ملاحظات:"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "ملاحظة"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "من"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "من /"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "نوع الأولية"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "وجهة الإيفاد:"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "يرجى التفضل بالموافقة على إيفاد السادة المدرجة أسماؤهم أدناه لغرض"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_memorandum_content
+msgid "يوم/أيام"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model_terms:ir.ui.view,arch_db:gov_hr_deputation.deputation_mission_order_content
+msgid "يوم/أيام)"
+msgstr ""
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_case_types
+msgid "Government Case Types"
+msgstr "أنواع المعاملات الحكومية"
+
+#. module: gov_hr_deputation
+#: model:ir.ui.menu,name:gov_hr_deputation.menu_gov_hr_sequences
+msgid "Internal Sequences"
+msgstr "التسلسلات الداخلية"

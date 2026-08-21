@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gov_hr_case_type_list" model="ir.ui.view">
+        <field name="name">gov.hr.case.type.list</field>
+        <field name="model">gov.hr.case.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="route_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_gov_hr_case_type_form" model="ir.ui.view">
+        <field name="name">gov.hr.case.type.form</field>
+        <field name="model">gov.hr.case.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <field name="code"/>
+                        <field name="route_id"/>
+                        <field name="sequence_code" string="Internal Sequence Code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_gov_hr_case_types" model="ir.actions.act_window">
+        <field name="name">Government Case Types</field>
+        <field name="res_model">gov.hr.case.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_gov_hr_basis_type_list" model="ir.ui.view">
+        <field name="name">gov.hr.basis.type.list</field>
+        <field name="model">gov.hr.basis.type</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="default_required"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_gov_hr_basis_types" model="ir.actions.act_window">
+        <field name="name">Basis and Document Types</field>
+        <field name="res_model">gov.hr.basis.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_gov_hr_route_list" model="ir.ui.view">
+        <field name="name">gov.hr.approval.route.list</field>
+        <field name="model">gov.hr.approval.route</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_gov_hr_route_form" model="ir.ui.view">
+        <field name="name">gov.hr.approval.route.form</field>
+        <field name="model">gov.hr.approval.route</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group><field name="company_id"/><field name="active"/></group>
+                    <field name="step_ids">
+                        <list editable="bottom">
+                            <field name="phase"/>
+                            <field name="sequence"/>
+                            <field name="name"/>
+                            <field name="step_kind"/>
+                            <field name="role_code"/>
+                            <field name="specific_user_id" invisible="role_code != 'specific_user'"/>
+                            <field name="group_id" invisible="role_code != 'security_group'"/>
+                            <field name="activity_summary" optional="hide"/>
+                            <field name="active"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_gov_hr_routes" model="ir.actions.act_window">
+        <field name="name">Approval Routes</field>
+        <field name="res_model">gov.hr.approval.route</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_gov_hr_sequence_form" model="ir.ui.view">
+        <field name="name">ir.sequence.form.gov.hr</field>
+        <field name="model">ir.sequence</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="prefix"/>
+                            <field name="suffix"/>
+                            <field name="padding"/>
+                        </group>
+                        <group>
+                            <field name="number_next_actual"/>
+                            <field name="number_increment"/>
+                            <field name="use_date_range"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">The outgoing number remains manual and is not controlled by this sequence.</div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_gov_hr_sequences" model="ir.actions.act_window">
+        <field name="name">Government HR Sequences</field>
+        <field name="res_model">ir.sequence</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('base.sequence_view_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_gov_hr_sequence_form')})]"/>
+        <field name="domain">[('code', '=like', 'gov.hr.%')]</field>
+    </record>
+</odoo>

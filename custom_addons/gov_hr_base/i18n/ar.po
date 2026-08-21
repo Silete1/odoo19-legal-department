@@ -1,0 +1,1342 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gov_hr_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-20 10:07+0000\n"
+"PO-Revision-Date: 2026-08-20 10:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/basis.py:0
+msgid "A document cannot be verified before a file is uploaded."
+msgstr "لا يمكن تدقيق المستند قبل رفع الملف."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "A return reason is required."
+msgstr "سبب الإرجاع مطلوب."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/approval.py:0
+msgid "A security group is required for this approval step."
+msgstr "مجموعة صلاحيات مطلوبة لخطوة الموافقة هذه."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/approval.py:0
+msgid "A specific user is required for this approval step."
+msgstr "مستخدم محدد مطلوب لخطوة الموافقة هذه."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__action
+msgid "Action"
+msgstr "الإجراء"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__active
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__active
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__active
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__activity_summary
+msgid "Activity Summary"
+msgstr "ملخص النشاط"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__gov_hr_administrative_department_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__gov_hr_administrative_department_id
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Administrative Department"
+msgstr "القسم الإداري"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__role_code__administrative_department_manager
+#: model:res.groups,name:gov_hr_base.group_gov_hr_admin_manager
+msgid "Administrative Department Manager"
+msgstr "مدير القسم الإداري"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__administrative_officer_id
+#: model:res.groups,name:gov_hr_base.group_gov_hr_admin_officer
+msgid "Administrative Officer"
+msgstr "الموظف الإداري"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__administrative_officer_user_id
+msgid "Administrative Officer User"
+msgstr "مستخدم الموظف الإداري"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"An issuance task cannot be returned; complete the outgoing registration or "
+"contact the Administrative Manager."
+msgstr ""
+"لا يمكن إرجاع مهمة الإصدار؛ أكمل تسجيل الصادر أو راجع مدير القسم الإداري."
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__step_kind__approval
+msgid "Approval"
+msgstr "موافقة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__approval_log_ids
+msgid "Approval History"
+msgstr "سجل الموافقات"
+
+#. module: gov_hr_base
+#: model:ir.actions.act_window,name:gov_hr_base.action_gov_hr_routes
+msgid "Approval Routes"
+msgstr "مسارات الموافقة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__step_ids
+msgid "Approval Steps"
+msgstr "خطوات الموافقة"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/approval.py:0
+msgid "Approval history is immutable and cannot be changed."
+msgstr "سجل الموافقات ثابت ولا يمكن تعديله."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/approval.py:0
+msgid "Approval history is immutable and cannot be deleted."
+msgstr "سجل الموافقات ثابت ولا يمكن حذفه."
+
+#. module: gov_hr_base
+#: model:ir.model.constraint,message:gov_hr_base.constraint_gov_hr_approval_step_unique_route_phase_sequence
+msgid "Approval step sequence must be unique within each route phase."
+msgstr "يجب ألا يتكرر تسلسل خطوة الموافقة ضمن مرحلة المسار."
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__approved
+msgid "Approved"
+msgstr "تمت الموافقة"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Approved and sent to %(user)s."
+msgstr "تمت الموافقة وإرسال المعاملة إلى %(user)s."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__approver_employee_id
+msgid "Approver Employee"
+msgstr "موظف الموافقة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__approver_user_id
+msgid "Approver User"
+msgstr "المستخدم الموافق"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/ir_attachment.py:0
+msgid "Archived official government documents are immutable."
+msgstr "المستندات الحكومية الرسمية المؤرشفة ثابتة ولا يمكن تعديلها."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/ir_attachment.py:0
+msgid "Archived official government documents cannot be deleted."
+msgstr "لا يمكن حذف المستندات الحكومية الرسمية المؤرشفة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Assign an administrative officer linked to an active Odoo user."
+msgstr "عيّن موظفًا إداريًا مرتبطًا بمستخدم أودو نشط."
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__role_code__assigned_administrative_officer
+msgid "Assigned Administrative Officer"
+msgstr "الموظف الإداري المكلف"
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid ""
+"Assigned automatically and may be changed by the Administrative Department "
+"Manager."
+msgstr "يُعيّن تلقائيًا ويمكن لمدير القسم الإداري تغييره."
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_ir_attachment
+msgid "Attachment"
+msgstr "المرفق"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__awaiting_outgoing
+msgid "Awaiting Outgoing Registration"
+msgstr "بانتظار الصادر"
+
+#. module: gov_hr_base
+#: model:ir.actions.act_window,name:gov_hr_base.action_gov_hr_basis_types
+msgid "Basis and Document Types"
+msgstr "أنواع الأوليات والمستندات"
+
+#. module: gov_hr_base
+#: model:ir.model.constraint,message:gov_hr_base.constraint_gov_hr_basis_type_unique_code_company
+msgid "Basis type codes must be unique per company."
+msgstr "يجب ألا تتكرر رموز أنواع الأوليات داخل الجهة."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__business_model
+msgid "Business Model"
+msgstr "نموذج المعاملة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__business_res_id
+msgid "Business Res"
+msgstr "سجل المعاملة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__can_current_user_act
+msgid "Can Current User Act"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__can_edit_basis
+msgid "Can Edit Basis"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__can_edit_business
+msgid "Can Edit Business"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__can_manage_configuration
+msgid "Can Manage Configuration"
+msgstr ""
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.view_gov_hr_return_wizard_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__case_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__case_id
+msgid "Case"
+msgstr "المعاملة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__name
+msgid "Case Reference"
+msgstr "رقم المعاملة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__case_type_id
+msgid "Case Type"
+msgstr "نوع المعاملة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__code
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_res_company
+msgid "Companies"
+msgstr "الجهات"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__company_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__company_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__company_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__company_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__company_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__company_id
+msgid "Company"
+msgstr "الجهة"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Complete the deputation information and send it for approval."
+msgstr "أكمل معلومات الإيفاد ثم أرسل المعاملة للموافقة."
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__done
+msgid "Completed"
+msgstr "مكتمل"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__completed_at
+msgid "Completed At"
+msgstr "وقت الاكتمال"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__role_code__concerned_department_manager
+msgid "Concerned Department Manager"
+msgstr "مدير القسم المعني"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"Configure an Administrative Department whose manager is linked to an active "
+"Odoo user."
+msgstr "يرجى إعداد القسم الإداري وربط مديره بمستخدم أودو نشط."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Configure an active Director General user in the company settings."
+msgstr "يرجى إعداد مستخدم نشط للمدير العام في إعدادات الجهة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Configure an active specific user for the approval step '%(step)s'."
+msgstr ""
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Correct government case %(reference)s"
+msgstr "تصحيح المعاملة الحكومية %(reference)s"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"Correct the request according to the recorded return reason, then resubmit "
+"it."
+msgstr "صحح الطلب وفق سبب الإرجاع المسجل ثم أعد إرساله."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__correction_user_id
+msgid "Correction User"
+msgstr "مستخدم التصحيح"
+
+#. module: gov_hr_base
+#: model:res.groups,comment:gov_hr_base.group_gov_hr_user
+msgid "Create and follow government HR administrative requests."
+msgstr "إنشاء ومتابعة معاملات الموارد البشرية الحكومية."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__create_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__create_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__create_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__create_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__create_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__create_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__create_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__create_uid
+msgid "Created by"
+msgstr "أنشأه"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__create_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__create_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__create_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__create_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__create_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__create_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__create_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__current_activity_id
+msgid "Current Activity"
+msgstr "النشاط الحالي"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__current_approver_user_id
+msgid "Current Approver User"
+msgstr "الموافق الحالي"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__current_step_id
+msgid "Current Step"
+msgstr "الخطوة الحالية"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Current status: %(status)s"
+msgstr "الحالة الحالية: %(status)s"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__decision_at
+msgid "Decision At"
+msgstr "وقت القرار"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__gov_hr_default_administrative_officer_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__gov_hr_default_administrative_officer_id
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Default Administrative Officer"
+msgstr "الموظف الإداري الافتراضي"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__department_id
+msgid "Department"
+msgstr "القسم"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__gov_hr_director_general_user_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__gov_hr_director_general_user_id
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__role_code__director_general
+#: model:res.groups,name:gov_hr_base.group_gov_hr_director_general
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Director General"
+msgstr "المدير العام"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__gov_hr_director_general_signature
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__gov_hr_director_general_signature
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Director General Signature"
+msgstr "توقيع المدير العام"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_workflow_mixin__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__display_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__step_kind__document_review
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__document_review
+msgid "Document Review"
+msgstr "تدقيق المستندات"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__documents_verified
+msgid "Documents Verified"
+msgstr "تم تدقيق الأوليات"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Enter both the outgoing number and outgoing date before issuance."
+msgstr "أدخل رقم الصادر وتاريخ الصادر قبل الإصدار."
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.view_gov_hr_return_wizard_form
+msgid "Explain exactly what must be corrected..."
+msgstr "بيّن بصورة واضحة ما المطلوب تصحيحه..."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__file_data
+msgid "File Data"
+msgstr "الملف"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__filename
+msgid "Filename"
+msgstr "اسم الملف"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__final_approvals
+msgid "Final Approvals"
+msgstr "الموافقات النهائية"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__final_dg_approval_log_id
+msgid "Final Dg Approval Log"
+msgstr "سجل الاعتماد النهائي للمدير العام"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Final Director General approval is required before issuance."
+msgstr "الاعتماد النهائي للمدير العام مطلوب قبل الإصدار."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__final_order_attachment_id
+msgid "Final Order Attachment"
+msgstr "مرفق أمر الإيفاد النهائي"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__gov_hr_director_general_signature_filename
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__gov_hr_director_general_signature_filename
+msgid "Gov Hr Director General Signature Filename"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__gov_hr_official_stamp_filename
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__gov_hr_official_stamp_filename
+msgid "Gov Hr Official Stamp Filename"
+msgstr ""
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Government HR"
+msgstr "المعاملات الإدارية"
+
+#. module: gov_hr_base
+#: model:ir.module.category,name:gov_hr_base.module_category_gov_hr
+msgid "Government HR Administration"
+msgstr "الإدارة الحكومية للموارد البشرية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_case
+msgid "Government HR Administrative Case"
+msgstr "معاملة إدارية حكومية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_approval_log
+msgid "Government HR Approval Log"
+msgstr "سجل موافقات المعاملات الحكومية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_approval_route
+msgid "Government HR Approval Route"
+msgstr "مسار موافقات المعاملات الحكومية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_approval_step
+msgid "Government HR Approval Step"
+msgstr "خطوة موافقة حكومية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_basis_type
+msgid "Government HR Basis Type"
+msgstr "نوع أولية حكومية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_case_type
+msgid "Government HR Case Type"
+msgstr "نوع معاملة حكومية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_case_workflow_mixin
+msgid "Government HR Case Workflow Mixin"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:res.groups,name:gov_hr_base.group_gov_hr_manager
+msgid "Government HR Configuration Manager"
+msgstr "مدير النظام الإداري"
+
+#. module: gov_hr_base
+#: model:res.groups,name:gov_hr_base.group_gov_hr_user
+msgid "Government HR Request User"
+msgstr "مستخدم الإيفادات"
+
+#. module: gov_hr_base
+#: model:res.groups.privilege,name:gov_hr_base.privilege_gov_hr
+msgid "Government HR Roles"
+msgstr "صلاحيات المعاملات الإدارية"
+
+#. module: gov_hr_base
+#: model:ir.actions.act_window,name:gov_hr_base.action_gov_hr_settings
+msgid "Government HR Settings"
+msgstr "إعدادات المعاملات الإدارية"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_case_basis
+msgid "Government HR Supporting Document"
+msgstr "أولية معاملة حكومية"
+
+#. module: gov_hr_base
+#: model:mail.activity.type,name:gov_hr_base.mail_activity_type_gov_hr_approval
+msgid "Government HR Workflow Action"
+msgstr "إجراء سير معاملة حكومية"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Government case %(reference)s is waiting for your action at: %(step)s"
+msgstr "المعاملة الحكومية %(reference)s بانتظار إجرائك في: %(step)s"
+
+#. module: gov_hr_base
+#: model:ir.model.constraint,message:gov_hr_base.constraint_gov_hr_case_type_unique_code
+msgid "Government case type codes must be unique."
+msgstr "يجب ألا تتكرر رموز أنواع المعاملات الحكومية."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__group_id
+msgid "Group"
+msgstr "المجموعة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__has_official_stamp
+msgid "Has Official Stamp"
+msgstr "الختم الرسمي مهيأ"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_workflow_mixin__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_ir_attachment__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__id
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid ""
+"Included only in an authorized final issued PDF. Existing archived PDFs are "
+"never regenerated."
+msgstr ""
+"يُدرج فقط في ملف PDF نهائي مخول بالإصدار، ولا يعاد إنشاء الملفات المؤرشفة "
+"السابقة."
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case_basis__verification_status__incomplete
+msgid "Incomplete"
+msgstr "غير مكتمل"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__initial_approvals
+msgid "Initial Approvals"
+msgstr "الموافقات الأولية"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__is_superseded
+msgid "Is Superseded"
+msgstr "مستبدل بجولة لاحقة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__phase__issuance
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__phase__issuance
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__step_kind__issuance
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__phase__issuance
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__returned_from_phase__issuance
+msgid "Issuance"
+msgstr "الإصدار"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__issued
+msgid "Issued"
+msgstr "تم الإصدار"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__issued_at
+msgid "Issued At"
+msgstr "وقت الإصدار"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__issuer
+msgid "Issuer"
+msgstr "الجهة المصدرة"
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid ""
+"Its configured department manager receives administrative-manager approval "
+"steps."
+msgstr "يستلم مدير القسم المهيأ خطوات موافقة مدير القسم الإداري."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__write_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__write_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__write_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__write_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__write_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__write_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__write_uid
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__write_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__write_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__write_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__write_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__write_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__write_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__write_date
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__memo_completed_at
+msgid "Memo Completed At"
+msgstr "وقت اكتمال المذكرة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__phase__memo
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__phase__memo
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__phase__memo
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__returned_from_phase__memo
+msgid "Memorandum"
+msgstr "المذكرة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__memorandum_attachment_id
+msgid "Memorandum Attachment"
+msgstr "مرفق المذكرة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__phase__mission
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__phase__mission
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__phase__mission
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__returned_from_phase__mission
+msgid "Mission Order"
+msgstr "أمر الإيفاد"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__mission_order_approved_at
+msgid "Mission Order Approved At"
+msgstr "وقت اعتماد أمر الإيفاد"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__mission_preparation
+msgid "Mission Order Preparation"
+msgstr "إعداد أمر الإيفاد"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__mission_order_prepared
+msgid "Mission Order Prepared"
+msgstr "تم إعداد أمر الإيفاد"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_route__name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__current_stage_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__new_state
+msgid "New State"
+msgstr "الحالة الجديدة"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "No active approval route is configured for this case type."
+msgstr "لا يوجد مسار موافقة نشط لهذا النوع من المعاملات."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "No mission-order approval step is configured."
+msgstr "لم تتم تهيئة خطوة موافقة لأمر الإيفاد."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__notes
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Official Document Authorization"
+msgstr "اعتماد المستندات الرسمية"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_company__gov_hr_official_stamp
+#: model:ir.model.fields,field_description:gov_hr_base.field_res_config_settings__gov_hr_official_stamp
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Official Electronic Stamp"
+msgstr "الختم الإلكتروني الرسمي"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Only a draft or returned case can be submitted."
+msgstr "يمكن إرسال المعاملة إذا كانت مسودة أو معادة للتصحيح فقط."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"Only the Administrative Department Manager can reassign an active case."
+msgstr ""
+"مدير القسم الإداري وحده يستطيع إعادة تكليف الموظف الإداري للمعاملة النشطة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"Only the assigned administrative officer can enter outgoing information at "
+"the issuance stage."
+msgstr ""
+"الموظف الإداري المكلف وحده يستطيع إدخال معلومات الصادر في مرحلة الإصدار."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/basis.py:0
+msgid ""
+"Only the assigned administrative officer can verify supporting documents."
+msgstr "الموظف الإداري المكلف وحده يستطيع تدقيق الأوليات."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Only the assigned correction user can resubmit this case."
+msgstr "مستخدم التصحيح المكلف وحده يستطيع إعادة إرسال المعاملة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Only the requester can delete this draft case."
+msgstr "مقدم الطلب وحده يستطيع حذف هذه المسودة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Only the requester can submit this draft."
+msgstr "مقدم الطلب وحده يستطيع إرسال هذه المسودة."
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case_basis__verification_status__optional
+msgid "Optional"
+msgstr "اختياري"
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Optional signature image for the final official document."
+msgstr "صورة توقيع اختيارية للمستند الرسمي النهائي."
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "Organizational Routing"
+msgstr "التوجيه التنظيمي"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__outgoing_date
+msgid "Outgoing Date"
+msgstr "تاريخ الصادر"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__outgoing_number
+msgid "Outgoing Number"
+msgstr "رقم الصادر"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__participant_user_ids
+msgid "Participant Users"
+msgstr "المستخدمون المشاركون"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case_basis__verification_status__pending
+msgid "Pending"
+msgstr "بانتظار التدقيق"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__phase
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__phase
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__phase
+msgid "Phase"
+msgstr "المرحلة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__previous_state
+msgid "Previous State"
+msgstr "الحالة السابقة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__processing_duration_hours
+msgid "Processing Duration Hours"
+msgstr "مدة المعالجة بالساعات"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__reason
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__reference_date
+msgid "Reference Date"
+msgstr "تاريخ المرجع"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__reference_number
+msgid "Reference Number"
+msgstr "رقم المرجع"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__rejected
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,help:gov_hr_base.field_gov_hr_case__administrative_officer_user_id
+#: model:ir.model.fields,help:gov_hr_base.field_gov_hr_case__requester_user_id
+msgid "Related user name for the resource to manage its access."
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__requester_employee_id
+msgid "Requester Employee"
+msgstr "الموظف مقدم الطلب"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__requester_user_id
+msgid "Requester User"
+msgstr "مقدم الطلب"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__required
+msgid "Required"
+msgstr "مطلوب"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__default_required
+msgid "Required by Default"
+msgstr "مطلوب افتراضياً"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__res_id
+msgid "Res"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__res_model
+msgid "Res Model"
+msgstr ""
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__restarted
+msgid "Resubmitted"
+msgstr "أعيد الإرسال"
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.view_gov_hr_return_wizard_form
+msgid "Return"
+msgstr "إرجاع"
+
+#. module: gov_hr_base
+#: model:ir.model,name:gov_hr_base.model_gov_hr_return_wizard
+msgid "Return Government HR Case for Correction"
+msgstr "إرجاع المعاملة الحكومية للتصحيح"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.view_gov_hr_return_wizard_form
+msgid "Return for Correction"
+msgstr "إرجاع للتصحيح"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__returned_from_phase
+msgid "Returned From Phase"
+msgstr "مرحلة الإرجاع"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__returned_from_step_id
+msgid "Returned From Step"
+msgstr "خطوة الإرجاع"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__returned
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case__state__returned
+msgid "Returned for Correction"
+msgstr "معاد للتصحيح"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Returned for correction"
+msgstr "معاد للتصحيح"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Review government case %(reference)s"
+msgstr "مراجعة المعاملة الحكومية %(reference)s"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Review the case and complete the action assigned to you."
+msgstr "راجع المعاملة وأكمل الإجراء المسند إليك."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__role_code
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__current_step_role_code
+msgid "Role Code"
+msgstr "الدور"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__round_number
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__round_number
+msgid "Round Number"
+msgstr "رقم الجولة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__route_id
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__route_id
+msgid "Route"
+msgstr "المسار"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__role_code__security_group
+msgid "Security Group"
+msgstr "مجموعة صلاحيات"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__sequence
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__sequence
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_basis_type__sequence
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__sequence
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_type__sequence_code
+msgid "Sequence Code"
+msgstr "رمز التسلسل"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__specific_user_id
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_step__role_code__specific_user
+msgid "Specific User"
+msgstr "مستخدم محدد"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__step_id
+msgid "Step"
+msgstr "الخطوة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_step__step_kind
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__current_step_kind
+msgid "Step Kind"
+msgstr "نوع الخطوة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_approval_log__step_name
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_return_wizard__step_name
+msgid "Step Name"
+msgstr "اسم الخطوة"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__subject
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Submission"
+msgstr "الإرسال"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_approval_log__action__submitted
+msgid "Submitted"
+msgstr "تم الإرسال"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__submitted_at
+msgid "Submitted At"
+msgstr "وقت الإرسال"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Submitted or completed government cases cannot be deleted."
+msgstr "لا يمكن حذف المعاملات الحكومية المرسلة أو المكتملة."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__basis_line_ids
+msgid "Supporting Documents"
+msgstr "الأوليات"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/basis.py:0
+msgid "Supporting documents are locked after submission."
+msgstr "تُقفل الأوليات بعد الإرسال."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Supporting documents were verified by %(user)s."
+msgstr "دقق %(user)s الأوليات."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/basis.py:0
+msgid "Supporting-document verification is not available at this stage."
+msgstr "تدقيق الأوليات غير متاح في هذه المرحلة."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__task_instruction
+msgid "Task Instruction"
+msgstr "التوجيه الحالي"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__task_title
+msgid "Task Title"
+msgstr "المطلوب الآن"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,help:gov_hr_base.field_gov_hr_case_type__sequence_code
+msgid "Technical ir.sequence code used for the internal case reference."
+msgstr "رمز تسلسل أودو المستخدم لرقم المعاملة الداخلي."
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.res_config_settings_view_form_gov_hr
+msgid "The active internal user who performs Director General approvals."
+msgstr "المستخدم الداخلي النشط الذي ينفذ موافقات المدير العام."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"The approval group for '%(step)s' has no active internal user in this "
+"company."
+msgstr ""
+"لا تضم مجموعة الموافقة للخطوة '%(step)s' مستخدمًا داخليًا نشطًا في هذه "
+"الجهة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The approval route does not define the next required step."
+msgstr "لا يحدد مسار الموافقة الخطوة التالية المطلوبة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The approval route has no active step for phase '%(phase)s'."
+msgstr "لا يتضمن مسار الموافقة خطوة نشطة للمرحلة '%(phase)s'."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The case was returned to %(user)s for correction."
+msgstr "أعيدت المعاملة إلى %(user)s للتصحيح."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The case was routed to %(user)s for %(step)s."
+msgstr "وُجهت المعاملة إلى %(user)s لتنفيذ %(step)s."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The case was sent to %(user)s."
+msgstr "أُرسلت المعاملة إلى %(user)s."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"The concerned department '%(department)s' must have a manager linked to an "
+"active Odoo user."
+msgstr ""
+"يجب أن يكون للقسم المعني '%(department)s' مدير مرتبط بمستخدم أودو نشط."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The correction user does not have an active Odoo account."
+msgstr "لا يملك المستخدم المكلف بالتصحيح حساب أودو نشطًا."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The mission order was prepared and sent to %(user)s."
+msgstr "أُعد أمر الإيفاد وأُرسل إلى %(user)s."
+
+#. module: gov_hr_base
+#: model:ir.model.constraint,message:gov_hr_base.constraint_gov_hr_case_unique_outgoing_company
+msgid "The outgoing number must be unique within the company."
+msgstr "يجب ألا يتكرر رقم الصادر داخل الجهة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid ""
+"The reassigned employee must be an active internal user with the "
+"Administrative Officer role in this company."
+msgstr ""
+"يجب أن يكون الموظف المعاد إسناد المعاملة إليه مستخدمًا داخليًا نشطًا بصلاحية"
+" الموظف الإداري في هذه الجهة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "The substantive case information is locked at this stage."
+msgstr "معلومات المعاملة الأساسية مقفلة في هذه المرحلة."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/wizard/gov_hr_return_wizard.py:0
+msgid "The target case model is not available."
+msgstr "نموذج المعاملة المستهدف غير متاح."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/wizard/gov_hr_return_wizard.py:0
+msgid "The target record is not a government workflow case."
+msgstr "السجل المستهدف ليس معاملة في سير العمل الحكومي."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "This action is not valid for the active workflow step."
+msgstr "هذا الإجراء غير صالح لخطوة سير العمل الحالية."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "This case is complete and its official document is archived."
+msgstr "اكتملت المعاملة وأُرشفت نسختها الرسمية."
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__type_id
+msgid "Type"
+msgstr "النوع"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__verification_status
+msgid "Verification Status"
+msgstr "حالة التدقيق"
+
+#. module: gov_hr_base
+#: model:ir.model.fields.selection,name:gov_hr_base.selection__gov_hr_case_basis__verification_status__verified
+msgid "Verified"
+msgstr "مدقق"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__verified_at
+msgid "Verified At"
+msgstr "وقت التدقيق"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case_basis__verified_by
+msgid "Verified By"
+msgstr "دققه"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "What you need to do now"
+msgstr "مطلوب منك الآن"
+
+#. module: gov_hr_base
+#: model:ir.model.fields,field_description:gov_hr_base.field_gov_hr_case__workflow_display
+msgid "Workflow Display"
+msgstr "عرض مسار الموافقات"
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Workflow action completed."
+msgstr "اكتمل إجراء سير العمل."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "Workflow fields can only be changed by protected case actions."
+msgstr "لا تتغير حقول سير العمل إلا من خلال إجراءات المعاملة المحمية."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "You are not the authorized user for the active approval step."
+msgstr "لست المستخدم المخول لخطوة الموافقة الحالية."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "You can only create a government case for your own employee record."
+msgstr "يمكنك إنشاء معاملة حكومية لسجل موظفك فقط."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "You cannot create a case for a company outside your allowed companies."
+msgstr "لا يمكنك إنشاء معاملة لجهة خارج الجهات المسموح بها."
+
+#. module: gov_hr_base
+#. odoo-python
+#: code:addons/gov_hr_base/models/case.py:0
+msgid "You cannot process a case outside your allowed companies."
+msgstr "لا يمكنك معالجة معاملة خارج الجهات المسموح بها."
+
+#. module: gov_hr_base
+#: model:ir.actions.act_window,name:gov_hr_base.action_gov_hr_case_types
+msgid "Government Case Types"
+msgstr "أنواع المعاملات الحكومية"
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.view_gov_hr_case_type_form
+msgid "Internal Sequence Code"
+msgstr "رمز التسلسل الداخلي"
+
+#. module: gov_hr_base
+#: model:ir.actions.act_window,name:gov_hr_base.action_gov_hr_sequences
+msgid "Government HR Sequences"
+msgstr "تسلسلات المعاملات الإدارية"
+
+#. module: gov_hr_base
+#: model_terms:ir.ui.view,arch_db:gov_hr_base.view_gov_hr_sequence_form
+msgid ""
+"The outgoing number remains manual and is not controlled by this sequence."
+msgstr "يبقى رقم الصادر يدويًا ولا يتحكم به هذا التسلسل."

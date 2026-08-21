@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="basis_type_work_order" model="gov.hr.basis.type">
+        <field name="name">Work Order</field><field name="code">work_order</field><field name="sequence">10</field><field name="default_required" eval="True"/></record>
+    <record id="basis_type_committee_order" model="gov.hr.basis.type">
+        <field name="name">Committee Order</field><field name="code">committee_order</field><field name="sequence">20</field></record>
+    <record id="basis_type_investigation_committee" model="gov.hr.basis.type">
+        <field name="name">Investigation Committee</field><field name="code">investigation_committee</field><field name="sequence">30</field></record>
+    <record id="basis_type_audit_committee" model="gov.hr.basis.type">
+        <field name="name">Audit Committee</field><field name="code">audit_committee</field><field name="sequence">40</field></record>
+    <record id="basis_type_review" model="gov.hr.basis.type">
+        <field name="name">Review</field><field name="code">review</field><field name="sequence">50</field></record>
+    <record id="basis_type_official_letter" model="gov.hr.basis.type">
+        <field name="name">Official Letter</field><field name="code">official_letter</field><field name="sequence">60</field></record>
+    <record id="basis_type_memorandum" model="gov.hr.basis.type">
+        <field name="name">Memorandum</field><field name="code">memorandum</field><field name="sequence">70</field></record>
+    <record id="basis_type_other" model="gov.hr.basis.type">
+        <field name="name">Other</field><field name="code">other</field><field name="sequence">90</field></record>
+</odoo>

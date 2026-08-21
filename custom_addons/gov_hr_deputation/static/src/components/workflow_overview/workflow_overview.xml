@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="gov_hr_deputation.WorkflowOverview">
+        <section class="o_gov_hr_workflow" dir="rtl" aria-label="Approval workflow">
+            <ol class="o_gov_hr_workflow_steps list-unstyled m-0">
+                <li t-foreach="steps" t-as="step" t-key="step.id"
+                    t-attf-class="o_gov_hr_workflow_step is-{{ step.status }}"
+                    t-att-title="step.reason || step.approver || statusLabel(step.status)">
+                    <span class="o_gov_hr_workflow_marker" aria-hidden="true">
+                        <i t-attf-class="fa {{ iconClass(step.status) }}"/>
+                    </span>
+                    <span class="o_gov_hr_workflow_copy">
+                        <strong t-esc="step.label"/>
+                        <small class="d-block text-body-secondary">
+                            <span t-esc="statusLabel(step.status)"/>
+                            <t t-if="step.approver"> · <span t-esc="step.approver"/></t>
+                        </small>
+                    </span>
+                    <span class="visually-hidden" t-esc="statusLabel(step.status)"/>
+                </li>
+            </ol>
+        </section>
+    </t>
+</templates>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gov_hr_deputation_list" model="ir.ui.view">
+        <field name="name">gov.hr.deputation.list</field>
+        <field name="model">gov.hr.deputation</field>
+        <field name="arch" type="xml">
+            <list string="Deputations" multi_edit="0" duplicate="false"
+                  decoration-success="state == 'done'" decoration-warning="state == 'returned'" decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="outgoing_number" optional="show"/>
+                <field name="subject"/>
+                <field name="department_id"/>
+                <field name="destination"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="duration_days" optional="hide"/>
+                <field name="participant_count" optional="show"/>
+                <field name="current_stage_name" optional="show"/>
+                <field name="administrative_officer_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state in ('initial_approvals', 'document_review', 'mission_preparation', 'final_approvals', 'awaiting_outgoing')"
+                       decoration-success="state == 'done'" decoration-warning="state == 'returned'" decoration-danger="state == 'rejected'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_gov_hr_deputation_form" model="ir.ui.view">
+        <field name="name">gov.hr.deputation.form</field>
+        <field name="model">gov.hr.deputation</field>
+        <field name="arch" type="xml">
+            <form string="Employee Deputation">
+                <!-- THESIS: one operational government case, not a CRUD table. OWN-WORLD: native Odoo surfaces, restrained government-document hierarchy. STORY: understand status, perform the one assigned action, inspect evidence. FIRST VIEWPORT: reference, status, workflow, and required task precede details. FORM: established Odoo operate surface. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md. -->
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,initial_approvals,document_review,final_approvals,awaiting_outgoing,done"/>
+                </header>
+                <sheet>
+                    <field name="case_id" invisible="1"/>
+                    <field name="case_type_id" invisible="1"/>
+                    <field name="requester_employee_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="current_step_id" invisible="1"/>
+                    <field name="current_step_kind" invisible="1"/>
+                    <field name="current_step_role_code" invisible="1"/>
+                    <field name="current_approver_user_id" invisible="1"/>
+                    <field name="administrative_officer_user_id" invisible="1"/>
+                    <field name="can_current_user_act" invisible="1"/>
+                    <field name="can_current_user_resubmit" invisible="1"/>
+                    <field name="can_edit_business" invisible="1"/>
+                    <field name="can_edit_basis" invisible="1"/>
+                    <field name="documents_verified_at" invisible="1"/>
+                    <field name="memorandum_available" invisible="1"/>
+                    <field name="final_document_available" invisible="1"/>
+                    <field name="workflow_display" widget="gov_hr_workflow_overview" nolabel="1" readonly="1" invisible="state == 'draft'"/>
+
+                    <div class="alert alert-info border-0 o_gov_hr_task_panel" role="status">
+                        <h3 class="h5 mb-1"><field name="task_title" readonly="1" nolabel="1"/></h3>
+                        <p class="mb-0"><field name="task_instruction" readonly="1" nolabel="1"/></p>
+                        <div class="o_gov_hr_task_actions">
+                            <button name="action_submit" string="Send for Approval" type="object" class="btn-primary" data-hotkey="s"
+                                    invisible="state not in ('draft', 'returned') or not can_current_user_resubmit"/>
+                            <button name="action_approve" string="Approve" type="object" class="btn-primary" data-hotkey="a"
+                                    invisible="not can_current_user_act or current_step_kind != 'approval'"/>
+                            <button name="action_open_return_wizard" string="Return for Correction" type="object" class="btn-secondary" data-hotkey="r"
+                                    invisible="not can_current_user_act or current_step_kind == 'issuance'"/>
+                            <button name="action_verify_documents" string="Confirm Supporting Documents" type="object" class="btn-primary"
+                                    invisible="not can_current_user_act or current_step_kind != 'document_review' or documents_verified_at"/>
+                            <button name="action_prepare_mission_order" string="Prepare Mission Order" type="object" class="btn-primary"
+                                    invisible="not can_current_user_act or current_step_kind != 'document_review' or not documents_verified_at"/>
+                            <button name="action_preview_memorandum" string="View Memorandum" type="object" class="btn-secondary"
+                                    invisible="state == 'draft'"/>
+                            <button name="action_preview_mission_order" string="View Mission Order Draft" type="object" class="btn-secondary"
+                                    invisible="state not in ('document_review', 'mission_preparation', 'final_approvals', 'awaiting_outgoing')"/>
+                        </div>
+                        <group invisible="state not in ('awaiting_outgoing', 'done')" class="mt-3">
+                            <group>
+                                <field name="outgoing_number" readonly="state == 'done' or not can_current_user_act" placeholder="Official outgoing number"/>
+                                <field name="outgoing_date" readonly="state == 'done' or not can_current_user_act"/>
+                            </group>
+                            <group>
+                                <div class="text-body-secondary" invisible="state == 'done'">The official stamp will be included automatically after issuance.</div>
+                                <button name="action_issue" string="Issue Mission Order" type="object" class="btn-primary"
+                                        invisible="state != 'awaiting_outgoing' or not can_current_user_act"/>
+                                <button name="action_view_final_order" string="View Official Copy" type="object" class="btn-primary"
+                                        invisible="not final_document_available"/>
+                            </group>
+                        </group>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="subject" string="Deputation Subject"/>
+                        <h1><field name="subject" placeholder="A concise subject for the official correspondence" readonly="not can_edit_business"/></h1>
+                        <div class="text-body-secondary fs-5">
+                            <field name="name" readonly="1" class="oe_inline"/>
+                            <span invisible="not current_stage_name"><span>Waiting for:</span> <field name="current_stage_name" readonly="1" class="oe_inline"/></span>
+                        </div>
+                    </div>
+
+                    <group string="Deputation Information">
+                        <group>
+                            <field name="department_id" readonly="not can_edit_business" options="{'no_create': True}"/>
+                            <field name="requester_user_id" string="Requester" readonly="1"/>
+                            <field name="deputation_activity_type_id" readonly="not can_edit_business" options="{'no_create': True}"/>
+                            <field name="destination" readonly="not can_edit_business" placeholder="City or official destination"/>
+                        </group>
+                        <group>
+                            <field name="date_from" readonly="not can_edit_business"/>
+                            <field name="date_to" readonly="not can_edit_business"/>
+                            <field name="duration_days" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="not can_edit_business"/>
+                            <field name="administrative_officer_id" options="{'no_create': True}"
+                                   groups="gov_hr_base.group_gov_hr_admin_manager,gov_hr_base.group_gov_hr_manager"
+                                   readonly="state in ('done', 'rejected')"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="activity_description" readonly="not can_edit_business" placeholder="Describe the official activity and purpose..."/>
+                    </group>
+
+                    <notebook>
+                        <page string="Participants" name="participants">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h3 class="h5 mb-0">Deputed Employees</h3>
+                                <span class="text-body-secondary"><field name="participant_count" readonly="1" class="oe_inline"/> employees</span>
+                            </div>
+                            <field name="participant_ids" readonly="not can_edit_business" nolabel="1">
+                                <list editable="bottom" duplicate="false">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="employee_public_id" widget="many2one_avatar_employee" options="{'no_create': True}"/>
+                                    <field name="employee_id" invisible="1"/>
+                                    <field name="employee_name" invisible="1"/>
+                                    <field name="job_title" readonly="1"/>
+                                    <field name="department_name" readonly="1"/>
+                                    <field name="role_note" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Supporting Documents" name="basis">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h3 class="h5 mb-0">Supporting-document checklist</h3>
+                                <span class="text-body-secondary"><field name="basis_progress_label" readonly="1" class="oe_inline"/></span>
+                            </div>
+                            <field name="basis_line_ids" readonly="not can_edit_basis" nolabel="1"
+                                   context="{'default_company_id': company_id}">
+                                <list editable="bottom" duplicate="false"
+                                      decoration-success="verification_status == 'verified'"
+                                      decoration-danger="verification_status == 'incomplete'">
+                                    <!-- Required by check_company on type_id while
+                                         editing a new unsaved one2many row. -->
+                                    <field name="company_id" column_invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="type_id" options="{'no_create': True}"/>
+                                    <field name="reference_number" optional="show"/>
+                                    <field name="reference_date" optional="show"/>
+                                    <field name="issuer" optional="hide"/>
+                                    <field name="required"/>
+                                    <field name="filename" invisible="1"/>
+                                    <field name="file_data" filename="filename" widget="binary" string="File"/>
+                                    <field name="verification_status" widget="badge"
+                                           readonly="parent.state != 'document_review' or not parent.can_current_user_act"/>
+                                    <field name="verified_by" optional="hide" readonly="1"/>
+                                    <field name="verified_at" optional="hide" readonly="1"/>
+                                    <field name="notes" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Official Documents" name="official_documents">
+                            <group>
+                                <group string="Memorandum">
+                                    <button name="action_preview_memorandum" string="View Draft" type="object" class="btn-secondary"/>
+                                    <button name="action_view_archived_memorandum" string="View Archived Memorandum" type="object" class="btn-primary" invisible="not memorandum_available"/>
+                                </group>
+                                <group string="Mission Order">
+                                    <button name="action_preview_mission_order" string="View Draft" type="object" class="btn-secondary" invisible="state in ('draft', 'initial_approvals')"/>
+                                    <button name="action_view_final_order" string="View Official Copy" type="object" class="btn-primary" invisible="not final_document_available"/>
+                                    <field name="mission_order_notes" readonly="not can_edit_business and not (state in ('document_review', 'returned') and administrative_officer_user_id == uid)"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Approval History" name="approval_history">
+                            <field name="approval_log_ids" readonly="1" nolabel="1">
+                                <list create="false" delete="false" edit="false"
+                                      decoration-muted="is_superseded" decoration-success="action == 'approved'" decoration-warning="action == 'returned'">
+                                    <field name="round_number"/>
+                                    <field name="phase"/>
+                                    <field name="step_name"/>
+                                    <field name="action" widget="badge"/>
+                                    <field name="approver_user_id" widget="many2one_avatar_user"/>
+                                    <field name="decision_at"/>
+                                    <field name="reason" optional="show"/>
+                                    <field name="is_superseded" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_gov_hr_deputation_search" model="ir.ui.view">
+        <field name="name">gov.hr.deputation.search</field>
+        <field name="model">gov.hr.deputation</field>
+        <field name="arch" type="xml">
+            <search string="Search Deputations">
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="outgoing_number"/>
+                <field name="department_id"/>
+                <field name="destination"/>
+                <field name="deputation_activity_type_id"/>
+                <field name="administrative_officer_id"/>
+                <separator/>
+                <filter name="my_deputations" string="My Deputations" domain="['|', ('requester_user_id', '=', uid), ('participant_user_ids', 'in', [uid])]"/>
+                <filter name="waiting_my_approval" string="Waiting for My Approval" domain="[('current_approver_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="in_approval" string="In Approval" domain="[('state', 'in', ['initial_approvals', 'final_approvals'])]"/>
+                <filter name="document_review" string="Waiting for Document Review" domain="[('state', '=', 'document_review')]"/>
+                <filter name="awaiting_dg" string="Waiting for Director General" domain="[('current_step_role_code', '=', 'director_general')]"/>
+                <filter name="awaiting_admin" string="Waiting for Administration" domain="[('state', 'in', ['document_review', 'mission_preparation', 'awaiting_outgoing'])]"/>
+                <filter name="awaiting_outgoing" string="Waiting for Outgoing Number" domain="[('state', '=', 'awaiting_outgoing')]"/>
+                <filter name="completed" string="Completed" domain="[('state', '=', 'done')]"/>
+                <filter name="returned" string="Returned or Rejected" domain="[('state', 'in', ['returned', 'rejected'])]"/>
+                <separator/>
+                <filter name="this_month" string="This Month" date="date_from" default_period="month"/>
+                <filter name="this_year" string="This Year" date="date_from" default_period="year"/>
+                <group name="group_filters">
+                    <filter name="group_department" string="Department" context="{'group_by': 'department_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_stage" string="Current Stage" context="{'group_by': 'current_step_id'}"/>
+                    <filter name="group_destination" string="Destination" context="{'group_by': 'destination'}"/>
+                    <filter name="group_activity" string="Activity" context="{'group_by': 'deputation_activity_type_id'}"/>
+                    <filter name="group_officer" string="Administrative Officer" context="{'group_by': 'administrative_officer_id'}"/>
+                    <filter name="group_month" string="Month" context="{'group_by': 'date_from:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_gov_hr_deputation_my" model="ir.actions.act_window">
+        <field name="name">My Deputations</field>
+        <field name="res_model">gov.hr.deputation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_gov_hr_deputation_search"/>
+        <field name="domain">['|', ('requester_user_id', '=', uid), ('participant_user_ids', 'in', [uid])]</field>
+        <field name="context">{'search_default_my_deputations': 1}</field>
+    </record>
+    <record id="action_gov_hr_deputation_pending" model="ir.actions.act_window">
+        <field name="name">Waiting for My Approval</field>
+        <field name="res_model">gov.hr.deputation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_gov_hr_deputation_search"/>
+        <field name="domain">[('current_approver_user_id', '=', uid)]</field>
+        <field name="context">{'search_default_waiting_my_approval': 1}</field>
+    </record>
+    <record id="action_gov_hr_deputation_all" model="ir.actions.act_window">
+        <field name="name">All Deputations</field>
+        <field name="res_model">gov.hr.deputation</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="search_view_id" ref="view_gov_hr_deputation_search"/>
+    </record>
+    <record id="action_gov_hr_deputation_review" model="ir.actions.act_window">
+        <field name="name">Waiting for My Review</field>
+        <field name="res_model">gov.hr.deputation</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('current_approver_user_id', '=', uid), ('state', '=', 'document_review')]</field>
+    </record>
+    <record id="action_gov_hr_deputation_outgoing" model="ir.actions.act_window">
+        <field name="name">Waiting for Outgoing Registration</field>
+        <field name="res_model">gov.hr.deputation</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('current_approver_user_id', '=', uid), ('state', '=', 'awaiting_outgoing')]</field>
+    </record>
+</odoo>

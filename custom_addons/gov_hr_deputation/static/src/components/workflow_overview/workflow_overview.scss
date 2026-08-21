@@ -1,0 +1,109 @@
+.o_form_view .o_gov_hr_workflow {
+    --gov-workflow-line: var(--border-color, #d8dadd);
+    --gov-workflow-complete: #2d6a4f;
+    --gov-workflow-current: #714b67;
+    --gov-workflow-returned: #9c4a18;
+    padding: 0.75rem 0 1.25rem;
+
+    .o_gov_hr_workflow_steps {
+        display: flex;
+        align-items: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+    }
+
+    .o_gov_hr_workflow_step {
+        position: relative;
+        display: flex;
+        gap: 0.625rem;
+        min-width: 10.5rem;
+        flex: 1 0 10.5rem;
+        color: var(--body-color);
+
+        &:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            inset-inline-start: 1.75rem;
+            inset-inline-end: 0.25rem;
+            top: 0.75rem;
+            height: 1px;
+            background: var(--gov-workflow-line);
+        }
+
+        &.is-completed .o_gov_hr_workflow_marker {
+            color: #fff;
+            background: var(--gov-workflow-complete);
+            border-color: var(--gov-workflow-complete);
+        }
+
+        &.is-current .o_gov_hr_workflow_marker {
+            color: #fff;
+            background: var(--gov-workflow-current);
+            border-color: var(--gov-workflow-current);
+        }
+
+        &.is-returned .o_gov_hr_workflow_marker {
+            color: #fff;
+            background: var(--gov-workflow-returned);
+            border-color: var(--gov-workflow-returned);
+        }
+    }
+
+    .o_gov_hr_workflow_marker {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        flex: 0 0 1.5rem;
+        border: 1px solid var(--gov-workflow-line);
+        border-radius: 50%;
+        background: var(--o-view-background-color, #fff);
+        font-size: 0.75rem;
+    }
+
+    .o_gov_hr_workflow_copy {
+        position: relative;
+        z-index: 1;
+        max-width: 16rem;
+        padding-inline-end: 0.5rem;
+        background: var(--o-view-background-color, #fff);
+        line-height: 1.35;
+    }
+}
+
+.o_form_view .o_gov_hr_task_panel {
+    max-width: 75ch;
+    padding: 1rem 1.25rem;
+
+    .o_gov_hr_task_actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .o_form_view .o_gov_hr_workflow {
+        .o_gov_hr_workflow_steps {
+            display: block;
+            overflow: visible;
+        }
+
+        .o_gov_hr_workflow_step {
+            min-width: 0;
+            padding-bottom: 0.9rem;
+
+            &:not(:last-child)::after {
+                inset-inline-start: 0.72rem;
+                inset-inline-end: auto;
+                top: 1.5rem;
+                width: 1px;
+                height: calc(100% - 1rem);
+            }
+        }
+    }
+}

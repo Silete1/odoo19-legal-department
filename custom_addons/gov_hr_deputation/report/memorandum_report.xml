@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="deputation_report_styles">
+        <style>
+            .gov-doc { direction: rtl; text-align: right; font-family: "DejaVu Sans", Arial, sans-serif; color: #111; font-size: 13px; line-height: 1.75; }
+            .gov-header { width: 100%; border-bottom: 2px solid #222; padding-bottom: 8px; margin-bottom: 18px; }
+            .gov-header td { vertical-align: middle; border: 0; }
+            .gov-logo { max-width: 76px; max-height: 76px; }
+            .gov-entity { font-size: 15px; font-weight: 700; line-height: 1.6; }
+            .gov-title { text-align: center; font-size: 24px; font-weight: 700; margin: 18px 0 22px; }
+            .gov-meta { width: 100%; margin-bottom: 16px; }
+            .gov-meta td { padding: 3px 0; border: 0; }
+            .gov-label { font-weight: 700; white-space: nowrap; width: 120px; }
+            .gov-table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; }
+            .gov-table th, .gov-table td { border: 1px solid #333; padding: 6px 7px; vertical-align: top; }
+            .gov-table th { background: #eeeeee; text-align: center; font-weight: 700; }
+            .gov-body { margin: 12px 0; text-align: justify; }
+            .gov-signature { width: 42%; margin-right: auto; text-align: center; margin-top: 36px; }
+            .gov-watermark { position: fixed; top: 42%; left: 22%; transform: rotate(-28deg); font-size: 72px; color: #b5b5b5; opacity: .22; z-index: -1; }
+            .gov-ref { direction: ltr; unicode-bidi: embed; display: inline-block; }
+        </style>
+    </template>
+
+    <template id="deputation_memorandum_content">
+        <t t-foreach="docs" t-as="doc">
+            <div class="article page gov-doc" t-att-data-oe-model="doc._name" t-att-data-oe-id="doc.id">
+                <t t-call="gov_hr_deputation.deputation_report_styles"/>
+                <div t-if="not is_final" class="gov-watermark">مسودة</div>
+                <table class="gov-header">
+                    <tr>
+                        <td style="width: 22%; text-align: right;">
+                            <img t-if="doc.company_id.logo" class="gov-logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="شعار الجهة"/>
+                        </td>
+                        <td class="gov-entity" style="width: 56%; text-align: center;">
+                            <div t-esc="doc.company_id.name"/>
+                            <div t-if="doc.company_id.street" t-esc="doc.company_id.street"/>
+                        </td>
+                        <td style="width: 22%; text-align: left;">
+                            <div>رقم المعاملة</div>
+                            <strong class="gov-ref" t-esc="doc.name"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="gov-title">مذكرة</div>
+                <table class="gov-meta">
+                    <tr><td class="gov-label">إلى /</td><td>السيد المدير العام المحترم</td></tr>
+                    <tr><td class="gov-label">من /</td><td>مدير <span t-esc="doc.department_id.display_name"/></td></tr>
+                    <tr><td class="gov-label">الموضوع /</td><td t-esc="doc.subject"/></tr>
+                </table>
+                <p class="gov-body">
+                    يرجى التفضل بالموافقة على إيفاد السادة المدرجة أسماؤهم أدناه لغرض
+                    <strong t-esc="doc.activity_description"/>
+                    إلى <strong t-esc="doc.destination"/>
+                    للمدة من <span t-esc="doc.date_from.strftime('%d/%m/%Y')"/> إلى <span t-esc="doc.date_to.strftime('%d/%m/%Y')"/>،
+                    وبمدة مقدارها <strong><span t-esc="doc.duration_days"/> يوم/أيام</strong>.
+                </p>
+                <table class="gov-table">
+                    <thead><tr><th style="width: 7%;">ت</th><th>اسم الموظف</th><th>العنوان الوظيفي</th><th>القسم</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="doc.participant_ids" t-as="line">
+                            <td style="text-align: center;" t-esc="line_index + 1"/>
+                            <td t-esc="line.employee_name"/>
+                            <td t-esc="line.job_title or '-'"/>
+                            <td t-esc="line.department_name or '-'"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <div><strong>النشاط:</strong> <span t-esc="doc.deputation_activity_type_id.name"/></div>
+                <div><strong>القسم المعني:</strong> <span t-esc="doc.department_id.display_name"/></div>
+                <div style="margin-top: 14px;"><strong>استناداً إلى:</strong></div>
+                <table class="gov-table">
+                    <thead><tr><th style="width: 7%;">ت</th><th>نوع الأولية</th><th>الرقم</th><th>التاريخ</th><th>الجهة المصدرة</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="doc.basis_line_ids" t-as="basis">
+                            <td style="text-align: center;" t-esc="basis_index + 1"/>
+                            <td t-esc="basis.type_id.name"/>
+                            <td t-esc="basis.reference_number or '-'"/>
+                            <td><span t-if="basis.reference_date" t-esc="basis.reference_date.strftime('%d/%m/%Y')"/><span t-else="">-</span></td>
+                            <td t-esc="basis.issuer or '-'"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <div t-if="is_final" class="gov-signature">
+                    <strong>مدير <span t-esc="doc.department_id.display_name"/></strong>
+                    <t t-set="dept_approval" t-value="doc.approval_log_ids.filtered(lambda log: log.phase == 'memo' and log.step_id.role_code == 'concerned_department_manager' and log.action == 'approved')[:1]"/>
+                    <div t-if="dept_approval" t-esc="dept_approval.approver_user_id.name"/>
+                    <div t-if="dept_approval" t-esc="context_timestamp(dept_approval.decision_at).strftime('%d/%m/%Y %H:%M')"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_deputation_memorandum_draft">
+        <t t-call="web.html_container">
+            <t t-set="is_final" t-value="False"/>
+            <t t-call="gov_hr_deputation.deputation_memorandum_content"/>
+        </t>
+    </template>
+    <template id="report_deputation_memorandum_final">
+        <t t-call="web.html_container">
+            <t t-set="is_final" t-value="True"/>
+            <t t-call="gov_hr_deputation.deputation_memorandum_content"/>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="route_deputation_default" model="gov.hr.approval.route">
+        <field name="name">Government Deputation Default Route</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="step_memo_department_manager" model="gov.hr.approval.step">
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="name">Concerned Department Manager</field>
+        <field name="phase">memo</field><field name="sequence">10</field>
+        <field name="step_kind">approval</field>
+        <field name="role_code">concerned_department_manager</field>
+        <field name="activity_summary">Approve deputation memorandum</field>
+    </record>
+    <record id="step_memo_director_general" model="gov.hr.approval.step">
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="name">Director General</field>
+        <field name="phase">memo</field><field name="sequence">20</field>
+        <field name="step_kind">approval</field>
+        <field name="role_code">director_general</field>
+        <field name="activity_summary">Approve deputation memorandum</field>
+    </record>
+    <record id="step_memo_admin_manager" model="gov.hr.approval.step">
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="name">Administrative Department Manager</field>
+        <field name="phase">memo</field><field name="sequence">30</field>
+        <field name="step_kind">approval</field>
+        <field name="role_code">administrative_department_manager</field>
+        <field name="activity_summary">Approve deputation memorandum for administrative review</field>
+    </record>
+    <record id="step_memo_admin_officer_review" model="gov.hr.approval.step">
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="name">Administrative Officer Review</field>
+        <field name="phase">memo</field><field name="sequence">40</field>
+        <field name="step_kind">document_review</field>
+        <field name="role_code">assigned_administrative_officer</field>
+        <field name="activity_summary">Verify deputation supporting documents</field>
+    </record>
+    <record id="step_mission_admin_manager" model="gov.hr.approval.step">
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="name">Administrative Department Manager</field>
+        <field name="phase">mission</field><field name="sequence">10</field>
+        <field name="step_kind">approval</field>
+        <field name="role_code">administrative_department_manager</field>
+        <field name="activity_summary">Approve the mission-order draft</field>
+    </record>
+    <record id="step_mission_director_general" model="gov.hr.approval.step">
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="name">Director General Final Approval</field>
+        <field name="phase">mission</field><field name="sequence">20</field>
+        <field name="step_kind">approval</field>
+        <field name="role_code">director_general</field>
+        <field name="activity_summary">Final approval of the mission order</field>
+    </record>
+    <record id="step_issuance_admin_officer" model="gov.hr.approval.step">
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="name">Administrative Officer Issuance</field>
+        <field name="phase">issuance</field><field name="sequence">10</field>
+        <field name="step_kind">issuance</field>
+        <field name="role_code">assigned_administrative_officer</field>
+        <field name="activity_summary">Enter outgoing registration and issue the mission order</field>
+    </record>
+
+    <record id="case_type_deputation" model="gov.hr.case.type">
+        <field name="name">Employee Deputation</field>
+        <field name="code">deputation</field>
+        <field name="sequence">10</field>
+        <field name="route_id" ref="route_deputation_default"/>
+        <field name="sequence_code">gov.hr.deputation</field>
+    </record>
+
+    <record id="activity_type_official_mission" model="gov.hr.deputation.activity.type">
+        <field name="name">Official Mission</field><field name="code">mission</field><field name="sequence">10</field>
+    </record>
+    <record id="activity_type_review" model="gov.hr.deputation.activity.type">
+        <field name="name">Official Review</field><field name="code">review</field><field name="sequence">20</field>
+    </record>
+    <record id="activity_type_meeting" model="gov.hr.deputation.activity.type">
+        <field name="name">Meeting or Committee</field><field name="code">meeting</field><field name="sequence">30</field>
+    </record>
+    <record id="activity_type_other" model="gov.hr.deputation.activity.type">
+        <field name="name">Other</field><field name="code">other</field><field name="sequence">90</field>
+    </record>
+</odoo>

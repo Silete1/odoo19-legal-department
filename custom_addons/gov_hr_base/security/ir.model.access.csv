@@ -1,0 +1,22 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gov_hr_case_internal,gov.hr.case internal read,model_gov_hr_case,base.group_user,1,0,0,0
+access_gov_hr_case_user,gov.hr.case request user,model_gov_hr_case,group_gov_hr_user,1,1,1,1
+access_gov_hr_case_admin_officer,gov.hr.case administrative officer,model_gov_hr_case,group_gov_hr_admin_officer,1,1,0,0
+access_gov_hr_case_admin_manager,gov.hr.case administrative manager,model_gov_hr_case,group_gov_hr_admin_manager,1,1,1,0
+access_gov_hr_case_director,gov.hr.case director general,model_gov_hr_case,group_gov_hr_director_general,1,0,0,0
+access_gov_hr_case_manager,gov.hr.case manager,model_gov_hr_case,group_gov_hr_manager,1,1,1,1
+access_gov_hr_case_type_read,gov.hr.case.type read,model_gov_hr_case_type,base.group_user,1,0,0,0
+access_gov_hr_case_type_manager,gov.hr.case.type manager,model_gov_hr_case_type,group_gov_hr_manager,1,1,1,1
+access_gov_hr_route_read,gov.hr.approval.route read,model_gov_hr_approval_route,base.group_user,1,0,0,0
+access_gov_hr_route_manager,gov.hr.approval.route manager,model_gov_hr_approval_route,group_gov_hr_manager,1,1,1,1
+access_gov_hr_step_read,gov.hr.approval.step read,model_gov_hr_approval_step,base.group_user,1,0,0,0
+access_gov_hr_step_manager,gov.hr.approval.step manager,model_gov_hr_approval_step,group_gov_hr_manager,1,1,1,1
+access_gov_hr_log_read,gov.hr.approval.log read,model_gov_hr_approval_log,base.group_user,1,0,0,0
+access_gov_hr_basis_type_read,gov.hr.basis.type read,model_gov_hr_basis_type,base.group_user,1,0,0,0
+access_gov_hr_basis_type_manager,gov.hr.basis.type manager,model_gov_hr_basis_type,group_gov_hr_manager,1,1,1,1
+access_gov_hr_basis_internal,gov.hr.case.basis internal read,model_gov_hr_case_basis,base.group_user,1,0,0,0
+access_gov_hr_basis_user,gov.hr.case.basis request user,model_gov_hr_case_basis,group_gov_hr_user,1,1,1,1
+access_gov_hr_basis_admin_officer,gov.hr.case.basis administrative officer,model_gov_hr_case_basis,group_gov_hr_admin_officer,1,1,1,0
+access_gov_hr_basis_manager,gov.hr.case.basis manager,model_gov_hr_case_basis,group_gov_hr_manager,1,1,1,1
+access_gov_hr_return_wizard,gov.hr.return.wizard,model_gov_hr_return_wizard,base.group_user,1,1,1,1
+access_gov_hr_sequence_manager,government HR sequence manager,base.model_ir_sequence,group_gov_hr_manager,1,1,0,0

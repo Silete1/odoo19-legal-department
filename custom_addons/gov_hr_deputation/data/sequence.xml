@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="sequence_gov_hr_deputation" model="ir.sequence">
+        <field name="name">Government HR Deputation</field>
+        <field name="code">gov.hr.deputation</field>
+        <field name="prefix">EFD/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+        <field name="use_date_range" eval="True"/>
+    </record>
+</odoo>

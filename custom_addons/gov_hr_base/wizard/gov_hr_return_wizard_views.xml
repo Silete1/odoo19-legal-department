@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gov_hr_return_wizard_form" model="ir.ui.view">
+        <field name="name">gov.hr.return.wizard.form</field>
+        <field name="model">gov.hr.return.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Return for Correction">
+                <group>
+                    <field name="res_model" invisible="1"/>
+                    <field name="res_id" invisible="1"/>
+                    <field name="step_name" readonly="1"/>
+                    <field name="reason" placeholder="Explain exactly what must be corrected..."/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Return" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

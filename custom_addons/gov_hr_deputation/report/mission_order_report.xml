@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="deputation_mission_order_content">
+        <t t-foreach="docs" t-as="doc">
+            <div class="article page gov-doc" t-att-data-oe-model="doc._name" t-att-data-oe-id="doc.id">
+                <t t-call="gov_hr_deputation.deputation_report_styles"/>
+                <div t-if="not is_final" class="gov-watermark">مسودة</div>
+                <table class="gov-header">
+                    <tr>
+                        <td style="width: 22%; text-align: right;">
+                            <img t-if="doc.company_id.logo" class="gov-logo" t-att-src="image_data_uri(doc.company_id.logo)" alt="شعار الجهة"/>
+                        </td>
+                        <td class="gov-entity" style="width: 56%; text-align: center;">
+                            <div t-esc="doc.company_id.name"/>
+                            <div t-if="doc.company_id.street" t-esc="doc.company_id.street"/>
+                        </td>
+                        <td style="width: 22%; text-align: left;">
+                            <div><strong>رقم الصادر:</strong> <span class="gov-ref" t-esc="doc.outgoing_number if is_final else '—'"/></div>
+                            <div><strong>التاريخ:</strong> <span t-if="is_final and doc.outgoing_date" t-esc="doc.outgoing_date.strftime('%d/%m/%Y')"/><span t-else="">—</span></div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="gov-title">أمر إيفاد</div>
+                <div style="text-align: center; margin-top: -14px; margin-bottom: 18px;">
+                    رقم المعاملة: <strong class="gov-ref" t-esc="doc.name"/>
+                </div>
+                <p class="gov-body">
+                    بناءً على الموافقات الأصولية والمذكرة الخاصة بالمعاملة المشار إليها أعلاه،
+                    تقرر إيفاد الموظفين المدرجة أسماؤهم أدناه من
+                    <strong t-esc="doc.department_id.display_name"/>
+                    إلى <strong t-esc="doc.destination"/>
+                    لتنفيذ نشاط <strong t-esc="doc.deputation_activity_type_id.name"/>
+                    (<span t-esc="doc.activity_description"/>).
+                </p>
+                <table class="gov-table">
+                    <thead><tr><th style="width: 7%;">ت</th><th>اسم الموظف</th><th>العنوان الوظيفي</th><th>القسم</th><th>ملاحظة</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="doc.participant_ids" t-as="line">
+                            <td style="text-align: center;" t-esc="line_index + 1"/>
+                            <td t-esc="line.employee_name"/>
+                            <td t-esc="line.job_title or '-'"/>
+                            <td t-esc="line.department_name or '-'"/>
+                            <td t-esc="line.role_note or '-'"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="gov-meta">
+                    <tr><td class="gov-label">وجهة الإيفاد:</td><td t-esc="doc.destination"/></tr>
+                    <tr><td class="gov-label">مدة الإيفاد:</td><td>من <span t-esc="doc.date_from.strftime('%d/%m/%Y')"/> إلى <span t-esc="doc.date_to.strftime('%d/%m/%Y')"/> (<span t-esc="doc.duration_days"/> يوم/أيام)</td></tr>
+                    <tr><td class="gov-label">مرجع المذكرة:</td><td class="gov-ref" t-esc="doc.name"/></tr>
+                    <tr t-if="doc.mission_order_notes"><td class="gov-label">ملاحظات:</td><td t-esc="doc.mission_order_notes"/></tr>
+                </table>
+                <div><strong>الأوليات المعتمدة:</strong></div>
+                <ul>
+                    <li t-foreach="doc.basis_line_ids" t-as="basis">
+                        <span t-esc="basis.type_id.name"/>
+                        <t t-if="basis.reference_number"> رقم <span t-esc="basis.reference_number"/></t>
+                        <t t-if="basis.reference_date"> بتاريخ <span t-esc="basis.reference_date.strftime('%d/%m/%Y')"/></t>
+                    </li>
+                </ul>
+                <p class="gov-body">على الجهات ذات العلاقة تنفيذ هذا الأمر كلٌ حسب اختصاصه.</p>
+                <div class="gov-signature">
+                    <strong>المدير العام</strong>
+                    <div t-if="doc.final_dg_approval_log_id" t-esc="doc.final_dg_approval_log_id.approver_user_id.name"/>
+                    <div t-if="is_final and doc.final_dg_approval_log_id" t-esc="context_timestamp(doc.final_dg_approval_log_id.decision_at).strftime('%d/%m/%Y %H:%M')"/>
+                    <div t-if="is_final" style="min-height: 92px; margin-top: 6px;">
+                        <img t-if="signature_by_id.get(doc.id)" t-att-src="signature_by_id.get(doc.id)" style="max-height: 58px; max-width: 150px;" alt="توقيع المدير العام"/>
+                        <img t-att-src="stamp_by_id.get(doc.id)" style="max-height: 88px; max-width: 170px;" alt="الختم الرسمي"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_deputation_mission_order_draft">
+        <t t-call="web.html_container">
+            <t t-set="is_final" t-value="False"/>
+            <t t-set="stamp_by_id" t-value="{}"/>
+            <t t-set="signature_by_id" t-value="{}"/>
+            <t t-call="gov_hr_deputation.deputation_mission_order_content"/>
+        </t>
+    </template>
+    <template id="report_deputation_mission_order_final">
+        <t t-call="web.html_container">
+            <t t-set="is_final" t-value="True"/>
+            <t t-call="gov_hr_deputation.deputation_mission_order_content"/>
+        </t>
+    </template>
+</odoo>

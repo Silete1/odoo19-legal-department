@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_deputation_memorandum_draft" model="ir.actions.report">
+        <field name="name">Memorandum Preview</field>
+        <field name="model">gov.hr.deputation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gov_hr_deputation.report_deputation_memorandum_draft</field>
+        <field name="report_file">gov_hr_deputation.report_deputation_memorandum_draft</field>
+        <field name="paperformat_id" ref="paperformat_gov_hr_a4"/>
+        <field name="print_report_name">'Memorandum-Draft-%s' % object.name.replace('/', '-')</field>
+    </record>
+    <record id="action_report_deputation_memorandum_final" model="ir.actions.report">
+        <field name="name">Official Memorandum</field>
+        <field name="model">gov.hr.deputation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gov_hr_deputation.report_deputation_memorandum_final</field>
+        <field name="report_file">gov_hr_deputation.report_deputation_memorandum_final</field>
+        <field name="paperformat_id" ref="paperformat_gov_hr_a4"/>
+        <field name="attachment">'Memorandum-%s.pdf' % object.name.replace('/', '-')</field>
+        <field name="attachment_use" eval="True"/>
+        <field name="print_report_name">'Memorandum-%s' % object.name.replace('/', '-')</field>
+    </record>
+    <record id="action_report_deputation_mission_order_draft" model="ir.actions.report">
+        <field name="name">Mission Order Draft</field>
+        <field name="model">gov.hr.deputation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gov_hr_deputation.report_deputation_mission_order_draft</field>
+        <field name="report_file">gov_hr_deputation.report_deputation_mission_order_draft</field>
+        <field name="paperformat_id" ref="paperformat_gov_hr_a4"/>
+        <field name="print_report_name">'Mission-Order-Draft-%s' % object.name.replace('/', '-')</field>
+    </record>
+    <record id="action_report_deputation_mission_order_final" model="ir.actions.report">
+        <field name="name">Final Mission Order</field>
+        <field name="model">gov.hr.deputation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gov_hr_deputation.report_deputation_mission_order_final</field>
+        <field name="report_file">gov_hr_deputation.report_deputation_mission_order_final</field>
+        <field name="paperformat_id" ref="paperformat_gov_hr_a4"/>
+        <field name="attachment">'Mission-Order-%s.pdf' % object.name.replace('/', '-')</field>
+        <field name="attachment_use" eval="True"/>
+        <field name="print_report_name">'Mission-Order-%s' % object.name.replace('/', '-')</field>
+    </record>
+</odoo>

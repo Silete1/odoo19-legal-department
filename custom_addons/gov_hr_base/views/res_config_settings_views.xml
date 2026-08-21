@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_gov_hr" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.gov.hr</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="priority">75</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Government HR" string="Government HR" name="gov_hr" groups="gov_hr_base.group_gov_hr_manager">
+                    <block title="Organizational Routing" name="gov_hr_organization_settings">
+                        <setting company_dependent="1" string="Administrative Department" help="Its configured department manager receives administrative-manager approval steps.">
+                            <field name="gov_hr_administrative_department_id" options="{'no_create': True}"/>
+                        </setting>
+                        <setting company_dependent="1" string="Director General" help="The active internal user who performs Director General approvals.">
+                            <field name="gov_hr_director_general_user_id" domain="[('share', '=', False), ('company_ids', 'in', [company_id])]" options="{'no_create': True}"/>
+                        </setting>
+                        <setting company_dependent="1" string="Default Administrative Officer" help="Assigned automatically and may be changed by the Administrative Department Manager.">
+                            <field name="gov_hr_default_administrative_officer_id" options="{'no_create': True}"/>
+                        </setting>
+                    </block>
+                    <block title="Official Document Authorization" name="gov_hr_document_settings">
+                        <setting company_dependent="1" string="Official Electronic Stamp" help="Included only in an authorized final issued PDF. Existing archived PDFs are never regenerated.">
+                            <field name="gov_hr_official_stamp" filename="gov_hr_official_stamp_filename" widget="image" class="oe_avatar"/>
+                            <field name="gov_hr_official_stamp_filename" invisible="1"/>
+                        </setting>
+                        <setting company_dependent="1" string="Director General Signature" help="Optional signature image for the final official document.">
+                            <field name="gov_hr_director_general_signature" filename="gov_hr_director_general_signature_filename" widget="image" class="oe_avatar"/>
+                            <field name="gov_hr_director_general_signature_filename" invisible="1"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_gov_hr_settings" model="ir.actions.act_window">
+        <field name="name">Government HR Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module': 'gov_hr_base', 'bin_size': False}</field>
+    </record>
+</odoo>
