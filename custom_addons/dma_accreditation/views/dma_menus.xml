@@ -7,6 +7,12 @@
               sequence="45"
               groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_general_director,dma_accreditation.group_dma_legal_director,dma_accreditation.group_dma_cert_officer,dma_accreditation.group_dma_operations,dma_accreditation.group_dma_finance,dma_accreditation.group_dma_committee,dma_accreditation.group_dma_manager"/>
 
+    <menuitem id="menu_dma_dashboard"
+              name="Dashboard"
+              parent="menu_dma_root"
+              action="action_dma_dashboard"
+              sequence="5"/>
+
     <!-- ================================================================
          My Queue - one entry per role, each restricted to its own group.
          ================================================================ -->

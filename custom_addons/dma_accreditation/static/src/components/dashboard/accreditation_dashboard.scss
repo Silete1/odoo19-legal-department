@@ -1,0 +1,269 @@
+// Department dashboard.
+//
+// Colour rules followed here:
+//  * the "files by step" chart is ONE series, so it uses one hue and no legend -
+//    magnitude is carried by bar length, not by colour;
+//  * the expiry rows use the STATUS palette (warning / serious / critical) and
+//    always ship an icon and a written level, never colour alone;
+//  * every value is text, so it wears an ink token and never the mark colour.
+// All colours come from Odoo's own tokens, so light and dark follow the theme
+// instead of being hard-coded twice. Spacing uses logical properties so the
+// whole page mirrors in Arabic.
+
+.o_dma_dashboard {
+    .o_dma_dashboard_body {
+        padding: 1rem;
+        max-width: 90rem;
+        margin-inline: auto;
+    }
+
+    // ------------------------------------------------------------- KPI row
+    .o_dma_kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+        gap: 0.75rem;
+        margin-block-end: 1rem;
+    }
+
+    .o_dma_kpi {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.1rem;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--border-color, #d8dadd);
+        border-radius: 6px;
+        background-color: var(--card-bg, #fff);
+        text-align: start;
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--primary, #714b67);
+        }
+    }
+
+    .o_dma_kpi_value {
+        font-size: 1.9rem;
+        line-height: 1.1;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: var(--body-color, #1f2937);
+    }
+
+    .o_dma_kpi_label {
+        font-size: 0.8rem;
+        color: var(--text-muted, #6b7280);
+    }
+
+    .o_dma_kpi_lead {
+        .o_dma_kpi_value {
+            // The one number the dashboard leads with.
+            font-size: 2.6rem;
+            color: var(--primary, #714b67);
+        }
+    }
+
+    // -------------------------------------------------------------- layout
+    .o_dma_dashboard_cols {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        gap: 1rem;
+
+        @media (max-width: 992px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .o_dma_side {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .o_dma_card {
+        border: 1px solid var(--border-color, #d8dadd);
+        border-radius: 6px;
+        background-color: var(--card-bg, #fff);
+        padding: 0.9rem 1rem;
+    }
+
+    .o_dma_card_title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin: 0 0 0.6rem;
+        color: var(--body-color, #1f2937);
+    }
+
+    .o_dma_empty {
+        margin: 0;
+        color: var(--text-muted, #6b7280);
+        font-size: 0.85rem;
+    }
+
+    // ---------------------------------------------------------- bar chart
+    .o_dma_bars {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        // 2px of surface between neighbouring bars does the separating
+        li + li {
+            margin-block-start: 2px;
+        }
+    }
+
+    .o_dma_bar_row {
+        display: grid;
+        grid-template-columns: 12rem minmax(0, 1fr) 3rem;
+        align-items: center;
+        gap: 0.6rem;
+        width: 100%;
+        padding: 0.2rem 0.25rem;
+        border: 0;
+        border-radius: 4px;
+        background: none;
+        text-align: start;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--bg-view, rgba(0, 0, 0, 0.04));
+        }
+    }
+
+    .o_dma_bar_label {
+        font-size: 0.82rem;
+        color: var(--body-color, #1f2937);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_bar_track {
+        height: 14px;                      // <= 24px: the bar never fills its slot
+        background-color: var(--bg-view, rgba(0, 0, 0, 0.05));
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .o_dma_bar_fill {
+        display: block;
+        height: 100%;
+        min-width: 2px;
+        background-color: var(--primary, #714b67);
+        // square at the baseline, 4px rounded at the data end - and the data
+        // end swaps sides in Arabic, hence the logical radius.
+        border-start-end-radius: 4px;
+        border-end-end-radius: 4px;
+    }
+
+    .o_dma_bar_value {
+        font-size: 0.82rem;
+        font-variant-numeric: tabular-nums;
+        text-align: end;
+        color: var(--text-muted, #6b7280);
+    }
+
+    // ------------------------------------------------------------- queues
+    .o_dma_queues {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .o_dma_queue_row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.35rem 0.25rem;
+        border: 0;
+        border-radius: 4px;
+        background: none;
+        text-align: start;
+        cursor: pointer;
+        font-size: 0.85rem;
+
+        &:hover {
+            background-color: var(--bg-view, rgba(0, 0, 0, 0.04));
+        }
+    }
+
+    .o_dma_queue_count {
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: var(--body-color, #1f2937);
+    }
+
+    // ------------------------------------------------------------ expiring
+    .o_dma_expiring {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .o_dma_expiring_row {
+        button {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            align-items: baseline;
+            gap: 0.15rem 0.5rem;
+            width: 100%;
+            padding: 0.4rem 0.25rem;
+            border: 0;
+            border-radius: 4px;
+            background: none;
+            text-align: start;
+            cursor: pointer;
+            font-size: 0.82rem;
+
+            &:hover {
+                background-color: var(--bg-view, rgba(0, 0, 0, 0.04));
+            }
+        }
+
+        + .o_dma_expiring_row button {
+            border-block-start: 1px solid var(--border-color, #d8dadd);
+        }
+    }
+
+    .o_dma_expiring_name {
+        font-weight: 600;
+        color: var(--body-color, #1f2937);
+    }
+
+    .o_dma_expiring_partner {
+        grid-column: 2;
+        color: var(--text-muted, #6b7280);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_expiring_level {
+        grid-column: 3;
+        grid-row: 1;
+        font-weight: 600;
+    }
+
+    .o_dma_expiring_date {
+        grid-column: 3;
+        grid-row: 2;
+        color: var(--text-muted, #6b7280);
+        font-variant-numeric: tabular-nums;
+    }
+
+    // Status colours: reserved, and always paired with the icon and the
+    // written level rendered next to them.
+    .o_dma_level_warning {
+        .fa, .o_dma_expiring_level { color: var(--warning, #f0ad4e); }
+    }
+
+    .o_dma_level_serious {
+        .fa, .o_dma_expiring_level { color: var(--orange-500, #e8833a); }
+    }
+
+    .o_dma_level_critical {
+        .fa, .o_dma_expiring_level { color: var(--danger, #d9534f); }
+    }
+}

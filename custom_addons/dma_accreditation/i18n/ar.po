@@ -32,6 +32,12 @@ msgstr "لا يجوز تنفيذ %(action)s إلا من قبل: %(roles)s."
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%(count)s document(s) accepted by %(user)s."
+msgstr "تم قبول %(count)s وثيقة بواسطة %(user)s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "%(from_state)s to %(to_state)s by %(user)s (%(role)s)."
 msgstr "من %(from_state)s إلى %(to_state)s بواسطة %(user)s (%(role)s)."
 
@@ -40,6 +46,30 @@ msgstr "من %(from_state)s إلى %(to_state)s بواسطة %(user)s (%(role)s)
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "%(request)s already carries %(count)s decision(s) in its approvals log and can no longer be deleted. Archive it instead."
 msgstr "%(request)s يتضمن %(count)s قراراً في سجل الموافقات ولم يعد قابلاً للحذف. يُرجى أرشفته بدلاً من ذلك."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "%(role)s — %(user)s, %(date)s"
+msgstr "%(role)s — %(user)s، %(date)s"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%s days left"
+msgstr "متبقٍ %s يوماً"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%s has not been provided."
+msgstr "%s لم يُقدَّم."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%s is provided but not accepted yet."
+msgstr "%s مقدَّم ولم يُقبل بعد."
 
 #. module: dma_accreditation
 #. odoo-python
@@ -339,11 +369,6 @@ msgid "<span class=\"text-muted\">required documents accepted</span>"
 msgstr "<span class=\"text-muted\">من الوثائق الإلزامية مقبولة</span>"
 
 #. module: dma_accreditation
-#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
-msgid "<span>The office accreditation stays blocked until every required document of the checklist is provided and accepted.</span>"
-msgstr "<span>يبقى التفويض المكتبي موقوفاً إلى أن تصبح كل وثيقة إلزامية في قائمة التدقيق مُقدَّمة ومقبولة.</span>"
-
-#. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.report_dma_letterhead
 msgid "<span>[ EMBLEM ]</span>"
 msgstr "<span>[ الشعار ]</span>"
@@ -417,6 +442,17 @@ msgid "Accept"
 msgstr "قبول"
 
 #. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Accept All Provided"
+msgstr "قبول كل المقدَّم"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Accept the checklist"
+msgstr "قبول قائمة التدقيق"
+
+#. module: dma_accreditation
 #: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_request_document__review_result__accepted
 msgid "Accepted"
 msgstr "مقبولة"
@@ -447,6 +483,11 @@ msgstr "سطر سجل موافقات التفويض"
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
 msgid "Accreditation Committee"
 msgstr "لجنة منح التفويض"
+
+#. module: dma_accreditation
+#: model:ir.actions.client,name:dma_accreditation.action_dma_dashboard
+msgid "Accreditation Dashboard"
+msgstr "لوحة متابعة التفويض"
 
 #. module: dma_accreditation
 #: model:ir.model,name:dma_accreditation.model_dma_document_type
@@ -481,6 +522,12 @@ msgstr "ملخص ملف التفويض"
 #: model:res.groups,name:dma_accreditation.group_dma_manager
 msgid "Accreditation Manager"
 msgstr "مدير التفويض"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "Accreditation Progress"
+msgstr "سير إنجاز التفويض"
 
 #. module: dma_accreditation
 #: model:ir.model,name:dma_accreditation.model_dma_accreditation_request
@@ -544,6 +591,14 @@ msgid "Accreditation step: %s"
 msgstr "خطوة التفويض: %s"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Accreditations expiring"
+msgstr "تفويضات قاربت على الانتهاء"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
 msgid "Accredited"
 msgstr "مُفوَّض"
@@ -665,18 +720,15 @@ msgid "Battle Area Clearance"
 msgstr "تطهير مناطق القتال"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "Before this step can be completed:"
+msgstr "قبل إتمام هذه المرحلة يلزم:"
+
+#. module: dma_accreditation
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__dual_confirm_complete
 msgid "Both Parties Confirmed"
 msgstr "مصادقة الطرفين مكتملة"
-
-#. module: dma_accreditation
-#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
-msgid ""
-"Both the Finance Department and the Operations Department\n"
-"                        have to confirm before the file can move on."
-msgstr ""
-"على القسم المالي وقسم العمليات كليهما\n"
-"                        المصادقة قبل أن ينتقل الملف إلى الخطوة التالية."
 
 #. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_decision_reason_view_form
@@ -949,6 +1001,11 @@ msgid "DMA: Request Returned or Rejected"
 msgstr "دائرة شؤون الألغام: إعادة الطلب أو رفضه"
 
 #. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_dashboard
+msgid "Dashboard"
+msgstr "لوحة المتابعة"
+
+#. module: dma_accreditation
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__date
 msgid "Date"
 msgstr "التاريخ"
@@ -1017,6 +1074,12 @@ msgid "Demonstration Fee Confirmed"
 msgstr "رسوم المظاهرة العملياتية مؤكَّدة"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Department queues"
+msgstr "قوائم أعمال الأقسام"
+
+#. module: dma_accreditation
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__description
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__description
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_scope_view_form
@@ -1076,6 +1139,12 @@ msgstr "لا يمكن قبول الوثيقة “%s” قبل تأشيرها ب�
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
 msgid "Documents"
 msgstr "الوثائق"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "Done"
+msgstr "منجز"
 
 #. module: dma_accreditation
 #: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__draft
@@ -1146,6 +1215,12 @@ msgid "Evidence that the organisation can financially sustain the operations it 
 msgstr "ما يُثبت قدرة المؤسسة على تمويل العمليات التي تتقدَّم بطلب التفويض بها."
 
 #. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Expired"
+msgstr "منتهي الصلاحية"
+
+#. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
 msgid "Expiring in 90 Days"
 msgstr "تنتهي صلاحيتها خلال 90 يوماً"
@@ -1206,6 +1281,12 @@ msgstr "تُحتسب الرسوم بعملة الشركة النشطة."
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
 msgid "Files"
 msgstr "المرفقات"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Files by step"
+msgstr "الملفات حسب المرحلة"
 
 #. module: dma_accreditation
 #: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_my_queue
@@ -1374,6 +1455,13 @@ msgid "In Progress"
 msgstr "قيد الإنجاز"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "In progress"
+msgstr "قيد الإنجاز"
+
+#. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 #: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_general_director
@@ -1505,8 +1593,19 @@ msgstr "التطهير اليدوي"
 
 #. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Mark All Provided"
+msgstr "تأشير الكل كمقدَّم"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
 msgid "Mark provided and accepted"
 msgstr "تأشير كمقدَّمة ومقبولة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Mark the checklist as provided"
+msgstr "تأشير قائمة التدقيق كمقدَّمة"
 
 #. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
@@ -1599,6 +1698,18 @@ msgid "Next Activity Type"
 msgstr "نوع النشاط التالي"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "No accreditation expires in the next 90 days."
+msgstr "لا يوجد تفويض تنتهي صلاحيته خلال التسعين يوماً القادمة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "No accreditation scope has been requested."
+msgstr "لم يُطلب أي نطاق تفويض."
+
+#. module: dma_accreditation
 #: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_approval_line
 msgid "No decision has been recorded yet."
 msgstr "لم يُسجَّل أي قرار بعد."
@@ -1620,6 +1731,12 @@ msgid "Normal"
 msgstr "عادي"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "Not started"
+msgstr "لم يبدأ"
+
+#. module: dma_accreditation
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__notes
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__notes
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__notes
@@ -1632,6 +1749,18 @@ msgstr "الملاحظات"
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "Notes:"
 msgstr "الملاحظات:"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Nothing here"
+msgstr "لا يوجد شيء هنا"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "Nothing is blocking this step."
+msgstr "لا يوجد ما يعيق هذه المرحلة."
 
 #. module: dma_accreditation
 #: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_my_queue
@@ -1720,6 +1849,12 @@ msgstr "لا يجوز تعديل إعدادات التفويض إلا لمدير
 #: code:addons/dma_accreditation/models/dma_fee_payment.py:0
 msgid "Only the Finance Department can confirm or reset an accreditation fee."
 msgstr "القسم المالي وحده يملك صلاحية تأكيد رسوم التفويض أو إعادة تعيينها."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Open"
+msgstr "فتح"
 
 #. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
@@ -1908,6 +2043,13 @@ msgid "Proceed to the Demonstration Fee"
 msgstr "الانتقال إلى رسوم المظاهرة العملياتية"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__progress_payload
+msgid "Progress"
+msgstr "الإنجاز"
+
+#. module: dma_accreditation
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__is_provided
 msgid "Provided"
 msgstr "مُقدَّمة"
@@ -2038,6 +2180,8 @@ msgid "Reject Request"
 msgstr "رفض الطلب"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
 #: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__committee_decision__reject
 #: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__rejected
 #: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__rejected
@@ -2188,6 +2332,8 @@ msgid "Return to Applicant"
 msgstr "إعادة إلى المعني"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
 #: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__decision__returned
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
@@ -2418,14 +2564,32 @@ msgstr "المسح الفني"
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The Finance Department has not signed off."
+msgstr "لم يصادق القسم المالي بعد."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "The Legal Department has to refine the decision text of %s before the operational accreditation can be issued."
 msgstr "يجب على القسم القانوني إجراء التنقيح القانوني لنص القرار الخاص بـ %s قبل إصدار تفويض العمليات."
 
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The Operations Department has not signed off."
+msgstr "لم يصادق قسم العمليات بعد."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "The PDF of %s could not be generated on this server. It can be printed again from the Print menu."
 msgstr "تعذّر إنشاء ملف PDF الخاص بـ %s على هذا الخادم. ويمكن طباعته مجدداً من قائمة الطباعة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The SOP reading fee is not confirmed."
+msgstr "لم تُؤكَّد رسوم قراءة الإجراءات التشغيلية (SOP)."
 
 #. module: dma_accreditation
 #. odoo-python
@@ -2447,8 +2611,20 @@ msgstr "سلّم المعني الوثيقة إلى الدائرة."
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The committee decision is missing."
+msgstr "قرار اللجنة مفقود."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "The date of the Accreditation Committee session on %s is missing."
 msgstr "تاريخ جلسة لجنة منح التفويض بشأن %s غير محدَّد."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The date of the committee session is missing."
+msgstr "تاريخ جلسة اللجنة مفقود."
 
 #. module: dma_accreditation
 #. odoo-python
@@ -2459,8 +2635,20 @@ msgstr "قرار لجنة منح التفويض بشأن %s غير مسجَّل.
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The decision text is empty."
+msgstr "نص القرار فارغ."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "The decision text of the Accreditation Committee on %s is missing."
 msgstr "نص قرار لجنة منح التفويض بشأن %s غير مسجَّل."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The electronic copy of the SOP is missing."
+msgstr "النسخة الإلكترونية من الإجراءات التشغيلية القياسية (SOP) مفقودة."
 
 #. module: dma_accreditation
 #. odoo-python
@@ -2524,14 +2712,38 @@ msgstr ""
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The operational demonstration fee is not confirmed."
+msgstr "لم تُؤكَّد رسوم المظاهرة العملياتية."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The paper copy of the SOP is not registered."
+msgstr "لم تُسجَّل النسخة الورقية من الإجراءات التشغيلية القياسية (SOP)."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "The paper copy of the SOP of %s has not been registered yet."
 msgstr "لم تُسجَّل بعد النسخة الورقية من الإجراءات التشغيلية القياسية (SOP) الخاصة بـ %s."
 
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The prerequisites checklist is empty."
+msgstr "قائمة تدقيق الأوليات فارغة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "The prerequisites checklist of %s is empty; load the document types before granting the office accreditation."
 msgstr "قائمة تدقيق الأوليات الخاصة بـ %s فارغة؛ يُرجى تحميل أنواع الوثائق قبل منح التفويض المكتبي."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The refined decision text is empty."
+msgstr "نص القرار المنقَّح فارغ."
 
 #. module: dma_accreditation
 #: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_accreditation_scope
@@ -2548,6 +2760,18 @@ msgstr ""
 #: code:addons/dma_accreditation/models/dma_accreditation_settings.py:0
 msgid "The validity of an accreditation must be at least one month."
 msgstr "يجب ألا تقل مدة صلاحية التفويض عن شهر واحد."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "There is no provided document waiting to be accepted on %s."
+msgstr "لا توجد وثيقة مقدَّمة بانتظار القبول في %s."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "This file is closed."
+msgstr "هذه المعاملة مغلقة."
 
 #. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
@@ -2621,6 +2845,18 @@ msgstr "تدقيق وثيقة"
 #: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_mine
 msgid "Waiting for Me"
 msgstr "بانتظار إجرائي"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Waiting for me"
+msgstr "بانتظار إجرائي"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/progress/accreditation_progress.js:0
+msgid "Waiting on"
+msgstr "بانتظار"
 
 #. module: dma_accreditation
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_form

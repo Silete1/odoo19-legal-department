@@ -45,6 +45,7 @@ chatter and pushed to the next responsible group as a scheduled activity.
         "views/dma_approval_line_views.xml",
         "views/dma_accreditation_request_views.xml",
         "views/dma_accreditation_settings_views.xml",
+        "views/dma_accreditation_dashboard_views.xml",
         "views/dma_menus.xml",
     ],
     "demo": [
@@ -52,6 +53,16 @@ chatter and pushed to the next responsible group as a scheduled activity.
         "demo/dma_demo_requests.xml",
     ],
     "assets": {
+        "web.assets_backend": [
+            "dma_accreditation/static/src/components/progress/*",
+            "dma_accreditation/static/src/components/dashboard/*",
+        ],
+        "web.assets_unit_tests": [
+            "dma_accreditation/static/tests/**/*.test.js",
+        ],
+        "web.assets_tests": [
+            "dma_accreditation/static/tests/tours/*.js",
+        ],
         "web.report_assets_common": [
             "dma_accreditation/static/src/scss/dma_report.scss",
         ],

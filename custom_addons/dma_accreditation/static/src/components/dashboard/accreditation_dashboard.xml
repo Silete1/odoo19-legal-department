@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.AccreditationDashboard">
+        <Layout className="'o_dma_dashboard'" display="{ controlPanel: {} }">
+            <div class="o_dma_dashboard_body" t-if="data">
+
+                <!-- Headline numbers. Stat tiles, not a one-bar bar chart. -->
+                <div class="o_dma_kpis">
+                    <button class="o_dma_kpi o_dma_kpi_lead" t-on-click="() => this.openMyTurn()">
+                        <span class="o_dma_kpi_value" t-esc="data.my_turn"/>
+                        <span class="o_dma_kpi_label" t-esc="label.myTurn"/>
+                    </button>
+                    <button class="o_dma_kpi"
+                            t-on-click="() => this.openRequests(label.inProgress, [['state','not in',['draft','authorized','rejected']]])">
+                        <span class="o_dma_kpi_value" t-esc="data.totals.in_progress"/>
+                        <span class="o_dma_kpi_label" t-esc="label.inProgress"/>
+                    </button>
+                    <button class="o_dma_kpi"
+                            t-on-click="() => this.openRequests(label.authorized, [['state','=','authorized']])">
+                        <span class="o_dma_kpi_value" t-esc="data.totals.authorized"/>
+                        <span class="o_dma_kpi_label" t-esc="label.authorized"/>
+                    </button>
+                    <button class="o_dma_kpi"
+                            t-on-click="() => this.openRequests(label.returned, [['state','=','returned']])">
+                        <span class="o_dma_kpi_value" t-esc="data.totals.returned"/>
+                        <span class="o_dma_kpi_label" t-esc="label.returned"/>
+                    </button>
+                    <button class="o_dma_kpi"
+                            t-on-click="() => this.openRequests(label.rejected, [['state','=','rejected']])">
+                        <span class="o_dma_kpi_value" t-esc="data.totals.rejected"/>
+                        <span class="o_dma_kpi_label" t-esc="label.rejected"/>
+                    </button>
+                </div>
+
+                <div class="o_dma_dashboard_cols">
+
+                    <!-- Files by step: one series, so magnitude is the bar
+                         length and a legend would only restate the title. -->
+                    <section class="o_dma_card">
+                        <h3 class="o_dma_card_title" t-esc="label.pipeline"/>
+                        <ol class="o_dma_bars">
+                            <li t-foreach="data.pipeline" t-as="step" t-key="step.key">
+                                <button class="o_dma_bar_row"
+                                        t-on-click="() => this.openRequests(step.label, step.domain)">
+                                    <span class="o_dma_bar_label" t-esc="step.label"/>
+                                    <span class="o_dma_bar_track">
+                                        <span class="o_dma_bar_fill"
+                                              t-attf-style="width: {{ step.percent }}%;"/>
+                                    </span>
+                                    <span class="o_dma_bar_value" dir="ltr" t-esc="step.count"/>
+                                </button>
+                            </li>
+                        </ol>
+                    </section>
+
+                    <div class="o_dma_side">
+                        <!-- One tile per department the reader belongs to. -->
+                        <section class="o_dma_card" t-if="data.queues.length">
+                            <h3 class="o_dma_card_title" t-esc="label.queues"/>
+                            <ul class="o_dma_queues">
+                                <li t-foreach="data.queues" t-as="queue" t-key="queue.role">
+                                    <button class="o_dma_queue_row"
+                                            t-on-click="() => this.openRequests(queue.label, queue.domain)">
+                                        <span class="o_dma_queue_label" t-esc="queue.label"/>
+                                        <span class="o_dma_queue_count" dir="ltr" t-esc="queue.count"/>
+                                    </button>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <!-- Status, never colour alone: every row carries an
+                             icon and a written level. -->
+                        <section class="o_dma_card">
+                            <h3 class="o_dma_card_title" t-esc="label.expiring"/>
+                            <p class="o_dma_empty" t-if="!data.expiring.length" t-esc="label.noExpiring"/>
+                            <ul class="o_dma_expiring" t-else="">
+                                <li t-foreach="data.expiring" t-as="item" t-key="item.id"
+                                    t-attf-class="o_dma_expiring_row o_dma_level_{{ item.level }}">
+                                    <button t-on-click="() => this.openRecord(item.id)">
+                                        <i class="fa" t-attf-class="fa {{ item.level === 'critical' ? 'fa-times-circle' : 'fa-exclamation-triangle' }}"
+                                           role="img" aria-hidden="true"/>
+                                        <span class="o_dma_expiring_name" t-esc="item.name"/>
+                                        <span class="o_dma_expiring_partner" t-esc="item.partner"/>
+                                        <span class="o_dma_expiring_level" t-esc="item.level_label"/>
+                                        <span class="o_dma_expiring_date" dir="ltr" t-esc="item.expiry_date"/>
+                                    </button>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    </t>
+
+</templates>

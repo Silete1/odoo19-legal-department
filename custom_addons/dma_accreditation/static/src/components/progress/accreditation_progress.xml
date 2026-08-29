@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.AccreditationProgress">
+        <!-- data-state / data-pending-role are stable technical hooks: they let
+             a tour or any automation target a step without matching translated
+             text. -->
+        <section class="o_dma_progress" t-att-dir="payload.rtl ? 'rtl' : 'ltr'"
+                 t-att-data-state="payload.current"
+                 t-att-data-pending-role="payload.pending_role_key || ''"
+                 t-att-data-blockers="blockers.length">
+
+            <div class="o_dma_progress_head">
+                <span class="o_dma_progress_state" t-esc="payload.current_label"/>
+                <span class="o_dma_progress_pending" t-if="payload.pending_role &amp;&amp; !payload.closed">
+                    <t t-esc="label.blocked"/>
+                    <b t-esc="payload.pending_role"/>
+                </span>
+                <!-- dir="ltr": a bare "4 / 13" is reordered to "13 / 4" by the
+                     bidi algorithm inside an Arabic paragraph. -->
+                <span class="o_dma_progress_counter" dir="ltr">
+                    <t t-esc="payload.steps_done"/> / <t t-esc="payload.steps_total"/>
+                </span>
+            </div>
+
+            <div class="o_dma_progress_bar" role="progressbar"
+                 t-att-aria-valuenow="payload.percent" aria-valuemin="0" aria-valuemax="100"
+                 t-att-aria-label="label.progress">
+                <div class="o_dma_progress_bar_fill"
+                     t-attf-style="width: {{ payload.percent }}%;"/>
+            </div>
+
+            <ol class="o_dma_rail">
+                <li t-foreach="steps" t-as="step" t-key="step.key"
+                    t-att-class="stepClass(step)" t-att-title="stepTitle(step)">
+                    <span class="o_dma_step_marker">
+                        <i class="fa fa-check" t-if="step.status === 'done'" role="img"
+                           t-att-aria-label="label.done"/>
+                        <t t-else="" t-esc="step.number"/>
+                    </span>
+                    <span class="o_dma_step_label" t-esc="step.label"/>
+                    <span class="o_dma_step_role" t-esc="step.role"/>
+                    <span class="o_dma_step_user" t-if="step.user" t-esc="step.user"/>
+                </li>
+            </ol>
+
+            <div class="o_dma_blockers alert alert-warning" role="alert"
+                 t-if="blockers.length &amp;&amp; !payload.closed">
+                <div class="o_dma_blockers_title" t-esc="label.blockers"/>
+                <ul>
+                    <li t-foreach="blockers" t-as="blocker" t-key="blocker_index"
+                        t-esc="blocker"/>
+                </ul>
+            </div>
+
+            <div class="o_dma_exception alert alert-danger" role="alert"
+                 t-if="payload.exception">
+                <b t-esc="payload.exception_label"/>
+            </div>
+        </section>
+    </t>
+
+</templates>

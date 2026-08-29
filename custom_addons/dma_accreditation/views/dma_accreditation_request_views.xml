@@ -150,6 +150,12 @@
                         <h1><field name="name" readonly="1"/></h1>
                     </div>
 
+                    <!-- Where the file stands, who owes the next move, and what
+                         is blocking it. Everything shown here is computed by
+                         _compute_progress_payload on the server. -->
+                    <field name="progress_payload" nolabel="1" readonly="1"
+                           widget="dma_accreditation_progress"/>
+
                     <div class="alert alert-danger" role="alert" invisible="state != 'rejected'">
                         <b>Request rejected.</b>
                         <field name="reject_reason" nolabel="1" readonly="1" class="mb-0"/>
@@ -158,17 +164,6 @@
                         <b>Returned to the applicant.</b>
                         <field name="return_reason" nolabel="1" readonly="1" class="mb-0"/>
                         <div>It will resume at: <field name="return_to_state" nolabel="1" readonly="1" class="oe_inline"/></div>
-                    </div>
-                    <div class="alert alert-info d-flex align-items-center gap-2" role="alert"
-                         invisible="state != 'cert_check' or checklist_complete">
-                        <span>The office accreditation stays blocked until every required document of the checklist is provided and accepted.</span>
-                        <field name="checklist_progress" nolabel="1" readonly="1"
-                               class="badge text-bg-primary"/>
-                    </div>
-                    <div class="alert alert-info" role="alert"
-                         invisible="state != 'dual_confirm' or dual_confirm_complete">
-                        Both the Finance Department and the Operations Department
-                        have to confirm before the file can move on.
                     </div>
 
                     <group>
@@ -243,9 +238,19 @@
                                            class="badge text-bg-secondary"/>
                                     <span class="text-muted">required documents accepted</span>
                                 </div>
-                                <button name="action_reload_checklist" type="object"
-                                        string="Reload Checklist" class="btn btn-secondary btn-sm"
-                                        groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_cert_officer"/>
+                                <div class="d-flex gap-2">
+                                    <button name="action_mark_all_provided" type="object"
+                                            string="Mark All Provided" class="btn btn-secondary btn-sm"
+                                            groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_cert_officer"
+                                            invisible="state in ('authorized', 'rejected')"/>
+                                    <button name="action_accept_all_provided" type="object"
+                                            string="Accept All Provided" class="btn btn-secondary btn-sm"
+                                            groups="dma_accreditation.group_dma_cert_officer"
+                                            invisible="state != 'cert_check'"/>
+                                    <button name="action_reload_checklist" type="object"
+                                            string="Reload Checklist" class="btn btn-secondary btn-sm"
+                                            groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_cert_officer"/>
+                                </div>
                             </div>
                             <field name="document_ids" nolabel="1"
                                    readonly="state in ('authorized', 'rejected')">

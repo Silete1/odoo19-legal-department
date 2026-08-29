@@ -109,11 +109,27 @@ Inside:
   * one further entry **per department**, visible only to that department
     (*Reception*, *Initial Acceptance*, *Legal Department*, *Certifications
     Division*, *Operations*, *Finance*, *Accreditation Committee*).
+* **Dashboard** — the landing page for every department: how many files are
+  waiting for *you*, the whole pipeline as a bar per step, one row per queue you
+  belong to, and the accreditations expiring in the next 90 days. Every tile
+  drills through to the matching list.
 * **All Requests** — kanban grouped by status, plus list, activity, graph and
   pivot views (manager and General Director only).
 * **Fees** — every fee line with a *To Confirm* filter (Finance and manager).
 * **Approvals Log** — the read-only audit trail (manager and General Director).
 * **Configuration** — Document Types, Accreditation Scopes, Settings (manager).
+
+### The progress rail
+
+Every request form opens with a rail of the thirteen steps: green for signed
+(naming the officer who signed and when), highlighted for the current one, amber
+when it is blocked — and underneath, **exactly what is blocking it**, document by
+document. It replaces guessing at a status bar with reading a sentence.
+
+The rail is drawn by an OWL component from a `progress_payload` Json field, so
+the rule for what counts as "blocked" lives in Python next to the gates it
+mirrors, and is covered by the Python tests. The component itself holds no
+business logic and is covered by its own hoot tests.
 
 On a request form, the **header shows only the buttons the logged-in user may
 press in the current status**. A Finance officer looking at a file in *Legal
@@ -263,6 +279,11 @@ liability) · safety and occupational health policy · quality management
 documentation · prior demining experience · financial capability statement ·
 power of attorney of the representative.
 
+On the Documents tab, Reception can **Mark All Provided** while assembling a
+file, and the Certifications Division can **Accept All Provided** in one press
+instead of ticking ten rows; both go through the same guards as the individual
+buttons.
+
 The list is editable: reorder with the handle, rename (the name is
 translatable), toggle *Required by Default*, or archive a type that no longer
 applies. **A request gets its checklist when it is created**, so changing the
@@ -289,6 +310,12 @@ letter and the certificate.
 | `dma.accreditation.scope` | a demining activity the organisation is accredited for |
 | `dma.approval.line` | **immutable** audit trail of every transition |
 | `dma.decision.reason` | transient wizard collecting the return/reject reason |
+| `dma.accreditation.settings` | transient settings dialog owned by the Accreditation Manager |
+
+Two server methods feed the interface and keep its logic testable in Python:
+`_compute_progress_payload` (the progress rail and its blockers) and
+`get_dashboard_data` (every number on the dashboard, counted through the record
+rules).
 
 ### Why the approval log cannot be edited
 
@@ -404,7 +431,18 @@ odoo-bin -c odoo.conf -d dma_test -i dma_accreditation --with-demo \
          --test-enable --test-tags /dma_accreditation --stop-after-init
 ```
 
-58 tests in four files:
+Three suites, run separately:
+
+```bash
+# 1. Python + browser tours (the tours need Chrome, see below)
+odoo-bin -c odoo.conf -d dma_test -i dma_accreditation --with-demo          --test-enable --test-tags /dma_accreditation --stop-after-init
+
+# 2. JavaScript unit tests (hoot). They run through web's own runner,
+#    so --test-tags /dma_accreditation does NOT pick them up.
+odoo-bin -c odoo.conf -d dma_test --test-enable --stop-after-init          --test-tags "/web:WebSuite.test_unit_desktop[@dma_accreditation]"
+```
+
+78 Python tests in five files:
 
 * `test_workflow.py` — the full happy path `draft → authorized` acted by a
   different user at every step, both dual-confirmation orders, the committee
@@ -426,8 +464,30 @@ odoo-bin -c odoo.conf -d dma_test -i dma_accreditation --with-demo \
   Accreditation Manager, the fee defaults, and `get_views()` over every view the
   module ships.
 
+* `test_coverage.py` — returning and rejecting from every second-phase step,
+  a closed file refusing both, the return/reject/authorisation notifications and
+  what they carry, multi-company isolation of the files *and* of the audit trail,
+  duplicating a request, archiving, reloading the checklist, resetting a fee,
+  forging an approval line, the chatter and status tracking (the rest of the
+  suite runs with `tracking_disable`), and the seeded configuration.
+* `test_tours.py` — two **browser** walk-throughs in headless Chrome: granting
+  the office accreditation entirely through the interface (watching the progress
+  rail update and the blockers clear), and a department that does not own the
+  step being offered no button at all.
+
+Plus 7 **hoot** tests in `static/tests/accreditation_progress.test.js` covering
+the progress component itself: the step states, the pending department, the
+blocker list, the closed-file case, the rejected case and the RTL flip.
+
 The report tests render **HTML**, not PDF, so the suite is green on a CI machine
 without `wkhtmltopdf`.
+
+> **The browser suites SKIP rather than fail when they cannot run.** Odoo looks
+> for Chrome at fixed paths (on Windows: `%ProgramFiles%`, `%ProgramFiles(x86)%`
+> and `%LocalAppData%\Google\Chrome\Application\chrome.exe`) and needs the
+> `websocket-client` package. Missing either one raises `SkipTest`, so a green
+> run on a bare CI box can mean "not run" — check the log for the skip before
+> trusting it.
 
 ---
 

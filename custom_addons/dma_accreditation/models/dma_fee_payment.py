@@ -90,7 +90,10 @@ class DmaFeePayment(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if not vals.get("amount"):
+            # Only fill in the configured default when no amount was given at
+            # all. An explicit zero is a real value - and one that
+            # :meth:`action_confirm` refuses - not a request for the default.
+            if vals.get("amount") is None:
                 vals["amount"] = self._default_amount(vals.get("fee_type", "sop_reading"))
         return super().create(vals_list)
 

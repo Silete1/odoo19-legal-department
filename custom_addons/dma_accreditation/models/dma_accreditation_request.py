@@ -154,6 +154,13 @@ class DmaAccreditationRequest(models.Model):
         store=True, index=True,
         help="Role that has to act on the request at its current step.",
     )
+    # Technical payload of the progress widget: the steps, who signed each of
+    # them and what is blocking the current one. Deliberately without `help`:
+    # the widget has no label, so a help text would only surface as a stray
+    # tooltip over the form.
+    progress_payload = fields.Json(
+        string="Progress", compute="_compute_progress_payload",
+    )
     is_my_turn = fields.Boolean(
         string="My Turn", compute="_compute_is_my_turn", search="_search_is_my_turn",
         # The answer depends on the groups of the reader, so the value must
@@ -581,6 +588,210 @@ class DmaAccreditationRequest(models.Model):
             )
         return users[:20]
 
+    # ==================================================================
+    # Payload of the department dashboard
+    # ==================================================================
+    @api.model
+    def get_dashboard_data(self):
+        """Everything the dashboard shows, counted server side.
+
+        Aggregating here rather than in the browser keeps the queue definitions
+        in one place (they are the same ``ROLE_QUEUE_STATES`` the menus and the
+        "My Turn" filter use), lets the record rules do their work, and makes
+        the whole dashboard testable in Python.
+        """
+        self.check_access("read")
+        user = self.env.user
+        today = fields.Date.context_today(self)
+        horizon = today + relativedelta(days=90)
+
+        def count(domain):
+            return self.search_count(domain)
+
+        queues = []
+        for role in ROLE_SELECTION:
+            key = role[0]
+            if key == "manager" or not user.has_group(ROLE_GROUP[key]):
+                continue
+            states = ROLE_QUEUE_STATES.get(key, [])
+            if not states:
+                continue
+            domain = [("state", "in", states)]
+            queues.append({
+                "role": key,
+                "label": role_label(self.env, key),
+                "count": count(domain),
+                "domain": domain,
+            })
+
+        pipeline = []
+        for key in MAIN_PATH_STATES:
+            pipeline.append({
+                "key": key,
+                "label": state_label(self.env, key),
+                "count": count([("state", "=", key)]),
+                "domain": [("state", "=", key)],
+            })
+        busiest = max((step["count"] for step in pipeline), default=0)
+        for step in pipeline:
+            step["percent"] = round(100.0 * step["count"] / busiest) if busiest else 0
+
+        expiring = []
+        soon = self.search([
+            ("state", "=", "authorized"),
+            ("expiry_date", "!=", False),
+            ("expiry_date", "<=", horizon),
+        ], order="expiry_date asc", limit=10)
+        for request in soon:
+            days = (request.expiry_date - today).days
+            expiring.append({
+                "id": request.id,
+                "name": request.name,
+                "partner": request.partner_id.display_name,
+                "expiry_date": fields.Date.to_string(request.expiry_date),
+                "days": days,
+                # Status, not a series colour: it ships with a label, never
+                # colour alone.
+                "level": "critical" if days < 0 else ("serious" if days <= 30 else "warning"),
+                "level_label": (
+                    self.env._("Expired") if days < 0
+                    else self.env._("%s days left", days)
+                ),
+            })
+
+        return {
+            "my_turn": count([("is_my_turn", "=", True)]),
+            "queues": queues,
+            "pipeline": pipeline,
+            "expiring": expiring,
+            "totals": {
+                "in_progress": count([
+                    ("state", "not in", ("draft", "authorized", "rejected")),
+                ]),
+                "authorized": count([("state", "=", "authorized")]),
+                "rejected": count([("state", "=", "rejected")]),
+                "returned": count([("state", "=", "returned")]),
+            },
+        }
+
+    # ==================================================================
+    # Payload of the progress widget
+    # ==================================================================
+    def _progress_blockers(self):
+        """Everything standing between this file and its next step.
+
+        Computed here rather than in the browser so it is covered by the
+        Python tests and translated with the rest of the module.
+        """
+        self.ensure_one()
+        blockers = []
+        if self.state == "draft" and not self.scope_ids:
+            blockers.append(self.env._("No accreditation scope has been requested."))
+        elif self.state == "cert_check":
+            for line in self._missing_checklist_lines():
+                if not line.is_provided:
+                    blockers.append(self.env._(
+                        "%s has not been provided.", line.type_id.display_name,
+                    ))
+                else:
+                    blockers.append(self.env._(
+                        "%s is provided but not accepted yet.",
+                        line.type_id.display_name,
+                    ))
+            if not self.required_document_count:
+                blockers.append(self.env._("The prerequisites checklist is empty."))
+        elif self.state == "sop_submission":
+            if not self.sudo().sop_attachment_ids:
+                blockers.append(self.env._("The electronic copy of the SOP is missing."))
+            if not self.sop_paper_received:
+                blockers.append(self.env._("The paper copy of the SOP is not registered."))
+        elif self.state == "sop_fee" and not self._confirmed_fees("sop_reading"):
+            blockers.append(self.env._("The SOP reading fee is not confirmed."))
+        elif self.state == "dual_confirm":
+            if not self.finance_confirmed_sop_fee:
+                blockers.append(self.env._("The Finance Department has not signed off."))
+            if not self.operations_confirmed_sop:
+                blockers.append(self.env._("The Operations Department has not signed off."))
+        elif self.state == "demo_fee" and not self._confirmed_fees("operational_demo"):
+            blockers.append(self.env._(
+                "The operational demonstration fee is not confirmed."
+            ))
+        elif self.state == "committee":
+            if not self.committee_decision:
+                blockers.append(self.env._("The committee decision is missing."))
+            if not self.committee_date:
+                blockers.append(self.env._("The date of the committee session is missing."))
+            if is_html_empty(self.decision_text):
+                blockers.append(self.env._("The decision text is empty."))
+        elif self.state == "legal_refine" and is_html_empty(self.refined_decision_text):
+            blockers.append(self.env._("The refined decision text is empty."))
+        return blockers
+
+    @api.depends(
+        "state", "scope_ids", "approval_line_ids",
+        "checklist_complete", "required_document_count",
+        "sop_paper_received", "sop_attachment_ids",
+        "sop_fee_paid", "demo_fee_paid",
+        "finance_confirmed_sop_fee", "operations_confirmed_sop",
+        "committee_decision", "committee_date", "decision_text",
+        "refined_decision_text",
+    )
+    def _compute_progress_payload(self):
+        """Feed the progress widget: one entry per step of the main path."""
+        rtl = self.env["res.lang"]._lang_get(self.env.lang or "en_US").direction == "rtl"
+        for request in self:
+            decided = {}
+            for line in request.approval_line_ids.sorted("id"):
+                decided.setdefault(line.step, line)
+            current = request.state
+            reached = (
+                MAIN_PATH_STATES.index(current)
+                if current in MAIN_PATH_STATES
+                else len(MAIN_PATH_STATES)
+            )
+            steps = []
+            for index, key in enumerate(MAIN_PATH_STATES):
+                line = decided.get(key)
+                if key == current:
+                    status = "current"
+                elif index < reached or line:
+                    status = "done"
+                else:
+                    status = "todo"
+                steps.append({
+                    "key": key,
+                    "number": index + 1,
+                    "label": state_label(self.env, key),
+                    "role": role_label(self.env, STATE_PENDING_ROLE.get(key) or "manager"),
+                    "status": status,
+                    "user": line.user_id.display_name if line else False,
+                    "date": fields.Datetime.to_string(line.date) if line else False,
+                })
+            steps_done = sum(1 for step in steps if step["status"] == "done")
+            request.progress_payload = {
+                "rtl": rtl,
+                "current": current,
+                "current_label": state_label(self.env, current),
+                "closed": current in ("authorized", "rejected"),
+                "exception": current if current in ("returned", "rejected") else False,
+                "exception_label": (
+                    state_label(self.env, current)
+                    if current in ("returned", "rejected") else False
+                ),
+                "steps": steps,
+                "steps_done": steps_done,
+                "steps_total": len(steps),
+                "percent": round(100.0 * steps_done / len(steps)) if steps else 0,
+                "pending_role": (
+                    role_label(self.env, request.pending_group)
+                    if request.pending_group else False
+                ),
+                # The technical key alongside the label, so automation can
+                # target a role without matching translated text.
+                "pending_role_key": request.pending_group or False,
+                "blockers": request._progress_blockers(),
+            }
+
     def _pending_roles(self):
         """Roles that still have to act on the request at its current step.
 
@@ -748,6 +959,39 @@ class DmaAccreditationRequest(models.Model):
                 self.env._("Reload Checklist"),
             )
             request._populate_checklist()
+        return True
+
+    def action_mark_all_provided(self):
+        """Tick every checklist line as provided (Reception assembling a file)."""
+        for request in self:
+            request._check_workflow_role(
+                ("reception", "cert_officer", "manager"),
+                self.env._("Mark the checklist as provided"),
+            )
+            request.document_ids.filtered(lambda line: not line.is_provided).write({
+                "is_provided": True,
+            })
+        return True
+
+    def action_accept_all_provided(self):
+        """Accept every provided line at once (Certifications Division)."""
+        for request in self:
+            request._check_workflow_role(
+                ("cert_officer",), self.env._("Accept the checklist"),
+            )
+            pending = request.document_ids.filtered(
+                lambda line: line.is_provided and line.review_result != "accepted"
+            )
+            if not pending:
+                raise UserError(self.env._(
+                    "There is no provided document waiting to be accepted on %s.",
+                    request.display_name,
+                ))
+            pending.write({"review_result": "accepted"})
+            request.message_post(body=self.env._(
+                "%(count)s document(s) accepted by %(user)s.",
+                count=len(pending), user=self.env.user.name,
+            ))
         return True
 
     def _missing_checklist_lines(self):
