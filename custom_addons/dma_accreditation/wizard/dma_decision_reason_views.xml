@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dma_decision_reason_view_form" model="ir.ui.view">
+        <field name="name">dma.decision.reason.form</field>
+        <field name="model">dma.decision.reason</field>
+        <field name="arch" type="xml">
+            <form string="Reason">
+                <sheet>
+                    <div class="alert alert-warning" role="alert" invisible="mode != 'reject'">
+                        Rejecting closes the file definitively. The applicant is
+                        notified by e-mail with the reason entered below.
+                    </div>
+                    <div class="alert alert-info" role="alert" invisible="mode != 'return'">
+                        Returning sends the file one step back so the applicant
+                        can complete it. The reason below is e-mailed to the
+                        applicant and posted in the chatter.
+                    </div>
+                    <group>
+                        <field name="request_id" readonly="1"/>
+                        <field name="target_state" readonly="1"/>
+                        <field name="mode" readonly="1"/>
+                    </group>
+                    <group string="Reason">
+                        <field name="reason" nolabel="1" required="1"
+                               placeholder="State precisely what is missing or why the request is refused."/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

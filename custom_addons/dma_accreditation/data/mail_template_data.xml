@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================
+             1. Office accreditation granted - إشعار إلى المعني
+             ============================================================ -->
+        <record id="mail_template_office_granted" model="mail.template">
+            <field name="name">DMA: Office Accreditation Granted</field>
+            <field name="model_id" ref="model_dma_accreditation_request"/>
+            <field name="subject">{{ object.name }} - منح التفويض المكتبي / Office Accreditation Granted</field>
+            <field name="email_from">{{ (user.email_formatted or object.company_id.email_formatted or '') }}</field>
+            <!-- Recipient: the applicant's representative, resolved by
+                 _mail_get_partner_fields on the request (contact first,
+                 then the organisation). -->
+            <field name="use_default_to" eval="True"/>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Sent to the applicant when the office accreditation is granted.</field>
+            <field name="body_html" type="html">
+<div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;">
+    <p>السادة <t t-out="object.partner_id.name or ''"/> المحترمين،</p>
+    <p>
+        تحية طيبة وبعد،
+    </p>
+    <p>
+        يسر <b>دائرة شؤون الألغام</b> إشعاركم بأنه تم منح مؤسستكم
+        <b>التفويض المكتبي</b> بموجب الطلب المرقم
+        <b><t t-out="object.name or ''"/></b> وبالإشارة الرسمية
+        <b><t t-out="object.office_ref or ''"/></b> بتاريخ
+        <b><t t-out="object.office_date or ''"/></b>.
+    </p>
+    <p>
+        نطاقات العمل المشمولة بالتفويض:
+        <b><t t-out="', '.join(object.scope_ids.mapped('name')) or '-'"/></b>
+    </p>
+    <p>
+        يرجى التفضل بالمباشرة بإجراءات <b>تفويض العمليات</b>، وذلك بتقديم
+        إجراءات التشغيل القياسية (SOP) بنسختيها الورقية والإلكترونية إلى
+        قسم العمليات، وتسديد رسوم قراءة الإجراءات التشغيلية.
+    </p>
+    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>
+</div>
+<div dir="ltr" style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;">
+    <p>
+        <b>English summary:</b> the Directorate of Mine Action has granted the
+        <b>Office Accreditation</b> of <t t-out="object.partner_id.name or ''"/> under
+        reference <t t-out="object.office_ref or ''"/> dated
+        <t t-out="object.office_date or ''"/>. Please proceed with the Operational
+        Accreditation phase by submitting your SOP in both paper and electronic
+        form and by settling the SOP reading fee.
+    </p>
+</div>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             2. Request returned or rejected, with the reason
+             ============================================================ -->
+        <record id="mail_template_request_returned" model="mail.template">
+            <field name="name">DMA: Request Returned or Rejected</field>
+            <field name="model_id" ref="model_dma_accreditation_request"/>
+            <field name="subject">{{ object.name }} - {{ 'رفض الطلب / Request Rejected' if object.state == 'rejected' else 'إعادة الطلب / Request Returned' }}</field>
+            <field name="email_from">{{ (user.email_formatted or object.company_id.email_formatted or '') }}</field>
+            <!-- Recipient: the applicant's representative, resolved by
+                 _mail_get_partner_fields on the request (contact first,
+                 then the organisation). -->
+            <field name="use_default_to" eval="True"/>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Sent to the applicant when a request is returned for completion or rejected.</field>
+            <field name="body_html" type="html">
+<div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;">
+    <p>السادة <t t-out="object.partner_id.name or ''"/> المحترمين،</p>
+    <t t-if="object.state == 'rejected'">
+        <p>
+            نأسف لإشعاركم بأنه تقرر <b>رفض</b> طلب التفويض المرقم
+            <b><t t-out="object.name or ''"/></b>.
+        </p>
+        <p><b>أسباب الرفض:</b></p>
+        <p style="white-space: pre-line;"><t t-out="object.reject_reason or ''"/></p>
+    </t>
+    <t t-else="">
+        <p>
+            نود إشعاركم بأنه تمت <b>إعادة</b> طلب التفويض المرقم
+            <b><t t-out="object.name or ''"/></b> لاستكمال النواقص المبينة أدناه.
+        </p>
+        <p><b>أسباب الإعادة:</b></p>
+        <p style="white-space: pre-line;"><t t-out="object.return_reason or ''"/></p>
+        <p>يرجى استكمال المطلوب وإعادة تقديم الطلب إلى شعبة الاستلام.</p>
+    </t>
+    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>
+</div>
+<div dir="ltr" style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;">
+    <p>
+        <b>English summary:</b> accreditation request
+        <t t-out="object.name or ''"/> has been
+        <t t-out="'rejected' if object.state == 'rejected' else 'returned for completion'"/>.
+        Reason: <t t-out="(object.reject_reason if object.state == 'rejected' else object.return_reason) or ''"/>
+    </p>
+</div>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             3. Operational accreditation granted
+             ============================================================ -->
+        <record id="mail_template_operational_granted" model="mail.template">
+            <field name="name">DMA: Operational Accreditation Granted</field>
+            <field name="model_id" ref="model_dma_accreditation_request"/>
+            <field name="subject">{{ object.name }} - منح تفويض العمليات / Operational Accreditation Granted</field>
+            <field name="email_from">{{ (user.email_formatted or object.company_id.email_formatted or '') }}</field>
+            <!-- Recipient: the applicant's representative, resolved by
+                 _mail_get_partner_fields on the request (contact first,
+                 then the organisation). -->
+            <field name="use_default_to" eval="True"/>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Sent to the applicant when the operational accreditation certificate is issued.</field>
+            <field name="body_html" type="html">
+<div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;">
+    <p>السادة <t t-out="object.partner_id.name or ''"/> المحترمين،</p>
+    <p>
+        استناداً إلى قرار <b>لجنة منح التفويض</b> الصادر بتاريخ
+        <b><t t-out="object.committee_date or ''"/></b> وبعد إتمام
+        <b>التنقيح القانوني</b> للقرار، تم منح مؤسستكم
+        <b>تفويض العمليات</b> بموجب الشهادة المرقمة
+        <b><t t-out="object.certificate_ref or ''"/></b>.
+    </p>
+    <table style="border-collapse: collapse; margin: 12px 0;">
+        <tr>
+            <td style="padding: 4px 12px; border: 1px solid #e5e7eb;"><b>تاريخ الإصدار</b></td>
+            <td style="padding: 4px 12px; border: 1px solid #e5e7eb;"><t t-out="object.issue_date or ''"/></td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 12px; border: 1px solid #e5e7eb;"><b>تاريخ الانتهاء</b></td>
+            <td style="padding: 4px 12px; border: 1px solid #e5e7eb;"><t t-out="object.expiry_date or ''"/></td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 12px; border: 1px solid #e5e7eb;"><b>نطاقات التفويض</b></td>
+            <td style="padding: 4px 12px; border: 1px solid #e5e7eb;"><t t-out="', '.join(object.scope_ids.mapped('name')) or '-'"/></td>
+        </tr>
+    </table>
+    <p>
+        يتوجب الالتزام بالمعايير الوطنية وبالإجراءات التشغيلية المعتمدة طوال
+        فترة سريان التفويض، ويخضع التفويض للمراقبة والتقييم من قبل الدائرة.
+    </p>
+    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>
+</div>
+<div dir="ltr" style="font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;">
+    <p>
+        <b>English summary:</b> the Operational Accreditation of
+        <t t-out="object.partner_id.name or ''"/> has been granted under certificate
+        <t t-out="object.certificate_ref or ''"/>, valid from
+        <t t-out="object.issue_date or ''"/> to <t t-out="object.expiry_date or ''"/>.
+    </p>
+</div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

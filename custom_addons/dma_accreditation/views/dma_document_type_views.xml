@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dma_document_type_view_list" model="ir.ui.view">
+        <field name="name">dma.document.type.list</field>
+        <field name="model">dma.document.type</field>
+        <field name="arch" type="xml">
+            <list string="Document Types" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description" optional="show"/>
+                <field name="required_default"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dma_document_type_view_form" model="ir.ui.view">
+        <field name="name">dma.document.type.form</field>
+        <field name="model">dma.document.type</field>
+        <field name="arch" type="xml">
+            <form string="Document Type">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Company Registration Certificate"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="required_default"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1" placeholder="What the Certifications Division has to check on this document."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dma_document_type_view_search" model="ir.ui.view">
+        <field name="name">dma.document.type.search</field>
+        <field name="model">dma.document.type</field>
+        <field name="arch" type="xml">
+            <search string="Document Types">
+                <field name="name"/>
+                <filter name="filter_required" string="Required by Default" domain="[('required_default', '=', True)]"/>
+                <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dma_document_type" model="ir.actions.act_window">
+        <field name="name">Document Types</field>
+        <field name="res_model">dma.document.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="dma_document_type_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smart_button">
+                Define the prerequisite documents of the office accreditation file.
+            </p><p>
+                Every request gets one checklist line per document type. The
+                Certifications Division has to mark each required line as
+                provided and accepted before the office accreditation can be
+                granted.
+            </p>
+        </field>
+    </record>
+
+</odoo>

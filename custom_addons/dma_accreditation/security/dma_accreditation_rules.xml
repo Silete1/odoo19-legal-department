@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Every department sees every accreditation file: the process is
+             collegial and the approvals log must stay auditable by all. Only
+             the company boundary is enforced. -->
+        <record id="dma_accreditation_request_company_rule" model="ir.rule">
+            <field name="name">Accreditation request: multi-company</field>
+            <field name="model_id" ref="model_dma_accreditation_request"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="dma_approval_line_company_rule" model="ir.rule">
+            <field name="name">Approval log: multi-company</field>
+            <field name="model_id" ref="model_dma_approval_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('request_id.company_id', '=', False), ('request_id.company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="dma_fee_payment_company_rule" model="ir.rule">
+            <field name="name">Accreditation fee: multi-company</field>
+            <field name="model_id" ref="model_dma_fee_payment"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('request_id.company_id', '=', False), ('request_id.company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!-- Deleting an accreditation file is reserved to the Accreditation
+             Manager and only while it is still a draft; anything further in the
+             process has to be archived so the audit trail survives. -->
+        <record id="dma_accreditation_request_unlink_rule" model="ir.rule">
+            <field name="name">Accreditation request: delete drafts only</field>
+            <field name="model_id" ref="model_dma_accreditation_request"/>
+            <field name="groups" eval="[(4, ref('group_dma_manager'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('state', '=', 'draft')]</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_dma_root"
+              name="DMA Accreditation"
+              web_icon="dma_accreditation,static/description/icon.png"
+              sequence="45"
+              groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_general_director,dma_accreditation.group_dma_legal_director,dma_accreditation.group_dma_cert_officer,dma_accreditation.group_dma_operations,dma_accreditation.group_dma_finance,dma_accreditation.group_dma_committee,dma_accreditation.group_dma_manager"/>
+
+    <!-- ================================================================
+         My Queue - one entry per role, each restricted to its own group.
+         ================================================================ -->
+    <menuitem id="menu_dma_queue"
+              name="My Queue"
+              parent="menu_dma_root"
+              sequence="10"/>
+
+    <menuitem id="menu_dma_queue_mine"
+              name="Waiting for Me"
+              parent="menu_dma_queue"
+              action="action_dma_my_queue"
+              sequence="5"/>
+
+    <menuitem id="menu_dma_queue_reception"
+              name="Reception"
+              parent="menu_dma_queue"
+              action="action_dma_queue_reception"
+              groups="dma_accreditation.group_dma_reception"
+              sequence="10"/>
+
+    <menuitem id="menu_dma_queue_general_director"
+              name="Initial Acceptance"
+              parent="menu_dma_queue"
+              action="action_dma_queue_general_director"
+              groups="dma_accreditation.group_dma_general_director"
+              sequence="20"/>
+
+    <menuitem id="menu_dma_queue_legal"
+              name="Legal Department"
+              parent="menu_dma_queue"
+              action="action_dma_queue_legal"
+              groups="dma_accreditation.group_dma_legal_director"
+              sequence="30"/>
+
+    <menuitem id="menu_dma_queue_cert"
+              name="Certifications Division"
+              parent="menu_dma_queue"
+              action="action_dma_queue_cert"
+              groups="dma_accreditation.group_dma_cert_officer"
+              sequence="40"/>
+
+    <menuitem id="menu_dma_queue_operations"
+              name="Operations"
+              parent="menu_dma_queue"
+              action="action_dma_queue_operations"
+              groups="dma_accreditation.group_dma_operations"
+              sequence="50"/>
+
+    <menuitem id="menu_dma_queue_finance"
+              name="Finance"
+              parent="menu_dma_queue"
+              action="action_dma_queue_finance"
+              groups="dma_accreditation.group_dma_finance"
+              sequence="60"/>
+
+    <menuitem id="menu_dma_queue_committee"
+              name="Accreditation Committee"
+              parent="menu_dma_queue"
+              action="action_dma_queue_committee"
+              groups="dma_accreditation.group_dma_committee"
+              sequence="70"/>
+
+    <!-- ================================================================
+         All requests, fees and the audit log.
+         ================================================================ -->
+    <menuitem id="menu_dma_requests"
+              name="All Requests"
+              parent="menu_dma_root"
+              action="action_dma_accreditation_request"
+              groups="dma_accreditation.group_dma_manager,dma_accreditation.group_dma_general_director"
+              sequence="20"/>
+
+    <menuitem id="menu_dma_fees"
+              name="Fees"
+              parent="menu_dma_root"
+              action="action_dma_fee_payment"
+              groups="dma_accreditation.group_dma_finance,dma_accreditation.group_dma_manager"
+              sequence="30"/>
+
+    <menuitem id="menu_dma_approvals"
+              name="Approvals Log"
+              parent="menu_dma_root"
+              action="action_dma_approval_line"
+              groups="dma_accreditation.group_dma_manager,dma_accreditation.group_dma_general_director"
+              sequence="40"/>
+
+    <!-- ================================================================
+         Configuration - Accreditation Manager only.
+         ================================================================ -->
+    <menuitem id="menu_dma_configuration"
+              name="Configuration"
+              parent="menu_dma_root"
+              groups="dma_accreditation.group_dma_manager"
+              sequence="90"/>
+
+    <menuitem id="menu_dma_config_document_type"
+              name="Document Types"
+              parent="menu_dma_configuration"
+              action="action_dma_document_type"
+              groups="dma_accreditation.group_dma_manager"
+              sequence="10"/>
+
+    <menuitem id="menu_dma_config_scope"
+              name="Accreditation Scopes"
+              parent="menu_dma_configuration"
+              action="action_dma_accreditation_scope"
+              groups="dma_accreditation.group_dma_manager"
+              sequence="20"/>
+
+    <menuitem id="menu_dma_config_settings"
+              name="Settings"
+              parent="menu_dma_configuration"
+              action="action_dma_accreditation_settings"
+              groups="dma_accreditation.group_dma_manager"
+              sequence="30"/>
+
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Official correspondence of the Directorate: A4 portrait with wide
+             margins so the pre-printed letterhead paper is not overwritten. -->
+        <record id="paperformat_dma_letter" model="report.paperformat">
+            <field name="name">DMA Official Letter (A4)</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">22</field>
+            <field name="margin_left">12</field>
+            <field name="margin_right">12</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">18</field>
+            <field name="dpi">96</field>
+        </record>
+
+        <record id="paperformat_dma_certificate" model="report.paperformat">
+            <field name="name">DMA Accreditation Certificate (A4 Landscape)</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">14</field>
+            <field name="margin_bottom">14</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">96</field>
+        </record>
+
+    </data>
+</odoo>

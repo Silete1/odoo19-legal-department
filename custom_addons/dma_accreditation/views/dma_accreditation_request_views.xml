@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         FORM
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_form" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.form</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="arch" type="xml">
+            <form string="Accreditation Request">
+                <header>
+                    <!-- ========== Phase 1: office accreditation ========== -->
+                    <button name="action_submit" type="object" string="Submit"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="dma_accreditation.group_dma_reception"/>
+                    <button name="action_send_to_general_director" type="object"
+                            string="Send to General Director" class="btn-primary"
+                            invisible="state != 'submitted'"
+                            groups="dma_accreditation.group_dma_reception"/>
+                    <button name="action_gd_accept" type="object"
+                            string="Initial Acceptance" class="btn-primary"
+                            invisible="state != 'gd_review'"
+                            groups="dma_accreditation.group_dma_general_director"/>
+                    <button name="action_legal_approve" type="object"
+                            string="Legal Approval" class="btn-primary"
+                            invisible="state != 'legal_review'"
+                            groups="dma_accreditation.group_dma_legal_director"/>
+                    <button name="action_grant_office_accreditation" type="object"
+                            string="Grant Office Accreditation" class="btn-primary"
+                            invisible="state != 'cert_check'"
+                            groups="dma_accreditation.group_dma_cert_officer,dma_accreditation.group_dma_general_director"/>
+
+                    <!-- ========== Phase 2: operational accreditation ========== -->
+                    <button name="action_start_operational_phase" type="object"
+                            string="Start Operational Accreditation" class="btn-primary"
+                            invisible="state != 'office_granted'"
+                            groups="dma_accreditation.group_dma_operations,dma_accreditation.group_dma_reception"/>
+                    <button name="action_register_paper_sop" type="object"
+                            string="Register Paper SOP"
+                            invisible="state != 'sop_submission' or sop_paper_received"
+                            groups="dma_accreditation.group_dma_operations"/>
+                    <button name="action_sop_received" type="object"
+                            string="Confirm SOP Submission" class="btn-primary"
+                            invisible="state != 'sop_submission'"
+                            groups="dma_accreditation.group_dma_operations"/>
+                    <button name="action_sop_fee_registered" type="object"
+                            string="Confirm SOP Reading Fee" class="btn-primary"
+                            invisible="state != 'sop_fee'"
+                            groups="dma_accreditation.group_dma_finance"/>
+                    <button name="action_finance_confirm" type="object"
+                            string="Finance Confirmation" class="btn-primary"
+                            invisible="state != 'dual_confirm' or finance_confirmed_sop_fee"
+                            groups="dma_accreditation.group_dma_finance"/>
+                    <button name="action_operations_confirm" type="object"
+                            string="Operations Confirmation" class="btn-primary"
+                            invisible="state != 'dual_confirm' or operations_confirmed_sop"
+                            groups="dma_accreditation.group_dma_operations"/>
+                    <button name="action_dual_confirm_done" type="object"
+                            string="Proceed to the Demonstration Fee"
+                            invisible="state != 'dual_confirm'"
+                            groups="dma_accreditation.group_dma_finance,dma_accreditation.group_dma_operations"/>
+                    <button name="action_demo_fee_registered" type="object"
+                            string="Confirm Demonstration Fee" class="btn-primary"
+                            invisible="state != 'demo_fee'"
+                            groups="dma_accreditation.group_dma_finance"/>
+                    <button name="action_committee_decision" type="object"
+                            string="Record Committee Decision" class="btn-primary"
+                            invisible="state != 'committee'"
+                            groups="dma_accreditation.group_dma_committee"/>
+                    <button name="action_issue_authorization" type="object"
+                            string="Issue Operational Accreditation" class="btn-primary"
+                            invisible="state != 'legal_refine'"
+                            groups="dma_accreditation.group_dma_legal_director,dma_accreditation.group_dma_general_director"/>
+                    <button name="action_resume_from_return" type="object"
+                            string="Resume Request" class="btn-primary"
+                            invisible="state != 'returned'"
+                            groups="dma_accreditation.group_dma_reception"/>
+
+                    <!-- ========== Return / Reject, per acting role ========== -->
+                    <button name="action_open_return_wizard" type="object" string="Return"
+                            invisible="state != 'submitted'"
+                            groups="dma_accreditation.group_dma_reception"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state != 'submitted'"
+                            groups="dma_accreditation.group_dma_reception"/>
+                    <button name="action_open_return_wizard" type="object" string="Return"
+                            invisible="state != 'gd_review'"
+                            groups="dma_accreditation.group_dma_general_director"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state != 'gd_review'"
+                            groups="dma_accreditation.group_dma_general_director"/>
+                    <button name="action_open_return_wizard" type="object" string="Return"
+                            invisible="state not in ('legal_review', 'legal_refine')"
+                            groups="dma_accreditation.group_dma_legal_director"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state not in ('legal_review', 'legal_refine')"
+                            groups="dma_accreditation.group_dma_legal_director"/>
+                    <button name="action_open_return_wizard" type="object" string="Return"
+                            invisible="state != 'cert_check'"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state != 'cert_check'"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <button name="action_open_return_wizard" type="object" string="Return"
+                            invisible="state not in ('office_granted', 'sop_submission')"
+                            groups="dma_accreditation.group_dma_operations"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state not in ('office_granted', 'sop_submission')"
+                            groups="dma_accreditation.group_dma_operations"/>
+                    <button name="action_open_return_wizard" type="object" string="Return"
+                            invisible="state not in ('sop_fee', 'dual_confirm', 'demo_fee')"
+                            groups="dma_accreditation.group_dma_finance"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state not in ('sop_fee', 'dual_confirm', 'demo_fee')"
+                            groups="dma_accreditation.group_dma_finance"/>
+                    <button name="action_open_return_wizard" type="object" string="Return"
+                            invisible="state != 'committee'"
+                            groups="dma_accreditation.group_dma_committee"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state != 'committee'"
+                            groups="dma_accreditation.group_dma_committee"/>
+
+                    <!-- ========== Printing and administration ========== -->
+                    <button name="action_print_office_letter" type="object"
+                            string="Print Office Letter" invisible="not office_ref"/>
+                    <button name="action_print_certificate" type="object"
+                            string="Print Certificate" invisible="not certificate_ref"/>
+                    <button name="action_print_summary" type="object" string="Print Summary"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"
+                            groups="dma_accreditation.group_dma_manager"
+                            confirm="This resets the file to draft. The approvals log keeps every previous decision. Continue?"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,gd_review,legal_review,cert_check,office_granted,sop_submission,sop_fee,dual_confirm,demo_fee,committee,legal_refine,authorized"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger"
+                            invisible="state != 'rejected'"/>
+                    <widget name="web_ribbon" title="Returned" bg_color="text-bg-warning"
+                            invisible="state != 'returned'"/>
+                    <widget name="web_ribbon" title="Accredited" bg_color="text-bg-success"
+                            invisible="state != 'authorized'"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+
+                    <div class="alert alert-danger" role="alert" invisible="state != 'rejected'">
+                        <b>Request rejected.</b>
+                        <field name="reject_reason" nolabel="1" readonly="1" class="mb-0"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="state != 'returned'">
+                        <b>Returned to the applicant.</b>
+                        <field name="return_reason" nolabel="1" readonly="1" class="mb-0"/>
+                        <div>It will resume at: <field name="return_to_state" nolabel="1" readonly="1" class="oe_inline"/></div>
+                    </div>
+                    <div class="alert alert-info d-flex align-items-center gap-2" role="alert"
+                         invisible="state != 'cert_check' or checklist_complete">
+                        <span>The office accreditation stays blocked until every required document of the checklist is provided and accepted.</span>
+                        <field name="checklist_progress" nolabel="1" readonly="1"
+                               class="badge text-bg-primary"/>
+                    </div>
+                    <div class="alert alert-info" role="alert"
+                         invisible="state != 'dual_confirm' or dual_confirm_complete">
+                        Both the Finance Department and the Operations Department
+                        have to confirm before the file can move on.
+                    </div>
+
+                    <group>
+                        <group name="applicant">
+                            <field name="partner_id" options="{'no_quick_create': True}"
+                                   readonly="state not in ('draft', 'returned')"/>
+                            <field name="contact_partner_id" options="{'no_quick_create': True}"
+                                   readonly="state in ('authorized', 'rejected')"/>
+                            <field name="contact_name" readonly="state in ('authorized', 'rejected')"/>
+                            <field name="contact_email" widget="email"
+                                   readonly="state in ('authorized', 'rejected')"/>
+                            <field name="contact_phone" widget="phone"
+                                   readonly="state in ('authorized', 'rejected')"/>
+                        </group>
+                        <group name="request">
+                            <field name="request_type" readonly="state not in ('draft', 'returned')"/>
+                            <field name="scope_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"
+                                   readonly="state not in ('draft', 'returned')"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="submission_date"/>
+                            <field name="pending_group"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="active" invisible="1"/>
+                            <field name="checklist_complete" invisible="1"/>
+                            <field name="dual_confirm_complete" invisible="1"/>
+                            <field name="sop_paper_received" invisible="1"/>
+                            <field name="finance_confirmed_sop_fee" invisible="1"/>
+                            <field name="operations_confirmed_sop" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- ================ Company ================ -->
+                        <page name="company" string="Company">
+                            <group>
+                                <group string="Applicant">
+                                    <label for="partner_id" string="Organisation"/>
+                                    <div>
+                                        <field name="partner_id" widget="res_partner_many2one"
+                                               nolabel="1" readonly="1"
+                                               context="{'show_address': 1}"
+                                               options="{'always_reload': True, 'no_open': True}"/>
+                                    </div>
+                                    <field name="contact_email" widget="email" readonly="1"/>
+                                    <field name="contact_phone" widget="phone" readonly="1"/>
+                                </group>
+                                <group string="Office Accreditation">
+                                    <field name="office_ref"/>
+                                    <field name="office_date"/>
+                                    <field name="verification_token" string="Verification Code"/>
+                                </group>
+                            </group>
+                            <group string="Operational Accreditation" invisible="not certificate_ref">
+                                <group>
+                                    <field name="certificate_ref"/>
+                                    <field name="issue_date"/>
+                                </group>
+                                <group>
+                                    <field name="expiry_date"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- ================ Documents (الأوليات) ================ -->
+                        <page name="documents" string="Documents">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="o_form_label">Prerequisites checklist</span>
+                                    <field name="checklist_progress" nolabel="1" readonly="1"
+                                           class="badge text-bg-secondary"/>
+                                    <span class="text-muted">required documents accepted</span>
+                                </div>
+                                <button name="action_reload_checklist" type="object"
+                                        string="Reload Checklist" class="btn btn-secondary btn-sm"
+                                        groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_cert_officer"/>
+                            </div>
+                            <field name="document_ids" nolabel="1"
+                                   readonly="state in ('authorized', 'rejected')">
+                                <list string="Prerequisite Documents" editable="bottom"
+                                      decoration-success="review_result == 'accepted'"
+                                      decoration-danger="review_result in ('missing', 'invalid')"
+                                      decoration-muted="not is_required">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="type_id" options="{'no_quick_create': True}"/>
+                                    <!-- The Certifications Division owns the two
+                                         verification columns; everybody else
+                                         sees them read only. group_dma_manager
+                                         implies group_dma_cert_officer, so the
+                                         negation covers it too. -->
+                                    <field name="is_required"
+                                           groups="dma_accreditation.group_dma_cert_officer"/>
+                                    <field name="is_required" readonly="1"
+                                           groups="!dma_accreditation.group_dma_cert_officer"/>
+                                    <field name="is_provided" widget="boolean_toggle"/>
+                                    <field name="attachment_ids" widget="many2many_binary" string="Files"/>
+                                    <field name="review_result" widget="badge"
+                                           groups="dma_accreditation.group_dma_cert_officer"
+                                           decoration-success="review_result == 'accepted'"
+                                           decoration-danger="review_result in ('missing', 'invalid')"
+                                           decoration-warning="review_result == 'pending'"/>
+                                    <field name="review_result" widget="badge" readonly="1"
+                                           groups="!dma_accreditation.group_dma_cert_officer"
+                                           decoration-success="review_result == 'accepted'"
+                                           decoration-danger="review_result in ('missing', 'invalid')"
+                                           decoration-warning="review_result == 'pending'"/>
+                                    <field name="notes" optional="show"/>
+                                    <field name="reviewed_by" optional="hide"/>
+                                    <field name="reviewed_on" optional="hide"/>
+                                    <button name="action_accept" type="object" string="Accept"
+                                            icon="fa-check" title="Mark provided and accepted"
+                                            invisible="review_result == 'accepted'"
+                                            groups="dma_accreditation.group_dma_cert_officer"/>
+                                    <button name="action_mark_missing" type="object" string="Missing"
+                                            icon="fa-times" title="Mark the document as missing"
+                                            invisible="review_result == 'missing'"
+                                            groups="dma_accreditation.group_dma_cert_officer"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- ================ SOP ================ -->
+                        <page name="sop" string="SOP">
+                            <group>
+                                <group string="Electronic Copy">
+                                    <field name="sop_reference"/>
+                                    <field name="sop_version"/>
+                                    <field name="sop_attachment_ids" widget="many2many_binary"
+                                           string="Electronic SOP"/>
+                                </group>
+                                <group string="Paper Copy">
+                                    <field name="sop_paper_received" widget="boolean_toggle" readonly="1"/>
+                                    <field name="sop_paper_received_by"/>
+                                    <field name="sop_paper_received_date"/>
+                                </group>
+                            </group>
+                            <group string="Dual Confirmation">
+                                <group string="Finance Department">
+                                    <field name="finance_confirmed_sop_fee" widget="boolean_toggle" readonly="1"/>
+                                    <field name="finance_confirmed_by"/>
+                                    <field name="finance_confirmed_on"/>
+                                </group>
+                                <group string="Operations Department">
+                                    <field name="operations_confirmed_sop" widget="boolean_toggle" readonly="1"/>
+                                    <field name="operations_confirmed_by"/>
+                                    <field name="operations_confirmed_on"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- ================ Fees ================ -->
+                        <page name="fees" string="Fees">
+                            <field name="fee_ids" nolabel="1"
+                                   readonly="state in ('authorized', 'rejected')"
+                                   context="{'default_request_id': id}"/>
+                            <group class="oe_subtotal_footer">
+                                <field name="total_fees_confirmed" widget="monetary"/>
+                            </group>
+                        </page>
+
+                        <!-- ================ Committee and decision ================ -->
+                        <page name="committee" string="Committee &amp; Decision">
+                            <group>
+                                <group string="Accreditation Committee">
+                                    <field name="committee_decision"
+                                           readonly="state not in ('committee',)"/>
+                                    <field name="committee_date"
+                                           readonly="state not in ('committee',)"/>
+                                    <field name="committee_minutes_ids" widget="many2many_binary"
+                                           string="Minutes"
+                                           readonly="state not in ('committee',)"/>
+                                </group>
+                                <group string="Legal Refinement">
+                                    <field name="legal_refined_by"/>
+                                    <field name="legal_refined_on"/>
+                                </group>
+                            </group>
+                            <separator string="Committee Decision Text"/>
+                            <field name="decision_text" nolabel="1"
+                                   placeholder="Decision of the Accreditation Committee."
+                                   readonly="state not in ('committee',)"/>
+                            <separator string="Refined Decision Text"/>
+                            <field name="refined_decision_text" nolabel="1"
+                                   placeholder="Decision refined by the Legal Department."
+                                   readonly="state not in ('legal_refine',)"
+                                   groups="dma_accreditation.group_dma_legal_director,dma_accreditation.group_dma_general_director,dma_accreditation.group_dma_manager"/>
+                        </page>
+
+                        <!-- ================ Approvals log ================ -->
+                        <page name="approvals" string="Approvals Log">
+                            <field name="approval_line_ids" nolabel="1" readonly="1">
+                                <list string="Approvals Log" create="false" edit="false" delete="false"
+                                      decoration-success="decision in ('approved', 'confirmed')"
+                                      decoration-danger="decision == 'rejected'"
+                                      decoration-warning="decision == 'returned'">
+                                    <field name="date"/>
+                                    <field name="step"/>
+                                    <field name="role"/>
+                                    <field name="user_id"/>
+                                    <field name="decision" widget="badge"
+                                           decoration-success="decision in ('approved', 'confirmed')"
+                                           decoration-danger="decision == 'rejected'"
+                                           decoration-warning="decision == 'returned'"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         LIST
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_list" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.list</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="arch" type="xml">
+            <list string="Accreditation Requests"
+                  decoration-success="state == 'authorized'"
+                  decoration-danger="state == 'rejected'"
+                  decoration-warning="state == 'returned'"
+                  decoration-muted="state == 'draft'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="request_type"/>
+                <field name="scope_ids" widget="many2many_tags"
+                       options="{'color_field': 'color'}" optional="show"/>
+                <field name="submission_date" optional="show"/>
+                <field name="pending_group" optional="show"/>
+                <field name="office_ref" optional="hide"/>
+                <field name="certificate_ref" optional="hide"/>
+                <field name="expiry_date" optional="hide"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'authorized'"
+                       decoration-danger="state == 'rejected'"
+                       decoration-warning="state == 'returned'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         KANBAN
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_kanban" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.kanban</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="arch" type="xml">
+            <!-- records_draggable: dragging a card between columns writes the
+                 group-by field straight to the database, which would let any
+                 role move a file to any status without passing a single
+                 workflow guard. The status only ever changes through the
+                 buttons of the form. -->
+            <kanban default_group_by="state" class="o_kanban_small_column" sample="1"
+                    records_draggable="false" group_create="false" group_delete="false"
+                    group_edit="false" quick_create="false">
+                <field name="state"/>
+                <field name="pending_group"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="name" class="fw-bolder fs-6"/>
+                            <field name="priority" widget="priority"/>
+                        </div>
+                        <field name="partner_id" class="text-truncate"/>
+                        <div class="mt-1">
+                            <field name="scope_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <field name="pending_group" widget="badge" class="text-bg-info"/>
+                            <field name="activity_ids" widget="kanban_activity"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         ACTIVITY / GRAPH / PIVOT
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_activity" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.activity</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="arch" type="xml">
+            <activity string="Accreditation Requests">
+                <templates>
+                    <div t-name="activity-box">
+                        <div>
+                            <field name="name" class="fw-bold"/>
+                            <field name="partner_id" muted="1" display="full"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <record id="dma_accreditation_request_view_graph" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.graph</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="arch" type="xml">
+            <graph string="Accreditation Requests" type="bar" sample="1">
+                <field name="state"/>
+                <field name="submission_date" interval="month"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="dma_accreditation_request_view_pivot" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.pivot</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="arch" type="xml">
+            <pivot string="Accreditation Requests" sample="1">
+                <field name="state" type="row"/>
+                <field name="submission_date" interval="month" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         SEARCH
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_search" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.search</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="arch" type="xml">
+            <search string="Accreditation Requests">
+                <field name="name" string="Reference"/>
+                <field name="partner_id" string="Applicant"/>
+                <field name="scope_ids"/>
+                <field name="office_ref"/>
+                <field name="certificate_ref"/>
+                <filter name="filter_my_turn" string="My Turn" domain="[('is_my_turn', '=', True)]"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_submitted" string="Submitted" domain="[('state', '=', 'submitted')]"/>
+                <filter name="filter_gd_review" string="General Director Review" domain="[('state', '=', 'gd_review')]"/>
+                <filter name="filter_legal_review" string="Legal Review" domain="[('state', '=', 'legal_review')]"/>
+                <filter name="filter_cert_check" string="Certifications Check" domain="[('state', '=', 'cert_check')]"/>
+                <filter name="filter_office_granted" string="Office Accreditation Granted" domain="[('state', '=', 'office_granted')]"/>
+                <separator/>
+                <filter name="filter_sop_submission" string="SOP Submission" domain="[('state', '=', 'sop_submission')]"/>
+                <filter name="filter_sop_fee" string="SOP Reading Fee" domain="[('state', '=', 'sop_fee')]"/>
+                <filter name="filter_dual_confirm" string="Dual Confirmation" domain="[('state', '=', 'dual_confirm')]"/>
+                <filter name="filter_demo_fee" string="Demonstration Fee" domain="[('state', '=', 'demo_fee')]"/>
+                <filter name="filter_committee" string="Committee" domain="[('state', '=', 'committee')]"/>
+                <filter name="filter_legal_refine" string="Legal Refinement" domain="[('state', '=', 'legal_refine')]"/>
+                <separator/>
+                <filter name="filter_authorized" string="Operationally Accredited" domain="[('state', '=', 'authorized')]"/>
+                <filter name="filter_returned" string="Returned" domain="[('state', '=', 'returned')]"/>
+                <filter name="filter_rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="filter_in_progress" string="In Progress"
+                        domain="[('state', 'not in', ('draft', 'authorized', 'rejected'))]"/>
+                <filter name="filter_expiring" string="Expiring in 90 Days"
+                        domain="[('expiry_date', '&lt;=', (context_today() + datetime.timedelta(days=90)).strftime('%Y-%m-%d')), ('expiry_date', '!=', False)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_pending" string="Pending With" context="{'group_by': 'pending_group'}"/>
+                    <filter name="group_partner" string="Applicant" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_type" string="Request Type" context="{'group_by': 'request_type'}"/>
+                    <filter name="group_submission_month" string="Submission Month"
+                            context="{'group_by': 'submission_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         ACTIONS
+         ================================================================ -->
+    <record id="action_dma_accreditation_request" model="ir.actions.act_window">
+        <field name="name">Accreditation Requests</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">kanban,list,form,activity,graph,pivot</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smart_button">
+                Register the accreditation file of a demining organisation.
+            </p><p>
+                The file walks through the office accreditation
+                (reception, General Director, Legal Department, Certifications
+                Division) and then through the operational accreditation
+                (SOP, fees, dual confirmation, Accreditation Committee, legal
+                refinement, certificate).
+            </p>
+        </field>
+    </record>
+
+    <record id="action_dma_my_queue" model="ir.actions.act_window">
+        <field name="name">My Queue</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('is_my_turn', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smart_button">
+                Nothing is waiting for you.
+            </p><p>
+                Files show up here as soon as they reach a step your department
+                is responsible for.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_dma_queue_reception" model="ir.actions.act_window">
+        <field name="name">Reception Queue</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('state', 'in', ('draft', 'submitted', 'returned'))]</field>
+    </record>
+
+    <record id="action_dma_queue_general_director" model="ir.actions.act_window">
+        <field name="name">Initial Acceptance</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('state', '=', 'gd_review')]</field>
+    </record>
+
+    <record id="action_dma_queue_legal" model="ir.actions.act_window">
+        <field name="name">Legal Queue</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('state', 'in', ('legal_review', 'legal_refine'))]</field>
+    </record>
+
+    <record id="action_dma_queue_cert" model="ir.actions.act_window">
+        <field name="name">Certifications Queue</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('state', '=', 'cert_check')]</field>
+    </record>
+
+    <record id="action_dma_queue_operations" model="ir.actions.act_window">
+        <field name="name">Operations Queue</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('state', 'in', ('office_granted', 'sop_submission', 'dual_confirm'))]</field>
+    </record>
+
+    <record id="action_dma_queue_finance" model="ir.actions.act_window">
+        <field name="name">Finance Queue</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('state', 'in', ('sop_fee', 'dual_confirm', 'demo_fee'))]</field>
+    </record>
+
+    <record id="action_dma_queue_committee" model="ir.actions.act_window">
+        <field name="name">Committee Queue</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
+        <field name="domain">[('state', '=', 'committee')]</field>
+    </record>
+
+</odoo>

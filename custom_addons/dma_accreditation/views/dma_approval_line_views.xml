@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dma_approval_line_view_list" model="ir.ui.view">
+        <field name="name">dma.approval.line.list</field>
+        <field name="model">dma.approval.line</field>
+        <field name="arch" type="xml">
+            <list string="Approvals Log" create="false" edit="false" delete="false"
+                  decoration-success="decision in ('approved', 'confirmed')"
+                  decoration-danger="decision == 'rejected'"
+                  decoration-warning="decision == 'returned'">
+                <field name="date"/>
+                <field name="step"/>
+                <field name="role"/>
+                <field name="user_id"/>
+                <field name="decision" widget="badge"
+                       decoration-success="decision in ('approved', 'confirmed')"
+                       decoration-danger="decision == 'rejected'"
+                       decoration-warning="decision == 'returned'"/>
+                <field name="notes"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dma_approval_line_view_search" model="ir.ui.view">
+        <field name="name">dma.approval.line.search</field>
+        <field name="model">dma.approval.line</field>
+        <field name="arch" type="xml">
+            <search string="Approvals Log">
+                <field name="request_id"/>
+                <field name="user_id"/>
+                <filter name="filter_approved" string="Approved" domain="[('decision', 'in', ('approved', 'confirmed'))]"/>
+                <filter name="filter_returned" string="Returned" domain="[('decision', '=', 'returned')]"/>
+                <filter name="filter_rejected" string="Rejected" domain="[('decision', '=', 'rejected')]"/>
+                <group>
+                    <filter name="group_request" string="Request" context="{'group_by': 'request_id'}"/>
+                    <filter name="group_step" string="Step" context="{'group_by': 'step'}"/>
+                    <filter name="group_role" string="Role" context="{'group_by': 'role'}"/>
+                    <filter name="group_user" string="Decided By" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dma_approval_line" model="ir.actions.act_window">
+        <field name="name">Approvals Log</field>
+        <field name="res_model">dma.approval.line</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="dma_approval_line_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smart_button">
+                No decision has been recorded yet.
+            </p><p>
+                Every workflow transition appends one line here. Entries can
+                never be modified nor deleted, so the log can be handed over to
+                an external auditor as is.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ================================================================
+             Applicant organisations
+             ================================================================ -->
+        <record id="demo_partner_alamal" model="res.partner">
+            <field name="name">Al-Amal Demining Company</field>
+            <field name="is_company" eval="True"/>
+            <field name="email">contact@al-amal-demining.example.com</field>
+            <field name="phone">+964 770 111 2233</field>
+            <field name="street">Al-Mansour District</field>
+            <field name="city">Baghdad</field>
+        </record>
+
+        <record id="demo_partner_alamal_contact" model="res.partner">
+            <field name="name">Layla Hassan</field>
+            <field name="parent_id" ref="demo_partner_alamal"/>
+            <field name="function">Operations Manager</field>
+            <field name="email">l.hassan@al-amal-demining.example.com</field>
+            <field name="phone">+964 770 111 2244</field>
+        </record>
+
+        <record id="demo_partner_sanad" model="res.partner">
+            <field name="name">Sanad Mine Action Services</field>
+            <field name="is_company" eval="True"/>
+            <field name="email">info@sanad-mineaction.example.com</field>
+            <field name="phone">+964 780 222 3344</field>
+            <field name="city">Basra</field>
+        </record>
+
+        <record id="demo_partner_sanad_contact" model="res.partner">
+            <field name="name">Omar Al-Rashid</field>
+            <field name="parent_id" ref="demo_partner_sanad"/>
+            <field name="function">Quality Manager</field>
+            <field name="email">o.rashid@sanad-mineaction.example.com</field>
+        </record>
+
+        <record id="demo_partner_nahrain" model="res.partner">
+            <field name="name">Nahrain Clearance Group</field>
+            <field name="is_company" eval="True"/>
+            <field name="email">office@nahrain-clearance.example.com</field>
+            <field name="phone">+964 750 333 4455</field>
+            <field name="city">Mosul</field>
+        </record>
+
+        <record id="demo_partner_nahrain_contact" model="res.partner">
+            <field name="name">Zaid Karim</field>
+            <field name="parent_id" ref="demo_partner_nahrain"/>
+            <field name="function">Managing Director</field>
+            <field name="email">z.karim@nahrain-clearance.example.com</field>
+        </record>
+
+        <!-- ================================================================
+             One demo user per role of the Directorate
+             ================================================================ -->
+        <record id="demo_user_reception" model="res.users">
+            <field name="name">Reception Officer (Demo)</field>
+            <field name="login">dma_reception</field>
+            <field name="email">reception@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_reception')])]"/>
+        </record>
+
+        <record id="demo_user_general_director" model="res.users">
+            <field name="name">General Director (Demo)</field>
+            <field name="login">dma_gd</field>
+            <field name="email">general.director@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_general_director')])]"/>
+        </record>
+
+        <record id="demo_user_legal" model="res.users">
+            <field name="name">Legal Department Director (Demo)</field>
+            <field name="login">dma_legal</field>
+            <field name="email">legal@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_legal_director')])]"/>
+        </record>
+
+        <record id="demo_user_cert" model="res.users">
+            <field name="name">Certifications Division Officer (Demo)</field>
+            <field name="login">dma_cert</field>
+            <field name="email">certifications@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_cert_officer')])]"/>
+        </record>
+
+        <record id="demo_user_operations" model="res.users">
+            <field name="name">Operations Officer (Demo)</field>
+            <field name="login">dma_operations</field>
+            <field name="email">operations@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_operations')])]"/>
+        </record>
+
+        <record id="demo_user_finance" model="res.users">
+            <field name="name">Finance Officer (Demo)</field>
+            <field name="login">dma_finance</field>
+            <field name="email">finance@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_finance')])]"/>
+        </record>
+
+        <record id="demo_user_committee" model="res.users">
+            <field name="name">Accreditation Committee Secretary (Demo)</field>
+            <field name="login">dma_committee</field>
+            <field name="email">committee@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_committee')])]"/>
+        </record>
+
+        <record id="demo_user_manager" model="res.users">
+            <field name="name">Accreditation Manager (Demo)</field>
+            <field name="login">dma_manager</field>
+            <field name="email">accreditation.manager@dma.example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('dma_accreditation.group_dma_manager')])]"/>
+        </record>
+
+    </data>
+</odoo>

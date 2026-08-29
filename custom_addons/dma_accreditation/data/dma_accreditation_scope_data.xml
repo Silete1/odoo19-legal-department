@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Demining activities an organisation can be accredited for, as
+             listed by IMAS 07.30 / TNMA 07.30/01. -->
+        <record id="scope_manual_clearance" model="dma.accreditation.scope">
+            <field name="name">Manual Clearance</field>
+            <field name="code">MC</field>
+            <field name="sequence">10</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="scope_bac" model="dma.accreditation.scope">
+            <field name="name">Battle Area Clearance</field>
+            <field name="code">BAC</field>
+            <field name="sequence">20</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="scope_eod" model="dma.accreditation.scope">
+            <field name="name">Explosive Ordnance Disposal (EOD)</field>
+            <field name="code">EOD</field>
+            <field name="sequence">30</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="scope_mdd" model="dma.accreditation.scope">
+            <field name="name">Mine Detection Dogs</field>
+            <field name="code">MDD</field>
+            <field name="sequence">40</field>
+            <field name="color">4</field>
+        </record>
+
+        <record id="scope_mechanical" model="dma.accreditation.scope">
+            <field name="name">Mechanical Demining</field>
+            <field name="code">MECH</field>
+            <field name="sequence">50</field>
+            <field name="color">5</field>
+        </record>
+
+        <record id="scope_technical_survey" model="dma.accreditation.scope">
+            <field name="name">Technical Survey</field>
+            <field name="code">TS</field>
+            <field name="sequence">60</field>
+            <field name="color">6</field>
+        </record>
+
+        <record id="scope_non_technical_survey" model="dma.accreditation.scope">
+            <field name="name">Non-Technical Survey</field>
+            <field name="code">NTS</field>
+            <field name="sequence">70</field>
+            <field name="color">7</field>
+        </record>
+
+        <record id="scope_eore" model="dma.accreditation.scope">
+            <field name="name">Explosive Ordnance Risk Education (EORE)</field>
+            <field name="code">EORE</field>
+            <field name="sequence">80</field>
+            <field name="color">8</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,246 @@
+// Styling of the official documents issued by the Directorate of Mine Action.
+// Arabic first: the page is right-to-left and the Latin subtitles are kept
+// smaller and greyed so the Arabic text stays the primary reading line.
+
+.dma-page {
+    // The official documents are Arabic-first whatever the language of the
+    // officer printing them, so this direction must survive rtlcss: without
+    // the guards below, an Arabic user gets the mirror image of the mirror
+    // image, i.e. a left-to-right letter.
+    /*rtl:ignore*/
+    direction: rtl;
+    /*rtl:ignore*/
+    text-align: right;
+    font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+    font-size: 12px;
+    color: #1f2937;
+}
+
+.dma-letterhead {
+    margin-bottom: 12px;
+
+    .dma-emblem-placeholder {
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px dashed #9ca3af;
+        color: #9ca3af;
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    .dma-authority-ar {
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .dma-authority-en {
+        font-size: 10px;
+        color: #6b7280;
+        letter-spacing: 0.5px;
+    }
+
+    .dma-rule {
+        border: 0;
+        border-top: 2px solid #1e3a5f;
+        margin: 8px 0 0;
+    }
+}
+
+.dma-refs {
+    font-size: 11px;
+    margin: 10px 0 14px;
+}
+
+.dma-addressee {
+    margin-bottom: 10px;
+
+    .dma-to {
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .dma-to-en {
+        font-size: 10px;
+        color: #6b7280;
+    }
+}
+
+.dma-subject {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    margin: 14px 0 2px;
+}
+
+.dma-subject-en {
+    font-size: 10px;
+    color: #6b7280;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.dma-h4 {
+    font-size: 13px;
+    font-weight: 700;
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 3px;
+    margin: 16px 0 8px;
+}
+
+.dma-body p {
+    line-height: 1.9;
+    text-align: justify;
+}
+
+.dma-table {
+    width: 100%;
+    font-size: 11px;
+
+    th,
+    td {
+        border: 1px solid #d1d5db;
+        padding: 4px 6px;
+        /*rtl:ignore*/
+        text-align: right;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f3f4f6;
+        font-weight: 700;
+    }
+}
+
+.dma-signatures {
+    margin-top: 28px;
+
+    .dma-sign-role {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .dma-sign-line {
+        border-bottom: 1px solid #1f2937;
+        margin: 34px 12px 4px;
+    }
+
+    .dma-sign-en {
+        font-size: 9px;
+        color: #6b7280;
+    }
+}
+
+.dma-qr {
+    .dma-qr-caption {
+        font-size: 8px;
+        color: #6b7280;
+        margin-top: 2px;
+    }
+
+    .dma-token {
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 7px;
+        word-break: break-all;
+        /*rtl:ignore*/
+        direction: ltr;
+    }
+}
+
+.dma-footer-note {
+    margin-top: 20px;
+    padding-top: 6px;
+    border-top: 1px solid #d1d5db;
+    font-size: 9px;
+    color: #6b7280;
+
+    .dma-footer-en {
+        display: block;
+        /*rtl:ignore*/
+        direction: ltr;
+        /*rtl:ignore*/
+        text-align: left;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Certificate
+// ---------------------------------------------------------------------------
+.dma-certificate {
+    .dma-cert-frame {
+        border: 6px double #1e3a5f;
+        padding: 22px 28px;
+        min-height: 96%;
+    }
+
+    .dma-cert-title {
+        font-size: 30px;
+        font-weight: 700;
+        text-align: center;
+        color: #1e3a5f;
+        margin: 14px 0 0;
+    }
+
+    .dma-cert-title-en {
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 10px;
+    }
+
+    .dma-cert-ref {
+        text-align: center;
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .dma-cert-org {
+        font-size: 22px;
+        font-weight: 700;
+        text-align: center;
+        color: #b8860b;
+        margin: 10px 0;
+    }
+
+    .dma-cert-body p {
+        text-align: center;
+        line-height: 1.9;
+        font-size: 12px;
+    }
+
+    .dma-cert-table {
+        width: 78%;
+        margin: 12px auto;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Shown instead of an official document when the file has not reached the step
+// that issues it.
+// ---------------------------------------------------------------------------
+.dma-not-issued {
+    border: 3px dashed #b91c1c;
+    color: #b91c1c;
+    padding: 24px;
+    margin: 24px 0;
+    text-align: center;
+
+    h2 {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    > div {
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #1f2937;
+        font-size: 12px;
+    }
+}

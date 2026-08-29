@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The module ships its own settings model rather than extending
+         res.config.settings: saving that one is reserved to users of
+         "Administration / Settings", which the Accreditation Manager is not. -->
+    <record id="dma_accreditation_settings_view_form" model="ir.ui.view">
+        <field name="name">dma.accreditation.settings.form</field>
+        <field name="model">dma.accreditation.settings</field>
+        <field name="arch" type="xml">
+            <form string="Accreditation Settings">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Accreditation Settings</h1>
+                        <p class="text-muted">
+                            Directorate wide defaults applied to every new accreditation file.
+                        </p>
+                    </div>
+                    <group>
+                        <group string="Fees">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="sop_fee" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                            <field name="demo_fee" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        <group string="Validity">
+                            <field name="validity_months"/>
+                        </group>
+                    </group>
+                    <div class="text-muted mt-3">
+                        The fee amounts are proposed by default on new fee lines and
+                        the validity drives the expiry date of the operational
+                        accreditation certificate.
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_apply" type="object" string="Save"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_dma_accreditation_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">dma.accreditation.settings</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="dma_accreditation_settings_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

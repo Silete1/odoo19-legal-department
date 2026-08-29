@@ -1,0 +1,46 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dma_request_reception,dma.accreditation.request reception,model_dma_accreditation_request,group_dma_reception,1,1,1,0
+access_dma_request_general_director,dma.accreditation.request general director,model_dma_accreditation_request,group_dma_general_director,1,1,0,0
+access_dma_request_legal_director,dma.accreditation.request legal director,model_dma_accreditation_request,group_dma_legal_director,1,1,0,0
+access_dma_request_cert_officer,dma.accreditation.request certifications,model_dma_accreditation_request,group_dma_cert_officer,1,1,0,0
+access_dma_request_operations,dma.accreditation.request operations,model_dma_accreditation_request,group_dma_operations,1,1,0,0
+access_dma_request_finance,dma.accreditation.request finance,model_dma_accreditation_request,group_dma_finance,1,1,0,0
+access_dma_request_committee,dma.accreditation.request committee,model_dma_accreditation_request,group_dma_committee,1,1,0,0
+access_dma_request_manager,dma.accreditation.request manager,model_dma_accreditation_request,group_dma_manager,1,1,1,1
+access_dma_document_reception,dma.request.document reception,model_dma_request_document,group_dma_reception,1,1,1,1
+access_dma_document_general_director,dma.request.document general director,model_dma_request_document,group_dma_general_director,1,0,0,0
+access_dma_document_legal_director,dma.request.document legal director,model_dma_request_document,group_dma_legal_director,1,0,0,0
+access_dma_document_cert_officer,dma.request.document certifications,model_dma_request_document,group_dma_cert_officer,1,1,1,1
+access_dma_document_operations,dma.request.document operations,model_dma_request_document,group_dma_operations,1,0,0,0
+access_dma_document_finance,dma.request.document finance,model_dma_request_document,group_dma_finance,1,0,0,0
+access_dma_document_committee,dma.request.document committee,model_dma_request_document,group_dma_committee,1,0,0,0
+access_dma_document_manager,dma.request.document manager,model_dma_request_document,group_dma_manager,1,1,1,1
+access_dma_document_type_user,dma.document.type read,model_dma_document_type,base.group_user,1,0,0,0
+access_dma_document_type_manager,dma.document.type manager,model_dma_document_type,group_dma_manager,1,1,1,1
+access_dma_scope_user,dma.accreditation.scope read,model_dma_accreditation_scope,base.group_user,1,0,0,0
+access_dma_scope_manager,dma.accreditation.scope manager,model_dma_accreditation_scope,group_dma_manager,1,1,1,1
+access_dma_fee_reception,dma.fee.payment reception,model_dma_fee_payment,group_dma_reception,1,0,0,0
+access_dma_fee_general_director,dma.fee.payment general director,model_dma_fee_payment,group_dma_general_director,1,0,0,0
+access_dma_fee_legal_director,dma.fee.payment legal director,model_dma_fee_payment,group_dma_legal_director,1,0,0,0
+access_dma_fee_cert_officer,dma.fee.payment certifications,model_dma_fee_payment,group_dma_cert_officer,1,0,0,0
+access_dma_fee_operations,dma.fee.payment operations,model_dma_fee_payment,group_dma_operations,1,0,0,0
+access_dma_fee_finance,dma.fee.payment finance,model_dma_fee_payment,group_dma_finance,1,1,1,1
+access_dma_fee_committee,dma.fee.payment committee,model_dma_fee_payment,group_dma_committee,1,0,0,0
+access_dma_fee_manager,dma.fee.payment manager,model_dma_fee_payment,group_dma_manager,1,1,1,1
+access_dma_approval_line_reception,dma.approval.line reception,model_dma_approval_line,group_dma_reception,1,0,0,0
+access_dma_approval_line_general_director,dma.approval.line general director,model_dma_approval_line,group_dma_general_director,1,0,0,0
+access_dma_approval_line_legal_director,dma.approval.line legal director,model_dma_approval_line,group_dma_legal_director,1,0,0,0
+access_dma_approval_line_cert_officer,dma.approval.line certifications,model_dma_approval_line,group_dma_cert_officer,1,0,0,0
+access_dma_approval_line_operations,dma.approval.line operations,model_dma_approval_line,group_dma_operations,1,0,0,0
+access_dma_approval_line_finance,dma.approval.line finance,model_dma_approval_line,group_dma_finance,1,0,0,0
+access_dma_approval_line_committee,dma.approval.line committee,model_dma_approval_line,group_dma_committee,1,0,0,0
+access_dma_approval_line_manager,dma.approval.line manager,model_dma_approval_line,group_dma_manager,1,0,0,0
+access_dma_decision_reason_reception,dma.decision.reason reception,model_dma_decision_reason,group_dma_reception,1,1,1,1
+access_dma_decision_reason_general_director,dma.decision.reason general director,model_dma_decision_reason,group_dma_general_director,1,1,1,1
+access_dma_decision_reason_legal_director,dma.decision.reason legal director,model_dma_decision_reason,group_dma_legal_director,1,1,1,1
+access_dma_decision_reason_cert_officer,dma.decision.reason certifications,model_dma_decision_reason,group_dma_cert_officer,1,1,1,1
+access_dma_decision_reason_operations,dma.decision.reason operations,model_dma_decision_reason,group_dma_operations,1,1,1,1
+access_dma_decision_reason_finance,dma.decision.reason finance,model_dma_decision_reason,group_dma_finance,1,1,1,1
+access_dma_decision_reason_committee,dma.decision.reason committee,model_dma_decision_reason,group_dma_committee,1,1,1,1
+access_dma_decision_reason_manager,dma.decision.reason manager,model_dma_decision_reason,group_dma_manager,1,1,1,1
+access_dma_settings_manager,dma.accreditation.settings manager,model_dma_accreditation_settings,group_dma_manager,1,1,1,1

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dma_fee_payment_view_list" model="ir.ui.view">
+        <field name="name">dma.fee.payment.list</field>
+        <field name="model">dma.fee.payment</field>
+        <field name="arch" type="xml">
+            <list string="Accreditation Fees" editable="bottom"
+                  decoration-success="state == 'confirmed'"
+                  decoration-muted="state == 'draft'">
+                <field name="currency_id" column_invisible="True"/>
+                <field name="fee_type"/>
+                <field name="amount" widget="monetary"/>
+                <field name="receipt_number"/>
+                <field name="receipt_date"/>
+                <field name="attachment_ids" widget="many2many_binary" string="Receipt Scan"/>
+                <field name="notes" optional="hide"/>
+                <field name="confirmed_by" optional="hide"/>
+                <field name="confirmed_on" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'confirmed'"
+                       decoration-warning="state == 'draft'"/>
+                <button name="action_confirm" type="object" string="Confirm"
+                        icon="fa-check" title="Confirm the reception of the fee"
+                        invisible="state == 'confirmed'"
+                        groups="dma_accreditation.group_dma_finance"/>
+                <button name="action_reset_draft" type="object" string="Reset"
+                        icon="fa-undo" title="Reset the fee to draft"
+                        invisible="state != 'confirmed'"
+                        groups="dma_accreditation.group_dma_manager"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dma_fee_payment_view_form" model="ir.ui.view">
+        <field name="name">dma.fee.payment.form</field>
+        <field name="model">dma.fee.payment</field>
+        <field name="arch" type="xml">
+            <form string="Accreditation Fee">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm Fee"
+                            class="btn-primary" invisible="state == 'confirmed'"
+                            groups="dma_accreditation.group_dma_finance"/>
+                    <button name="action_reset_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'confirmed'"
+                            groups="dma_accreditation.group_dma_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="request_id" readonly="1"/>
+                            <field name="fee_type" readonly="state == 'confirmed'"/>
+                            <field name="amount" readonly="state == 'confirmed'"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                        <group>
+                            <field name="receipt_number" readonly="state == 'confirmed'"/>
+                            <field name="receipt_date" readonly="state == 'confirmed'"/>
+                            <field name="confirmed_by" invisible="state != 'confirmed'"/>
+                            <field name="confirmed_on" invisible="state != 'confirmed'"/>
+                        </group>
+                    </group>
+                    <group string="Receipt Scan">
+                        <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dma_fee_payment_view_search" model="ir.ui.view">
+        <field name="name">dma.fee.payment.search</field>
+        <field name="model">dma.fee.payment</field>
+        <field name="arch" type="xml">
+            <search string="Accreditation Fees">
+                <field name="request_id"/>
+                <field name="receipt_number"/>
+                <filter name="filter_draft" string="To Confirm" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_confirmed" string="Confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <separator/>
+                <filter name="filter_sop" string="SOP Reading Fee" domain="[('fee_type', '=', 'sop_reading')]"/>
+                <filter name="filter_demo" string="Demonstration Fee" domain="[('fee_type', '=', 'operational_demo')]"/>
+                <group>
+                    <filter name="group_fee_type" string="Fee Type" context="{'group_by': 'fee_type'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_request" string="Request" context="{'group_by': 'request_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dma_fee_payment" model="ir.actions.act_window">
+        <field name="name">Accreditation Fees</field>
+        <field name="res_model">dma.fee.payment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="dma_fee_payment_view_search"/>
+        <field name="context">{'search_default_filter_draft': 1}</field>
+    </record>
+
+</odoo>

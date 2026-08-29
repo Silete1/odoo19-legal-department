@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_request_summary_document">
+        <t t-call="web.basic_layout">
+            <div class="page dma-page" dir="rtl">
+                <t t-call="dma_accreditation.report_dma_letterhead"/>
+
+                <h2 class="dma-subject">ملخص ملف التفويض</h2>
+                <div class="dma-subject-en"><span t-out="'Accreditation File Summary'"/></div>
+
+                <div class="row dma-refs">
+                    <div class="col-6 text-start">
+                        <div><b>تاريخ الطباعة / Printed:</b>
+                            <span t-out="context_timestamp(datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M')"/>
+                        </div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <div><b>رقم الطلب / Request:</b> <span t-out="o.name"/></div>
+                        <div><b>الحالة / Status:</b> <span t-field="o.state"/></div>
+                    </div>
+                </div>
+
+                <h4 class="dma-h4">بيانات المؤسسة / Organisation</h4>
+                <table class="table table-sm dma-table">
+                    <tbody>
+                        <tr>
+                            <th style="width: 30%;">المؤسسة / Organisation</th>
+                            <td t-out="o.partner_id.name"/>
+                        </tr>
+                        <tr>
+                            <th>ممثل المؤسسة / Contact</th>
+                            <td>
+                                <span t-out="o.contact_name or '-'"/>
+                                <t t-if="o.contact_email"> — <span t-out="o.contact_email"/></t>
+                                <t t-if="o.contact_phone"> — <span t-out="o.contact_phone"/></t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>نوع الطلب / Request type</th>
+                            <td><span t-field="o.request_type"/></td>
+                        </tr>
+                        <tr>
+                            <th>نطاقات العمل / Scopes</th>
+                            <td>
+                                <t t-if="o.scope_ids">
+                                    <span t-out="', '.join(o.scope_ids.mapped('name'))"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>تاريخ التقديم / Submitted</th>
+                            <td><span t-out="o.submission_date" t-options='{"widget": "date"}'/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="dma-h4">الأوليات / Prerequisites checklist</h4>
+                <table class="table table-sm dma-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">المستمسك / Document</th>
+                            <th>مطلوب</th>
+                            <th>مقدّم</th>
+                            <th>النتيجة / Result</th>
+                            <th>المدقق / Reviewer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.document_ids" t-as="line">
+                            <td t-out="line.type_id.name"/>
+                            <td><span t-out="'نعم' if line.is_required else 'لا'"/></td>
+                            <td><span t-out="'نعم' if line.is_provided else 'لا'"/></td>
+                            <td><span t-field="line.review_result"/></td>
+                            <td t-out="line.reviewed_by.name or '-'"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="dma-h4">الإجراءات التشغيلية / SOP</h4>
+                <table class="table table-sm dma-table">
+                    <tbody>
+                        <tr>
+                            <th style="width: 30%;">النسخة الإلكترونية / Electronic copy</th>
+                            <td>
+                                <t t-if="o.sop_attachment_ids">
+                                    <span t-out="', '.join(o.sop_attachment_ids.mapped('name'))"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>النسخة الورقية / Paper copy</th>
+                            <td>
+                                <t t-if="o.sop_paper_received">
+                                    استُلمت بتاريخ
+                                    <span t-out="o.sop_paper_received_date" t-options='{"widget": "date"}'/>
+                                    بواسطة <span t-out="o.sop_paper_received_by.name or '-'"/>
+                                </t>
+                                <t t-else="">لم تُستلم / not received</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>مصادقة الطرفين / Dual confirmation</th>
+                            <td>
+                                <div>
+                                    المالية:
+                                    <span t-out="'نعم' if o.finance_confirmed_sop_fee else 'لا'"/>
+                                    <t t-if="o.finance_confirmed_by">
+                                        — <span t-out="o.finance_confirmed_by.name"/>
+                                    </t>
+                                </div>
+                                <div>
+                                    العمليات:
+                                    <span t-out="'نعم' if o.operations_confirmed_sop else 'لا'"/>
+                                    <t t-if="o.operations_confirmed_by">
+                                        — <span t-out="o.operations_confirmed_by.name"/>
+                                    </t>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="dma-h4">الرسوم / Fees</h4>
+                <table class="table table-sm dma-table">
+                    <thead>
+                        <tr>
+                            <th>نوع الرسم / Fee type</th>
+                            <th>المبلغ / Amount</th>
+                            <th>رقم الوصل / Receipt</th>
+                            <th>التاريخ / Date</th>
+                            <th>الحالة / Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.fee_ids" t-as="fee">
+                            <td><span t-field="fee.fee_type"/></td>
+                            <td><span t-field="fee.amount" t-options='{"widget": "monetary", "display_currency": fee.currency_id}'/></td>
+                            <td t-out="fee.receipt_number or '-'"/>
+                            <td><span t-out="fee.receipt_date" t-options='{"widget": "date"}'/></td>
+                            <td><span t-field="fee.state"/></td>
+                        </tr>
+                        <tr t-if="not o.fee_ids">
+                            <td colspan="5">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="dma-h4">قرار اللجنة والتنقيح / Committee decision and refinement</h4>
+                <table class="table table-sm dma-table">
+                    <tbody>
+                        <tr>
+                            <th style="width: 30%;">القرار / Decision</th>
+                            <td><span t-field="o.committee_decision"/></td>
+                        </tr>
+                        <tr>
+                            <th>تاريخ الجلسة / Session date</th>
+                            <td><span t-out="o.committee_date" t-options='{"widget": "date"}'/></td>
+                        </tr>
+                        <tr>
+                            <th>نص القرار / Decision text</th>
+                            <td><div t-field="o.decision_text"/></td>
+                        </tr>
+                        <tr>
+                            <th>النص المنقّح / Refined text</th>
+                            <td><div t-field="o.refined_decision_text"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="dma-h4">سجل الموافقات / Approvals log</h4>
+                <table class="table table-sm dma-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ / Date</th>
+                            <th>المرحلة / Step</th>
+                            <th>الجهة / Role</th>
+                            <th>المستخدم / User</th>
+                            <th>القرار / Decision</th>
+                            <th>ملاحظات / Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.approval_line_ids" t-as="entry">
+                            <td><span t-out="entry.date" t-options='{"widget": "datetime"}'/></td>
+                            <td><span t-field="entry.step"/></td>
+                            <td><span t-field="entry.role"/></td>
+                            <td t-out="entry.user_id.name"/>
+                            <td><span t-field="entry.decision"/></td>
+                            <td t-out="entry.notes or ''"/>
+                        </tr>
+                        <tr t-if="not o.approval_line_ids">
+                            <td colspan="6">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row dma-signatures">
+                    <div class="col-8"/>
+                    <div class="col-4">
+                        <t t-call="dma_accreditation.report_dma_qr_block"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_request_summary">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="dma_accreditation.report_request_summary_document"/>
+        </t>
+    </template>
+
+</odoo>

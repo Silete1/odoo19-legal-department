@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_certificate_document">
+        <t t-call="web.basic_layout">
+            <div class="page dma-page dma-certificate" dir="rtl">
+                <div class="dma-cert-frame">
+                    <t t-call="dma_accreditation.report_dma_letterhead"/>
+
+                    <!-- The report is bound to the model, so it can be launched
+                         from the Print menu of any request. A file that has not
+                         been authorised must never produce a document that
+                         looks like a certificate. -->
+                    <div t-if="not o.certificate_ref" class="dma-not-issued">
+                        <h2>لم تُصدر بعد</h2>
+                        <div><span t-out="'NOT ISSUED'"/></div>
+                        <p>
+                            الطلب <span t-out="o.name"/> لم يبلغ مرحلة
+                            <b>تفويض العمليات</b> بعد، وحالته الحالية:
+                            <b><span t-field="o.state"/></b>.
+                            لا تُصدر الشهادة إلا بعد قرار لجنة منح التفويض
+                            والتنقيح القانوني.
+                        </p>
+                        <p class="dma-footer-en">
+                            <span t-out="'Request %s has not reached the Operational Accreditation stage; no certificate exists yet.' % o.name"/>
+                        </p>
+                    </div>
+                    <t t-if="o.certificate_ref">
+
+                    <h1 class="dma-cert-title">شهادة تفويض العمليات</h1>
+                    <div class="dma-cert-title-en"><span t-out="'Operational Accreditation Certificate'"/></div>
+
+                    <div class="dma-cert-ref">
+                        <span>رقم الشهادة / Certificate No.:</span>
+                        <b t-out="o.certificate_ref or o.name"/>
+                    </div>
+
+                    <div class="dma-cert-body">
+                        <p>
+                            تشهد <b>دائرة شؤون الألغام</b> بأن المؤسسة
+                        </p>
+                        <div class="dma-cert-org" t-out="o.partner_id.name"/>
+                        <p>
+                            قد استوفت متطلبات التفويض المكتبي وتفويض العمليات وفق
+                            المعايير الوطنية للأعمال المتعلقة بالألغام
+                            (IMAS/TNMA 07.30)، واستناداً إلى قرار
+                            <b>لجنة منح التفويض</b> الصادر بتاريخ
+                            <b><span t-out="o.committee_date" t-options='{"widget": "date"}'/></b>
+                            وبعد <b>التنقيح القانوني</b> للقرار، وهي مخوّلة بمزاولة
+                            الأعمال ضمن النطاقات المبينة أدناه.
+                        </p>
+                    </div>
+
+                    <table class="table table-sm dma-table dma-cert-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 28%;">نطاقات التفويض / Accredited scopes</th>
+                                <td>
+                                    <t t-if="o.scope_ids">
+                                        <span t-out="', '.join(o.scope_ids.mapped('name'))"/>
+                                    </t>
+                                    <t t-else="">-</t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>تاريخ الإصدار / Issue date</th>
+                                <td><span t-out="o.issue_date" t-options='{"widget": "date"}'/></td>
+                            </tr>
+                            <tr>
+                                <th>تاريخ الانتهاء / Expiry date</th>
+                                <td><span t-out="o.expiry_date" t-options='{"widget": "date"}'/></td>
+                            </tr>
+                            <tr>
+                                <th>الإشارة المكتبية / Office accreditation</th>
+                                <td t-out="o.office_ref or '-'"/>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row dma-signatures">
+                        <div class="col-4 text-center">
+                            <div class="dma-sign-role">مدير القسم القانوني</div>
+                            <div class="dma-sign-line"/>
+                            <div class="dma-sign-en"><span t-out="'Legal Department Director'"/></div>
+                        </div>
+                        <div class="col-4">
+                            <t t-call="dma_accreditation.report_dma_qr_block"/>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div class="dma-sign-role">مدير عام دائرة شؤون الألغام</div>
+                            <div class="dma-sign-line"/>
+                            <div class="dma-sign-en"><span t-out="'General Director'"/></div>
+                        </div>
+                    </div>
+
+                    <div class="dma-footer-note">
+                        يخضع هذا التفويض للمراقبة والتقييم، ويجوز تعليقه أو سحبه عند مخالفة المعايير الوطنية.
+                        <span class="dma-footer-en"><span t-out="'This accreditation is subject to monitoring and may be suspended or withdrawn.'"/></span>
+                    </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_certificate">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="dma_accreditation.report_certificate_document"/>
+        </t>
+    </template>
+
+</odoo>

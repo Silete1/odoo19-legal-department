@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- The demo requests are not declared as plain records: they are
+             driven through the real workflow methods by the helper below, so
+             the demo database also ships a realistic approvals log, chatter
+             and set of activities. -->
+        <function model="dma.accreditation.request" name="_load_demo_workflow"/>
+
+    </data>
+</odoo>

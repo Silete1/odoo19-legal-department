@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_office_letter" model="ir.actions.report">
+        <field name="name">Office Accreditation Letter</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dma_accreditation.report_office_letter</field>
+        <field name="report_file">dma_accreditation.report_office_letter</field>
+        <field name="binding_model_id" ref="model_dma_accreditation_request"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_dma_letter"/>
+        <field name="print_report_name">'Office Accreditation Letter - %s' % (object.name)</field>
+    </record>
+
+    <record id="action_report_certificate" model="ir.actions.report">
+        <field name="name">Operational Accreditation Certificate</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dma_accreditation.report_certificate</field>
+        <field name="report_file">dma_accreditation.report_certificate</field>
+        <field name="binding_model_id" ref="model_dma_accreditation_request"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_dma_certificate"/>
+        <field name="print_report_name">'Operational Accreditation Certificate - %s' % (object.certificate_ref or object.name)</field>
+    </record>
+
+    <record id="action_report_request_summary" model="ir.actions.report">
+        <field name="name">Accreditation File Summary</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dma_accreditation.report_request_summary</field>
+        <field name="report_file">dma_accreditation.report_request_summary</field>
+        <field name="binding_model_id" ref="model_dma_accreditation_request"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_dma_letter"/>
+        <field name="print_report_name">'Accreditation File Summary - %s' % (object.name)</field>
+    </record>
+
+</odoo>

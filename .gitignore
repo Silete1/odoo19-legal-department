@@ -13,6 +13,7 @@
 /custom_addons/*
 !/custom_addons/gov_hr_base/
 !/custom_addons/gov_hr_deputation/
+!/custom_addons/dma_accreditation/
 
 /docs/*
 !/docs/access_schema_analysis.md

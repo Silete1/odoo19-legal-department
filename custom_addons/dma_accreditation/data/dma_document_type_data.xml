@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Prerequisites of the office accreditation file (الأوليات), derived
+             from the application documents listed by IMAS 07.30 and
+             TNMA 07.30/01. -->
+        <record id="document_type_registration" model="dma.document.type">
+            <field name="name">Company Registration Certificate</field>
+            <field name="sequence">10</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Official proof that the organisation is legally registered and entitled to operate.</field>
+        </record>
+
+        <record id="document_type_org_structure" model="dma.document.type">
+            <field name="name">Organisational Structure</field>
+            <field name="sequence">20</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Chart of the organisation showing the operational, quality and safety lines of responsibility.</field>
+        </record>
+
+        <record id="document_type_staff_cv" model="dma.document.type">
+            <field name="name">Key Staff CVs and Qualifications</field>
+            <field name="sequence">30</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Curricula vitae and competency certificates of the key operational and medical staff.</field>
+        </record>
+
+        <record id="document_type_equipment" model="dma.document.type">
+            <field name="name">Equipment List</field>
+            <field name="sequence">40</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Inventory of detection, protection, medical and communication equipment with maintenance records.</field>
+        </record>
+
+        <record id="document_type_insurance" model="dma.document.type">
+            <field name="name">Insurance (Staff Medical and Third-Party Liability)</field>
+            <field name="sequence">50</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Valid insurance policies covering the staff medically and third parties for liability.</field>
+        </record>
+
+        <record id="document_type_safety_policy" model="dma.document.type">
+            <field name="name">Safety and Occupational Health Policy</field>
+            <field name="sequence">60</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Written safety and occupational health policy, including the medical evacuation plan.</field>
+        </record>
+
+        <record id="document_type_quality" model="dma.document.type">
+            <field name="name">Quality Management Documentation</field>
+            <field name="sequence">70</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Internal quality management and quality control arrangements.</field>
+        </record>
+
+        <record id="document_type_experience" model="dma.document.type">
+            <field name="name">Prior Demining Experience</field>
+            <field name="sequence">80</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Record of previous demining contracts, tasks completed and references.</field>
+        </record>
+
+        <record id="document_type_financial" model="dma.document.type">
+            <field name="name">Financial Capability Statement</field>
+            <field name="sequence">90</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Evidence that the organisation can financially sustain the operations it applies for.</field>
+        </record>
+
+        <record id="document_type_power_of_attorney" model="dma.document.type">
+            <field name="name">Power of Attorney of the Representative</field>
+            <field name="sequence">100</field>
+            <field name="required_default" eval="True"/>
+            <field name="description">Authorisation of the person representing the organisation before the Directorate.</field>
+        </record>
+
+    </data>
+</odoo>

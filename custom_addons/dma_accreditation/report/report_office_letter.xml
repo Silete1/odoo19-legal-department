@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         Shared letterhead. The two blank bands at the top and the bottom
+         are placeholders for the pre-printed government letterhead; replace
+         the two <img> placeholders below with the official emblem files.
+         ================================================================ -->
+    <template id="report_dma_letterhead">
+        <div class="dma-letterhead">
+            <div class="row">
+                <div class="col-4 text-start">
+                    <div class="dma-emblem-placeholder">
+                        <span>[ EMBLEM ]</span>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="dma-authority">
+                        <div class="dma-authority-ar">دائرة شؤون الألغام</div>
+                        <div class="dma-authority-en"><span t-out="'Directorate of Mine Action'"/></div>
+                    </div>
+                </div>
+                <div class="col-4 text-end">
+                    <div class="dma-emblem-placeholder">
+                        <span>[ LETTERHEAD ]</span>
+                    </div>
+                </div>
+            </div>
+            <hr class="dma-rule"/>
+        </div>
+    </template>
+
+    <template id="report_dma_qr_block">
+        <!-- The QR encodes the public verification URL of the file. The
+             document is therefore *digitally verifiable*: a reader can check
+             the reference against the register of the Directorate.
+             It is NOT cryptographically signed. The national e-signature
+             (PKI) integration point is here: once the national CA is
+             available, sign the rendered PDF and embed the signature
+             reference next to this QR. -->
+        <div class="dma-qr text-center">
+            <img t-att-src="'/report/barcode/QR/%s?width=180&amp;height=180&amp;quiet=0' % (o.verification_token or o.name)"
+                 alt="Verification QR Code" style="width: 90px; height: 90px;"/>
+            <div class="dma-qr-caption">
+                <div>رمز التحقق / <span t-out="'Verification code'"/></div>
+                <div class="dma-token" t-out="o.verification_token or ''"/>
+            </div>
+        </div>
+    </template>
+
+    <!-- ================================================================
+         Office Accreditation letter, addressed to the General Director.
+         ================================================================ -->
+    <template id="report_office_letter_document">
+        <t t-call="web.basic_layout">
+            <div class="page dma-page" dir="rtl">
+                <t t-call="dma_accreditation.report_dma_letterhead"/>
+
+                <!-- The report is bound to the model and can therefore be
+                     launched from the Print menu at any step. A file whose
+                     office accreditation has not been granted must never come
+                     out looking like the letter that grants it. -->
+                <div t-if="not o.office_ref" class="dma-not-issued">
+                    <h2>لم يُمنح بعد</h2>
+                    <div><span t-out="'NOT GRANTED'"/></div>
+                    <p>
+                        الطلب <span t-out="o.name"/> لم يُمنح
+                        <b>التفويض المكتبي</b> بعد، وحالته الحالية:
+                        <b><span t-field="o.state"/></b>.
+                    </p>
+                    <p class="dma-footer-en">
+                        <span t-out="'Request %s has not been granted its Office Accreditation; this letter does not exist yet.' % o.name"/>
+                    </p>
+                </div>
+                <t t-if="o.office_ref">
+
+                <div class="row dma-refs">
+                    <div class="col-6 text-start">
+                        <div><b>التاريخ / Date:</b> <span t-out="o.office_date or o.create_date" t-options='{"widget": "date"}'/></div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <div><b>الإشارة / Ref.:</b> <span t-out="o.office_ref or o.name"/></div>
+                        <div><b>رقم الطلب / Request:</b> <span t-out="o.name"/></div>
+                    </div>
+                </div>
+
+                <div class="dma-addressee">
+                    <div class="dma-to">إلى: السيد مدير عام دائرة شؤون الألغام المحترم</div>
+                    <div class="dma-to-en"><span t-out="'To: The General Director, Directorate of Mine Action'"/></div>
+                </div>
+
+                <h2 class="dma-subject">م / منح التفويض المكتبي</h2>
+                <div class="dma-subject-en"><span t-out="'Subject: Grant of Office Accreditation'"/></div>
+
+                <div class="dma-body">
+                    <p>تحية طيبة وبعد،</p>
+                    <p>
+                        بالإشارة إلى الطلب المقدم من
+                        <b t-out="o.partner_id.name"/>
+                        والمسجل لدينا بالرقم <b t-out="o.name"/>
+                        بتاريخ <span t-out="o.submission_date or o.create_date" t-options='{"widget": "date"}'/>،
+                        وبعد استكمال إجراءات القبول الأولي ومراجعة القسم القانوني،
+                        وتدقيق شعبة التصديقات لكافة الأوليات المطلوبة،
+                        نعرض على مقامكم الكريم منح المؤسسة المذكورة
+                        <b>التفويض المكتبي</b> وفق المعايير الوطنية للأعمال المتعلقة
+                        بالألغام (IMAS/TNMA 07.30).
+                    </p>
+
+                    <table class="table table-sm dma-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 30%;">المؤسسة / Organisation</th>
+                                <td t-out="o.partner_id.name"/>
+                            </tr>
+                            <tr>
+                                <th>نوع الطلب / Request type</th>
+                                <td><span t-field="o.request_type"/></td>
+                            </tr>
+                            <tr>
+                                <th>نطاقات العمل / Scopes</th>
+                                <td>
+                                    <t t-if="o.scope_ids">
+                                        <span t-out="', '.join(o.scope_ids.mapped('name'))"/>
+                                    </t>
+                                    <t t-else="">-</t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ممثل المؤسسة / Representative</th>
+                                <td t-out="o.contact_name or '-'"/>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4 class="dma-h4">الأوليات المدققة / Verified prerequisites</h4>
+                    <table class="table table-sm dma-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 55%;">المستمسك / Document</th>
+                                <th>مطلوب / Required</th>
+                                <th>مقدّم / Provided</th>
+                                <th>النتيجة / Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.document_ids" t-as="line">
+                                <td t-out="line.type_id.name"/>
+                                <td><span t-out="'نعم' if line.is_required else 'لا'"/></td>
+                                <td><span t-out="'نعم' if line.is_provided else 'لا'"/></td>
+                                <td><span t-field="line.review_result"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        عليه، يرجى التفضل بالموافقة على منح التفويض المكتبي ومباشرة
+                        المؤسسة بإجراءات <b>تفويض العمليات</b>.
+                    </p>
+                    <p>مع فائق الاحترام والتقدير.</p>
+                </div>
+
+                <div class="row dma-signatures">
+                    <div class="col-4 text-center">
+                        <div class="dma-sign-role">شعبة التصديقات</div>
+                        <div class="dma-sign-line"/>
+                        <div class="dma-sign-en"><span t-out="'Certifications Division'"/></div>
+                    </div>
+                    <div class="col-4">
+                        <t t-call="dma_accreditation.report_dma_qr_block"/>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div class="dma-sign-role">مدير عام دائرة شؤون الألغام</div>
+                        <div class="dma-sign-line"/>
+                        <div class="dma-sign-en"><span t-out="'General Director'"/></div>
+                    </div>
+                </div>
+
+                <div class="dma-footer-note">
+                    هذه الوثيقة قابلة للتحقق إلكترونياً عبر رمز الاستجابة السريعة أعلاه.
+                    <span class="dma-footer-en"><span t-out="'This document is digitally verifiable through the QR code above.'"/></span>
+                </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_office_letter">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="dma_accreditation.report_office_letter_document"/>
+        </t>
+    </template>
+
+</odoo>

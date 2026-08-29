@@ -1,0 +1,3066 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* dma_accreditation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-29 15:43+0000\n"
+"PO-Revision-Date: 2026-08-29 15:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%(action)s is not available while %(request)s is in status %(state)s."
+msgstr "%(action)s غير متاح بينما يكون %(request)s في الحالة %(state)s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%(action)s may only be performed by: %(roles)s."
+msgstr "لا يجوز تنفيذ %(action)s إلا من قبل: %(roles)s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%(from_state)s to %(to_state)s by %(user)s (%(role)s)."
+msgstr "من %(from_state)s إلى %(to_state)s بواسطة %(user)s (%(role)s)."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%(request)s already carries %(count)s decision(s) in its approvals log and can no longer be deleted. Archive it instead."
+msgstr "%(request)s يتضمن %(count)s قراراً في سجل الموافقات ولم يعد قابلاً للحذف. يُرجى أرشفته بدلاً من ذلك."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_request_document.py:0
+msgid "%s is reserved to the Certifications Division."
+msgstr "%s من صلاحية شعبة التصديقات حصراً."
+
+#. module: dma_accreditation
+#: model:ir.actions.report,print_report_name:dma_accreditation.action_report_request_summary
+msgid "'Accreditation File Summary - %s' % (object.name)"
+msgstr "'ملخص ملف التفويض - %s' % (object.name)"
+
+#. module: dma_accreditation
+#: model:ir.actions.report,print_report_name:dma_accreditation.action_report_office_letter
+msgid "'Office Accreditation Letter - %s' % (object.name)"
+msgstr "'كتاب التفويض المكتبي - %s' % (object.name)"
+
+#. module: dma_accreditation
+#: model:ir.actions.report,print_report_name:dma_accreditation.action_report_certificate
+msgid "'Operational Accreditation Certificate - %s' % (object.certificate_ref or object.name)"
+msgstr "'شهادة تفويض العمليات - %s' % (object.certificate_ref or object.name)"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid ""
+".\n"
+"                            لا تُصدر الشهادة إلا بعد قرار لجنة منح التفويض\n"
+"                            والتنقيح القانوني."
+msgstr ""
+".\n"
+"                            لا تُصدر الشهادة إلا بعد قرار لجنة منح التفويض\n"
+"                            والتنقيح القانوني."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "<b>Request rejected.</b>"
+msgstr "<b>تم رفض الطلب.</b>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "<b>Returned to the applicant.</b>"
+msgstr "<b>أُعيد إلى المعني.</b>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "<b>الإشارة / Ref.:</b>"
+msgstr "<b>الإشارة / Ref.:</b>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "<b>التاريخ / Date:</b>"
+msgstr "<b>التاريخ / Date:</b>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "<b>الحالة / Status:</b>"
+msgstr "<b>الحالة / Status:</b>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "<b>تاريخ الطباعة / Printed:</b>"
+msgstr "<b>تاريخ الطباعة / Printed:</b>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "<b>رقم الطلب / Request:</b>"
+msgstr "<b>رقم الطلب / Request:</b>"
+
+#. module: dma_accreditation
+#: model:mail.template,body_html:dma_accreditation.mail_template_operational_granted
+msgid ""
+"<div dir=\"rtl\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;\">\n"
+"    <p>السادة <t t-out=\"object.partner_id.name or ''\"/> المحترمين،</p>\n"
+"    <p>\n"
+"        استناداً إلى قرار <b>لجنة منح التفويض</b> الصادر بتاريخ\n"
+"        <b><t t-out=\"object.committee_date or ''\"/></b> وبعد إتمام\n"
+"        <b>التنقيح القانوني</b> للقرار، تم منح مؤسستكم\n"
+"        <b>تفويض العمليات</b> بموجب الشهادة المرقمة\n"
+"        <b><t t-out=\"object.certificate_ref or ''\"/></b>.\n"
+"    </p>\n"
+"    <table style=\"border-collapse: collapse; margin: 12px 0;\">\n"
+"        <tr>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><b>تاريخ الإصدار</b></td>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><t t-out=\"object.issue_date or ''\"/></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><b>تاريخ الانتهاء</b></td>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><t t-out=\"object.expiry_date or ''\"/></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><b>نطاقات التفويض</b></td>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><t t-out=\"', '.join(object.scope_ids.mapped('name')) or '-'\"/></td>\n"
+"        </tr>\n"
+"    </table>\n"
+"    <p>\n"
+"        يتوجب الالتزام بالمعايير الوطنية وبالإجراءات التشغيلية المعتمدة طوال\n"
+"        فترة سريان التفويض، ويخضع التفويض للمراقبة والتقييم من قبل الدائرة.\n"
+"    </p>\n"
+"    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>\n"
+"</div>\n"
+"<div dir=\"ltr\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;\">\n"
+"    <p>\n"
+"        <b>English summary:</b> the Operational Accreditation of\n"
+"        <t t-out=\"object.partner_id.name or ''\"/> has been granted under certificate\n"
+"        <t t-out=\"object.certificate_ref or ''\"/>, valid from\n"
+"        <t t-out=\"object.issue_date or ''\"/> to <t t-out=\"object.expiry_date or ''\"/>.\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div dir=\"rtl\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;\">\n"
+"    <p>السادة <t t-out=\"object.partner_id.name or ''\"/> المحترمين،</p>\n"
+"    <p>\n"
+"        استناداً إلى قرار <b>لجنة منح التفويض</b> الصادر بتاريخ\n"
+"        <b><t t-out=\"object.committee_date or ''\"/></b> وبعد إتمام\n"
+"        <b>التنقيح القانوني</b> للقرار، تم منح مؤسستكم\n"
+"        <b>تفويض العمليات</b> بموجب الشهادة المرقمة\n"
+"        <b><t t-out=\"object.certificate_ref or ''\"/></b>.\n"
+"    </p>\n"
+"    <table style=\"border-collapse: collapse; margin: 12px 0;\">\n"
+"        <tr>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><b>تاريخ الإصدار</b></td>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><t t-out=\"object.issue_date or ''\"/></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><b>تاريخ الانتهاء</b></td>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><t t-out=\"object.expiry_date or ''\"/></td>\n"
+"        </tr>\n"
+"        <tr>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><b>نطاقات التفويض</b></td>\n"
+"            <td style=\"padding: 4px 12px; border: 1px solid #e5e7eb;\"><t t-out=\"', '.join(object.scope_ids.mapped('name')) or '-'\"/></td>\n"
+"        </tr>\n"
+"    </table>\n"
+"    <p>\n"
+"        يتوجب الالتزام بالمعايير الوطنية وبالإجراءات التشغيلية المعتمدة طوال\n"
+"        فترة سريان التفويض، ويخضع التفويض للمراقبة والتقييم من قبل الدائرة.\n"
+"    </p>\n"
+"    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>\n"
+"</div>\n"
+"<div dir=\"ltr\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;\">\n"
+"    <p>\n"
+"        <b>English summary:</b> the Operational Accreditation of\n"
+"        <t t-out=\"object.partner_id.name or ''\"/> has been granted under certificate\n"
+"        <t t-out=\"object.certificate_ref or ''\"/>, valid from\n"
+"        <t t-out=\"object.issue_date or ''\"/> to <t t-out=\"object.expiry_date or ''\"/>.\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: dma_accreditation
+#: model:mail.template,body_html:dma_accreditation.mail_template_office_granted
+msgid ""
+"<div dir=\"rtl\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;\">\n"
+"    <p>السادة <t t-out=\"object.partner_id.name or ''\"/> المحترمين،</p>\n"
+"    <p>\n"
+"        تحية طيبة وبعد،\n"
+"    </p>\n"
+"    <p>\n"
+"        يسر <b>دائرة شؤون الألغام</b> إشعاركم بأنه تم منح مؤسستكم\n"
+"        <b>التفويض المكتبي</b> بموجب الطلب المرقم\n"
+"        <b><t t-out=\"object.name or ''\"/></b> وبالإشارة الرسمية\n"
+"        <b><t t-out=\"object.office_ref or ''\"/></b> بتاريخ\n"
+"        <b><t t-out=\"object.office_date or ''\"/></b>.\n"
+"    </p>\n"
+"    <p>\n"
+"        نطاقات العمل المشمولة بالتفويض:\n"
+"        <b><t t-out=\"', '.join(object.scope_ids.mapped('name')) or '-'\"/></b>\n"
+"    </p>\n"
+"    <p>\n"
+"        يرجى التفضل بالمباشرة بإجراءات <b>تفويض العمليات</b>، وذلك بتقديم\n"
+"        إجراءات التشغيل القياسية (SOP) بنسختيها الورقية والإلكترونية إلى\n"
+"        قسم العمليات، وتسديد رسوم قراءة الإجراءات التشغيلية.\n"
+"    </p>\n"
+"    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>\n"
+"</div>\n"
+"<div dir=\"ltr\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;\">\n"
+"    <p>\n"
+"        <b>English summary:</b> the Directorate of Mine Action has granted the\n"
+"        <b>Office Accreditation</b> of <t t-out=\"object.partner_id.name or ''\"/> under\n"
+"        reference <t t-out=\"object.office_ref or ''\"/> dated\n"
+"        <t t-out=\"object.office_date or ''\"/>. Please proceed with the Operational\n"
+"        Accreditation phase by submitting your SOP in both paper and electronic\n"
+"        form and by settling the SOP reading fee.\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div dir=\"rtl\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;\">\n"
+"    <p>السادة <t t-out=\"object.partner_id.name or ''\"/> المحترمين،</p>\n"
+"    <p>\n"
+"        تحية طيبة وبعد،\n"
+"    </p>\n"
+"    <p>\n"
+"        يسر <b>دائرة شؤون الألغام</b> إشعاركم بأنه تم منح مؤسستكم\n"
+"        <b>التفويض المكتبي</b> بموجب الطلب المرقم\n"
+"        <b><t t-out=\"object.name or ''\"/></b> وبالإشارة الرسمية\n"
+"        <b><t t-out=\"object.office_ref or ''\"/></b> بتاريخ\n"
+"        <b><t t-out=\"object.office_date or ''\"/></b>.\n"
+"    </p>\n"
+"    <p>\n"
+"        نطاقات العمل المشمولة بالتفويض:\n"
+"        <b><t t-out=\"', '.join(object.scope_ids.mapped('name')) or '-'\"/></b>\n"
+"    </p>\n"
+"    <p>\n"
+"        يرجى التفضل بالمباشرة بإجراءات <b>تفويض العمليات</b>، وذلك بتقديم\n"
+"        إجراءات التشغيل القياسية (SOP) بنسختيها الورقية والإلكترونية إلى\n"
+"        قسم العمليات، وتسديد رسوم قراءة الإجراءات التشغيلية.\n"
+"    </p>\n"
+"    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>\n"
+"</div>\n"
+"<div dir=\"ltr\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;\">\n"
+"    <p>\n"
+"        <b>English summary:</b> the Directorate of Mine Action has granted the\n"
+"        <b>Office Accreditation</b> of <t t-out=\"object.partner_id.name or ''\"/> under\n"
+"        reference <t t-out=\"object.office_ref or ''\"/> dated\n"
+"        <t t-out=\"object.office_date or ''\"/>. Please proceed with the Operational\n"
+"        Accreditation phase by submitting your SOP in both paper and electronic\n"
+"        form and by settling the SOP reading fee.\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: dma_accreditation
+#: model:mail.template,body_html:dma_accreditation.mail_template_request_returned
+msgid ""
+"<div dir=\"rtl\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;\">\n"
+"    <p>السادة <t t-out=\"object.partner_id.name or ''\"/> المحترمين،</p>\n"
+"    <t t-if=\"object.state == 'rejected'\">\n"
+"        <p>\n"
+"            نأسف لإشعاركم بأنه تقرر <b>رفض</b> طلب التفويض المرقم\n"
+"            <b><t t-out=\"object.name or ''\"/></b>.\n"
+"        </p>\n"
+"        <p><b>أسباب الرفض:</b></p>\n"
+"        <p style=\"white-space: pre-line;\"><t t-out=\"object.reject_reason or ''\"/></p>\n"
+"    </t>\n"
+"    <t t-else=\"\">\n"
+"        <p>\n"
+"            نود إشعاركم بأنه تمت <b>إعادة</b> طلب التفويض المرقم\n"
+"            <b><t t-out=\"object.name or ''\"/></b> لاستكمال النواقص المبينة أدناه.\n"
+"        </p>\n"
+"        <p><b>أسباب الإعادة:</b></p>\n"
+"        <p style=\"white-space: pre-line;\"><t t-out=\"object.return_reason or ''\"/></p>\n"
+"        <p>يرجى استكمال المطلوب وإعادة تقديم الطلب إلى شعبة الاستلام.</p>\n"
+"    </t>\n"
+"    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>\n"
+"</div>\n"
+"<div dir=\"ltr\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;\">\n"
+"    <p>\n"
+"        <b>English summary:</b> accreditation request\n"
+"        <t t-out=\"object.name or ''\"/> has been\n"
+"        <t t-out=\"'rejected' if object.state == 'rejected' else 'returned for completion'\"/>.\n"
+"        Reason: <t t-out=\"(object.reject_reason if object.state == 'rejected' else object.return_reason) or ''\"/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div dir=\"rtl\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 14px; color: #1f2937;\">\n"
+"    <p>السادة <t t-out=\"object.partner_id.name or ''\"/> المحترمين،</p>\n"
+"    <t t-if=\"object.state == 'rejected'\">\n"
+"        <p>\n"
+"            نأسف لإشعاركم بأنه تقرر <b>رفض</b> طلب التفويض المرقم\n"
+"            <b><t t-out=\"object.name or ''\"/></b>.\n"
+"        </p>\n"
+"        <p><b>أسباب الرفض:</b></p>\n"
+"        <p style=\"white-space: pre-line;\"><t t-out=\"object.reject_reason or ''\"/></p>\n"
+"    </t>\n"
+"    <t t-else=\"\">\n"
+"        <p>\n"
+"            نود إشعاركم بأنه تمت <b>إعادة</b> طلب التفويض المرقم\n"
+"            <b><t t-out=\"object.name or ''\"/></b> لاستكمال النواقص المبينة أدناه.\n"
+"        </p>\n"
+"        <p><b>أسباب الإعادة:</b></p>\n"
+"        <p style=\"white-space: pre-line;\"><t t-out=\"object.return_reason or ''\"/></p>\n"
+"        <p>يرجى استكمال المطلوب وإعادة تقديم الطلب إلى شعبة الاستلام.</p>\n"
+"    </t>\n"
+"    <p>مع فائق الاحترام والتقدير،<br/>دائرة شؤون الألغام</p>\n"
+"</div>\n"
+"<div dir=\"ltr\" style=\"font-family: 'Segoe UI', Tahoma, Arial, sans-serif; font-size: 12px; color: #6b7280; border-top: 1px solid #e5e7eb; margin-top: 16px; padding-top: 8px;\">\n"
+"    <p>\n"
+"        <b>English summary:</b> accreditation request\n"
+"        <t t-out=\"object.name or ''\"/> has been\n"
+"        <t t-out=\"'rejected' if object.state == 'rejected' else 'returned for completion'\"/>.\n"
+"        Reason: <t t-out=\"(object.reject_reason if object.state == 'rejected' else object.return_reason) or ''\"/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "<span class=\"o_form_label\">Prerequisites checklist</span>"
+msgstr "<span class=\"o_form_label\">قائمة تدقيق الأوليات</span>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "<span class=\"text-muted\">required documents accepted</span>"
+msgstr "<span class=\"text-muted\">من الوثائق الإلزامية مقبولة</span>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "<span>The office accreditation stays blocked until every required document of the checklist is provided and accepted.</span>"
+msgstr "<span>يبقى التفويض المكتبي موقوفاً إلى أن تصبح كل وثيقة إلزامية في قائمة التدقيق مُقدَّمة ومقبولة.</span>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_dma_letterhead
+msgid "<span>[ EMBLEM ]</span>"
+msgstr "<span>[ الشعار ]</span>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_dma_letterhead
+msgid "<span>[ LETTERHEAD ]</span>"
+msgstr "<span>[ ترويسة الكتاب ]</span>"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "<span>رقم الشهادة / Certificate No.:</span>"
+msgstr "<span>رقم الشهادة / Certificate No.:</span>"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "A confirmed SOP reading fee is required before %s can move on."
+msgstr "يلزم وجود رسوم قراءة الإجراءات التشغيلية (SOP) مؤكَّدة قبل أن ينتقل %s إلى الخطوة التالية."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "A confirmed operational demonstration fee is required before %s can be sent to the Accreditation Committee."
+msgstr "يلزم وجود رسوم المظاهرة العملياتية مؤكَّدة قبل إحالة %s إلى لجنة منح التفويض."
+
+#. module: dma_accreditation
+#: model:ir.model.constraint,message:dma_accreditation.constraint_dma_fee_payment_amount_positive
+msgid "A fee amount can never be negative."
+msgstr "لا يمكن أن يكون مبلغ الرسوم سالباً."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_settings.py:0
+msgid "A fee amount cannot be negative."
+msgstr "لا يمكن أن يكون مبلغ الرسوم سالباً."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/wizard/dma_decision_reason.py:0
+msgid "A reason is required before returning or rejecting a request."
+msgstr "يجب بيان السبب قبل إعادة الطلب أو رفضه."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "A reason is required to reject a request."
+msgstr "يجب بيان السبب لرفض الطلب."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "A reason is required to return a request to the applicant."
+msgstr "يجب بيان السبب لإعادة الطلب إلى المعني."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_fee_payment.py:0
+msgid "A receipt date is required before confirming a fee."
+msgstr "يجب إدخال تاريخ الوصل قبل تأكيد الرسوم."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_fee_payment.py:0
+msgid "A receipt number is required before confirming a fee."
+msgstr "يجب إدخال رقم الوصل قبل تأكيد الرسوم."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Accept"
+msgstr "قبول"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_request_document__review_result__accepted
+msgid "Accepted"
+msgstr "مقبولة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__accepted_document_count
+msgid "Accepted Documents"
+msgstr "الوثائق المقبولة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__checklist_progress
+msgid "Accepted required documents over the total of required documents."
+msgstr "عدد الوثائق الإلزامية المقبولة من مجموع الوثائق الإلزامية."
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_approval_line
+msgid "Accreditation Approval Log Line"
+msgstr "سطر سجل موافقات التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__committee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__committee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__committee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__committee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__committee
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_committee
+#: model:res.groups,name:dma_accreditation.group_dma_committee
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Accreditation Committee"
+msgstr "لجنة منح التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_document_type
+msgid "Accreditation Document Type"
+msgstr "نوع وثيقة التفويض"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_form
+msgid "Accreditation Fee"
+msgstr "رسوم التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_fee_payment
+msgid "Accreditation Fee Payment"
+msgstr "تسديد رسوم التفويض"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_fee_payment
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_list
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "Accreditation Fees"
+msgstr "رسوم التفويض"
+
+#. module: dma_accreditation
+#: model:ir.actions.report,name:dma_accreditation.action_report_request_summary
+msgid "Accreditation File Summary"
+msgstr "ملخص ملف التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__manager
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__manager
+#: model:res.groups,name:dma_accreditation.group_dma_manager
+msgid "Accreditation Manager"
+msgstr "مدير التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_accreditation_request
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Accreditation Request"
+msgstr "طلب التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_request_document
+msgid "Accreditation Request Document"
+msgstr "وثيقة طلب التفويض"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_accreditation_request
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_activity
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_graph
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_list
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_pivot
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Accreditation Requests"
+msgstr "طلبات التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_decision_reason
+msgid "Accreditation Return / Reject Reason"
+msgstr "سبب إعادة / رفض طلب التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_accreditation_scope
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_scope_view_form
+msgid "Accreditation Scope"
+msgstr "نطاق التفويض"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_accreditation_scope
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_config_scope
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_scope_view_list
+msgid "Accreditation Scopes"
+msgstr "نطاقات التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model,name:dma_accreditation.model_dma_accreditation_settings
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_settings_view_form
+msgid "Accreditation Settings"
+msgstr "إعدادات التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__validity_months
+msgid "Accreditation Validity (months)"
+msgstr "مدة صلاحية التفويض (بالأشهر)"
+
+#. module: dma_accreditation
+#: model:ir.module.category,description:dma_accreditation.module_category_dma_accreditation
+msgid "Accreditation of demining organisations by the Directorate of Mine Action."
+msgstr "منح التفويض للمؤسسات العاملة في إزالة الألغام من قبل دائرة شؤون الألغام."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Accreditation step: %s"
+msgstr "خطوة التفويض: %s"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Accredited"
+msgstr "مُفوَّض"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__active
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__active
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Administrative reset: the sign-offs of the previous pass have to be given again."
+msgstr "إعادة تعيين إدارية: يجب تجديد مصادقات الدورة السابقة."
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_requests
+msgid "All Requests"
+msgstr "جميع الطلبات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__request_type__amendment
+msgid "Amendment"
+msgstr "تعديل"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Applicant"
+msgstr "مقدِّم الطلب"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__partner_id
+msgid "Applicant Company"
+msgstr "الشركة مقدِّمة الطلب"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_approval_line
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__approval_line_ids
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_approvals
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_list
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+msgid "Approvals Log"
+msgstr "سجل الموافقات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__committee_decision__approve
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__decision__approved
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+msgid "Approved"
+msgstr "موافق عليه"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__committee_decision__conditional
+msgid "Approved with Conditions"
+msgstr "موافق عليه بشروط"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_scope_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_search
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "At least one accreditation scope must be requested before submitting %s."
+msgstr "يجب طلب نطاق تفويض واحد على الأقل قبل تقديم %s."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_power_of_attorney
+msgid "Authorisation of the person representing the organisation before the Directorate."
+msgstr "تخويل الشخص الذي يمثّل المؤسسة أمام الدائرة."
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_bac
+msgid "Battle Area Clearance"
+msgstr "تطهير مناطق القتال"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__dual_confirm_complete
+msgid "Both Parties Confirmed"
+msgstr "مصادقة الطرفين مكتملة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid ""
+"Both the Finance Department and the Operations Department\n"
+"                        have to confirm before the file can move on."
+msgstr ""
+"على القسم المالي وقسم العمليات كليهما\n"
+"                        المصادقة قبل أن ينتقل الملف إلى الخطوة التالية."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_decision_reason_view_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__certificate_ref
+msgid "Certificate Number"
+msgstr "رقم الشهادة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Certifications Check"
+msgstr "تدقيق شعبة التصديقات"
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_cert
+msgid "Certifications Division"
+msgstr "شعبة التصديقات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__cert_check
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__cert_check
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__cert_check
+msgid "Certifications Division Check"
+msgstr "تدقيق شعبة التصديقات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__cert_officer
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__cert_officer
+#: model:res.groups,name:dma_accreditation.group_dma_cert_officer
+msgid "Certifications Division Officer"
+msgstr "ضابط شعبة التصديقات"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_cert
+msgid "Certifications Queue"
+msgstr "قائمة انتظار شعبة التصديقات"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_org_structure
+msgid "Chart of the organisation showing the operational, quality and safety lines of responsibility."
+msgstr "مخطط هيكلية المؤسسة يبيّن خطوط المسؤولية العملياتية والجودة والسلامة."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__checklist_complete
+msgid "Checklist Complete"
+msgstr "قائمة التدقيق مكتملة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__checklist_progress
+msgid "Checklist Progress"
+msgstr "إنجاز قائمة التدقيق"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__verification_token
+msgid "Code encoded in the QR of the official documents; it lets a third party verify the authenticity of a letter or a certificate."
+msgstr "الرمز المضمَّن في رمز QR الخاص بالوثائق الرسمية؛ يتيح لطرف ثالث التحقق من صحة الكتاب أو الشهادة."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__color
+msgid "Colour Index"
+msgstr "مؤشر اللون"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Committee"
+msgstr "اللجنة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Committee & Decision"
+msgstr "اللجنة والقرار"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__committee_date
+msgid "Committee Date"
+msgstr "تاريخ اللجنة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__committee_decision
+msgid "Committee Decision"
+msgstr "قرار اللجنة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__decision_text
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Committee Decision Text"
+msgstr "نص قرار اللجنة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__committee_minutes_ids
+msgid "Committee Minutes"
+msgstr "محاضر اللجنة"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_committee
+msgid "Committee Queue"
+msgstr "قائمة انتظار لجنة منح التفويض"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__company_id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__company_id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__company_id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__company_id
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Company"
+msgstr "الشركة"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_registration
+msgid "Company Registration Certificate"
+msgstr "شهادة تسجيل الشركة"
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_configuration
+msgid "Configuration"
+msgstr "التهيئة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_decision_reason_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_list
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Confirm Demonstration Fee"
+msgstr "تأكيد رسوم المظاهرة العملياتية"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_form
+msgid "Confirm Fee"
+msgstr "تأكيد الرسوم"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Confirm SOP Reading Fee"
+msgstr "تأكيد رسوم قراءة الإجراءات التشغيلية (SOP)"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Confirm SOP Submission"
+msgstr "المصادقة على تقديم الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_list
+msgid "Confirm the reception of the fee"
+msgstr "تأكيد استلام الرسوم"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__decision__confirmed
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_fee_payment__state__confirmed
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "Confirmed"
+msgstr "مؤكَّد"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__confirmed_by
+msgid "Confirmed By"
+msgstr "المؤكِّد"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__confirmed_on
+msgid "Confirmed On"
+msgstr "تاريخ التأكيد"
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_finance
+msgid "Confirms the accreditation fees and the receipt of the request."
+msgstr "يؤكّد رسوم التفويض ويصادق على استلام الطلب."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__contact_email
+msgid "Contact Email"
+msgstr "البريد الإلكتروني لجهة الاتصال"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__contact_name
+msgid "Contact Name"
+msgstr "اسم جهة الاتصال"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__contact_partner_id
+msgid "Contact Person"
+msgstr "جهة الاتصال"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__contact_phone
+msgid "Contact Phone"
+msgstr "هاتف جهة الاتصال"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__create_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__create_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__create_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__create_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__create_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__create_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__create_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__create_uid
+msgid "Created by"
+msgstr "أنشأه"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__create_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__create_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__create_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__create_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__create_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__create_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__create_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_reception
+msgid "Creates accreditation requests and submits them to the General Director."
+msgstr "ينشئ طلبات التفويض ويقدّمها إلى المدير العام."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__currency_id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__target_state
+msgid "Current Step"
+msgstr "الخطوة الحالية"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_staff_cv
+msgid "Curricula vitae and competency certificates of the key operational and medical staff."
+msgstr "السير الذاتية وشهادات الكفاءة للكوادر العملياتية والطبية الرئيسية."
+
+#. module: dma_accreditation
+#: model:ir.module.category,name:dma_accreditation.module_category_dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_root
+#: model:res.groups.privilege,name:dma_accreditation.res_groups_privilege_dma_accreditation
+msgid "DMA Accreditation"
+msgstr "تفويض دائرة شؤون الألغام"
+
+#. module: dma_accreditation
+#: model:mail.template,name:dma_accreditation.mail_template_office_granted
+msgid "DMA: Office Accreditation Granted"
+msgstr "دائرة شؤون الألغام: منح التفويض المكتبي"
+
+#. module: dma_accreditation
+#: model:mail.template,name:dma_accreditation.mail_template_operational_granted
+msgid "DMA: Operational Accreditation Granted"
+msgstr "دائرة شؤون الألغام: منح تفويض العمليات"
+
+#. module: dma_accreditation
+#: model:mail.template,name:dma_accreditation.mail_template_request_returned
+msgid "DMA: Request Returned or Rejected"
+msgstr "دائرة شؤون الألغام: إعادة الطلب أو رفضه"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__user_id
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+msgid "Decided By"
+msgstr "متخذ القرار"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__decision
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__mode
+msgid "Decision"
+msgstr "القرار"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Decision of the Accreditation Committee."
+msgstr "قرار لجنة منح التفويض."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Decision refined by the Legal Department."
+msgstr "القرار بعد التنقيح القانوني من قبل القسم القانوني."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__refined_decision_text
+msgid "Decision text after the refinement of the Legal Department."
+msgstr "نص القرار بعد التنقيح القانوني من قبل القسم القانوني."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_settings__sop_fee
+msgid "Default amount proposed on a new SOP reading fee line."
+msgstr "المبلغ الافتراضي المقترح في سطر جديد لرسوم قراءة الإجراءات التشغيلية (SOP)."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_settings__demo_fee
+msgid "Default amount proposed on a new operational demonstration fee line."
+msgstr "المبلغ الافتراضي المقترح في سطر جديد لرسوم المظاهرة العملياتية."
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_accreditation_scope
+msgid "Define the demining activities an organisation can be accredited for."
+msgstr "حدِّد أنشطة إزالة الألغام التي يمكن منح المؤسسة تفويضاً بها."
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_document_type
+msgid "Define the prerequisite documents of the office accreditation file."
+msgstr "حدِّد وثائق الأوليات الخاصة بملف التفويض المكتبي."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__partner_id
+msgid "Demining organisation applying for accreditation."
+msgstr "المؤسسة العاملة في إزالة الألغام مقدِّمة طلب التفويض."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "Demonstration Fee"
+msgstr "رسوم المظاهرة العملياتية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__demo_fee_paid
+msgid "Demonstration Fee Confirmed"
+msgstr "رسوم المظاهرة العملياتية مؤكَّدة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__description
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__description
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_scope_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_settings_view_form
+msgid "Directorate wide defaults applied to every new accreditation file."
+msgstr "إعدادات افتراضية على مستوى الدائرة تُطبَّق على كل ملف تفويض جديد."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_settings_view_form
+msgid "Discard"
+msgstr "تجاهل"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__display_name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__display_name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__display_name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__display_name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__display_name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__display_name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__display_name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_request_document.py:0
+msgid "Document"
+msgstr "وثيقة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__type_id
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_form
+msgid "Document Type"
+msgstr "نوع الوثيقة"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_document_type
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_config_document_type
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_list
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_search
+msgid "Document Types"
+msgstr "أنواع الوثائق"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_request_document.py:0
+msgid "Document “%s” cannot be accepted before it is marked as provided."
+msgstr "لا يمكن قبول الوثيقة “%s” قبل تأشيرها بأنها مقدَّمة."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Documents"
+msgstr "الوثائق"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__draft
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__draft
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__draft
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_fee_payment__state__draft
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__dual_confirm
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__dual_confirm
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__dual_confirm
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Dual Confirmation"
+msgstr "مصادقة الطرفين"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Electronic Copy"
+msgstr "النسخة الإلكترونية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__sop_attachment_ids
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Electronic SOP"
+msgstr "النسخة الإلكترونية من الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__sop_attachment_ids
+msgid "Electronic copy of the Standing Operating Procedures."
+msgstr "نسخة إلكترونية من الإجراءات التشغيلية القياسية (SOP)."
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_equipment
+msgid "Equipment List"
+msgstr "قائمة المعدات"
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_document_type
+msgid ""
+"Every request gets one checklist line per document type. The\n"
+"                Certifications Division has to mark each required line as\n"
+"                provided and accepted before the office accreditation can be\n"
+"                granted."
+msgstr ""
+"يحصل كل طلب على سطر واحد في قائمة التدقيق لكل نوع وثيقة. وعلى\n"
+"                شعبة التصديقات تأشير كل سطر إلزامي بأنه\n"
+"                مقدَّم ومقبول قبل أن يتسنى منح التفويض\n"
+"                المكتبي."
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_approval_line
+msgid ""
+"Every workflow transition appends one line here. Entries can\n"
+"                never be modified nor deleted, so the log can be handed over to\n"
+"                an external auditor as is."
+msgstr ""
+"يُضيف كل انتقال في سير العمل سطراً واحداً هنا. ولا يمكن\n"
+"                تعديل القيود أو حذفها إطلاقاً، بحيث يمكن تسليم السجل إلى\n"
+"                مدقِّق خارجي كما هو."
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_financial
+msgid "Evidence that the organisation can financially sustain the operations it applies for."
+msgstr "ما يُثبت قدرة المؤسسة على تمويل العمليات التي تتقدَّم بطلب التفويض بها."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Expiring in 90 Days"
+msgstr "تنتهي صلاحيتها خلال 90 يوماً"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__expiry_date
+msgid "Expiry Date"
+msgstr "تاريخ انتهاء الصلاحية"
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_eod
+msgid "Explosive Ordnance Disposal (EOD)"
+msgstr "التخلص من الذخائر المتفجرة (EOD)"
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_eore
+msgid "Explosive Ordnance Risk Education (EORE)"
+msgstr "التوعية بمخاطر الذخائر المتفجرة (EORE)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__currency_id
+msgid "Fee Currency"
+msgstr "عملة الرسوم"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__fee_type
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "Fee Type"
+msgstr "نوع الرسوم"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_fee_payment.py:0
+msgid "Fee confirmed: %(fee)s - %(amount)s (receipt %(receipt)s)."
+msgstr "تم تأكيد الرسوم: %(fee)s - %(amount)s (الوصل %(receipt)s)."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_fee_payment.py:0
+msgid "Fee “%s” is already confirmed."
+msgstr "الرسوم “%s” مؤكَّدة مسبقاً."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__fee_ids
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_fees
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_settings_view_form
+msgid "Fees"
+msgstr "الرسوم"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_settings__currency_id
+msgid "Fees are expressed in the currency of the active company."
+msgstr "تُحتسب الرسوم بعملة الشركة النشطة."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__attachment_ids
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Files"
+msgstr "المرفقات"
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_my_queue
+msgid ""
+"Files show up here as soon as they reach a step your department\n"
+"                is responsible for."
+msgstr ""
+"تظهر الملفات هنا فور وصولها إلى خطوة يكون قسمك\n"
+"                مسؤولاً عنها."
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_finance
+msgid "Finance"
+msgstr "القسم المالي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__finance_confirmed_sop_fee
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Finance Confirmation"
+msgstr "مصادقة القسم المالي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__finance_confirmed_by
+msgid "Finance Confirmed By"
+msgstr "المُصادِق من القسم المالي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__finance_confirmed_on
+msgid "Finance Confirmed On"
+msgstr "تاريخ مصادقة القسم المالي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__finance
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__finance
+#: model:res.groups,name:dma_accreditation.group_dma_finance
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Finance Department"
+msgstr "القسم المالي"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_finance
+msgid "Finance Queue"
+msgstr "قائمة انتظار القسم المالي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Finance already confirmed %s."
+msgstr "سبق للقسم المالي أن صادق على %s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Finance confirmed the receipt of the request and of the SOP reading fee (%s)."
+msgstr "صادق القسم المالي على استلام الطلب وعلى رسوم قراءة الإجراءات التشغيلية (SOP) (%s)."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__finance_confirmed_sop_fee
+msgid "Finance confirms receipt of the request and of the SOP reading fee."
+msgstr "يصادق القسم المالي على استلام الطلب وعلى رسوم قراءة الإجراءات التشغيلية (SOP)."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Finance has not confirmed the receipt of the request and of the SOP reading fee of %s yet."
+msgstr "لم يصادق القسم المالي بعد على استلام الطلب وعلى رسوم قراءة الإجراءات التشغيلية (SOP) الخاصة بـ %s."
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_financial
+msgid "Financial Capability Statement"
+msgstr "بيان القدرة المالية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_manager
+msgid "Full access to every step, to the configuration and to the archives."
+msgstr "صلاحية كاملة على جميع الخطوات وعلى الإعدادات وعلى الأرشيف."
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__general_director
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__general_director
+#: model:res.groups,name:dma_accreditation.group_dma_general_director
+msgid "General Director"
+msgstr "مدير عام الدائرة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__gd_review
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__gd_review
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__gd_review
+msgid "General Director Initial Acceptance"
+msgstr "القبول الأولي من المدير العام"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "General Director Review"
+msgstr "مراجعة المدير العام"
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_general_director
+msgid "Gives the initial acceptance of an accreditation request."
+msgstr "يمنح القبول الأولي لطلب التفويض."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Grant Office Accreditation"
+msgstr "منح التفويض المكتبي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__has_message
+msgid "Has Message"
+msgstr "يحتوي على رسالة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للدلالة على نشاط استثنائي."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "عند التحديد، تتطلب الرسائل الجديدة انتباهك."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "عند التحديد، توجد رسائل بها خطأ في التسليم."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "In Progress"
+msgstr "قيد الإنجاز"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_general_director
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_general_director
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Initial Acceptance"
+msgstr "القبول الأولي"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_insurance
+msgid "Insurance (Staff Medical and Third-Party Liability)"
+msgstr "التأمين (الطبي للعاملين والمسؤولية المدنية تجاه الغير)"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_quality
+msgid "Internal quality management and quality control arrangements."
+msgstr "ترتيبات إدارة الجودة وضبط الجودة الداخلية."
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_request_document__review_result__invalid
+msgid "Invalid"
+msgstr "غير صالحة"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_equipment
+msgid "Inventory of detection, protection, medical and communication equipment with maintenance records."
+msgstr "جرد معدات الكشف والوقاية والمعدات الطبية ومعدات الاتصال مع سجلات الصيانة."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__issue_date
+msgid "Issue Date"
+msgstr "تاريخ الإصدار"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Issue Operational Accreditation"
+msgstr "إصدار تفويض العمليات"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "It will resume at:"
+msgstr "سيُستأنف عند:"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_staff_cv
+msgid "Key Staff CVs and Qualifications"
+msgstr "السير الذاتية ومؤهلات الكوادر الرئيسية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__write_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__write_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__write_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__write_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__write_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__write_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__write_uid
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__write_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__write_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__write_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__write_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__write_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__write_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__write_date
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__write_date
+msgid "Last Updated on"
+msgstr "تاريخ آخر تحديث"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Legal Approval"
+msgstr "الموافقة القانونية"
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_legal
+msgid "Legal Department"
+msgstr "القسم القانوني"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__legal_director
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__legal_director
+#: model:res.groups,name:dma_accreditation.group_dma_legal_director
+msgid "Legal Department Director"
+msgstr "مدير القسم القانوني"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__legal_review
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__legal_review
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__legal_review
+msgid "Legal Department Review"
+msgstr "مراجعة القسم القانوني"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_legal
+msgid "Legal Queue"
+msgstr "قائمة انتظار القسم القانوني"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__legal_refine
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__legal_refine
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__legal_refine
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Legal Refinement"
+msgstr "التنقيح القانوني"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Legal Review"
+msgstr "المراجعة القانونية"
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_manual_clearance
+msgid "Manual Clearance"
+msgstr "التطهير اليدوي"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Mark provided and accepted"
+msgstr "تأشير كمقدَّمة ومقبولة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Mark the document as missing"
+msgstr "تأشير الوثيقة كناقصة"
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_mechanical
+msgid "Mechanical Demining"
+msgstr "إزالة الألغام الميكانيكية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_mdd
+msgid "Mine Detection Dogs"
+msgstr "كلاب كشف الألغام"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Minutes"
+msgstr "المحاضر"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_request_document__review_result__missing
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Missing"
+msgstr "ناقصة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_my_queue
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue
+msgid "My Queue"
+msgstr "قائمة أعمالي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__is_my_turn
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "My Turn"
+msgstr "دوري"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__name
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__request_type__new
+msgid "New Accreditation"
+msgstr "تفويض جديد"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_document_type__required_default
+msgid "New requests get this document flagged as mandatory for the office accreditation checklist."
+msgstr "تُؤشَّر هذه الوثيقة بأنها إلزامية ضمن قائمة تدقيق التفويض المكتبي في الطلبات الجديدة."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_approval_line
+msgid "No decision has been recorded yet."
+msgstr "لم يُسجَّل أي قرار بعد."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "No e-mail address is known for the applicant; the notification could not be sent."
+msgstr "لا يوجد عنوان بريد إلكتروني معروف للمعني؛ تعذَّر إرسال الإشعار."
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_non_technical_survey
+msgid "Non-Technical Survey"
+msgstr "المسح غير الفني"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__priority__0
+msgid "Normal"
+msgstr "عادي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__notes
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__notes
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__notes
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Notes:"
+msgstr "الملاحظات:"
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_my_queue
+msgid "Nothing is waiting for you."
+msgstr "لا يوجد ما ينتظر إجراءً منك."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراءً"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Office Accreditation"
+msgstr "التفويض المكتبي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__office_date
+msgid "Office Accreditation Date"
+msgstr "تاريخ التفويض المكتبي"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__office_granted
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__office_granted
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__office_granted
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Office Accreditation Granted"
+msgstr "التفويض المكتبي ممنوح"
+
+#. module: dma_accreditation
+#: model:ir.actions.report,name:dma_accreditation.action_report_office_letter
+msgid "Office Accreditation Letter"
+msgstr "كتاب التفويض المكتبي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Office Accreditation Letter - %s.pdf"
+msgstr "كتاب التفويض المكتبي - %s.pdf"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__office_ref
+msgid "Office Accreditation Reference"
+msgstr "إشارة التفويض المكتبي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Official document generated: %s"
+msgstr "تم إنشاء الوثيقة الرسمية: %s"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_registration
+msgid "Official proof that the organisation is legally registered and entitled to operate."
+msgstr "إثبات رسمي بأن المؤسسة مسجَّلة قانونياً ومخوَّلة بمزاولة العمل."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Only draft accreditation requests can be deleted; %(request)s is in status %(state)s. Archive it instead."
+msgstr "لا يمكن حذف طلبات التفويض إلا وهي في حالة المسودة؛ الطلب %(request)s في الحالة %(state)s. يُرجى أرشفته بدلاً من ذلك."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_settings.py:0
+msgid "Only the Accreditation Manager can change the accreditation settings."
+msgstr "لا يجوز تعديل إعدادات التفويض إلا لمدير التفويض."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_fee_payment.py:0
+msgid "Only the Finance Department can confirm or reset an accreditation fee."
+msgstr "القسم المالي وحده يملك صلاحية تأكيد رسوم التفويض أو إعادة تعيينها."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Operational Accreditation"
+msgstr "تفويض العمليات"
+
+#. module: dma_accreditation
+#: model:ir.actions.report,name:dma_accreditation.action_report_certificate
+msgid "Operational Accreditation Certificate"
+msgstr "شهادة تفويض العمليات"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Operational Accreditation Certificate - %s.pdf"
+msgstr "شهادة تفويض العمليات - %s.pdf"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__authorized
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__authorized
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__authorized
+msgid "Operational Accreditation Granted"
+msgstr "تفويض العمليات ممنوح"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__demo_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__demo_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__demo_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__demo_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_fee_payment__fee_type__operational_demo
+msgid "Operational Demonstration Fee"
+msgstr "رسوم المظاهرة العملياتية"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Operationally Accredited"
+msgstr "مُفوَّض عملياتياً"
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_operations
+msgid "Operations"
+msgstr "قسم العمليات"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__operations_confirmed_sop
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Operations Confirmation"
+msgstr "مصادقة قسم العمليات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__operations_confirmed_by
+msgid "Operations Confirmed By"
+msgstr "المصادِق من قسم العمليات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__operations_confirmed_on
+msgid "Operations Confirmed On"
+msgstr "تاريخ مصادقة قسم العمليات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__operations
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__operations
+#: model:res.groups,name:dma_accreditation.group_dma_operations
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Operations Department"
+msgstr "قسم العمليات"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_operations
+msgid "Operations Queue"
+msgstr "قائمة انتظار قسم العمليات"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Operations already confirmed %s."
+msgstr "سبق لقسم العمليات أن صادق على %s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Operations confirmed the receipt of the company SOP for appraisal (%s)."
+msgstr "صادق قسم العمليات على استلام الإجراءات التشغيلية القياسية (SOP) الخاصة بالشركة لغرض التقييم (%s)."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__operations_confirmed_sop
+msgid "Operations confirms receipt of the company SOP for appraisal."
+msgstr "يصادق قسم العمليات على استلام الإجراءات التشغيلية القياسية (SOP) الخاصة بالشركة لغرض التقييم."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Operations has not confirmed the receipt of the SOP of %s yet."
+msgstr "لم يصادق قسم العمليات بعد على استلام الإجراءات التشغيلية القياسية (SOP) الخاصة بـ %s."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Organisation"
+msgstr "المؤسسة"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_org_structure
+msgid "Organisational Structure"
+msgstr "الهيكل التنظيمي"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Paper Copy"
+msgstr "النسخة الورقية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__sop_paper_received
+msgid "Paper SOP Received"
+msgstr "استلام النسخة الورقية من الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__sop_paper_received_by
+msgid "Paper SOP Received By"
+msgstr "مستلم النسخة الورقية من الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__sop_paper_received_date
+msgid "Paper SOP Received On"
+msgstr "تاريخ استلام النسخة الورقية من الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Paper copy of the SOP received by %s."
+msgstr "استُلمت النسخة الورقية من الإجراءات التشغيلية القياسية (SOP) من قِبل %s."
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_request_document__review_result__pending
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__pending_group
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Pending With"
+msgstr "قيد الانتظار لدى"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_power_of_attorney
+msgid "Power of Attorney of the Representative"
+msgstr "التخويل الرسمي للممثل"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__document_ids
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Prerequisite Documents"
+msgstr "الأوليات"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Print Certificate"
+msgstr "طباعة الشهادة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Print Office Letter"
+msgstr "طباعة كتاب التفويض المكتبي"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Print Summary"
+msgstr "طباعة الملخص"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_experience
+msgid "Prior Demining Experience"
+msgstr "الخبرة السابقة في إزالة الألغام"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Proceed to the Demonstration Fee"
+msgstr "الانتقال إلى رسوم المظاهرة العملياتية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__is_provided
+msgid "Provided"
+msgstr "مُقدَّمة"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_quality
+msgid "Quality Management Documentation"
+msgstr "وثائق إدارة الجودة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__reason
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_decision_reason_view_form
+msgid "Reason"
+msgstr "السبب"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__receipt_date
+msgid "Receipt Date"
+msgstr "تاريخ الوصل"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__receipt_number
+msgid "Receipt Number"
+msgstr "رقم الوصل"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__attachment_ids
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_list
+msgid "Receipt Scan"
+msgstr "نسخة الوصل الممسوحة ضوئياً"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Receipt of the company SOP for appraisal confirmed."
+msgstr "تمت المصادقة على استلام الإجراءات التشغيلية القياسية (SOP) الخاصة بالشركة لغرض التقييم."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Receipt of the request and of the SOP reading fee confirmed."
+msgstr "تمت المصادقة على استلام الطلب وعلى رسوم قراءة الإجراءات التشغيلية (SOP)."
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_reception
+msgid "Reception"
+msgstr "شعبة الاستلام"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__pending_group__reception
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__role__reception
+#: model:res.groups,name:dma_accreditation.group_dma_reception
+msgid "Reception Officer"
+msgstr "ضابط الاستلام"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_queue_reception
+msgid "Reception Queue"
+msgstr "قائمة انتظار شعبة الاستلام"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Record Committee Decision"
+msgstr "تسجيل قرار اللجنة"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_experience
+msgid "Record of previous demining contracts, tasks completed and references."
+msgstr "سجل بعقود إزالة الألغام السابقة والمهام المنجزة والجهات المزكِّية."
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_committee
+msgid "Records the decision of the accreditation granting committee."
+msgstr "يسجّل قرار لجنة منح التفويض."
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_operations
+msgid "Records the reception of the SOP and confirms it for appraisal."
+msgstr "يسجّل استلام الإجراءات التشغيلية القياسية (SOP) ويصادق عليها لغرض التقييم."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__name
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Reference"
+msgstr "الإشارة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__legal_refined_by
+msgid "Refined By"
+msgstr "القائم بالتنقيح"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__refined_decision_text
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Refined Decision Text"
+msgstr "نص القرار المنقَّح"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__legal_refined_on
+msgid "Refined On"
+msgstr "تاريخ التنقيح"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Register Paper SOP"
+msgstr "تسجيل النسخة الورقية من الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_accreditation_request
+msgid "Register the accreditation file of a demining organisation."
+msgstr "سجّل ملف تفويض مؤسسة عاملة في إزالة الألغام."
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_decision_reason__mode__reject
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Reject Request"
+msgstr "رفض الطلب"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__committee_decision__reject
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__rejected
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__rejected
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__decision__rejected
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__rejected
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Rejected by the Accreditation Committee on %s."
+msgstr "رُفض من قِبل لجنة منح التفويض بتاريخ %s."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_decision_reason_view_form
+msgid ""
+"Rejecting closes the file definitively. The applicant is\n"
+"                        notified by e-mail with the reason entered below."
+msgstr ""
+"الرفض يغلق المعاملة نهائياً. ويُشعَر المعني بالبريد الإلكتروني\n"
+"                        مع السبب المدوَّن أدناه."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__reject_reason
+msgid "Rejection Reason"
+msgstr "سبب الرفض"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Reload Checklist"
+msgstr "إعادة تحميل قائمة التدقيق"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_request_document.py:0
+msgid "Removing a checklist line"
+msgstr "حذف سطر من قائمة التدقيق"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__request_type__renewal
+msgid "Renewal"
+msgstr "تجديد"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__request_id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_decision_reason__request_id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__request_id
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__request_id
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "Request"
+msgstr "الطلب"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Request %(ref)s of %(partner)s is waiting for %(role)s."
+msgstr "الطلب %(ref)s العائد إلى %(partner)s بانتظار %(role)s."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__request_type
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Request Type"
+msgstr "نوع الطلب"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__scope_ids
+msgid "Requested Scopes"
+msgstr "نطاقات التفويض المطلوبة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__is_required
+msgid "Required"
+msgstr "إلزامية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__required_document_count
+msgid "Required Documents"
+msgstr "الوثائق الإلزامية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__required_default
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_search
+msgid "Required by Default"
+msgstr "إلزامية افتراضياً"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_request_document__is_required
+msgid "Required documents block the Office Accreditation until they are provided and accepted."
+msgstr "تحجب الوثائق الإلزامية منح التفويض المكتبي إلى حين تقديمها وقبولها."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_list
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_list
+msgid "Reset the fee to draft"
+msgstr "إعادة الرسوم إلى حالة المسودة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_form
+msgid "Reset to Draft"
+msgstr "إعادة إلى المسودة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Resume Request"
+msgstr "استئناف الطلب"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Return"
+msgstr "إعادة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__return_reason
+msgid "Return Reason"
+msgstr "سبب الإعادة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__return_to_state
+msgid "Return Target"
+msgstr "خطوة الإعادة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_decision_reason__mode__return
+msgid "Return to Applicant"
+msgstr "إعادة إلى المعني"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__decision__returned
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+msgid "Returned"
+msgstr "مُعاد"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__returned
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__returned
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__returned
+msgid "Returned to Applicant"
+msgstr "مُعاد إلى المعني"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_decision_reason_view_form
+msgid ""
+"Returning sends the file one step back so the applicant\n"
+"                        can complete it. The reason below is e-mailed to the\n"
+"                        applicant and posted in the chatter."
+msgstr ""
+"الإعادة تُرجع المعاملة خطوة واحدة إلى الوراء ليتمكن المعني\n"
+"                        من استكمالها. ويُرسل السبب المذكور أدناه بالبريد الإلكتروني إلى\n"
+"                        المعني ويُثبَّت في سجل المحادثات."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__review_result
+msgid "Review Result"
+msgstr "نتيجة المراجعة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__reviewed_by
+msgid "Reviewed By"
+msgstr "المُراجِع"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__reviewed_on
+msgid "Reviewed On"
+msgstr "تاريخ المراجعة"
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_legal_director
+msgid "Reviews the request legally and refines the committee decision."
+msgstr "يراجع الطلب من الناحية القانونية ويتولى التنقيح القانوني لقرار اللجنة."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__role
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+msgid "Role"
+msgstr "الدور"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__pending_group
+msgid "Role that has to act on the request at its current step."
+msgstr "الدور المطلوب منه اتخاذ الإجراء على الطلب في خطوته الحالية."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "SOP"
+msgstr "الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_settings__sop_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__sop_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__sop_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__sop_fee
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_fee_payment__fee_type__sop_reading
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "SOP Reading Fee"
+msgstr "رسوم قراءة الإجراءات التشغيلية (SOP)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__sop_fee_paid
+msgid "SOP Reading Fee Confirmed"
+msgstr "رسوم قراءة الإجراءات التشغيلية (SOP) مؤكَّدة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__sop_reference
+msgid "SOP Reference"
+msgstr "إشارة الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__sop_submission
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__sop_submission
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__sop_submission
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "SOP Submission"
+msgstr "تقديم الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__sop_version
+msgid "SOP Version"
+msgstr "إصدارة الإجراءات التشغيلية القياسية (SOP)"
+
+#. module: dma_accreditation
+#: model:dma.document.type,name:dma_accreditation.document_type_safety_policy
+msgid "Safety and Occupational Health Policy"
+msgstr "سياسة السلامة والصحة المهنية"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_settings_view_form
+msgid "Save"
+msgstr "حفظ"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Send to General Director"
+msgstr "إرسال إلى المدير العام"
+
+#. module: dma_accreditation
+#: model:mail.template,description:dma_accreditation.mail_template_request_returned
+msgid "Sent to the applicant when a request is returned for completion or rejected."
+msgstr "يُرسل إلى المعني عند إعادة الطلب لاستكماله أو عند رفضه."
+
+#. module: dma_accreditation
+#: model:mail.template,description:dma_accreditation.mail_template_office_granted
+msgid "Sent to the applicant when the office accreditation is granted."
+msgstr "يُرسل إلى المعني عند منح التفويض المكتبي."
+
+#. module: dma_accreditation
+#: model:mail.template,description:dma_accreditation.mail_template_operational_granted
+msgid "Sent to the applicant when the operational accreditation certificate is issued."
+msgstr "يُرسل إلى المعني عند إصدار شهادة تفويض العمليات."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_scope__sequence
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_document_type__sequence
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_request_document__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: dma_accreditation
+#: model:ir.actions.act_window,name:dma_accreditation.action_dma_accreditation_settings
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_config_settings
+msgid "Settings"
+msgstr "الإعدادات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_scope__code
+msgid "Short technical code used on letters and certificates."
+msgstr "رمز فني مختصر يُستخدم في الكتب الرسمية والشهادات."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Start Operational Accreditation"
+msgstr "بدء تفويض العمليات"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_fee_payment__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_decision_reason_view_form
+msgid "State precisely what is missing or why the request is refused."
+msgstr "حدِّد بدقة ما هو ناقص أو سبب رفض الطلب."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__state
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخرة: تاريخ الاستحقاق قد فات\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخططة: أنشطة مستقبلية."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_approval_line__step
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_approval_line_view_search
+msgid "Step"
+msgstr "الخطوة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__return_to_state
+msgid "Step the request goes back to once the applicant resubmits it."
+msgstr "الخطوة التي يعود إليها الطلب بعد إعادة تقديمه من قبل المعني."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__submission_date
+msgid "Submission Date"
+msgstr "تاريخ التقديم"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Submission Month"
+msgstr "شهر التقديم"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Submit"
+msgstr "تقديم"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Submit Request"
+msgstr "تقديم الطلب"
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__return_to_state__submitted
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__state__submitted
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_approval_line__step__submitted
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_search
+msgid "Submitted"
+msgstr "مقدَّم"
+
+#. module: dma_accreditation
+#: model:dma.accreditation.scope,name:dma_accreditation.scope_technical_survey
+msgid "Technical Survey"
+msgstr "المسح الفني"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The Legal Department has to refine the decision text of %s before the operational accreditation can be issued."
+msgstr "يجب على القسم القانوني إجراء التنقيح القانوني لنص القرار الخاص بـ %s قبل إصدار تفويض العمليات."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The PDF of %s could not be generated on this server. It can be printed again from the Print menu."
+msgstr "تعذّر إنشاء ملف PDF الخاص بـ %s على هذا الخادم. ويمكن طباعته مجدداً من قائمة الطباعة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_approval_line.py:0
+msgid "The accreditation approval log is immutable: existing entries can never be deleted."
+msgstr "سجل الموافقات غير قابل للتغيير: لا يمكن حذف القيود المسجَّلة إطلاقاً."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_approval_line.py:0
+msgid "The accreditation approval log is immutable: existing entries can never be modified."
+msgstr "سجل الموافقات غير قابل للتغيير: لا يمكن تعديل القيود المسجَّلة إطلاقاً."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_request_document__is_provided
+msgid "The applicant handed the document over to the Directorate."
+msgstr "سلّم المعني الوثيقة إلى الدائرة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The date of the Accreditation Committee session on %s is missing."
+msgstr "تاريخ جلسة لجنة منح التفويض بشأن %s غير محدَّد."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The decision of the Accreditation Committee on %s is missing."
+msgstr "قرار لجنة منح التفويض بشأن %s غير مسجَّل."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The decision text of the Accreditation Committee on %s is missing."
+msgstr "نص قرار لجنة منح التفويض بشأن %s غير مسجَّل."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The electronic copy of the SOP of %s is missing."
+msgstr "النسخة الإلكترونية من الإجراءات التشغيلية القياسية (SOP) الخاصة بـ %s غير موجودة."
+
+#. module: dma_accreditation
+#: model:ir.model.constraint,message:dma_accreditation.constraint_dma_accreditation_request_check_validity_dates
+msgid "The expiry date of an accreditation cannot precede its issue date."
+msgstr "لا يجوز أن يسبق تاريخ انتهاء التفويض تاريخ إصداره."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_fee_payment.py:0
+msgid "The fee amount must be greater than zero."
+msgstr "يجب أن يكون مبلغ الرسوم أكبر من الصفر."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_settings_view_form
+msgid ""
+"The fee amounts are proposed by default on new fee lines and\n"
+"                        the validity drives the expiry date of the operational\n"
+"                        accreditation certificate."
+msgstr ""
+"تُقترح مبالغ الرسوم تلقائياً على سطور الرسوم الجديدة، كما تحدد\n"
+"                        مدة الصلاحية تاريخ انتهاء شهادة تفويض\n"
+"                        العمليات."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The fields %(fields)s are set by the accreditation workflow itself and cannot be written directly. Use the buttons of the request."
+msgstr "الحقول %(fields)s يحددها سير عمل التفويض نفسه ولا يمكن تعديلها مباشرة. يُرجى استخدام أزرار الطلب."
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_accreditation_request
+msgid ""
+"The file walks through the office accreditation\n"
+"                (reception, General Director, Legal Department, Certifications\n"
+"                Division) and then through the operational accreditation\n"
+"                (SOP, fees, dual confirmation, Accreditation Committee, legal\n"
+"                refinement, certificate)."
+msgstr ""
+"يمر الملف عبر مرحلة التفويض المكتبي\n"
+"                (الاستلام، مدير عام الدائرة، القسم القانوني، شعبة\n"
+"                التصديقات) ثم عبر مرحلة تفويض العمليات\n"
+"                (الإجراءات التشغيلية القياسية SOP، الرسوم، مصادقة الطرفين، لجنة منح التفويض،\n"
+"                التنقيح القانوني، الشهادة)."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid ""
+"The office accreditation cannot be granted: the following required documents are not provided and accepted yet:\n"
+"%s"
+msgstr ""
+"لا يمكن منح التفويض المكتبي: الوثائق الإلزامية الآتية لم تُقدَّم ولم تُقبل بعد:\n"
+"%s"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The paper copy of the SOP of %s has not been registered yet."
+msgstr "لم تُسجَّل بعد النسخة الورقية من الإجراءات التشغيلية القياسية (SOP) الخاصة بـ %s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "The prerequisites checklist of %s is empty; load the document types before granting the office accreditation."
+msgstr "قائمة تدقيق الأوليات الخاصة بـ %s فارغة؛ يُرجى تحميل أنواع الوثائق قبل منح التفويض المكتبي."
+
+#. module: dma_accreditation
+#: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_accreditation_scope
+msgid ""
+"The scopes follow IMAS 07.30: manual clearance, battle area\n"
+"                clearance, EOD, mine detection dogs, mechanical demining,\n"
+"                technical and non-technical survey and EORE."
+msgstr ""
+"تتبع نطاقات التفويض المعيار IMAS 07.30: التطهير اليدوي، تطهير\n"
+"                مناطق القتال، التخلص من الذخائر المتفجرة (EOD)، كلاب كشف الألغام، إزالة الألغام الميكانيكية، المسح الفني والمسح غير الفني، والتوعية بمخاطر الذخائر المتفجرة (EORE)."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_settings.py:0
+msgid "The validity of an accreditation must be at least one month."
+msgstr "يجب ألا تقل مدة صلاحية التفويض عن شهر واحد."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "This resets the file to draft. The approvals log keeps every previous decision. Continue?"
+msgstr "سيؤدي هذا إلى إعادة الملف إلى حالة المسودة. ويحتفظ سجل الموافقات بجميع القرارات السابقة. هل تريد المتابعة؟"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_fee_payment_view_search
+msgid "To Confirm"
+msgstr "بانتظار التأكيد"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__total_fees_confirmed
+msgid "Total Fees Confirmed"
+msgstr "إجمالي الرسوم المؤكَّدة"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_request__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي المسجَّل."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "Unsupported operator on the My Turn filter."
+msgstr "عامل غير مدعوم في مرشّح «دوري»."
+
+#. module: dma_accreditation
+#: model:ir.model.fields.selection,name:dma_accreditation.selection__dma_accreditation_request__priority__1
+msgid "Urgent"
+msgstr "عاجل"
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_insurance
+msgid "Valid insurance policies covering the staff medically and third parties for liability."
+msgstr "وثائق تأمين سارية المفعول تغطي الكادر طبياً وتغطي المسؤولية تجاه الغير."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_settings_view_form
+msgid "Validity"
+msgstr "مدة الصلاحية"
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_accreditation_settings__validity_months
+msgid "Validity of an operational accreditation certificate, in months."
+msgstr "مدة صلاحية شهادة تفويض العمليات بالأشهر."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__verification_token
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_request_view_form
+msgid "Verification Code"
+msgstr "رمز التحقق"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_dma_qr_block
+msgid "Verification QR Code"
+msgstr "رمز QR للتحقق"
+
+#. module: dma_accreditation
+#: model:res.groups,comment:dma_accreditation.group_dma_cert_officer
+msgid "Verifies the prerequisites checklist and grants the office accreditation."
+msgstr "يتحقق من قائمة تدقيق الأوليات ويمنح التفويض المكتبي."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_request_document.py:0
+msgid "Verifying a document"
+msgstr "تدقيق وثيقة"
+
+#. module: dma_accreditation
+#: model:ir.ui.menu,name:dma_accreditation.menu_dma_queue_mine
+msgid "Waiting for Me"
+msgstr "بانتظار إجرائي"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_form
+msgid "What the Certifications Division has to check on this document."
+msgstr "ما يتعين على شعبة التصديقات التحقق منه في هذه الوثيقة."
+
+#. module: dma_accreditation
+#: model:ir.model.fields,help:dma_accreditation.field_dma_approval_line__step
+msgid "Workflow step the decision was taken on."
+msgstr "خطوة سير العمل التي اتُّخذ فيها القرار."
+
+#. module: dma_accreditation
+#: model:dma.document.type,description:dma_accreditation.document_type_safety_policy
+msgid "Written safety and occupational health policy, including the medical evacuation plan."
+msgstr "سياسة مكتوبة للسلامة والصحة المهنية تتضمن خطة الإخلاء الطبي."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_scope_view_form
+msgid "e.g. BAC"
+msgstr "مثال: BAC"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_accreditation_scope_view_form
+msgid "e.g. Battle Area Clearance"
+msgstr "مثال: تطهير مناطق القتال"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_form
+msgid "e.g. Company Registration Certificate"
+msgstr "مثال: شهادة تسجيل الشركة"
+
+#. module: dma_accreditation
+#: model:mail.template,subject:dma_accreditation.mail_template_request_returned
+msgid "{{ object.name }} - {{ 'رفض الطلب / Request Rejected' if object.state == 'rejected' else 'إعادة الطلب / Request Returned' }}"
+msgstr "{{ object.name }} - {{ 'رفض الطلب / Request Rejected' if object.state == 'rejected' else 'إعادة الطلب / Request Returned' }}"
+
+#. module: dma_accreditation
+#: model:mail.template,subject:dma_accreditation.mail_template_office_granted
+msgid "{{ object.name }} - منح التفويض المكتبي / Office Accreditation Granted"
+msgstr "{{ object.name }} - منح التفويض المكتبي / Office Accreditation Granted"
+
+#. module: dma_accreditation
+#: model:mail.template,subject:dma_accreditation.mail_template_operational_granted
+msgid "{{ object.name }} - منح تفويض العمليات / Operational Accreditation Granted"
+msgstr "{{ object.name }} - منح تفويض العمليات / Operational Accreditation Granted"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid ""
+"،\n"
+"                        وبعد استكمال إجراءات القبول الأولي ومراجعة القسم القانوني،\n"
+"                        وتدقيق شعبة التصديقات لكافة الأوليات المطلوبة،\n"
+"                        نعرض على مقامكم الكريم منح المؤسسة المذكورة\n"
+"                        <b>التفويض المكتبي</b> وفق المعايير الوطنية للأعمال المتعلقة\n"
+"                        بالألغام (IMAS/TNMA 07.30)."
+msgstr ""
+"،\n"
+"                        وبعد استكمال إجراءات القبول الأولي ومراجعة القسم القانوني،\n"
+"                        وتدقيق شعبة التصديقات لكافة الأوليات المطلوبة،\n"
+"                        نعرض على مقامكم الكريم منح المؤسسة المذكورة\n"
+"                        <b>التفويض المكتبي</b> وفق المعايير الوطنية للأعمال المتعلقة\n"
+"                        بالألغام (IMAS/TNMA 07.30)."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "إلى: السيد مدير عام دائرة شؤون الألغام المحترم"
+msgstr "إلى: السيد مدير عام دائرة شؤون الألغام المحترم"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "استُلمت بتاريخ"
+msgstr "استُلمت بتاريخ"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "الأوليات / Prerequisites checklist"
+msgstr "الأوليات / Prerequisites checklist"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "الأوليات المدققة / Verified prerequisites"
+msgstr "الأوليات المدققة / Verified prerequisites"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "الإجراءات التشغيلية / SOP"
+msgstr "الإجراءات التشغيلية / SOP"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "الإشارة المكتبية / Office accreditation"
+msgstr "الإشارة المكتبية / Office accreditation"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "التاريخ / Date"
+msgstr "التاريخ / Date"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "الجهة / Role"
+msgstr "الجهة / Role"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "الحالة / Status"
+msgstr "الحالة / Status"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "الرسوم / Fees"
+msgstr "الرسوم / Fees"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "الطلب"
+msgstr "الطلب"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "العمليات:"
+msgstr "العمليات:"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "القرار / Decision"
+msgstr "القرار / Decision"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "المؤسسة / Organisation"
+msgstr "المؤسسة / Organisation"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "المالية:"
+msgstr "المالية:"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "المبلغ / Amount"
+msgstr "المبلغ / Amount"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "المدقق / Reviewer"
+msgstr "المدقق / Reviewer"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "المرحلة / Step"
+msgstr "المرحلة / Step"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "المستخدم / User"
+msgstr "المستخدم / User"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "المستمسك / Document"
+msgstr "المستمسك / Document"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "النتيجة / Result"
+msgstr "النتيجة / Result"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "النسخة الإلكترونية / Electronic copy"
+msgstr "النسخة الإلكترونية / Electronic copy"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "النسخة الورقية / Paper copy"
+msgstr "النسخة الورقية / Paper copy"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "النص المنقّح / Refined text"
+msgstr "النص المنقّح / Refined text"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "بالإشارة إلى الطلب المقدم من"
+msgstr "بالإشارة إلى الطلب المقدم من"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "بتاريخ"
+msgstr "بتاريخ"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "بواسطة"
+msgstr "بواسطة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "بيانات المؤسسة / Organisation"
+msgstr "بيانات المؤسسة / Organisation"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "تاريخ الإصدار / Issue date"
+msgstr "تاريخ الإصدار / Issue date"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "تاريخ الانتهاء / Expiry date"
+msgstr "تاريخ الانتهاء / Expiry date"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "تاريخ التقديم / Submitted"
+msgstr "تاريخ التقديم / Submitted"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "تاريخ الجلسة / Session date"
+msgstr "تاريخ الجلسة / Session date"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "تحية طيبة وبعد،"
+msgstr "تحية طيبة وبعد،"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "تشهد <b>دائرة شؤون الألغام</b> بأن المؤسسة"
+msgstr "تشهد <b>دائرة شؤون الألغام</b> بأن المؤسسة"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_dma_letterhead
+msgid "دائرة شؤون الألغام"
+msgstr "دائرة شؤون الألغام"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "رقم الوصل / Receipt"
+msgstr "رقم الوصل / Receipt"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_dma_qr_block
+msgid "رمز التحقق /"
+msgstr "رمز التحقق /"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "سجل الموافقات / Approvals log"
+msgstr "سجل الموافقات / Approvals log"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "شعبة التصديقات"
+msgstr "شعبة التصديقات"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "شهادة تفويض العمليات"
+msgstr "شهادة تفويض العمليات"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid ""
+"عليه، يرجى التفضل بالموافقة على منح التفويض المكتبي ومباشرة\n"
+"                        المؤسسة بإجراءات <b>تفويض العمليات</b>."
+msgstr ""
+"عليه، يرجى التفضل بالموافقة على منح التفويض المكتبي ومباشرة\n"
+"                        المؤسسة بإجراءات <b>تفويض العمليات</b>."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid ""
+"قد استوفت متطلبات التفويض المكتبي وتفويض العمليات وفق\n"
+"                            المعايير الوطنية للأعمال المتعلقة بالألغام\n"
+"                            (IMAS/TNMA 07.30)، واستناداً إلى قرار\n"
+"                            <b>لجنة منح التفويض</b> الصادر بتاريخ"
+msgstr ""
+"قد استوفت متطلبات التفويض المكتبي وتفويض العمليات وفق\n"
+"                            المعايير الوطنية للأعمال المتعلقة بالألغام\n"
+"                            (IMAS/TNMA 07.30)، واستناداً إلى قرار\n"
+"                            <b>لجنة منح التفويض</b> الصادر بتاريخ"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "قرار اللجنة والتنقيح / Committee decision and refinement"
+msgstr "قرار اللجنة والتنقيح / Committee decision and refinement"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "لم تُستلم / not received"
+msgstr "لم تُستلم / not received"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "لم تُصدر بعد"
+msgstr "لم تُصدر بعد"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid ""
+"لم يبلغ مرحلة\n"
+"                            <b>تفويض العمليات</b> بعد، وحالته الحالية:"
+msgstr ""
+"لم يبلغ مرحلة\n"
+"                            <b>تفويض العمليات</b> بعد، وحالته الحالية:"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid ""
+"لم يُمنح\n"
+"                        <b>التفويض المكتبي</b> بعد، وحالته الحالية:"
+msgstr ""
+"لم يُمنح\n"
+"                        <b>التفويض المكتبي</b> بعد، وحالته الحالية:"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "لم يُمنح بعد"
+msgstr "لم يُمنح بعد"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "م / منح التفويض المكتبي"
+msgstr "م / منح التفويض المكتبي"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "مدير القسم القانوني"
+msgstr "مدير القسم القانوني"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "مدير عام دائرة شؤون الألغام"
+msgstr "مدير عام دائرة شؤون الألغام"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "مصادقة الطرفين / Dual confirmation"
+msgstr "مصادقة الطرفين / Dual confirmation"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "مطلوب"
+msgstr "مطلوب"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "مطلوب / Required"
+msgstr "مطلوب / Required"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "مع فائق الاحترام والتقدير."
+msgstr "مع فائق الاحترام والتقدير."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "مقدّم"
+msgstr "مقدّم"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "مقدّم / Provided"
+msgstr "مقدّم / Provided"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "ملاحظات / Notes"
+msgstr "ملاحظات / Notes"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "ملخص ملف التفويض"
+msgstr "ملخص ملف التفويض"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "ممثل المؤسسة / Contact"
+msgstr "ممثل المؤسسة / Contact"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "ممثل المؤسسة / Representative"
+msgstr "ممثل المؤسسة / Representative"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "نص القرار / Decision text"
+msgstr "نص القرار / Decision text"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "نطاقات التفويض / Accredited scopes"
+msgstr "نطاقات التفويض / Accredited scopes"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "نطاقات العمل / Scopes"
+msgstr "نطاقات العمل / Scopes"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "نوع الرسم / Fee type"
+msgstr "نوع الرسم / Fee type"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_request_summary_document
+msgid "نوع الطلب / Request type"
+msgstr "نوع الطلب / Request type"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "هذه الوثيقة قابلة للتحقق إلكترونياً عبر رمز الاستجابة السريعة أعلاه."
+msgstr "هذه الوثيقة قابلة للتحقق إلكترونياً عبر رمز الاستجابة السريعة أعلاه."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_office_letter_document
+msgid "والمسجل لدينا بالرقم"
+msgstr "والمسجل لدينا بالرقم"
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid ""
+"وبعد <b>التنقيح القانوني</b> للقرار، وهي مخوّلة بمزاولة\n"
+"                            الأعمال ضمن النطاقات المبينة أدناه."
+msgstr ""
+"وبعد <b>التنقيح القانوني</b> للقرار، وهي مخوّلة بمزاولة\n"
+"                            الأعمال ضمن النطاقات المبينة أدناه."
+
+#. module: dma_accreditation
+#: model_terms:ir.ui.view,arch_db:dma_accreditation.report_certificate_document
+msgid "يخضع هذا التفويض للمراقبة والتقييم، ويجوز تعليقه أو سحبه عند مخالفة المعايير الوطنية."
+msgstr "يخضع هذا التفويض للمراقبة والتقييم، ويجوز تعليقه أو سحبه عند مخالفة المعايير الوطنية."
