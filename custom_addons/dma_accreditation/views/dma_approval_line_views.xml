@@ -5,13 +5,18 @@
         <field name="name">dma.approval.line.list</field>
         <field name="model">dma.approval.line</field>
         <field name="arch" type="xml">
+            <!-- Sorted by file, then chronologically inside it: read top to
+                 bottom this is the decision history of one request after
+                 another, which is how an auditor reads it. -->
             <list string="Approvals Log" create="false" edit="false" delete="false"
+                  default_order="request_id, date"
                   decoration-success="decision in ('approved', 'confirmed')"
                   decoration-danger="decision == 'rejected'"
                   decoration-warning="decision == 'returned'">
+                <field name="request_id"/>
                 <field name="date"/>
                 <field name="step"/>
-                <field name="role"/>
+                <field name="role" optional="show"/>
                 <field name="user_id"/>
                 <field name="decision" widget="badge"
                        decoration-success="decision in ('approved', 'confirmed')"
@@ -19,6 +24,40 @@
                        decoration-warning="decision == 'returned'"/>
                 <field name="notes"/>
             </list>
+        </field>
+    </record>
+
+    <!-- Read only by construction: the model refuses write and unlink, so the
+         form exists to show one decision in full, not to change it. -->
+    <record id="dma_approval_line_view_form" model="ir.ui.view">
+        <field name="name">dma.approval.line.form</field>
+        <field name="model">dma.approval.line</field>
+        <field name="arch" type="xml">
+            <form string="Decision" create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="step" string="Step"/>
+                        <h1><field name="step" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="File">
+                            <field name="request_id" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                        </group>
+                        <group string="Decision">
+                            <field name="decision" widget="badge" readonly="1"
+                                   decoration-success="decision in ('approved', 'confirmed')"
+                                   decoration-danger="decision == 'rejected'"
+                                   decoration-warning="decision == 'returned'"/>
+                            <field name="role" readonly="1"/>
+                            <field name="user_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
 
@@ -45,10 +84,10 @@
     <record id="action_dma_approval_line" model="ir.actions.act_window">
         <field name="name">Approvals Log</field>
         <field name="res_model">dma.approval.line</field>
-        <field name="view_mode">list</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="dma_approval_line_view_search"/>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smart_button">
+            <p class="o_view_nocontent_empty_folder">
                 No decision has been recorded yet.
             </p><p>
                 Every workflow transition appends one line here. Entries can

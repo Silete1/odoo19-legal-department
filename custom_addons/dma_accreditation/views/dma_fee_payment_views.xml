@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- The list of fee lines *inside* a request: the request is implied, so it
+         is not a column, and the officer edits the lines in place. -->
     <record id="dma_fee_payment_view_list" model="ir.ui.view">
         <field name="name">dma.fee.payment.list</field>
         <field name="model">dma.fee.payment</field>
         <field name="arch" type="xml">
             <list string="Accreditation Fees" editable="bottom"
-                  decoration-success="state == 'confirmed'"
-                  decoration-muted="state == 'draft'">
+                  decoration-bf="state == 'draft'"
+                  decoration-muted="state == 'confirmed'">
                 <field name="currency_id" column_invisible="True"/>
                 <field name="fee_type"/>
-                <field name="amount" widget="monetary"/>
+                <field name="amount" widget="monetary" sum="Total"/>
                 <field name="receipt_number"/>
                 <field name="receipt_date"/>
                 <field name="attachment_ids" widget="many2many_binary" string="Receipt Scan"/>
@@ -32,6 +34,37 @@
         </field>
     </record>
 
+    <!-- The standalone Fees screen. A separate view because the request is the
+         one thing an officer needs here and must never be edited inline. -->
+    <record id="dma_fee_payment_view_list_standalone" model="ir.ui.view">
+        <field name="name">dma.fee.payment.list.standalone</field>
+        <field name="model">dma.fee.payment</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <list string="Accreditation Fees" create="false"
+                  default_order="receipt_date desc, id desc"
+                  decoration-bf="state == 'draft'"
+                  decoration-muted="state == 'confirmed'">
+                <field name="currency_id" column_invisible="True"/>
+                <field name="request_id" string="Request"/>
+                <field name="partner_id" string="Applicant" optional="show"/>
+                <field name="fee_type"/>
+                <field name="receipt_number"/>
+                <field name="receipt_date"/>
+                <field name="amount" widget="monetary" sum="Total"/>
+                <field name="confirmed_by" optional="hide"/>
+                <field name="confirmed_on" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'confirmed'"
+                       decoration-warning="state == 'draft'"/>
+                <button name="action_confirm" type="object" string="Confirm"
+                        icon="fa-check" title="Confirm the reception of the fee"
+                        invisible="state == 'confirmed'"
+                        groups="dma_accreditation.group_dma_finance"/>
+            </list>
+        </field>
+    </record>
+
     <record id="dma_fee_payment_view_form" model="ir.ui.view">
         <field name="name">dma.fee.payment.form</field>
         <field name="model">dma.fee.payment</field>
@@ -47,25 +80,39 @@
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
                 </header>
                 <sheet>
+                    <div class="oe_title">
+                        <label for="fee_type" string="Fee"/>
+                        <h1><field name="fee_type" readonly="state == 'confirmed'"/></h1>
+                    </div>
                     <group>
-                        <group>
-                            <field name="request_id" readonly="1"/>
-                            <field name="fee_type" readonly="state == 'confirmed'"/>
+                        <group string="Accreditation File">
+                            <field name="request_id" readonly="1"
+                                   options="{'no_create': True}"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="request_state" readonly="1"/>
+                        </group>
+                        <group string="Payment">
                             <field name="amount" readonly="state == 'confirmed'"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="receipt_number" readonly="state == 'confirmed'"
+                                   placeholder="e.g. REC/2026/0141"/>
+                            <field name="receipt_date" readonly="state == 'confirmed'"/>
+                        </group>
+                    </group>
+                    <group string="Confirmation" invisible="state != 'confirmed'">
+                        <group>
+                            <field name="confirmed_by"/>
                         </group>
                         <group>
-                            <field name="receipt_number" readonly="state == 'confirmed'"/>
-                            <field name="receipt_date" readonly="state == 'confirmed'"/>
-                            <field name="confirmed_by" invisible="state != 'confirmed'"/>
-                            <field name="confirmed_on" invisible="state != 'confirmed'"/>
+                            <field name="confirmed_on"/>
                         </group>
                     </group>
                     <group string="Receipt Scan">
                         <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
                     </group>
                     <group string="Notes">
-                        <field name="notes" nolabel="1"/>
+                        <field name="notes" nolabel="1"
+                               placeholder="Anything the Finance Department should record about this payment."/>
                     </group>
                 </sheet>
             </form>
@@ -78,16 +125,23 @@
         <field name="arch" type="xml">
             <search string="Accreditation Fees">
                 <field name="request_id"/>
+                <field name="partner_id"/>
                 <field name="receipt_number"/>
                 <filter name="filter_draft" string="To Confirm" domain="[('state', '=', 'draft')]"/>
                 <filter name="filter_confirmed" string="Confirmed" domain="[('state', '=', 'confirmed')]"/>
                 <separator/>
                 <filter name="filter_sop" string="SOP Reading Fee" domain="[('fee_type', '=', 'sop_reading')]"/>
                 <filter name="filter_demo" string="Demonstration Fee" domain="[('fee_type', '=', 'operational_demo')]"/>
+                <separator/>
+                <filter name="filter_this_year" string="This Year"
+                        domain="[('receipt_date', '&gt;=', context_today().strftime('%Y-01-01'))]"/>
                 <group>
-                    <filter name="group_fee_type" string="Fee Type" context="{'group_by': 'fee_type'}"/>
                     <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_fee_type" string="Fee Type" context="{'group_by': 'fee_type'}"/>
                     <filter name="group_request" string="Request" context="{'group_by': 'request_id'}"/>
+                    <filter name="group_partner" string="Applicant" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_receipt_month" string="Receipt Month"
+                            context="{'group_by': 'receipt_date:month'}"/>
                 </group>
             </search>
         </field>
@@ -97,8 +151,23 @@
         <field name="name">Accreditation Fees</field>
         <field name="res_model">dma.fee.payment</field>
         <field name="view_mode">list,form</field>
+        <field name="view_id" ref="dma_fee_payment_view_list_standalone"/>
         <field name="search_view_id" ref="dma_fee_payment_view_search"/>
-        <field name="context">{'search_default_filter_draft': 1}</field>
+        <!-- Explicitly empty rather than absent: removing the element would
+             leave whatever an earlier version wrote in the database, and this
+             screen used to land on a collapsed group-by that hid every row. -->
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No accreditation fee has been recorded yet.
+            </p><p>
+                Fees are raised from the accreditation file itself, on its
+                <b>Fees</b> tab: the SOP reading fee during the SOP step, and the
+                operational demonstration fee before the Accreditation Committee.
+                They show up here for the Finance Department to confirm against
+                the receipts.
+            </p>
+        </field>
     </record>
 
 </odoo>

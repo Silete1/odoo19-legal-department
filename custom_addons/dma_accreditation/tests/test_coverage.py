@@ -358,14 +358,30 @@ class TestAccreditationCoverage(DmaAccreditationCommon):
     # ------------------------------------------------------------------
     # Search / grouping helpers used by the views
     # ------------------------------------------------------------------
-    def test_18_the_kanban_always_shows_the_whole_pipeline(self):
+    def test_18_only_the_overview_kanban_shows_the_whole_pipeline(self):
         from ..models.dma_constants import MAIN_PATH_STATES
-        expanded = self.env["dma.accreditation.request"]._group_expand_state(None, None)
-        self.assertEqual(expanded, MAIN_PATH_STATES)
+        Request = self.env["dma.accreditation.request"]
+
+        expanded = Request.with_context(dma_expand_pipeline=1)._group_expand_state(
+            ["draft"], None,
+        )
+        self.assertEqual(
+            expanded, MAIN_PATH_STATES,
+            "'All Requests' keeps a column per step, empty or not",
+        )
         self.assertIsNot(
             expanded, MAIN_PATH_STATES,
             "A copy: the ORM may sort the returned list in place",
         )
+
+        present = ["draft", "cert_check"]
+        narrowed = Request._group_expand_state(present, None)
+        self.assertEqual(
+            narrowed, present,
+            "A role queue shows only the steps it actually holds, so its cards "
+            "are not buried behind ten empty columns",
+        )
+        self.assertIsNot(narrowed, present, "Still a copy")
 
     def test_19_the_my_turn_search_accepts_the_operators_the_client_sends(self):
         request = self._drive_to("submitted")
@@ -407,6 +423,55 @@ class TestAccreditationCoverage(DmaAccreditationCommon):
         self.assertIn("gd_review", signed)
         self.assertEqual(signed["gd_review"]["user"], self.user_gd.display_name)
         self.assertTrue(signed["gd_review"]["date"])
+
+    def test_21b_a_parked_file_does_not_read_as_a_finished_one(self):
+        """`returned` and `rejected` sit off the main path.
+
+        Reading the step index off the path therefore fell through to its
+        length, which drew every one of the thirteen steps as complete: a file
+        the Legal Department had just sent back displayed exactly like an
+        accredited one.
+        """
+        request = self._drive_to("submitted")
+        self._as(request, self.user_reception).action_send_to_general_director()
+        self._as(request, self.user_gd).action_gd_accept()
+
+        wizard = self.env["dma.decision.reason"].with_user(self.user_legal).create({
+            "request_id": request.id,
+            "mode": "return",
+            "reason": "The financial capability statement is missing.",
+        })
+        wizard.action_confirm()
+
+        payload = request.progress_payload
+        self.assertEqual(request.state, "returned")
+        self.assertLess(
+            payload["percent"], 100,
+            "a returned file has not completed the procedure",
+        )
+        self.assertLess(payload["steps_done"], payload["steps_total"])
+        self.assertEqual(payload["exception"], "returned")
+        self.assertTrue(
+            any(step["status"] == "todo" for step in payload["steps"]),
+            "the steps still to come are still to come",
+        )
+
+    def test_21c_an_accredited_file_reaches_the_end_of_the_rail(self):
+        """The last step of the path is also the closing state.
+
+        A step equal to the current one was always drawn as in-progress, so an
+        accredited file sat one step short of its own certificate for ever.
+        """
+        request = self._drive_to("authorized")
+        payload = request.progress_payload
+        self.assertEqual(request.state, "authorized")
+        self.assertTrue(payload["closed"])
+        self.assertEqual(
+            payload["steps_done"], payload["steps_total"],
+            "every step of the procedure has been completed",
+        )
+        self.assertEqual(payload["percent"], 100)
+        self.assertEqual(payload["steps"][-1]["status"], "done")
 
     def test_22_the_progress_payload_names_every_blocker(self):
         request = self._drive_to("submitted")

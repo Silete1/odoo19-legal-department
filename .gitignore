@@ -28,6 +28,9 @@
 
 /scripts/*
 !/scripts/setup_gov_hr_test_users.py
+!/scripts/dma_odoo_start.cmd
+!/scripts/dma_odoo_stop.cmd
+!/scripts/dma_install_into_odoo_service.ps1
 
 __pycache__/
 *.py[cod]

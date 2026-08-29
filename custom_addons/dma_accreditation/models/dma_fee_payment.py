@@ -50,11 +50,19 @@ class DmaFeePayment(models.Model):
     )
     state = fields.Selection(
         [("draft", "Draft"), ("confirmed", "Confirmed")],
-        default="draft", required=True, copy=False,
+        string="Status", default="draft", required=True, copy=False,
     )
     confirmed_by = fields.Many2one("res.users", string="Confirmed By", readonly=True, copy=False)
     confirmed_on = fields.Datetime(string="Confirmed On", readonly=True, copy=False)
     notes = fields.Text()
+    # Related, so the standalone Fees screen can show and group by the applicant
+    # and the status of the file the fee belongs to.
+    partner_id = fields.Many2one(
+        related="request_id.partner_id", string="Applicant", store=True, index=True,
+    )
+    request_state = fields.Selection(
+        related="request_id.state", string="Request Status",
+    )
     company_id = fields.Many2one(related="request_id.company_id")
 
     _amount_positive = models.Constraint(

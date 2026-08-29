@@ -13,8 +13,7 @@
             <div class="o_dma_progress_head">
                 <span class="o_dma_progress_state" t-esc="payload.current_label"/>
                 <span class="o_dma_progress_pending" t-if="payload.pending_role &amp;&amp; !payload.closed">
-                    <t t-esc="label.blocked"/>
-                    <b t-esc="payload.pending_role"/>
+                    <t t-esc="label.blocked"/><t>&#160;</t><b t-esc="payload.pending_role"/>
                 </span>
                 <!-- dir="ltr": a bare "4 / 13" is reordered to "13 / 4" by the
                      bidi algorithm inside an Arabic paragraph. -->

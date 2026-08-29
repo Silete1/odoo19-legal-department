@@ -6,9 +6,11 @@
 //  * the expiry rows use the STATUS palette (warning / serious / critical) and
 //    always ship an icon and a written level, never colour alone;
 //  * every value is text, so it wears an ink token and never the mark colour.
-// All colours come from Odoo's own tokens, so light and dark follow the theme
-// instead of being hard-coded twice. Spacing uses logical properties so the
-// whole page mirrors in Arabic.
+// All colours are Odoo backend SCSS tokens, resolved at compile time, so a
+// theme that overrides them re-skins this file for free. Spacing uses logical
+// properties, which need the component to declare its own direction: Odoo
+// mirrors the interface by running rtlcss over the physical properties and
+// never sets `direction`, so the template stamps `dir` on the body itself.
 
 .o_dma_dashboard {
     .o_dma_dashboard_body {
@@ -31,14 +33,14 @@
         align-items: flex-start;
         gap: 0.1rem;
         padding: 0.85rem 1rem;
-        border: 1px solid var(--border-color, #d8dadd);
+        border: 1px solid $border-color;
         border-radius: 6px;
-        background-color: var(--card-bg, #fff);
+        background-color: $o-view-background-color;
         text-align: start;
         cursor: pointer;
 
         &:hover {
-            border-color: var(--primary, #714b67);
+            border-color: $o-brand-primary;
         }
     }
 
@@ -47,19 +49,19 @@
         line-height: 1.1;
         font-weight: 700;
         font-variant-numeric: tabular-nums;
-        color: var(--body-color, #1f2937);
+        color: $body-color;
     }
 
     .o_dma_kpi_label {
         font-size: 0.8rem;
-        color: var(--text-muted, #6b7280);
+        color: $text-muted;
     }
 
     .o_dma_kpi_lead {
         .o_dma_kpi_value {
             // The one number the dashboard leads with.
             font-size: 2.6rem;
-            color: var(--primary, #714b67);
+            color: $o-brand-primary;
         }
     }
 
@@ -81,22 +83,25 @@
     }
 
     .o_dma_card {
-        border: 1px solid var(--border-color, #d8dadd);
+        border: 1px solid $border-color;
         border-radius: 6px;
-        background-color: var(--card-bg, #fff);
+        background-color: $o-view-background-color;
         padding: 0.9rem 1rem;
     }
 
     .o_dma_card_title {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
         font-size: 0.95rem;
         font-weight: 700;
         margin: 0 0 0.6rem;
-        color: var(--body-color, #1f2937);
+        color: $body-color;
     }
 
     .o_dma_empty {
         margin: 0;
-        color: var(--text-muted, #6b7280);
+        color: $text-muted;
         font-size: 0.85rem;
     }
 
@@ -114,7 +119,9 @@
 
     .o_dma_bar_row {
         display: grid;
-        grid-template-columns: 12rem minmax(0, 1fr) 3rem;
+        // 15rem fits the longest step name ("Operational Accreditation
+        // Granted") without an ellipsis at this module's default width.
+        grid-template-columns: 15rem minmax(0, 1fr) 3rem;
         align-items: center;
         gap: 0.6rem;
         width: 100%;
@@ -126,13 +133,13 @@
         cursor: pointer;
 
         &:hover {
-            background-color: var(--bg-view, rgba(0, 0, 0, 0.04));
+            background-color: $o-gray-200;
         }
     }
 
     .o_dma_bar_label {
         font-size: 0.82rem;
-        color: var(--body-color, #1f2937);
+        color: $body-color;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -140,7 +147,7 @@
 
     .o_dma_bar_track {
         height: 14px;                      // <= 24px: the bar never fills its slot
-        background-color: var(--bg-view, rgba(0, 0, 0, 0.05));
+        background-color: $o-gray-200;
         border-radius: 2px;
         overflow: hidden;
     }
@@ -149,7 +156,7 @@
         display: block;
         height: 100%;
         min-width: 2px;
-        background-color: var(--primary, #714b67);
+        background-color: $o-brand-primary;
         // square at the baseline, 4px rounded at the data end - and the data
         // end swaps sides in Arabic, hence the logical radius.
         border-start-end-radius: 4px;
@@ -160,7 +167,7 @@
         font-size: 0.82rem;
         font-variant-numeric: tabular-nums;
         text-align: end;
-        color: var(--text-muted, #6b7280);
+        color: $text-muted;
     }
 
     // ------------------------------------------------------------- queues
@@ -185,14 +192,14 @@
         font-size: 0.85rem;
 
         &:hover {
-            background-color: var(--bg-view, rgba(0, 0, 0, 0.04));
+            background-color: $o-gray-200;
         }
     }
 
     .o_dma_queue_count {
         font-weight: 700;
         font-variant-numeric: tabular-nums;
-        color: var(--body-color, #1f2937);
+        color: $body-color;
     }
 
     // ------------------------------------------------------------ expiring
@@ -218,23 +225,23 @@
             font-size: 0.82rem;
 
             &:hover {
-                background-color: var(--bg-view, rgba(0, 0, 0, 0.04));
+                background-color: $o-gray-200;
             }
         }
 
         + .o_dma_expiring_row button {
-            border-block-start: 1px solid var(--border-color, #d8dadd);
+            border-block-start: 1px solid $border-color;
         }
     }
 
     .o_dma_expiring_name {
         font-weight: 600;
-        color: var(--body-color, #1f2937);
+        color: $body-color;
     }
 
     .o_dma_expiring_partner {
         grid-column: 2;
-        color: var(--text-muted, #6b7280);
+        color: $text-muted;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -249,21 +256,134 @@
     .o_dma_expiring_date {
         grid-column: 3;
         grid-row: 2;
-        color: var(--text-muted, #6b7280);
+        color: $text-muted;
         font-variant-numeric: tabular-nums;
     }
 
     // Status colours: reserved, and always paired with the icon and the
     // written level rendered next to them.
     .o_dma_level_warning {
-        .fa, .o_dma_expiring_level { color: var(--warning, #f0ad4e); }
+        .fa, .o_dma_expiring_level { color: $warning; }
     }
 
     .o_dma_level_serious {
-        .fa, .o_dma_expiring_level { color: var(--orange-500, #e8833a); }
+        .fa, .o_dma_expiring_level { color: $orange-700; }
     }
 
     .o_dma_level_critical {
-        .fa, .o_dma_expiring_level { color: var(--danger, #d9534f); }
+        .fa, .o_dma_expiring_level { color: $danger; }
+    }
+
+    // ------------------------------------------------------------ worklist
+    // The one card that answers "what do I open first". It leads the page, so
+    // it is full width and its rows are generous hit targets.
+    .o_dma_card_count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.5rem;
+        padding: 0 0.35rem;
+        border-radius: 10px;
+        background-color: $o-brand-primary;
+        color: #fff;
+        font-size: 0.72rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .o_dma_card_hint {
+        margin: -0.25rem 0 0.5rem;
+        font-size: 0.75rem;
+        color: $text-muted;
+    }
+
+    .o_dma_worklist {
+        margin-block-end: 1rem;
+    }
+
+    .o_dma_worklist_rows {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .o_dma_worklist_row {
+        button {
+            display: grid;
+            grid-template-columns: 11rem minmax(6rem, 1fr) 12rem minmax(0, 1.4fr) 7rem;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.5rem 0.5rem;
+            border: 0;
+            border-radius: 4px;
+            background: none;
+            text-align: start;
+            cursor: pointer;
+            font-size: 0.84rem;
+
+            &:hover {
+                background-color: $o-gray-200;
+            }
+
+            @media (max-width: 1199px) {
+                grid-template-columns: 10rem minmax(0, 1fr) 10rem;
+
+                .o_dma_wl_next, .o_dma_wl_age { display: none; }
+            }
+        }
+
+        + .o_dma_worklist_row button {
+            border-block-start: 1px solid $border-color;
+            border-radius: 0;
+        }
+    }
+
+    .o_dma_wl_ref {
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: $body-color;
+    }
+
+    .o_dma_wl_star {
+        color: $warning;
+        margin-inline-end: 0.25rem;
+    }
+
+    .o_dma_wl_partner,
+    .o_dma_wl_step,
+    .o_dma_wl_next,
+    .o_dma_wl_age {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_wl_step {
+        color: $o-brand-primary;
+        font-weight: 600;
+    }
+
+    .o_dma_wl_next,
+    .o_dma_wl_age {
+        color: $text-muted;
+        font-size: 0.78rem;
+    }
+
+    .o_dma_wl_age {
+        text-align: end;
+    }
+
+    // ------------------------------------------------------------ all clear
+    .o_dma_allclear {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-block-end: 1rem;
+        color: $text-muted;
+
+        .fa {
+            color: $success;
+            font-size: 1.1rem;
+        }
     }
 }

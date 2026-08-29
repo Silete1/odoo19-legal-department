@@ -160,6 +160,10 @@ class DmaAccreditationRequest(models.Model):
     # tooltip over the form.
     progress_payload = fields.Json(
         string="Progress", compute="_compute_progress_payload",
+        # Every label in the payload is translated and the direction flag is
+        # read off the language, so the cache has to be keyed by it: without
+        # this one reader's language is served to the next one in the worker.
+        depends_context=("lang",),
     )
     is_my_turn = fields.Boolean(
         string="My Turn", compute="_compute_is_my_turn", search="_search_is_my_turn",
@@ -371,7 +375,15 @@ class DmaAccreditationRequest(models.Model):
 
     @api.model
     def _group_expand_state(self, states, domain):
-        """Always show the whole pipeline in the grouped kanban."""
+        """Show the whole pipeline only where the whole pipeline is the point.
+
+        "All Requests" is an overview of the procedure and wants a column per
+        step, empty or not. A role queue covers two or three steps, so padding
+        it out to thirteen columns would push its real cards off the board
+        behind ten empty ones.
+        """
+        if not self.env.context.get("dma_expand_pipeline"):
+            return list(states or ())
         # A copy: the ORM is free to sort this list in place.
         return list(MAIN_PATH_STATES)
 
@@ -636,6 +648,36 @@ class DmaAccreditationRequest(models.Model):
         for step in pipeline:
             step["percent"] = round(100.0 * step["count"] / busiest) if busiest else 0
 
+        # The worklist: the actual files this reader has to act on. A dashboard
+        # of counts tells an officer how much there is; this tells them what to
+        # open first.
+        mine = self.search(
+            [("is_my_turn", "=", True)],
+            order="priority desc, id asc", limit=12,
+        )
+        my_files = []
+        for request in mine:
+            since = request.approval_line_ids.sorted("date")[-1].date if (
+                request.approval_line_ids
+            ) else request.create_date
+            waiting = (fields.Datetime.now() - since).days if since else 0
+            blockers = request._progress_blockers()
+            my_files.append({
+                "id": request.id,
+                "name": request.name,
+                "partner": request.partner_id.display_name,
+                "state": request.state,
+                "state_label": state_label(self.env, request.state),
+                "urgent": request.priority == "1",
+                "waiting_days": waiting,
+                "waiting_label": (
+                    self.env._("today") if waiting <= 0
+                    else self.env._("%s day(s)", waiting)
+                ),
+                "blockers": len(blockers),
+                "next_step": blockers[0] if blockers else "",
+            })
+
         expiring = []
         soon = self.search([
             ("state", "=", "authorized"),
@@ -660,7 +702,15 @@ class DmaAccreditationRequest(models.Model):
             })
 
         return {
+            # Odoo mirrors the interface by running rtlcss over the physical CSS
+            # properties; it never sets `direction: rtl`. A component that lays
+            # itself out therefore has to say which way round it is, exactly as
+            # the progress widget does.
+            "rtl": self.env["res.lang"]._lang_get(
+                self.env.lang or "en_US"
+            ).direction == "rtl",
             "my_turn": count([("is_my_turn", "=", True)]),
+            "my_files": my_files,
             "queues": queues,
             "pipeline": pipeline,
             "expiring": expiring,
@@ -744,16 +794,31 @@ class DmaAccreditationRequest(models.Model):
             for line in request.approval_line_ids.sorted("id"):
                 decided.setdefault(line.step, line)
             current = request.state
-            reached = (
-                MAIN_PATH_STATES.index(current)
-                if current in MAIN_PATH_STATES
-                else len(MAIN_PATH_STATES)
-            )
+            closed = current in ("authorized", "rejected")
+            if current in MAIN_PATH_STATES:
+                reached = MAIN_PATH_STATES.index(current)
+            else:
+                # `returned` and `rejected` sit off the main path, so there is
+                # no index to read off it. A returned file has completed the
+                # steps behind the one it will resume at; a rejected one, which
+                # resumes nowhere, the steps it had actually been through.
+                resume = request.return_to_state
+                if resume in MAIN_PATH_STATES:
+                    reached = MAIN_PATH_STATES.index(resume)
+                else:
+                    seen = [
+                        MAIN_PATH_STATES.index(key) for key in decided
+                        if key in MAIN_PATH_STATES
+                    ]
+                    reached = max(seen) + 1 if seen else 0
             steps = []
             for index, key in enumerate(MAIN_PATH_STATES):
                 line = decided.get(key)
                 if key == current:
-                    status = "current"
+                    # The last step of the path is also the closing state, so
+                    # an accredited file has *finished* it rather than sitting
+                    # on it: without this the rail stops one short forever.
+                    status = "done" if closed else "current"
                 elif index < reached or line:
                     status = "done"
                 else:
@@ -772,7 +837,7 @@ class DmaAccreditationRequest(models.Model):
                 "rtl": rtl,
                 "current": current,
                 "current_label": state_label(self.env, current),
-                "closed": current in ("authorized", "rejected"),
+                "closed": closed,
                 "exception": current if current in ("returned", "rejected") else False,
                 "exception_label": (
                     state_label(self.env, current)

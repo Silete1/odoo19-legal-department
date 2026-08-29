@@ -154,7 +154,18 @@
                          is blocking it. Everything shown here is computed by
                          _compute_progress_payload on the server. -->
                     <field name="progress_payload" nolabel="1" readonly="1"
-                           widget="dma_accreditation_progress"/>
+                           widget="dma_accreditation_progress" invisible="not id"/>
+
+                    <!-- What to do first, shown only while the file is still
+                         being opened. -->
+                    <div class="alert alert-info o_dma_getting_started" role="alert"
+                         invisible="id">
+                        <b>Opening a new accreditation file.</b>
+                        Name the applicant organisation and the scopes it applies for,
+                        then press <b>Submit</b> to register it and forward it to the
+                        General Director. The prerequisites checklist is created for
+                        you and is verified later by the Certifications Division.
+                    </div>
 
                     <div class="alert alert-danger" role="alert" invisible="state != 'rejected'">
                         <b>Request rejected.</b>
@@ -169,9 +180,11 @@
                     <group>
                         <group name="applicant">
                             <field name="partner_id" options="{'no_quick_create': True}"
-                                   readonly="state not in ('draft', 'returned')"/>
+                                   readonly="state not in ('draft', 'returned')"
+                                   placeholder="e.g. Al-Amal Demining Company"/>
                             <field name="contact_partner_id" options="{'no_quick_create': True}"
-                                   readonly="state in ('authorized', 'rejected')"/>
+                                   readonly="state in ('authorized', 'rejected')"
+                                   placeholder="The person representing the applicant"/>
                             <field name="contact_name" readonly="state in ('authorized', 'rejected')"/>
                             <field name="contact_email" widget="email"
                                    readonly="state in ('authorized', 'rejected')"/>
@@ -180,9 +193,13 @@
                         </group>
                         <group name="request">
                             <field name="request_type" readonly="state not in ('draft', 'returned')"/>
+                            <!-- required to submit: the gate in action_submit
+                                 refuses a file with no scope -->
                             <field name="scope_ids" widget="many2many_tags"
                                    options="{'color_field': 'color'}"
-                                   readonly="state not in ('draft', 'returned')"/>
+                                   required="state == 'draft'"
+                                   readonly="state not in ('draft', 'returned')"
+                                   placeholder="e.g. Manual Clearance, EOD"/>
                             <field name="priority" widget="priority"/>
                             <field name="submission_date"/>
                             <field name="pending_group"/>
@@ -212,7 +229,8 @@
                                     <field name="contact_email" widget="email" readonly="1"/>
                                     <field name="contact_phone" widget="phone" readonly="1"/>
                                 </group>
-                                <group string="Office Accreditation">
+                                <group string="Office Accreditation"
+                                       invisible="not office_ref">
                                     <field name="office_ref"/>
                                     <field name="office_date"/>
                                     <field name="verification_token" string="Verification Code"/>
@@ -234,8 +252,15 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <div class="d-flex align-items-center gap-2">
                                     <span class="o_form_label">Prerequisites checklist</span>
+                                    <!-- Green the moment the checklist is
+                                         complete: that is the one state change
+                                         the reader of this tab is waiting for. -->
                                     <field name="checklist_progress" nolabel="1" readonly="1"
-                                           class="badge text-bg-secondary"/>
+                                           class="badge text-bg-success"
+                                           invisible="not checklist_complete"/>
+                                    <field name="checklist_progress" nolabel="1" readonly="1"
+                                           class="badge text-bg-secondary"
+                                           invisible="checklist_complete"/>
                                     <span class="text-muted">required documents accepted</span>
                                 </div>
                                 <div class="d-flex gap-2">
@@ -300,8 +325,8 @@
                         <page name="sop" string="SOP">
                             <group>
                                 <group string="Electronic Copy">
-                                    <field name="sop_reference"/>
-                                    <field name="sop_version"/>
+                                    <field name="sop_reference" placeholder="e.g. SANAD-SOP-2026"/>
+                                    <field name="sop_version" placeholder="e.g. 3.1"/>
                                     <field name="sop_attachment_ids" widget="many2many_binary"
                                            string="Electronic SOP"/>
                                 </group>
@@ -396,18 +421,24 @@
         <field name="name">dma.accreditation.request.list</field>
         <field name="model">dma.accreditation.request</field>
         <field name="arch" type="xml">
-            <list string="Accreditation Requests"
+            <list string="Accreditation Requests" default_order="priority desc, id desc"
                   decoration-success="state == 'authorized'"
                   decoration-danger="state == 'rejected'"
                   decoration-warning="state == 'returned'"
-                  decoration-muted="state == 'draft'">
+                  decoration-muted="state == 'draft'"
+                  decoration-bf="priority == '1'">
+                <field name="priority" widget="priority" optional="show" nolabel="1"/>
                 <field name="name"/>
                 <field name="partner_id"/>
-                <field name="request_type"/>
+                <field name="request_type" optional="show"/>
+                <!-- off by default: a file with four scopes trebles the row
+                     height, and the reference plus the applicant already
+                     identify the record. -->
                 <field name="scope_ids" widget="many2many_tags"
-                       options="{'color_field': 'color'}" optional="show"/>
-                <field name="submission_date" optional="show"/>
-                <field name="pending_group" optional="show"/>
+                       options="{'color_field': 'color'}" optional="hide"/>
+                <field name="submission_date" string="Submitted" optional="show"/>
+                <field name="checklist_progress" string="Checklist" optional="hide"/>
+                <field name="pending_group" string="Pending With" optional="show"/>
                 <field name="office_ref" optional="hide"/>
                 <field name="certificate_ref" optional="hide"/>
                 <field name="expiry_date" optional="hide"/>
@@ -415,7 +446,9 @@
                 <field name="state" widget="badge"
                        decoration-success="state == 'authorized'"
                        decoration-danger="state == 'rejected'"
-                       decoration-warning="state == 'returned'"/>
+                       decoration-warning="state == 'returned'"
+                       decoration-muted="state == 'draft'"
+                       decoration-info="state not in ('draft', 'authorized', 'rejected', 'returned')"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </list>
         </field>
@@ -504,6 +537,22 @@
     <!-- ================================================================
          SEARCH
          ================================================================ -->
+    <!-- The queues read in service-desk order: whatever is urgent first, then
+         whatever has waited longest. "All Requests" keeps the model's own
+         newest-first order, which is what a record list is for. -->
+    <record id="dma_accreditation_request_view_list_queue" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.list.queue</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="inherit_id" ref="dma_accreditation_request_view_list"/>
+        <field name="mode">primary</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="default_order">priority desc, submission_date asc, id asc</attribute>
+            </list>
+        </field>
+    </record>
+
     <record id="dma_accreditation_request_view_search" model="ir.ui.view">
         <field name="name">dma.accreditation.request.search</field>
         <field name="model">dma.accreditation.request</field>
@@ -522,14 +571,12 @@
                 <filter name="filter_legal_review" string="Legal Review" domain="[('state', '=', 'legal_review')]"/>
                 <filter name="filter_cert_check" string="Certifications Check" domain="[('state', '=', 'cert_check')]"/>
                 <filter name="filter_office_granted" string="Office Accreditation Granted" domain="[('state', '=', 'office_granted')]"/>
-                <separator/>
                 <filter name="filter_sop_submission" string="SOP Submission" domain="[('state', '=', 'sop_submission')]"/>
                 <filter name="filter_sop_fee" string="SOP Reading Fee" domain="[('state', '=', 'sop_fee')]"/>
                 <filter name="filter_dual_confirm" string="Dual Confirmation" domain="[('state', '=', 'dual_confirm')]"/>
                 <filter name="filter_demo_fee" string="Demonstration Fee" domain="[('state', '=', 'demo_fee')]"/>
                 <filter name="filter_committee" string="Committee" domain="[('state', '=', 'committee')]"/>
                 <filter name="filter_legal_refine" string="Legal Refinement" domain="[('state', '=', 'legal_refine')]"/>
-                <separator/>
                 <filter name="filter_authorized" string="Operationally Accredited" domain="[('state', '=', 'authorized')]"/>
                 <filter name="filter_returned" string="Returned" domain="[('state', '=', 'returned')]"/>
                 <filter name="filter_rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
@@ -560,9 +607,11 @@
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">kanban,list,form,activity,graph,pivot</field>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
-        <field name="context">{}</field>
+        <!-- The one screen that shows the procedure as a whole, so the kanban
+             keeps a column for every step even when it holds nothing. -->
+        <field name="context">{'dma_expand_pipeline': 1}</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smart_button">
+            <p class="o_view_nocontent_smiling_face">
                 Register the accreditation file of a demining organisation.
             </p><p>
                 The file walks through the office accreditation
@@ -581,12 +630,15 @@
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('is_my_turn', '=', True)]</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smart_button">
+            <p class="o_view_nocontent_empty_folder">
                 Nothing is waiting for you.
             </p><p>
                 Files show up here as soon as they reach a step your department
                 is responsible for.
             </p>
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">Nothing is waiting for you.</p><p>A file appears here the moment it reaches a step your department is responsible for. The <b>My Turn</b> filter understands the parallel dual confirmation: during that step a file sits on the Finance desk <b>and</b> the Operations desk until each of them has signed.</p>
         </field>
     </record>
 
@@ -594,56 +646,90 @@
         <field name="name">Reception Queue</field>
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation_request_view_list_queue"/>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('state', 'in', ('draft', 'submitted', 'returned'))]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No file is with the reception desk.</p><p>New applications are opened here with <b>New</b>, then submitted and forwarded to the General Director. Files returned by a department for completion also come back to this queue.</p>
+        </field>
     </record>
 
     <record id="action_dma_queue_general_director" model="ir.actions.act_window">
         <field name="name">Initial Acceptance</field>
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation_request_view_list_queue"/>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('state', '=', 'gd_review')]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No file is waiting for the initial acceptance.</p><p>Files forwarded by the reception desk appear here for the <b>initial acceptance</b> (القبول الأولي). Accept to send the file on to the Legal Department, or return it with a reason.</p>
+        </field>
     </record>
 
     <record id="action_dma_queue_legal" model="ir.actions.act_window">
         <field name="name">Legal Queue</field>
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation_request_view_list_queue"/>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('state', 'in', ('legal_review', 'legal_refine'))]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No file is waiting for the Legal Department.</p><p>Two steps arrive here: the <b>legal review</b> before the prerequisites are checked, and the <b>refinement</b> of the Accreditation Committee decision before the certificate is issued.</p>
+        </field>
     </record>
 
     <record id="action_dma_queue_cert" model="ir.actions.act_window">
         <field name="name">Certifications Queue</field>
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation_request_view_list_queue"/>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('state', '=', 'cert_check')]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No file is waiting for the Certifications Division.</p><p>Files here need their <b>prerequisites checklist</b> (الأوليات) verified: every required document marked provided and accepted. Only then can the office accreditation be granted.</p>
+        </field>
     </record>
 
     <record id="action_dma_queue_operations" model="ir.actions.act_window">
         <field name="name">Operations Queue</field>
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation_request_view_list_queue"/>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('state', 'in', ('office_granted', 'sop_submission', 'dual_confirm'))]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No file is waiting for the Operations Department.</p><p>Operations opens the operational phase, records the <b>paper SOP</b> when it is handed in, and confirms the company SOP for appraisal during the dual confirmation.</p>
+        </field>
     </record>
 
     <record id="action_dma_queue_finance" model="ir.actions.act_window">
         <field name="name">Finance Queue</field>
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation_request_view_list_queue"/>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('state', 'in', ('sop_fee', 'dual_confirm', 'demo_fee'))]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No file is waiting for the Finance Department.</p><p>Finance confirms the <b>SOP reading fee</b> and the <b>operational demonstration fee</b> against their receipts, and signs the Finance half of the dual confirmation.</p>
+        </field>
     </record>
 
     <record id="action_dma_queue_committee" model="ir.actions.act_window">
         <field name="name">Committee Queue</field>
         <field name="res_model">dma.accreditation.request</field>
         <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation_request_view_list_queue"/>
         <field name="search_view_id" ref="dma_accreditation_request_view_search"/>
         <field name="domain">[('state', '=', 'committee')]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No file is waiting for the Accreditation Committee.</p><p>A file reaches the committee once both fees are settled. Record the decision, the session date and the decision text on the <b>Committee &amp; Decision</b> tab, then confirm it.</p>
+        </field>
     </record>
 
 </odoo>

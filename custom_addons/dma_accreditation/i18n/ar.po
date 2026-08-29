@@ -56,6 +56,12 @@ msgstr "%(role)s — %(user)s، %(date)s"
 #. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "%s day(s)"
+msgstr "%s يوماً"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "%s days left"
 msgstr "متبقٍ %s يوماً"
 
@@ -1210,6 +1216,12 @@ msgstr ""
 "                مدقِّق خارجي كما هو."
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Everything at your department's steps, including files a colleague already signed."
+msgstr "كل ما هو في مراحل قسمك، بما في ذلك المعاملات التي وقّع عليها زميل بالفعل."
+
+#. module: dma_accreditation
 #: model:dma.document.type,description:dma_accreditation.document_type_financial
 msgid "Evidence that the organisation can financially sustain the operations it applies for."
 msgstr "ما يُثبت قدرة المؤسسة على تمويل العمليات التي تتقدَّم بطلب التفويض بها."
@@ -1667,6 +1679,12 @@ msgid "Name"
 msgstr "الاسم"
 
 #. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Needs your action"
+msgstr "بانتظار إجرائك"
+
+#. module: dma_accreditation
 #. odoo-python
 #: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
 msgid "New"
@@ -1766,6 +1784,12 @@ msgstr "لا يوجد ما يعيق هذه المرحلة."
 #: model_terms:ir.actions.act_window,help:dma_accreditation.action_dma_my_queue
 msgid "Nothing is waiting for you."
 msgstr "لا يوجد ما ينتظر إجراءً منك."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Nothing needs your action right now."
+msgstr "لا يوجد ما ينتظر إجراءك حالياً."
 
 #. module: dma_accreditation
 #: model:ir.model.fields,field_description:dma_accreditation.field_dma_accreditation_request__message_needaction_counter
@@ -2887,6 +2911,18 @@ msgstr "مثال: تطهير مناطق القتال"
 #: model_terms:ir.ui.view,arch_db:dma_accreditation.dma_document_type_view_form
 msgid "e.g. Company Registration Certificate"
 msgstr "مثال: شهادة تسجيل الشركة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_accreditation_request.py:0
+msgid "today"
+msgstr "اليوم"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "waiting"
+msgstr "منتظر منذ"
 
 #. module: dma_accreditation
 #: model:mail.template,subject:dma_accreditation.mail_template_request_returned

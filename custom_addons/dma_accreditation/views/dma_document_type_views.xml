@@ -61,7 +61,7 @@
         <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="dma_document_type_view_search"/>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smart_button">
+            <p class="o_view_nocontent_smiling_face">
                 Define the prerequisite documents of the office accreditation file.
             </p><p>
                 Every request gets one checklist line per document type. The

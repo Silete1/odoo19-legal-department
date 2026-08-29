@@ -3,7 +3,8 @@
 
     <t t-name="dma_accreditation.AccreditationDashboard">
         <Layout className="'o_dma_dashboard'" display="{ controlPanel: {} }">
-            <div class="o_dma_dashboard_body" t-if="data">
+            <div class="o_dma_dashboard_body" t-if="data"
+                 t-att-dir="data.rtl ? 'rtl' : 'ltr'">
 
                 <!-- Headline numbers. Stat tiles, not a one-bar bar chart. -->
                 <div class="o_dma_kpis">
@@ -33,6 +34,40 @@
                     </button>
                 </div>
 
+                <!-- The worklist. Counts say how much there is; this says what
+                     to open first, so it leads. -->
+                <section class="o_dma_card o_dma_worklist" t-if="data.my_files.length">
+                    <h3 class="o_dma_card_title">
+                        <t t-esc="label.needsYou"/>
+                        <span class="o_dma_card_count" dir="ltr" t-esc="data.my_turn"/>
+                    </h3>
+                    <ul class="o_dma_worklist_rows">
+                        <li t-foreach="data.my_files" t-as="file" t-key="file.id"
+                            t-attf-class="o_dma_worklist_row {{ file.urgent ? 'o_dma_urgent' : '' }}">
+                            <button t-on-click="() => this.openRecord(file.id)">
+                                <span class="o_dma_wl_ref">
+                                    <i class="fa fa-star o_dma_wl_star" t-if="file.urgent"
+                                       role="img" t-att-title="label.urgent"/>
+                                    <t t-esc="file.name"/>
+                                </span>
+                                <span class="o_dma_wl_partner" t-esc="file.partner"/>
+                                <span class="o_dma_wl_step" t-esc="file.state_label"/>
+                                <!-- Always rendered: dropping the cell
+                                     would shift the age into its column. -->
+                                <span class="o_dma_wl_next" t-esc="file.next_step"/>
+                                <span class="o_dma_wl_age">
+                                    <t t-esc="label.waiting"/>&#160;<t t-esc="file.waiting_label"/>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="o_dma_card o_dma_allclear" t-if="!data.my_files.length">
+                    <i class="fa fa-check-circle" role="img" aria-hidden="true"/>
+                    <span t-esc="label.allClear"/>
+                </section>
+
                 <div class="o_dma_dashboard_cols">
 
                     <!-- Files by step: one series, so magnitude is the bar
@@ -45,7 +80,11 @@
                                         t-on-click="() => this.openRequests(step.label, step.domain)">
                                     <span class="o_dma_bar_label" t-esc="step.label"/>
                                     <span class="o_dma_bar_track">
-                                        <span class="o_dma_bar_fill"
+                                        <!-- A step holding no files paints
+                                             nothing: a minimum-width stub would
+                                             read as "one or two", which is the
+                                             one thing a zero must not say. -->
+                                        <span class="o_dma_bar_fill" t-if="step.count"
                                               t-attf-style="width: {{ step.percent }}%;"/>
                                     </span>
                                     <span class="o_dma_bar_value" dir="ltr" t-esc="step.count"/>
@@ -58,6 +97,7 @@
                         <!-- One tile per department the reader belongs to. -->
                         <section class="o_dma_card" t-if="data.queues.length">
                             <h3 class="o_dma_card_title" t-esc="label.queues"/>
+                            <p class="o_dma_card_hint" t-esc="label.queuesHint"/>
                             <ul class="o_dma_queues">
                                 <li t-foreach="data.queues" t-as="queue" t-key="queue.role">
                                     <button class="o_dma_queue_row"

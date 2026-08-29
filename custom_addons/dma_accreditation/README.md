@@ -74,6 +74,33 @@ language on each user (*Settings → Users → Preferences → Language*). Odoo
 switches the whole backend to RTL automatically. The module ships a complete
 `i18n/ar.po`, so no further import is needed.
 
+### Running it permanently on this machine
+
+A permanent instance is installed and serving the `dma_accreditation` database:
+
+| | |
+|---|---|
+| URL | <http://localhost:8070> |
+| Database | `dma_accreditation` (pinned; no database selector) |
+| Config | `odoo19_dma_service.conf` |
+| Log | `.odoo_data_dma/odoo-dma.log` |
+| Autostart | a `.vbs` launcher in the user's Startup folder, so it comes up at logon |
+| Start / stop by hand | `scripts/dma_odoo_start.cmd` / `scripts/dma_odoo_stop.cmd` |
+
+The launcher puts the official Odoo installation's `thirdparty` directory on
+`PATH`, which is where `wkhtmltopdf.exe` lives, so the letters and certificates
+come out as real PDFs on this instance.
+
+To serve it instead from the **official Odoo Windows service**
+(`odoo-server-19.0`, port 8069, which starts before anyone logs in), run this
+once **as Administrator**:
+
+    powershell -ExecutionPolicy Bypass -File "<repo>/scripts/dma_install_into_odoo_service.ps1"
+
+It backs up that service's `odoo.conf`, adds this addon to its `addons_path`
+and restarts the service. Both instances share the same PostgreSQL, so they see
+the same databases.
+
 ---
 
 ## 3. Roles and who does what
