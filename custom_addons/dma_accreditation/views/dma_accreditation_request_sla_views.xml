@@ -29,31 +29,30 @@
             </xpath>
 
             <!-- A dossier and its escalations are things you open, not fields
-                 you read, so they go in a button box, which the form does not
-                 have yet. The name matters and the class does not: the Odoo 19
-                 form compiler selects the box with `div[name='button_box']`,
-                 and a box named anything else renders as a plain div. -->
-            <xpath expr="//div[hasclass('oe_title')]" position="before">
-                <div class="oe_button_box" name="button_box">
-                    <button name="action_download_dossier" type="object"
-                            class="oe_stat_button" icon="fa-archive"
-                            invisible="not id">
-                        <field name="dossier_document_count" widget="statinfo"
-                               string="Dossier"/>
-                    </button>
-                    <button name="action_open_blocking_documents" type="object"
-                            class="oe_stat_button" icon="fa-exclamation-triangle"
-                            invisible="blocking_document_count == 0">
-                        <field name="blocking_document_count" widget="statinfo"
-                               string="Blocking"/>
-                    </button>
-                    <button name="action_open_escalations" type="object"
-                            class="oe_stat_button" icon="fa-bell"
-                            invisible="open_escalation_count == 0">
-                        <field name="open_escalation_count" widget="statinfo"
-                               string="Escalations"/>
-                    </button>
-                </div>
+                 you read, so they belong in the button box - the one the form
+                 already has. A *second* `div[name='button_box']` compiles into
+                 a second ButtonBox component that never reaches the screen, so
+                 these buttons go inside the existing box rather than beside
+                 it. -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_download_dossier" type="object"
+                        class="oe_stat_button" icon="fa-archive"
+                        invisible="not id">
+                    <field name="dossier_document_count" widget="statinfo"
+                           string="Dossier"/>
+                </button>
+                <button name="action_open_blocking_documents" type="object"
+                        class="oe_stat_button" icon="fa-exclamation-triangle"
+                        invisible="blocking_document_count == 0">
+                    <field name="blocking_document_count" widget="statinfo"
+                           string="Blocking"/>
+                </button>
+                <button name="action_open_escalations" type="object"
+                        class="oe_stat_button" icon="fa-bell"
+                        invisible="open_escalation_count == 0">
+                    <field name="open_escalation_count" widget="statinfo"
+                           string="Escalations"/>
+                </button>
             </xpath>
 
             <!-- Two more figures on the office accreditation summary. -->
