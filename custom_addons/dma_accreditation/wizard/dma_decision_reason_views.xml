@@ -17,12 +17,19 @@
                      Certifications check, for instance, sends it back to Legal. -->
                 <div class="alert alert-info" role="alert" invisible="mode != 'return'">
                     <b>Returning the file to the applicant.</b>
-                    It leaves
-                    <field name="current_state" nolabel="1" readonly="1" class="oe_inline fw-bold"/>
-                    and, once the reception desk resumes it, re-enters the process at
-                    <field name="resume_state" nolabel="1" readonly="1" class="oe_inline fw-bold"/>.
                     The applicant is e-mailed the reason below, and the reason is written to
                     the approvals log, which can never be edited or deleted afterwards.
+                    <!-- The two steps as labelled facts. Written into the
+                         sentence they would export as three fragments the
+                         Arabic translator could not reorder. -->
+                    <div class="mt-2">
+                        <span class="fw-bold">Leaves:</span>
+                        <field name="current_state" nolabel="1" readonly="1" class="oe_inline"/>
+                    </div>
+                    <div>
+                        <span class="fw-bold">Resumes at:</span>
+                        <field name="resume_state" nolabel="1" readonly="1" class="oe_inline"/>
+                    </div>
                 </div>
                 <div class="alert alert-danger" role="alert" invisible="mode != 'reject'">
                     <b>Rejecting closes the file definitively.</b>

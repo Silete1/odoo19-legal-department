@@ -1,6 +1,7 @@
 # Part of the DMA Accreditation module. See LICENSE file for full copyright and licensing details.
 import logging
 import uuid
+from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
@@ -8,7 +9,7 @@ from markupsafe import Markup
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.fields import Domain
-from odoo.tools import format_datetime, is_html_empty
+from odoo.tools import format_date, format_datetime, is_html_empty
 
 from .dma_constants import (
     DEFAULT_WINDOW_DAYS,
@@ -194,6 +195,23 @@ class DmaAccreditationRequest(models.Model):
     blocker_summary = fields.Char(
         string="Blocked By", compute="_compute_blocker_summary",
         help="The first thing standing between the file and its next step.",
+    )
+    # Four sentences of the shape "<fact> by <someone> on <some date>". Built
+    # here rather than assembled in the arch around two <field> nodes, because
+    # the translation exporter splits a view's text at every field boundary and
+    # leaves the translator fragments they cannot reorder - which is exactly
+    # what Arabic needs to do.
+    sop_paper_received_label = fields.Char(
+        string="Paper SOP Receipt", compute="_compute_signoff_labels",
+    )
+    finance_confirmed_label = fields.Char(
+        string="Finance Sign-off", compute="_compute_signoff_labels",
+    )
+    operations_confirmed_label = fields.Char(
+        string="Operations Sign-off", compute="_compute_signoff_labels",
+    )
+    legal_refined_label = fields.Char(
+        string="Legal Refinement Stamp", compute="_compute_signoff_labels",
     )
     can_review = fields.Boolean(
         string="May Return or Reject", compute="_compute_can_review",
@@ -442,6 +460,48 @@ class DmaAccreditationRequest(models.Model):
                 request.validity_state = "expiring"
             else:
                 request.validity_state = "valid"
+
+    def _stamp_sentence(self, template, user, when):
+        """One sentence naming who did something and when, or nothing at all.
+
+        ``template`` arrives already translated, with its named placeholders
+        intact, so the substitution happens after the lookup and the sentence
+        stays a single msgid.
+        """
+        if not user or not when:
+            return False
+        return template % {
+            "user": user.display_name,
+            "date": (
+                format_datetime(self.env, when, dt_format="short")
+                if isinstance(when, datetime) else format_date(self.env, when)
+            ),
+        }
+
+    @api.depends(
+        "sop_paper_received_by", "sop_paper_received_date",
+        "finance_confirmed_by", "finance_confirmed_on",
+        "operations_confirmed_by", "operations_confirmed_on",
+        "legal_refined_by", "legal_refined_on",
+    )
+    def _compute_signoff_labels(self):
+        for request in self:
+            request.sop_paper_received_label = request._stamp_sentence(
+                self.env._("Paper copy received by %(user)s on %(date)s."),
+                request.sop_paper_received_by, request.sop_paper_received_date,
+            )
+            request.finance_confirmed_label = request._stamp_sentence(
+                self.env._("Confirmed by %(user)s on %(date)s."),
+                request.finance_confirmed_by, request.finance_confirmed_on,
+            )
+            request.operations_confirmed_label = request._stamp_sentence(
+                self.env._("Confirmed by %(user)s on %(date)s."),
+                request.operations_confirmed_by, request.operations_confirmed_on,
+            )
+            request.legal_refined_label = request._stamp_sentence(
+                self.env._("Refined by %(user)s on %(date)s."),
+                request.legal_refined_by, request.legal_refined_on,
+            )
 
     @api.depends("approval_line_ids")
     def _compute_approval_line_count(self):

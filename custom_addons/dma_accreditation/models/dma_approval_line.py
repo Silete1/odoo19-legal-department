@@ -1,6 +1,7 @@
 # Part of the DMA Accreditation module. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import format_datetime
 
 from .dma_constants import ROLE_SELECTION, STATE_SELECTION
 
@@ -50,7 +51,24 @@ class DmaApprovalLine(models.Model):
         string="Date", required=True, default=fields.Datetime.now,
     )
     notes = fields.Text()
+    # The whole statement as one translatable sentence: assembled in the form
+    # around four <field> nodes it would export as four fragments, and Arabic
+    # cannot reorder those.
+    summary = fields.Char(string="Decision", compute="_compute_summary")
     company_id = fields.Many2one(related="request_id.company_id")
+
+    @api.depends("user_id", "role", "date", "request_id")
+    def _compute_summary(self):
+        roles = dict(self._fields["role"]._description_selection(self.env))
+        for line in self:
+            line.summary = self.env._(
+                "%(user)s, acting as %(role)s, decided this on %(date)s "
+                "for %(request)s.",
+                user=line.user_id.display_name,
+                role=roles.get(line.role, line.role),
+                date=format_datetime(self.env, line.date, dt_format="short"),
+                request=line.request_id.name,
+            )
 
     @api.depends("step", "user_id")
     def _compute_display_name(self):

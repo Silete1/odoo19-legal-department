@@ -1,5 +1,6 @@
 # Part of the DMA Accreditation module. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models
+from odoo.tools import format_datetime
 from odoo.exceptions import UserError, ValidationError
 
 FEE_TYPE_SELECTION = [
@@ -54,6 +55,11 @@ class DmaFeePayment(models.Model):
     attachment_count = fields.Integer(
         string="Scans", compute="_compute_attachment_count",
     )
+    # One msgid rather than the three fragments a view splits
+    # "Confirmed by <field/> on <field/>" into.
+    confirmed_label = fields.Char(
+        string="Confirmation", compute="_compute_confirmed_label",
+    )
     state = fields.Selection(
         [("draft", "Draft"), ("confirmed", "Confirmed")],
         string="Status", default="draft", required=True, copy=False,
@@ -80,6 +86,15 @@ class DmaFeePayment(models.Model):
     def _compute_attachment_count(self):
         for fee in self:
             fee.attachment_count = len(fee.attachment_ids)
+
+    @api.depends("confirmed_by", "confirmed_on")
+    def _compute_confirmed_label(self):
+        for fee in self:
+            fee.confirmed_label = self.env._(
+                "Confirmed by %(user)s on %(date)s.",
+                user=fee.confirmed_by.display_name,
+                date=format_datetime(self.env, fee.confirmed_on, dt_format="short"),
+            ) if fee.confirmed_by and fee.confirmed_on else False
 
     @api.depends("fee_type", "receipt_number")
     def _compute_display_name(self):

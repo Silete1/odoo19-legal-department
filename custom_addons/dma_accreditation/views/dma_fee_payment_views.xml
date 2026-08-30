@@ -139,10 +139,8 @@
                     <!-- A record of something that happened, so it appears only
                          once it has, as one line rather than two blank rows. -->
                     <div class="text-muted mb-3" invisible="state != 'confirmed'">
-                        <i class="fa fa-check text-success me-1" role="img" aria-label="Confirmed"/>
-                        Confirmed by
-                        <field name="confirmed_by" nolabel="1" readonly="1" class="oe_inline fw-bold"/> on
-                        <field name="confirmed_on" nolabel="1" readonly="1" class="oe_inline"/>.
+                        <i class="fa fa-check text-success me-1" role="img" aria-hidden="true"/>
+                        <field name="confirmed_label" nolabel="1" readonly="1" class="oe_inline"/>
                     </div>
                     <separator string="Receipt Scan"/>
                     <div class="text-muted small mb-1" invisible="attachment_ids">

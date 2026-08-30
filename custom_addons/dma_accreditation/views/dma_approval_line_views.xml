@@ -57,18 +57,14 @@
                             <field name="step" readonly="1"/>
                         </h1>
                     </div>
-                    <div class="mb-3">
+                    <div class="d-flex align-items-center gap-2 mb-3">
                         <field name="user_id" readonly="1" nolabel="1"
                                widget="many2one_avatar_user" class="oe_inline"/>
-                        <span class="ms-2">
-                            <field name="user_id" readonly="1" nolabel="1" class="oe_inline fw-bold"/>
-                            acting as
-                            <field name="role" readonly="1" nolabel="1" class="oe_inline"/>
-                            on
-                            <field name="date" readonly="1" nolabel="1" class="oe_inline"/>,
-                            for
-                            <field name="request_id" readonly="1" nolabel="1" class="oe_inline fw-bold"/>.
-                        </span>
+                        <!-- One computed sentence rather than four <field> nodes
+                             threaded through prose: a view's text is exported
+                             in fragments at every field boundary, and Arabic
+                             has to reorder them. -->
+                        <field name="summary" readonly="1" nolabel="1" class="oe_inline"/>
                     </div>
                     <div class="alert alert-secondary py-2" role="alert" invisible="not notes">
                         <field name="notes" nolabel="1" readonly="1" class="mb-0 text-prewrap"/>

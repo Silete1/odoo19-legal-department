@@ -209,18 +209,27 @@
                 <div class="alert alert-warning" role="alert" invisible="state != 'returned'">
                     <b>Returned to the applicant.</b>
                     <field name="return_reason" nolabel="1" readonly="1" class="mb-0"/>
-                    <div>Once the applicant answers, the file resumes at
-                        <field name="return_to_state" nolabel="1" readonly="1" class="oe_inline fw-bold"/>.
+                    <div>Resumes at
+                        <field name="return_to_state" nolabel="1" readonly="1" class="oe_inline fw-bold"/>
                     </div>
                 </div>
+                <!-- The date is a labelled fact rather than a clause inside
+                     the sentence: the translation exporter splits a view's text
+                     at every <field>, and a sentence broken in two around a
+                     date cannot be reordered for Arabic. -->
                 <div class="alert alert-danger" role="alert" invisible="validity_state != 'expired'">
                     <b>This operational accreditation has expired.</b>
-                    It lapsed on <field name="expiry_date" nolabel="1" readonly="1" class="oe_inline fw-bold"/>
-                    and no longer authorises demining operations. A renewal has to be filed as a new request.
+                    It no longer authorises demining operations; a renewal has to be filed
+                    as a new request.
+                    <div>Expired on
+                        <field name="expiry_date" nolabel="1" readonly="1" class="oe_inline fw-bold"/>
+                    </div>
                 </div>
                 <div class="alert alert-warning" role="alert" invisible="validity_state != 'expiring'">
                     <b>This operational accreditation expires soon.</b>
-                    It runs out on <field name="expiry_date" nolabel="1" readonly="1" class="oe_inline fw-bold"/>.
+                    <div>Runs out on
+                        <field name="expiry_date" nolabel="1" readonly="1" class="oe_inline fw-bold"/>
+                    </div>
                 </div>
                 <div class="alert alert-info" role="alert" invisible="id">
                     <b>Opening a new accreditation file.</b>
@@ -283,7 +292,8 @@
                              certificate; what the title adds is how long it
                              runs. -->
                         <div class="text-muted" invisible="state != 'authorized'">
-                            Valid until <field name="expiry_date" nolabel="1" readonly="1" class="oe_inline fw-bold"/>.
+                            Valid until
+                            <field name="expiry_date" nolabel="1" readonly="1" class="oe_inline fw-bold"/>
                         </div>
                     </div>
 
@@ -488,13 +498,9 @@
                                     <div colspan="2" class="d-flex align-items-start gap-2"
                                          invisible="not sop_paper_received">
                                         <i class="fa fa-check text-success mt-1" role="img"
-                                           aria-label="Received"/>
-                                        <span>Paper copy received by
-                                            <field name="sop_paper_received_by" nolabel="1"
-                                                   readonly="1" class="oe_inline fw-bold"/> on
-                                            <field name="sop_paper_received_date" nolabel="1"
-                                                   readonly="1" class="oe_inline"/>.
-                                        </span>
+                                           aria-hidden="true"/>
+                                        <field name="sop_paper_received_label" nolabel="1"
+                                               readonly="1" class="oe_inline"/>
                                     </div>
                                     <div colspan="2" class="d-flex align-items-start gap-2"
                                          invisible="sop_paper_received">
@@ -507,10 +513,9 @@
                             </group>
                             <separator string="Electronic Copy"/>
                             <div class="d-flex align-items-center gap-2 mb-1">
-                                <span class="badge text-bg-success" invisible="not sop_electronic_received">
-                                    <field name="sop_attachment_count" nolabel="1" readonly="1"
-                                           class="oe_inline"/> file(s)
-                                </span>
+                                <field name="sop_attachment_count" nolabel="1" readonly="1"
+                                       class="badge text-bg-success"
+                                       invisible="not sop_electronic_received"/>
                                 <span class="badge text-bg-secondary" invisible="sop_electronic_received">No file</span>
                                 <span class="text-muted">The signed Standing Operating Procedures as
                                     submitted electronically. Required before the SOP submission can
@@ -542,13 +547,9 @@
                                     <div class="text-muted small" invisible="finance_confirmed_sop_fee">
                                         Has not confirmed receipt of the request and of the SOP reading fee.
                                     </div>
-                                    <div class="small" invisible="not finance_confirmed_sop_fee">
-                                        Confirmed by
-                                        <field name="finance_confirmed_by" nolabel="1" readonly="1"
-                                               class="oe_inline fw-bold"/> on
-                                        <field name="finance_confirmed_on" nolabel="1" readonly="1"
-                                               class="oe_inline text-muted"/>
-                                    </div>
+                                    <field name="finance_confirmed_label" nolabel="1" readonly="1"
+                                           class="small oe_inline"
+                                           invisible="not finance_confirmed_sop_fee"/>
                                     <button name="action_finance_confirm" type="object"
                                             string="Confirm for Finance"
                                             class="btn btn-primary btn-sm mt-2"
@@ -568,13 +569,9 @@
                                     <div class="text-muted small" invisible="operations_confirmed_sop">
                                         Has not confirmed receipt of the company SOP for appraisal.
                                     </div>
-                                    <div class="small" invisible="not operations_confirmed_sop">
-                                        Confirmed by
-                                        <field name="operations_confirmed_by" nolabel="1" readonly="1"
-                                               class="oe_inline fw-bold"/> on
-                                        <field name="operations_confirmed_on" nolabel="1" readonly="1"
-                                               class="oe_inline text-muted"/>
-                                    </div>
+                                    <field name="operations_confirmed_label" nolabel="1" readonly="1"
+                                           class="small oe_inline"
+                                           invisible="not operations_confirmed_sop"/>
                                     <button name="action_operations_confirm" type="object"
                                             string="Confirm for Operations"
                                             class="btn btn-primary btn-sm mt-2"
@@ -653,7 +650,7 @@
                                              inside a closed dropdown - and one
                                              badge once the verdict is on record. -->
                                         <field name="committee_decision" widget="radio"
-                                               options="{'horizontal': true}"
+                                               options="{'horizontal': True}"
                                                invisible="state != 'committee'"/>
                                         <field name="committee_decision" widget="badge" readonly="1"
                                                invisible="state == 'committee' or not committee_decision"
@@ -685,13 +682,9 @@
                                            options="{'height': 260}"
                                            placeholder="Decision refined by the Legal Department."
                                            readonly="state not in ('legal_refine',)"/>
-                                    <div class="text-muted small mt-2" invisible="not legal_refined_on">
-                                        Refined by
-                                        <field name="legal_refined_by" nolabel="1" readonly="1"
-                                               class="oe_inline"/> on
-                                        <field name="legal_refined_on" nolabel="1" readonly="1"
-                                               class="oe_inline"/>.
-                                    </div>
+                                    <field name="legal_refined_label" nolabel="1" readonly="1"
+                                           class="text-muted small mt-2 oe_inline"
+                                           invisible="not legal_refined_on"/>
                                 </div>
                             </div>
                         </page>
@@ -802,9 +795,16 @@
                   decoration-danger="state == 'rejected'"
                   decoration-bf="priority == '1'">
                 <field name="priority" widget="priority" optional="show" nolabel="1"/>
-                <field name="name"/>
+                <!-- Widths are pinned from here down, and the applicant takes
+                     whatever is left. The overview screen carries a 230px
+                     search panel, so the automatic algorithm was squeezing the
+                     reference - the one identifier a reader searches by - down
+                     to "DMA/ACC..." to make room for the status label. -->
+                <field name="name" width="165px"/>
                 <field name="partner_id"/>
-                <field name="request_type" optional="show"/>
+                <!-- "New Accreditation" on almost every row: a column that
+                     spends width to say nothing. -->
+                <field name="request_type" optional="hide"/>
                 <!-- off by default: a file with four scopes trebles the row
                      height, and the reference plus the applicant already
                      identify the record. -->
@@ -816,18 +816,24 @@
                      by and the first never moves. -->
                 <field name="waiting_since" string="Waiting Since" widget="remaining_days"
                        options="{'classes': {'danger': 'days &lt; -14', 'warning': 'days &lt; -7'}}"
+                       width="130px" optional="show"/>
+                <field name="checklist_progress" string="Checklist" width="95px"
                        optional="show"/>
-                <field name="checklist_progress" string="Checklist" optional="show"/>
                 <!-- A constant in a single-step queue, so the queue actions
                      switch the two columns that only repeat their own domain
                      off through the context. -->
-                <field name="pending_group" string="Pending With" optional="show"
+                <field name="pending_group" string="Pending With" width="180px"
+                       optional="show"
                        column_invisible="context.get('dma_queue_single_state')"/>
                 <field name="office_ref" optional="hide"/>
                 <field name="certificate_ref" optional="hide"/>
                 <field name="expiry_date" widget="remaining_days" optional="hide"/>
-                <field name="activity_ids" widget="list_activity" optional="show"/>
-                <field name="state" widget="badge"
+                <!-- Off by default: every automated activity of this module is
+                     titled "Accreditation step: <status>", so the column spent
+                     200px restating the badge two columns to its right - and in
+                     Arabic that was 200px the status label itself needed. -->
+                <field name="activity_ids" widget="list_activity" optional="hide"/>
+                <field name="state" widget="badge" width="210px"
                        column_invisible="context.get('dma_queue_single_state')"
                        decoration-success="state == 'authorized'"
                        decoration-danger="state == 'rejected'"
