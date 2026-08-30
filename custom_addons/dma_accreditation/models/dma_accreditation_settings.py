@@ -25,16 +25,19 @@ class DmaAccreditationSettings(models.TransientModel):
     _name = "dma.accreditation.settings"
     _description = "Accreditation Settings"
 
-    sop_fee = fields.Float(
-        string="SOP Reading Fee",
+    # Monetary, like the ``dma.fee.payment.amount`` they seed: typed as a Float
+    # the same quantity was declared two different ways in two files and the
+    # view had to carry a currency option the field definition gives for free.
+    sop_fee = fields.Monetary(
+        string="SOP Reading Fee", currency_field="currency_id",
         help="Default amount proposed on a new SOP reading fee line.",
     )
-    demo_fee = fields.Float(
-        string="Operational Demonstration Fee",
+    demo_fee = fields.Monetary(
+        string="Operational Demonstration Fee", currency_field="currency_id",
         help="Default amount proposed on a new operational demonstration fee line.",
     )
     validity_months = fields.Integer(
-        string="Accreditation Validity (months)",
+        string="Accreditation Validity",
         default=12,
         help="Validity of an operational accreditation certificate, in months.",
     )
@@ -86,4 +89,16 @@ class DmaAccreditationSettings(models.TransientModel):
         params.set_param("dma_accreditation.sop_fee", str(self.sop_fee))
         params.set_param("dma_accreditation.demo_fee", str(self.demo_fee))
         params.set_param("dma_accreditation.validity_months", str(self.validity_months))
-        return {"type": "ir.actions.act_window_close"}
+        # The values live in ir.config_parameter and are surfaced nowhere else,
+        # so a dialog that simply vanishes leaves the manager with no way to
+        # tell whether the write landed.
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "sticky": False,
+                "message": self.env._("Accreditation settings saved."),
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }

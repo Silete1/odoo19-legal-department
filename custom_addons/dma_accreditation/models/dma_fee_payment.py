@@ -48,6 +48,12 @@ class DmaFeePayment(models.Model):
         "attachment_id",
         string="Receipt Scan",
     )
+    # The lists show the count and the form shows the files: the upload widget
+    # is a form control and turns a list row into a 70px band wherever it is
+    # embedded, which is why Odoo never puts it in a list.
+    attachment_count = fields.Integer(
+        string="Scans", compute="_compute_attachment_count",
+    )
     state = fields.Selection(
         [("draft", "Draft"), ("confirmed", "Confirmed")],
         string="Status", default="draft", required=True, copy=False,
@@ -69,6 +75,11 @@ class DmaFeePayment(models.Model):
         "CHECK(amount >= 0)",
         "A fee amount can never be negative.",
     )
+
+    @api.depends("attachment_ids")
+    def _compute_attachment_count(self):
+        for fee in self:
+            fee.attachment_count = len(fee.attachment_ids)
 
     @api.depends("fee_type", "receipt_number")
     def _compute_display_name(self):
@@ -152,3 +163,22 @@ class DmaFeePayment(models.Model):
         """Undo a confirmation (Finance / Accreditation Manager only)."""
         self._check_finance_role()
         self.write({"state": "draft", "confirmed_by": False, "confirmed_on": False})
+
+    def unlink(self):
+        """A confirmed fee is financial evidence, not a draft line.
+
+        Deleting one takes its receipt number and its scan with it, and
+        ``_compute_fee_status`` then lets the request slide back through the
+        gate that fee opened. The form already locks every field of a confirmed
+        fee; without this the list contradicted it.
+        """
+        blocked = self.filtered(lambda fee: fee.state == "confirmed")
+        if blocked and not self.env.su and not self.env.user.has_group(
+            "dma_accreditation.group_dma_manager"
+        ):
+            raise UserError(self.env._(
+                "Confirmed fees cannot be deleted: %s. Reset the fee to draft "
+                "first, which only the Accreditation Manager can do.",
+                ", ".join(blocked.mapped("display_name")),
+            ))
+        return super().unlink()

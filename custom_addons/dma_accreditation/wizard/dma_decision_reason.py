@@ -2,6 +2,9 @@
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
+from ..models.dma_accreditation_request import RETURN_TARGET_STATE
+from ..models.dma_constants import STATE_SELECTION
+
 
 class DmaDecisionReason(models.TransientModel):
     """Collects the mandatory reason before returning or rejecting a request."""
@@ -18,9 +21,24 @@ class DmaDecisionReason(models.TransientModel):
         string="Decision", required=True, default="return",
     )
     reason = fields.Text(string="Reason", required=True)
-    target_state = fields.Selection(
+    # Named for what it holds. It used to be called `target_state` while being
+    # `related="request_id.state"`, so the name promised the destination and
+    # the value was the origin.
+    current_state = fields.Selection(
         related="request_id.state", string="Current Step", readonly=True,
     )
+    resume_state = fields.Selection(
+        STATE_SELECTION, string="Resumes At", compute="_compute_resume_state",
+        help="Step the file re-enters once the reception desk resumes it.",
+    )
+
+    @api.depends("request_id.state")
+    def _compute_resume_state(self):
+        for wizard in self:
+            state = wizard.request_id.state
+            wizard.resume_state = (
+                RETURN_TARGET_STATE.get(state, "draft") if state else False
+            )
 
     @api.model
     def default_get(self, fields_list):

@@ -1,0 +1,55 @@
+// Small, targeted rules for the accreditation request form. Everything that
+// Bootstrap and Odoo already provide - borders, radii, spacing, semantic text
+// colours - is used as-is; this file only carries the three things a utility
+// class cannot express. Every variable below is a real Odoo 19 backend token:
+// $o-view-background-color from web/static/src/scss/primary_variables.scss,
+// $border-color from web/static/src/scss/bootstrap_overridden.scss, and
+// $o-form-view-sheet-max-width from web/static/src/views/form/form.variables.scss.
+
+.o_form_view {
+
+    // ---------------------------------------------------------------- decisions
+    // A committee decision is continuous prose that lawyers read carefully and
+    // that is reproduced verbatim on the summary report. Across the full 1400px
+    // sheet an Arabic paragraph runs to roughly 180 characters a line, far
+    // outside the band at which continuous text is comfortably read.
+    .o_dma_decision_text {
+        max-width: calc(#{$o-form-view-sheet-max-width} * 0.62);
+    }
+
+    // ------------------------------------------------------------- sign-off cards
+    // The two halves of the parallel gate. Kept deliberately flat - a border and
+    // the sheet's own ground - so the only colour in the block is the status
+    // icon and the verdict line underneath it.
+    .o_dma_signoffs .o_dma_signoff {
+        min-width: 16rem;
+        background-color: $o-view-background-color;
+        border-color: $border-color !important;
+    }
+
+    // ------------------------------------------------------------ approvals feed
+    // The embedded log reads as a single-column feed rather than a card grid:
+    // it is the history of one file, top to bottom.
+    .o_dma_approval_feed .o_kanban_renderer {
+        --KanbanRecord-width: 100%;
+        --KanbanRecord-margin-h: 0;
+        // Default is $o-kanban-background, a grey slab that reads as a second
+        // panel inside the white sheet.
+        --Kanban-background: transparent;
+
+        // Core only zeroes the height of the layout ghosts; at full width the
+        // seven of them still leave a band of dead space under the last entry.
+        .o_kanban_ghost {
+            display: none;
+        }
+
+        .o_kanban_record {
+            border-block-end: 1px solid $border-color;
+            border-radius: 0;
+        }
+
+        .o_kanban_record:last-of-type {
+            border-block-end: 0;
+        }
+    }
+}

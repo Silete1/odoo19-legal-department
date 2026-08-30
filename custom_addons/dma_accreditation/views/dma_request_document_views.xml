@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- One checklist line, opened as a dialog from the checklist.
+         The upload widget is a form control - Odoo puts it in no list view
+         anywhere in 19.0 - so this is where the files, the reviewer note and
+         the review stamp live, and the checklist itself stays a list a
+         reviewer can scan in one pass. -->
+    <record id="dma_request_document_view_form" model="ir.ui.view">
+        <field name="name">dma.request.document.form</field>
+        <field name="model">dma.request.document</field>
+        <field name="arch" type="xml">
+            <form string="Prerequisite Document">
+                <sheet>
+                    <div class="oe_title">
+                        <span class="o_form_label">Prerequisite document</span>
+                        <h1><field name="type_id" readonly="1" options="{'no_open': True}"/></h1>
+                    </div>
+                    <group>
+                        <group name="requirement">
+                            <field name="request_id" readonly="1" options="{'no_open': True}"/>
+                            <field name="is_required"
+                                   groups="dma_accreditation.group_dma_cert_officer"/>
+                            <field name="is_required" readonly="1"
+                                   groups="!dma_accreditation.group_dma_cert_officer"/>
+                            <field name="is_provided" widget="boolean_toggle"/>
+                        </group>
+                        <group name="review">
+                            <field name="line_status" widget="badge" readonly="1"
+                                   decoration-success="line_status == 'accepted'"
+                                   decoration-danger="line_status in ('missing', 'invalid')"
+                                   decoration-warning="line_status == 'to_review'"
+                                   decoration-info="line_status == 'to_provide'"
+                                   decoration-muted="line_status == 'optional'"/>
+                            <!-- The review stamp is a record of something that
+                                 happened, not a pair of fields to fill in, so
+                                 it appears only once it exists. -->
+                            <field name="reviewed_by" invisible="not reviewed_on"/>
+                            <field name="reviewed_on" invisible="not reviewed_on"/>
+                        </group>
+                    </group>
+                    <separator string="Files"/>
+                    <div class="text-muted small mb-1" invisible="attachment_ids">
+                        No file has been attached to this prerequisite yet.
+                    </div>
+                    <field name="attachment_ids" widget="many2many_binary" nolabel="1"
+                           class="w-100"/>
+                    <separator string="Reviewer Note"/>
+                    <field name="notes" nolabel="1" rows="4"
+                           placeholder="e.g. the insurance policy expired on 30 November 2025."/>
+                </sheet>
+                <footer>
+                    <button name="action_accept" type="object" string="Accept"
+                            class="btn-primary" data-hotkey="q"
+                            invisible="line_status == 'accepted'"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <!-- Invalid needs the note beside it, which is why the row
+                         action was dropped and this is the only way to record
+                         it: a one-click action against a required field is a
+                         dead end. -->
+                    <button name="action_mark_invalid" type="object" string="Mark Invalid"
+                            class="btn-danger" data-hotkey="v"
+                            invisible="line_status == 'invalid' or not is_provided"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <button name="action_mark_missing" type="object" string="Mark Missing"
+                            data-hotkey="m"
+                            invisible="line_status == 'missing'"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <button string="Close" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

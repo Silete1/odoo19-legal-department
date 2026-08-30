@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- No <sheet>: inside a modal Odoo zeroes every one of its visual
+         properties, and wrapping the alerts in it takes them out of the
+         `.o_form_sheet_bg > .alert` rhythm that gives a dialog its spacing.
+         Almost no reason-collecting wizard in Odoo 19 uses one. -->
     <record id="dma_decision_reason_view_form" model="ir.ui.view">
         <field name="name">dma.decision.reason.form</field>
         <field name="model">dma.decision.reason</field>
         <field name="arch" type="xml">
             <form string="Reason">
-                <sheet>
-                    <div class="alert alert-warning" role="alert" invisible="mode != 'reject'">
-                        Rejecting closes the file definitively. The applicant is
-                        notified by e-mail with the reason entered below.
-                    </div>
-                    <div class="alert alert-info" role="alert" invisible="mode != 'return'">
-                        Returning sends the file one step back so the applicant
-                        can complete it. The reason below is e-mailed to the
-                        applicant and posted in the chatter.
-                    </div>
-                    <group>
-                        <field name="request_id" readonly="1"/>
-                        <field name="target_state" readonly="1"/>
-                        <field name="mode" readonly="1"/>
-                    </group>
-                    <group string="Reason">
-                        <field name="reason" nolabel="1" required="1"
-                               placeholder="State precisely what is missing or why the request is refused."/>
-                    </group>
-                </sheet>
+                <field name="mode" invisible="1"/>
+                <!-- The one fact the reviewer is deciding about: not that the
+                     file goes "one step back", but which department has to act
+                     again once the applicant answers. Returning from the
+                     Certifications check, for instance, sends it back to Legal. -->
+                <div class="alert alert-info" role="alert" invisible="mode != 'return'">
+                    <b>Returning the file to the applicant.</b>
+                    It leaves
+                    <field name="current_state" nolabel="1" readonly="1" class="oe_inline fw-bold"/>
+                    and, once the reception desk resumes it, re-enters the process at
+                    <field name="resume_state" nolabel="1" readonly="1" class="oe_inline fw-bold"/>.
+                    The applicant is e-mailed the reason below, and the reason is written to
+                    the approvals log, which can never be edited or deleted afterwards.
+                </div>
+                <div class="alert alert-danger" role="alert" invisible="mode != 'reject'">
+                    <b>Rejecting closes the file definitively.</b>
+                    Only the Accreditation Manager can reopen it, and doing so drops every
+                    departmental sign-off given so far. The applicant is e-mailed the reason
+                    below, and the reason is written to the approvals log, which can never be
+                    edited or deleted afterwards.
+                </div>
+                <label for="reason"/>
+                <field name="reason" nolabel="1" required="1" rows="6"
+                       placeholder="State precisely what is missing, or why the request is refused. This text reaches the applicant word for word."/>
                 <footer>
-                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary" data-hotkey="q"/>
+                    <!-- The primary names the action, and rejection - the one
+                         decision the department cannot undo - is the only
+                         footer button in the module that is red. -->
+                    <button name="action_confirm" type="object" string="Return to Applicant"
+                            class="btn-primary" data-hotkey="q" invisible="mode != 'return'"/>
+                    <button name="action_confirm" type="object" string="Reject Request"
+                            class="btn-danger" data-hotkey="q" invisible="mode != 'reject'"/>
                     <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>

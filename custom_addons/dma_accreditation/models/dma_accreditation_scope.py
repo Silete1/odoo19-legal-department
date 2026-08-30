@@ -10,7 +10,11 @@ class DmaAccreditationScope(models.Model):
     _order = "sequence, name, id"
 
     name = fields.Char(required=True, translate=True, index="trigram")
-    code = fields.Char(help="Short technical code used on letters and certificates.")
+    code = fields.Char(
+        help="Short internal code used to refer to the scope in the interface "
+             "and in operational shorthand. The official letter and the "
+             "certificate print the full name of the scope.",
+    )
     sequence = fields.Integer(default=10)
     color = fields.Integer(string="Colour Index")
     description = fields.Text(translate=True)

@@ -349,6 +349,13 @@ class DmaAccreditationRequest(models.Model):
         [("valid", "Valid"), ("expiring", "Expiring Soon"), ("expired", "Expired")],
         string="Validity", compute="_compute_validity_state",
     )
+    # Deliberately *not* stored: the answer changes because the calendar moved,
+    # not because the record did, and a stored column would quietly go stale on
+    # every accreditation that lapses overnight.
+    validity_state = fields.Selection(
+        [("valid", "Valid"), ("expiring", "Expiring Soon"), ("expired", "Expired")],
+        string="Validity", compute="_compute_validity_state",
+    )
 
     # ------------------------------------------------------------------
     # Exceptions
@@ -391,6 +398,62 @@ class DmaAccreditationRequest(models.Model):
         roles = self._user_roles(self.env.user)
         for request in self:
             request.is_my_turn = request._matches_user_queue(roles)
+
+    @api.depends("state")
+    def _compute_can_review(self):
+        """Whether the reader may return or reject the file at its current step.
+
+        The same question :meth:`_guard` answers server side, so the two
+        buttons appear exactly when pressing them would succeed. Deliberately
+        *not* ``is_my_turn``: that one reads ``ROLE_QUEUE_STATES``, which hands
+        the General Director the Certifications step so it shows up in their
+        queue, while only the Certifications Division may decide on it.
+        """
+        user = self.env.user
+        for request in self:
+            if request.state not in REVIEWABLE_STATES:
+                request.can_review = False
+                continue
+            roles = request._reviewer_roles_for_state(request.state) + ("manager",)
+            request.can_review = self.env.su or any(
+                user.has_group(ROLE_GROUP[role]) for role in roles
+            )
+
+    @api.depends("approval_line_ids.date", "create_date")
+    def _compute_waiting_since(self):
+        for request in self:
+            dates = request.approval_line_ids.mapped("date")
+            request.waiting_since = max(dates) if dates else request.create_date
+
+    @api.depends("state", "expiry_date")
+    def _compute_validity_state(self):
+        """Whether an issued accreditation is still in force.
+
+        The thresholds are the ones :meth:`get_dashboard_data` already uses for
+        its "expiring" list, so the record and the dashboard never disagree.
+        """
+        today = fields.Date.context_today(self)
+        for request in self:
+            if request.state != "authorized" or not request.expiry_date:
+                request.validity_state = False
+            elif request.expiry_date < today:
+                request.validity_state = "expired"
+            elif (request.expiry_date - today).days <= 30:
+                request.validity_state = "expiring"
+            else:
+                request.validity_state = "valid"
+
+    @api.depends("approval_line_ids")
+    def _compute_approval_line_count(self):
+        for request in self:
+            request.approval_line_count = len(request.approval_line_ids)
+
+    @api.depends("sop_attachment_ids")
+    def _compute_sop_electronic(self):
+        for request in self:
+            files = request.sudo().sop_attachment_ids
+            request.sop_attachment_count = len(files)
+            request.sop_electronic_received = bool(files)
 
     @api.depends("state")
     def _compute_can_review(self):
@@ -495,6 +558,9 @@ class DmaAccreditationRequest(models.Model):
                 confirmed.filtered(lambda fee: fee.fee_type == "operational_demo")
             )
             request.total_fees_confirmed = sum(confirmed.mapped("amount"))
+            request.total_fees_pending = sum(
+                request.fee_ids.filtered(lambda fee: fee.state == "draft").mapped("amount")
+            )
             request.total_fees_pending = sum(
                 request.fee_ids.filtered(lambda fee: fee.state == "draft").mapped("amount")
             )
@@ -1015,6 +1081,37 @@ class DmaAccreditationRequest(models.Model):
             blockers = request._progress_blockers()
             request.blocker_summary = blockers[0] if blockers else False
 
+    #: Everything :meth:`_progress_blockers` reads. Shared by the two fields
+    #: below and by the payload, so a new precondition in one place disables the
+    #: button, updates the board card and updates the rail at once.
+    _BLOCKER_DEPENDS = (
+        "state", "scope_ids",
+        "checklist_complete", "required_document_count",
+        "sop_paper_received", "sop_attachment_ids",
+        "sop_fee_paid", "demo_fee_paid",
+        "finance_confirmed_sop_fee", "operations_confirmed_sop",
+        "committee_decision", "committee_date", "decision_text",
+        "refined_decision_text",
+    )
+
+    @api.depends(*_BLOCKER_DEPENDS)
+    def _compute_ready_to_advance(self):
+        """One flag for "pressing the blue button will work".
+
+        Derived from the very list of blockers the progress widget shows, so
+        the button and the explanation underneath it can never disagree, and a
+        new precondition in :meth:`_progress_blockers` disables the button on
+        its own.
+        """
+        for request in self:
+            request.ready_to_advance = not request._progress_blockers()
+
+    @api.depends(*_BLOCKER_DEPENDS)
+    def _compute_blocker_summary(self):
+        for request in self:
+            blockers = request._progress_blockers()
+            request.blocker_summary = blockers[0] if blockers else False
+
     @api.depends(
         "state", "scope_ids", "approval_line_ids",
         "checklist_complete", "required_document_count",
@@ -1093,6 +1190,15 @@ class DmaAccreditationRequest(models.Model):
                 "steps_done": steps_done,
                 "steps_total": len(steps),
                 "percent": round(100.0 * steps_done / len(steps)) if steps else 0,
+                # Both of them during the parallel step. `pending_group` is a
+                # scalar because the search view, the group-by, the search panel
+                # and `_search_is_my_turn` all need one indexed value - but
+                # collapsing the pair into it made the headline of the widget
+                # say "Waiting on Finance" while Operations was equally
+                # blocking, contradicting the blocker list right below it.
+                "pending_roles": [
+                    role_label(self.env, role) for role in pending_roles
+                ],
                 # Both of them during the parallel step. `pending_group` is a
                 # scalar because the search view, the group-by, the search panel
                 # and `_search_is_my_turn` all need one indexed value - but
