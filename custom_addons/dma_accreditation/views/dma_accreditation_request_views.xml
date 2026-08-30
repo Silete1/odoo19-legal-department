@@ -516,9 +516,13 @@
         <field name="name">dma.accreditation.request.graph</field>
         <field name="model">dma.accreditation.request</field>
         <field name="arch" type="xml">
+            <!-- One dimension by default. Adding submission_date here put
+                 every unsubmitted file into a "None" series, and a two
+                 dimensional bar chart of thirteen steps by month is not
+                 readable at the sizes this is opened at. The reader can add
+                 a second dimension from the Group By menu. -->
             <graph string="Accreditation Requests" type="bar" sample="1">
                 <field name="state"/>
-                <field name="submission_date" interval="month"/>
             </graph>
         </field>
     </record>
@@ -527,9 +531,11 @@
         <field name="name">dma.accreditation.request.pivot</field>
         <field name="model">dma.accreditation.request</field>
         <field name="arch" type="xml">
+            <!-- request_type is required and defaulted, so unlike
+                 submission_date it cannot open a "None" column. -->
             <pivot string="Accreditation Requests" sample="1">
                 <field name="state" type="row"/>
-                <field name="submission_date" interval="month" type="col"/>
+                <field name="request_type" type="col"/>
             </pivot>
         </field>
     </record>

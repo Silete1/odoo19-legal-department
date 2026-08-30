@@ -6,5 +6,6 @@ from . import dma_approval_line
 from . import dma_request_document
 from . import dma_fee_payment
 from . import dma_accreditation_request
+from . import dma_dashboard
 from . import dma_accreditation_demo
 from . import dma_accreditation_settings

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.PipelineRibbon">
+        <section class="o_dma_card o_dma_ribbon_card">
+            <header class="o_dma_card_head">
+                <h3 class="o_dma_card_title" t-esc="label.title"/>
+                <span class="o_dma_card_meta">
+                    <b dir="ltr" t-esc="props.total"/> <t t-esc="label.inProcess"/>
+                    <t t-if="props.withApplicant">
+                        · <b dir="ltr" t-esc="props.withApplicant"/>
+                        <t t-esc="label.withApplicant"/>
+                    </t>
+                </span>
+            </header>
+
+            <p class="o_dma_empty_hint" t-if="!segments.length" t-esc="label.empty"/>
+
+            <t t-else="">
+                <div class="o_dma_ribbon" role="list">
+                    <button t-foreach="segments" t-as="seg" t-key="seg.key"
+                            role="listitem"
+                            t-attf-class="o_dma_seg o_dma_seg_{{ seg.key }}"
+                            t-attf-style="width: {{ seg.width }}%;"
+                            t-attf-title="{{ seg.label }}: {{ seg.count }}"
+                            t-attf-aria-label="{{ seg.label }}: {{ seg.count }}"
+                            t-on-click="() => this.props.onOpen(seg)">
+                        <span class="o_dma_seg_count" dir="ltr" t-esc="seg.count"/>
+                    </button>
+                </div>
+
+                <ol class="o_dma_phases" t-if="props.phases.length">
+                    <li t-foreach="props.phases" t-as="phase" t-key="phase.key"
+                        t-attf-class="o_dma_phase o_dma_phase_{{ phase.key }}">
+                        <span class="o_dma_swatch" aria-hidden="true"/>
+                        <span class="o_dma_phase_label" t-esc="phase.label"/>
+                        <span class="o_dma_phase_count" dir="ltr" t-esc="phase.count"/>
+                    </li>
+                </ol>
+
+                <!-- The canvas-free equivalent of a data table: the same figures
+                     as text, for a screen reader, a printer, and anyone who
+                     wants the exact number rather than the sweep. -->
+                <details class="o_dma_details" t-att-open="state.open or null">
+                    <summary t-on-click="() => this.toggle()" t-esc="label.showTable"/>
+                    <table class="table table-sm o_dma_table">
+                        <thead>
+                            <tr>
+                                <th t-esc="label.step"/>
+                                <th class="text-end" t-esc="label.files"/>
+                                <th class="text-end" t-esc="label.share"/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="props.steps" t-as="step" t-key="step.key"
+                                t-att-class="step.count ? '' : 'text-muted'">
+                                <td>
+                                    <button class="btn btn-link btn-sm p-0"
+                                            t-on-click="() => this.props.onOpen(step)"
+                                            t-esc="step.label"/>
+                                </td>
+                                <td class="text-end" dir="ltr" t-esc="step.count"/>
+                                <td class="text-end" dir="ltr">
+                                    <t t-esc="step.share"/>%
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+            </t>
+        </section>
+    </t>
+
+</templates>

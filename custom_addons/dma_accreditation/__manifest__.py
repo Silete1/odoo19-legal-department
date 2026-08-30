@@ -54,8 +54,10 @@ chatter and pushed to the next responsible group as a scheduled activity.
     ],
     "assets": {
         "web.assets_backend": [
-            "dma_accreditation/static/src/components/progress/*",
-            "dma_accreditation/static/src/components/dashboard/*",
+            # Every component of the workspace and of the request form.
+            # A glob rather than a list: the components are small and split by
+            # responsibility, and a new one should not need a manifest edit.
+            "dma_accreditation/static/src/components/**/*",
         ],
         "web.assets_unit_tests": [
             "dma_accreditation/static/tests/**/*.test.js",

@@ -8,9 +8,11 @@ from markupsafe import Markup
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.fields import Domain
-from odoo.tools import is_html_empty
+from odoo.tools import format_datetime, is_html_empty
 
 from .dma_constants import (
+    DEFAULT_WINDOW_DAYS,
+    IN_PROCESS_STATES,
     MAIN_PATH_STATES,
     REVIEWABLE_STATES,
     ROLE_GROUP,
@@ -160,10 +162,13 @@ class DmaAccreditationRequest(models.Model):
     # tooltip over the form.
     progress_payload = fields.Json(
         string="Progress", compute="_compute_progress_payload",
-        # Every label in the payload is translated and the direction flag is
-        # read off the language, so the cache has to be keyed by it: without
-        # this one reader's language is served to the next one in the worker.
-        depends_context=("lang",),
+        # Every label in the payload is translated, the direction flag is read
+        # off the language and the decision timestamps are rendered in the
+        # reader's timezone, so the cache has to be keyed by all three: without
+        # this one reader's language - or clock - is served to the next one in
+        # the worker. It also answers "is this waiting for *me*", which depends
+        # on the groups of the reader, hence the uid and compute_sudo=False.
+        compute_sudo=False, depends_context=("lang", "tz", "uid"),
     )
     is_my_turn = fields.Boolean(
         string="My Turn", compute="_compute_is_my_turn", search="_search_is_my_turn",
@@ -171,9 +176,40 @@ class DmaAccreditationRequest(models.Model):
         # never be shared between two users through the ORM cache.
         compute_sudo=False, depends_context=("uid",),
     )
+    ready_to_advance = fields.Boolean(
+        string="Ready for the Next Step", compute="_compute_ready_to_advance",
+        help="Nothing is blocking the current step, so the action that moves the "
+             "file on will succeed.",
+    )
+    # Stored so a queue can *sort* by it. Derived from the approval log rather
+    # than stamped by hand in `_apply_transition`, which means an existing
+    # database backfills itself on upgrade and the value can never drift from
+    # the log it describes.
+    waiting_since = fields.Datetime(
+        string="Waiting Since", compute="_compute_waiting_since", store=True, index=True,
+        help="When the file last changed hands. A queue triages by this, not by "
+             "the submission date: a file submitted in January that reached this "
+             "desk yesterday is not the oldest work on it.",
+    )
+    blocker_summary = fields.Char(
+        string="Blocked By", compute="_compute_blocker_summary",
+        help="The first thing standing between the file and its next step.",
+    )
+    can_review = fields.Boolean(
+        string="May Return or Reject", compute="_compute_can_review",
+        # The header offers Return and Reject exactly when the server would
+        # accept them, so the answer depends on the reader's groups and must
+        # never be shared between two users through the ORM cache.
+        compute_sudo=False, depends_context=("uid",),
+        help="The reader belongs to a department that owns the current step, "
+             "so it may return the file to the applicant or reject it.",
+    )
     approval_line_ids = fields.One2many(
         "dma.approval.line", "request_id", string="Approvals Log",
         readonly=True, copy=False,
+    )
+    approval_line_count = fields.Integer(
+        string="Decisions", compute="_compute_approval_line_count", store=True,
     )
     verification_token = fields.Char(
         string="Verification Code", readonly=True, copy=False, index=True,
@@ -198,7 +234,7 @@ class DmaAccreditationRequest(models.Model):
         string="Checklist Complete", compute="_compute_checklist_progress", store=True,
     )
     checklist_progress = fields.Char(
-        string="Checklist Progress", compute="_compute_checklist_progress",
+        string="Checklist Progress", compute="_compute_checklist_label",
         help="Accepted required documents over the total of required documents.",
     )
     office_ref = fields.Char(string="Office Accreditation Reference", readonly=True, copy=False)
@@ -217,6 +253,16 @@ class DmaAccreditationRequest(models.Model):
         string="Electronic SOP",
         help="Electronic copy of the Standing Operating Procedures.",
     )
+    # Stored, and read through sudo, because ``ir.attachment`` hides records
+    # from readers who are not their owner: a view level
+    # ``invisible="not sop_attachment_ids"`` would tell exactly those officers
+    # that the electronic copy is missing when it is on file.
+    sop_electronic_received = fields.Boolean(
+        string="Electronic SOP Received", compute="_compute_sop_electronic", store=True,
+    )
+    sop_attachment_count = fields.Integer(
+        string="Electronic SOP Files", compute="_compute_sop_electronic", store=True,
+    )
     sop_paper_received = fields.Boolean(string="Paper SOP Received", copy=False, tracking=True)
     sop_paper_received_by = fields.Many2one(
         "res.users", string="Paper SOP Received By", readonly=True, copy=False,
@@ -233,7 +279,11 @@ class DmaAccreditationRequest(models.Model):
         compute="_compute_fee_status", store=True, string="Demonstration Fee Confirmed",
     )
     total_fees_confirmed = fields.Monetary(
-        string="Total Fees Confirmed", compute="_compute_fee_status", store=True,
+        string="Confirmed", compute="_compute_fee_status", store=True,
+        currency_field="currency_id",
+    )
+    total_fees_pending = fields.Monetary(
+        string="Awaiting Confirmation", compute="_compute_fee_status", store=True,
         currency_field="currency_id",
     )
 
@@ -292,6 +342,13 @@ class DmaAccreditationRequest(models.Model):
     certificate_ref = fields.Char(string="Certificate Number", readonly=True, copy=False)
     issue_date = fields.Date(string="Issue Date", readonly=True, copy=False)
     expiry_date = fields.Date(string="Expiry Date", readonly=True, copy=False)
+    # Deliberately *not* stored: the answer changes because the calendar moved,
+    # not because the record did, and a stored column would quietly go stale on
+    # every accreditation that lapses overnight.
+    validity_state = fields.Selection(
+        [("valid", "Valid"), ("expiring", "Expiring Soon"), ("expired", "Expired")],
+        string="Validity", compute="_compute_validity_state",
+    )
 
     # ------------------------------------------------------------------
     # Exceptions
@@ -335,6 +392,62 @@ class DmaAccreditationRequest(models.Model):
         for request in self:
             request.is_my_turn = request._matches_user_queue(roles)
 
+    @api.depends("state")
+    def _compute_can_review(self):
+        """Whether the reader may return or reject the file at its current step.
+
+        The same question :meth:`_guard` answers server side, so the two
+        buttons appear exactly when pressing them would succeed. Deliberately
+        *not* ``is_my_turn``: that one reads ``ROLE_QUEUE_STATES``, which hands
+        the General Director the Certifications step so it shows up in their
+        queue, while only the Certifications Division may decide on it.
+        """
+        user = self.env.user
+        for request in self:
+            if request.state not in REVIEWABLE_STATES:
+                request.can_review = False
+                continue
+            roles = request._reviewer_roles_for_state(request.state) + ("manager",)
+            request.can_review = self.env.su or any(
+                user.has_group(ROLE_GROUP[role]) for role in roles
+            )
+
+    @api.depends("approval_line_ids.date", "create_date")
+    def _compute_waiting_since(self):
+        for request in self:
+            dates = request.approval_line_ids.mapped("date")
+            request.waiting_since = max(dates) if dates else request.create_date
+
+    @api.depends("state", "expiry_date")
+    def _compute_validity_state(self):
+        """Whether an issued accreditation is still in force.
+
+        The thresholds are the ones :meth:`get_dashboard_data` already uses for
+        its "expiring" list, so the record and the dashboard never disagree.
+        """
+        today = fields.Date.context_today(self)
+        for request in self:
+            if request.state != "authorized" or not request.expiry_date:
+                request.validity_state = False
+            elif request.expiry_date < today:
+                request.validity_state = "expired"
+            elif (request.expiry_date - today).days <= 30:
+                request.validity_state = "expiring"
+            else:
+                request.validity_state = "valid"
+
+    @api.depends("approval_line_ids")
+    def _compute_approval_line_count(self):
+        for request in self:
+            request.approval_line_count = len(request.approval_line_ids)
+
+    @api.depends("sop_attachment_ids")
+    def _compute_sop_electronic(self):
+        for request in self:
+            files = request.sudo().sop_attachment_ids
+            request.sop_attachment_count = len(files)
+            request.sop_electronic_received = bool(files)
+
     @api.depends(
         "document_ids.is_required",
         "document_ids.is_provided",
@@ -349,10 +462,27 @@ class DmaAccreditationRequest(models.Model):
             request.required_document_count = len(required)
             request.accepted_document_count = len(accepted)
             request.checklist_complete = bool(required) and len(required) == len(accepted)
-            # Rendered as one atomic "7 / 10" chip: keeping the two numbers out
-            # of the surrounding sentence is what makes the banner readable in
-            # a right-to-left interface.
-            request.checklist_progress = f"{len(accepted)} / {len(required)}"
+
+    @api.depends("required_document_count", "accepted_document_count")
+    def _compute_checklist_label(self):
+        """Kept apart from the three stored counters above.
+
+        A non-stored field sharing a compute method with stored ones makes
+        every read of the label a potential recompute *and write* of the
+        counters, which Odoo warns about at every install.
+        """
+        for request in self:
+            # No spaces around the slash, and that is not a style choice: with
+            # them the slash is a run of neutrals between two European numbers,
+            # which the bidi algorithm resolves right-to-left inside an Arabic
+            # paragraph, so an Arabic reader sees "10/3" and reads the total
+            # first. A single separator between two numbers is absorbed into one
+            # left-to-right run and needs no markup, which matters because a
+            # <field> in a form arch cannot carry a dir attribute the way the
+            # progress widget's own template can.
+            request.checklist_progress = (
+                f"{request.accepted_document_count}/{request.required_document_count}"
+            )
 
     @api.depends("fee_ids.state", "fee_ids.fee_type", "fee_ids.amount")
     def _compute_fee_status(self):
@@ -365,6 +495,9 @@ class DmaAccreditationRequest(models.Model):
                 confirmed.filtered(lambda fee: fee.fee_type == "operational_demo")
             )
             request.total_fees_confirmed = sum(confirmed.mapped("amount"))
+            request.total_fees_pending = sum(
+                request.fee_ids.filtered(lambda fee: fee.state == "draft").mapped("amount")
+            )
 
     @api.depends("finance_confirmed_sop_fee", "operations_confirmed_sop")
     def _compute_dual_confirm_complete(self):
@@ -604,25 +737,86 @@ class DmaAccreditationRequest(models.Model):
     # Payload of the department dashboard
     # ==================================================================
     @api.model
-    def get_dashboard_data(self):
-        """Everything the dashboard shows, counted server side.
+    def get_dashboard_data(self, window_days=None):
+        """Everything the workspace shows, counted server side.
 
-        Aggregating here rather than in the browser keeps the queue definitions
-        in one place (they are the same ``ROLE_QUEUE_STATES`` the menus and the
-        "My Turn" filter use), lets the record rules do their work, and makes
-        the whole dashboard testable in Python.
+        One call, one round trip. Aggregating here rather than in the browser
+        keeps the queue definitions in one place (they are the same
+        ``ROLE_QUEUE_STATES`` the menus and the "My Turn" filter use), lets the
+        record rules do their work, and makes the whole workspace testable in
+        Python.
+
+        ``window_days`` scopes the performance figures only. The desk and the
+        caseload are always "now": an officer's queue is not a reporting period.
         """
         self.check_access("read")
         user = self.env.user
         today = fields.Date.context_today(self)
         horizon = today + relativedelta(days=90)
+        window = int(window_days or DEFAULT_WINDOW_DAYS)
+        window_start = today - relativedelta(days=window)
 
         def count(domain):
             return self.search_count(domain)
 
+        # -- who is reading -------------------------------------------------
+        roles = [
+            {"key": key, "label": role_label(self.env, key)}
+            for key, _label in ROLE_SELECTION
+            if key != "manager" and user.has_group(ROLE_GROUP[key])
+        ]
+        is_manager = user.has_group("dma_accreditation.group_dma_manager")
+
+        # -- the desk -------------------------------------------------------
+        mine = self.search(
+            [("is_my_turn", "=", True)],
+            order="priority desc, id asc", limit=12,
+        )
+        my_turn = count([("is_my_turn", "=", True)])
+        now = fields.Datetime.now()
+        my_files, oldest = [], 0
+        for request in mine:
+            lines = request.approval_line_ids.sorted("date")
+            since = lines[-1].date if lines else request.create_date
+            waiting = (now - since).days if since else 0
+            oldest = max(oldest, waiting)
+            # Two ages, because they answer different questions. Time at this
+            # step is "whose desk is blocked". Time since submission is what
+            # the applicant experiences, and unlike the first it does not reset
+            # when a file is passed along.
+            total_age = (
+                (today - request.submission_date).days
+                if request.submission_date else waiting
+            )
+            blockers = request._progress_blockers()
+            my_files.append({
+                "id": request.id,
+                "name": request.name,
+                "partner": request.partner_id.display_name,
+                "state": request.state,
+                "state_label": state_label(self.env, request.state),
+                "urgent": request.priority == "1",
+                "waiting_days": waiting,
+                "waiting_label": (
+                    self.env._("today") if waiting <= 0
+                    else self.env._("%s day(s)", waiting)
+                ),
+                "total_age_days": total_age,
+                # A display scale, not a target: the Directorate has never
+                # agreed a table of per-step deadlines, so the bar is capped
+                # for rendering and the exact figure sits beside it.
+                "age_percent": min(100, round(100.0 * waiting / 14.0)),
+                "age_band": (
+                    "stuck" if waiting >= 7
+                    else ("slipping" if waiting >= 3 else "fresh")
+                ),
+                "blockers": len(blockers),
+                "next_step": blockers[0] if blockers else "",
+            })
+
+        # -- the caseload ---------------------------------------------------
         queues = []
-        for role in ROLE_SELECTION:
-            key = role[0]
+        for key, _label in ROLE_SELECTION:
             if key == "manager" or not user.has_group(ROLE_GROUP[key]):
                 continue
             states = ROLE_QUEUE_STATES.get(key, [])
@@ -637,47 +831,33 @@ class DmaAccreditationRequest(models.Model):
             })
 
         pipeline = []
-        for key in MAIN_PATH_STATES:
+        for key in IN_PROCESS_STATES:
             pipeline.append({
                 "key": key,
                 "label": state_label(self.env, key),
                 "count": count([("state", "=", key)]),
                 "domain": [("state", "=", key)],
             })
+        in_process = sum(step["count"] for step in pipeline)
         busiest = max((step["count"] for step in pipeline), default=0)
         for step in pipeline:
             step["percent"] = round(100.0 * step["count"] / busiest) if busiest else 0
+            step["share"] = (
+                round(100.0 * step["count"] / in_process, 1) if in_process else 0
+            )
 
-        # The worklist: the actual files this reader has to act on. A dashboard
-        # of counts tells an officer how much there is; this tells them what to
-        # open first.
-        mine = self.search(
-            [("is_my_turn", "=", True)],
-            order="priority desc, id asc", limit=12,
-        )
-        my_files = []
-        for request in mine:
-            since = request.approval_line_ids.sorted("date")[-1].date if (
-                request.approval_line_ids
-            ) else request.create_date
-            waiting = (fields.Datetime.now() - since).days if since else 0
-            blockers = request._progress_blockers()
-            my_files.append({
-                "id": request.id,
-                "name": request.name,
-                "partner": request.partner_id.display_name,
-                "state": request.state,
-                "state_label": state_label(self.env, request.state),
-                "urgent": request.priority == "1",
-                "waiting_days": waiting,
-                "waiting_label": (
-                    self.env._("today") if waiting <= 0
-                    else self.env._("%s day(s)", waiting)
-                ),
-                "blockers": len(blockers),
-                "next_step": blockers[0] if blockers else "",
-            })
+        # -- the analytics --------------------------------------------------
+        open_ids = self.search([("state", "in", IN_PROCESS_STATES)]).ids
+        finished_ids = self.search([
+            ("state", "in", ("authorized", "rejected")),
+            ("write_date", ">=", window_start),
+        ]).ids
+        ageing = self._dashboard_ageing(open_ids)
+        cycle = self._dashboard_cycle_time(finished_ids)
+        throughput = self._dashboard_throughput(window_start)
+        returns = self._dashboard_returns(window_start)
 
+        # -- expiring accreditations ---------------------------------------
         expiring = []
         soon = self.search([
             ("state", "=", "authorized"),
@@ -701,6 +881,9 @@ class DmaAccreditationRequest(models.Model):
                 ),
             })
 
+        stalled = len([f for f in my_files if f["waiting_days"] >= 7])
+        with_applicant = count([("state", "=", "returned")])
+
         return {
             # Odoo mirrors the interface by running rtlcss over the physical CSS
             # properties; it never sets `direction: rtl`. A component that lays
@@ -709,10 +892,35 @@ class DmaAccreditationRequest(models.Model):
             "rtl": self.env["res.lang"]._lang_get(
                 self.env.lang or "en_US"
             ).direction == "rtl",
-            "my_turn": count([("is_my_turn", "=", True)]),
+            "window_days": window,
+            "user": {
+                "name": user.name,
+                "roles": roles,
+                "is_manager": is_manager,
+                # A directorate of eight people: the workspace names the
+                # department the reader acts for, because that is what decides
+                # which half of the page is theirs.
+                "role_label": (
+                    self.env._("Accreditation Manager") if is_manager
+                    else (roles[0]["label"] if roles else self.env._("Observer"))
+                ),
+            },
+            "my_turn": my_turn,
             "my_files": my_files,
+            "hero": {
+                "count": my_turn,
+                "urgent": len([f for f in my_files if f["urgent"]]),
+                "oldest_days": oldest,
+                "stalled": stalled,
+            },
             "queues": queues,
             "pipeline": pipeline,
+            "in_process": in_process,
+            "with_applicant": with_applicant,
+            "ageing": ageing,
+            "cycle": cycle,
+            "throughput": throughput,
+            "returns": returns,
             "expiring": expiring,
             "totals": {
                 "in_progress": count([
@@ -720,10 +928,9 @@ class DmaAccreditationRequest(models.Model):
                 ]),
                 "authorized": count([("state", "=", "authorized")]),
                 "rejected": count([("state", "=", "rejected")]),
-                "returned": count([("state", "=", "returned")]),
+                "returned": with_applicant,
             },
         }
-
     # ==================================================================
     # Payload of the progress widget
     # ==================================================================
@@ -776,6 +983,37 @@ class DmaAccreditationRequest(models.Model):
         elif self.state == "legal_refine" and is_html_empty(self.refined_decision_text):
             blockers.append(self.env._("The refined decision text is empty."))
         return blockers
+
+    #: Everything :meth:`_progress_blockers` reads. Shared by the two fields
+    #: below and by the payload, so a new precondition in one place disables the
+    #: button, updates the board card and updates the rail at once.
+    _BLOCKER_DEPENDS = (
+        "state", "scope_ids",
+        "checklist_complete", "required_document_count",
+        "sop_paper_received", "sop_attachment_ids",
+        "sop_fee_paid", "demo_fee_paid",
+        "finance_confirmed_sop_fee", "operations_confirmed_sop",
+        "committee_decision", "committee_date", "decision_text",
+        "refined_decision_text",
+    )
+
+    @api.depends(*_BLOCKER_DEPENDS)
+    def _compute_ready_to_advance(self):
+        """One flag for "pressing the blue button will work".
+
+        Derived from the very list of blockers the progress widget shows, so
+        the button and the explanation underneath it can never disagree, and a
+        new precondition in :meth:`_progress_blockers` disables the button on
+        its own.
+        """
+        for request in self:
+            request.ready_to_advance = not request._progress_blockers()
+
+    @api.depends(*_BLOCKER_DEPENDS)
+    def _compute_blocker_summary(self):
+        for request in self:
+            blockers = request._progress_blockers()
+            request.blocker_summary = blockers[0] if blockers else False
 
     @api.depends(
         "state", "scope_ids", "approval_line_ids",
@@ -830,9 +1068,17 @@ class DmaAccreditationRequest(models.Model):
                     "role": role_label(self.env, STATE_PENDING_ROLE.get(key) or "manager"),
                     "status": status,
                     "user": line.user_id.display_name if line else False,
-                    "date": fields.Datetime.to_string(line.date) if line else False,
+                    # Localised, because the reader compares this tooltip with
+                    # the same timestamp rendered by a <field> on the Approvals
+                    # tab: `Datetime.to_string` is naive UTC, so in Baghdad the
+                    # two disagreed by three hours and, near midnight, by a day.
+                    "date": (
+                        format_datetime(self.env, line.date, dt_format="short")
+                        if line else False
+                    ),
                 })
             steps_done = sum(1 for step in steps if step["status"] == "done")
+            pending_roles = [] if closed else request._pending_roles()
             request.progress_payload = {
                 "rtl": rtl,
                 "current": current,
@@ -847,6 +1093,15 @@ class DmaAccreditationRequest(models.Model):
                 "steps_done": steps_done,
                 "steps_total": len(steps),
                 "percent": round(100.0 * steps_done / len(steps)) if steps else 0,
+                # Both of them during the parallel step. `pending_group` is a
+                # scalar because the search view, the group-by, the search panel
+                # and `_search_is_my_turn` all need one indexed value - but
+                # collapsing the pair into it made the headline of the widget
+                # say "Waiting on Finance" while Operations was equally
+                # blocking, contradicting the blocker list right below it.
+                "pending_roles": [
+                    role_label(self.env, role) for role in pending_roles
+                ],
                 "pending_role": (
                     role_label(self.env, request.pending_group)
                     if request.pending_group else False
@@ -854,6 +1109,10 @@ class DmaAccreditationRequest(models.Model):
                 # The technical key alongside the label, so automation can
                 # target a role without matching translated text.
                 "pending_role_key": request.pending_group or False,
+                # The one question the screen has to answer without the reader
+                # having to match the module's role vocabulary against their own
+                # group memberships.
+                "mine": request.is_my_turn and not closed,
                 "blockers": request._progress_blockers(),
             }
 
@@ -865,16 +1124,13 @@ class DmaAccreditationRequest(models.Model):
         soon as it has signed.
         """
         self.ensure_one()
-        if self.state == "dual_confirm":
-            roles = []
-            if not self.finance_confirmed_sop_fee:
-                roles.append("finance")
-            if not self.operations_confirmed_sop:
-                roles.append("operations")
-            # Both signed: someone still has to push the file to the next step.
-            return roles or ["finance"]
-        role = STATE_PENDING_ROLE.get(self.state)
-        return [role] if role else []
+        # Shared with the workspace aggregates, which have to answer the same
+        # question from raw column values rather than from a record.
+        return self._pending_roles_from(
+            self.state,
+            self.finance_confirmed_sop_fee,
+            self.operations_confirmed_sop,
+        )
 
     def _schedule_next_step_activity(self):
         """Re-arm the to-do of every department that still has to act.
@@ -965,6 +1221,11 @@ class DmaAccreditationRequest(models.Model):
         chatter instead of blocking the officer.
         """
         self.ensure_one()
+        if self.env.context.get("dma_skip_report_attachment"):
+            # Set only by the demo history generator, which drives hundreds of
+            # transitions. Safe as a context key precisely because this method
+            # is already best effort: skipping it cannot grant anyone anything.
+            return False
         report = self.env.ref(report_xmlid, raise_if_not_found=False)
         if not report:
             _logger.warning("Report %s is missing", report_xmlid)
@@ -1017,12 +1278,24 @@ class DmaAccreditationRequest(models.Model):
             self.sudo().write({"document_ids": commands})
 
     def action_reload_checklist(self):
-        """Add the document types that were created after the request."""
+        """Add the document types that were created after the request.
+
+        Refused on a closed file: appending pending lines to an accredited or
+        rejected record would flip ``checklist_complete`` back to False and
+        change what a reprint of the office letter lists.
+        """
         for request in self:
             request._check_workflow_role(
                 ("reception", "cert_officer", "manager"),
                 self.env._("Reload Checklist"),
             )
+            if request.state in ("authorized", "rejected"):
+                raise UserError(self.env._(
+                    "The prerequisites checklist of %(request)s can no longer be "
+                    "reloaded: the file is closed (%(state)s).",
+                    request=request.display_name,
+                    state=state_label(self.env, request.state),
+                ))
             request._populate_checklist()
         return True
 
@@ -1436,6 +1709,9 @@ class DmaAccreditationRequest(models.Model):
             "context": {
                 "default_request_id": self.id,
                 "default_mode": mode,
+                # One alert and one text area: the default large modal leaves
+                # the reason box stranded in the middle of an empty dialog.
+                "dialog_size": "medium",
             },
         }
 

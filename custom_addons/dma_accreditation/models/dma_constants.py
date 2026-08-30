@@ -34,6 +34,32 @@ MAIN_PATH_STATES = [
     "demo_fee", "committee", "legal_refine", "authorized",
 ]
 
+# ---------------------------------------------------------------------------
+# Workspace analytics
+# ---------------------------------------------------------------------------
+#: The steps a file passes *through*. ``authorized`` is deliberately absent:
+#: it is where files come to rest, so it accumulates every organisation ever
+#: accredited and would dominate any chart of "where the work is" - one full
+#: bar and twelve slivers. Outcomes are reported separately, as a ledger.
+IN_PROCESS_STATES = [s for s in MAIN_PATH_STATES if s != "authorized"]
+
+#: How long a file has been sitting where it is. Three bands, not four: Odoo's
+#: yellow and orange families sit close enough together that a four-step ramp
+#: is not separable under deuteranopia, and three is also the more useful
+#: operational split - fine, slipping, stuck.
+AGE_BANDS = [
+    ("fresh", 0, 3),
+    ("slipping", 3, 7),
+    ("stuck", 7, None),
+]
+
+#: Below this many finished files a percentile is noise, and a director will
+#: quote it to a minister. The workspace still reports the cohort size.
+COHORT_FLOOR = 20
+
+#: How far back the performance band looks unless the reader says otherwise.
+DEFAULT_WINDOW_DAYS = 180
+
 #: States a request can be returned or rejected from.
 REVIEWABLE_STATES = [
     "submitted", "gd_review", "legal_review", "cert_check", "office_granted",

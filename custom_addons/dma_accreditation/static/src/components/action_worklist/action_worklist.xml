@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.ActionWorklist">
+        <section class="o_dma_card o_dma_worklist">
+            <header class="o_dma_card_head">
+                <h3 class="o_dma_card_title">
+                    <t t-esc="label.title"/>
+                    <span class="o_dma_count" dir="ltr" t-esc="props.total"/>
+                </h3>
+            </header>
+
+            <div class="o_dma_empty" t-if="!props.files.length">
+                <i class="fa fa-check-circle" role="img" aria-hidden="true"/>
+                <div>
+                    <p class="o_dma_empty_title" t-esc="label.empty"/>
+                    <p class="o_dma_empty_hint" t-esc="label.emptyHint"/>
+                </div>
+            </div>
+
+            <ul class="o_dma_rows" t-else="">
+                <li t-foreach="props.files" t-as="file" t-key="file.id"
+                    t-attf-class="o_dma_row o_dma_age_{{ file.age_band }}">
+                    <button t-on-click="() => this.props.onOpenRecord(file.id)"
+                            t-attf-aria-label="{{ file.name }} - {{ file.state_label }}">
+                        <span class="o_dma_row_ref">
+                            <i class="fa fa-star o_dma_row_star" t-if="file.urgent"
+                               role="img" t-att-title="label.urgent"/>
+                            <t t-esc="file.name"/>
+                        </span>
+                        <span class="o_dma_row_partner" t-esc="file.partner"/>
+                        <span class="o_dma_row_step">
+                            <span class="o_dma_chip" t-esc="file.state_label"/>
+                        </span>
+                        <span class="o_dma_row_block" t-esc="file.next_step"/>
+                        <span class="o_dma_row_age">
+                            <!-- The bar is a display scale; the number beside it
+                                 is the fact. Both are needed: the bar for the
+                                 sweep down the column, the number because the
+                                 bar is capped. -->
+                            <span class="o_dma_meter" aria-hidden="true">
+                                <span class="o_dma_meter_fill"
+                                      t-attf-style="width: {{ file.age_percent }}%;"/>
+                            </span>
+                            <span class="o_dma_row_days" dir="ltr">
+                                <t t-esc="file.waiting_days"/><t t-esc="label.days"/>
+                            </span>
+                            <span class="o_dma_row_total" dir="ltr"
+                                  t-attf-title="{{ label.sinceSubmission }}">
+                                <t t-esc="file.total_age_days"/><t t-esc="label.days"/>
+                            </span>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+
+            <footer class="o_dma_card_foot" t-if="props.files.length">
+                <button class="btn btn-link btn-sm o_dma_more"
+                        t-on-click="() => this.props.onOpenAll()">
+                    <t t-esc="label.openAll"/>
+                    <i class="fa fa-angle-right" role="img" aria-hidden="true"/>
+                </button>
+                <span class="o_dma_foot_note">
+                    <t t-esc="label.atStep"/> · <t t-esc="label.sinceSubmission"/>
+                </span>
+            </footer>
+        </section>
+    </t>
+
+</templates>
