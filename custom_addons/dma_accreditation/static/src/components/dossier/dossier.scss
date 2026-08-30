@@ -1,0 +1,301 @@
+// The accreditation dossier, on the request form.
+//
+// Same visual system as the rest of the module: cards on $o-view-background-color
+// inside a 1px $border-color rule, the status palette reserved for status and
+// always paired with an icon and a written label, tabular numerals on every
+// figure, logical properties throughout and an explicit `dir` on the root
+// because Odoo mirrors with rtlcss and never sets `direction` itself.
+
+.o_form_view .o_dma_dossier {
+
+    // ---------------------------------------------------------------- head
+    .o_dma_dossier_head {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        margin-block-end: 0.5rem;
+    }
+
+    .o_dma_dossier_ref {
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .o_dma_dossier_partner {
+        color: $text-muted;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_dossier_count {
+        margin-inline-start: auto;
+        color: $text-muted;
+        font-variant-numeric: tabular-nums;
+        font-size: 0.85rem;
+    }
+
+    // ------------------------------------------------------------- banners
+    .o_dma_dossier_missing,
+    .o_dma_dossier_complete {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+        margin-block-end: 0.75rem;
+
+        ul {
+            margin: 0.25rem 0 0;
+            padding-inline-start: 1.1rem;
+        }
+
+        .fa {
+            margin-inline-end: 0.35rem;
+        }
+    }
+
+    // ------------------------------------------------------------ sections
+    .o_dma_dossier_sections {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        counter-reset: dma-dossier;
+    }
+
+    .o_dma_dossier_section {
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        background-color: $o-view-background-color;
+        counter-increment: dma-dossier;
+
+        + .o_dma_dossier_section {
+            margin-block-start: 0.35rem;
+        }
+    }
+
+    .o_dma_dossier_toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 0;
+        border-radius: 6px;
+        background: none;
+        text-align: start;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $o-gray-200;
+        }
+
+        // The heading number, so a printed index and this screen list the
+        // sections the same way round.
+        &::before {
+            content: counter(dma-dossier);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.4rem;
+            height: 1.4rem;
+            border-radius: 4px;
+            background-color: $o-gray-200;
+            color: $text-muted;
+            font-size: 0.72rem;
+            font-variant-numeric: tabular-nums;
+        }
+    }
+
+    .o_dma_dossier_section_label {
+        font-weight: 600;
+    }
+
+    .o_dma_dossier_section_note,
+    .o_dma_dossier_generated {
+        color: $text-muted;
+        font-size: 0.78rem;
+    }
+
+    .o_dma_dossier_section_count {
+        margin-inline-start: auto;
+        min-width: 1.5rem;
+        padding: 0 0.35rem;
+        border-radius: 10px;
+        background-color: $o-gray-200;
+        color: $body-color;
+        font-size: 0.72rem;
+        font-variant-numeric: tabular-nums;
+        text-align: center;
+    }
+
+    .o_dma_dossier_body {
+        padding: 0 0.75rem 0.6rem;
+    }
+
+    .o_dma_dossier_empty {
+        margin: 0;
+        color: $text-muted;
+        font-size: 0.82rem;
+    }
+
+    // ----------------------------------------------------------- documents
+    .o_dma_dossier_documents {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .o_dma_dossier_document {
+        padding: 0.4rem 0;
+
+        + .o_dma_dossier_document {
+            border-block-start: 1px solid $border-color;
+        }
+
+        // The one thing a reviewer is looking for: what is not done.
+        &.o_dma_incomplete {
+            // A 2px rule on the leading edge, which swaps sides in Arabic.
+            border-inline-start: 2px solid $danger;
+            padding-inline-start: 0.5rem;
+        }
+    }
+
+    .o_dma_dossier_document_head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.85rem;
+
+        .fa-check-circle { color: $success; }
+        .fa-times-circle { color: $danger; }
+        .fa-circle-o { color: $text-muted; }
+    }
+
+    .o_dma_dossier_document_label {
+        font-weight: 600;
+    }
+
+    .o_dma_dossier_tag {
+        padding: 0 0.4rem;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        font-size: 0.72rem;
+        color: $text-muted;
+    }
+
+    .o_dma_validity_valid { border-color: rgba($success, 0.45); color: $success; }
+    .o_dma_validity_expiring { border-color: rgba($warning, 0.55); color: $orange-700; }
+    .o_dma_validity_expired { border-color: rgba($danger, 0.55); color: $danger; }
+
+    .o_dma_dossier_why {
+        color: $danger;
+        font-size: 0.78rem;
+    }
+
+    .o_dma_dossier_reviewer {
+        color: $text-muted;
+        font-size: 0.75rem;
+        margin-block-start: 0.1rem;
+    }
+
+    // --------------------------------------------------------------- files
+    .o_dma_dossier_files {
+        list-style: none;
+        margin: 0.25rem 0 0;
+        padding: 0;
+    }
+
+    .o_dma_dossier_file button {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.2rem 0.25rem;
+        border: 0;
+        border-radius: 4px;
+        background: none;
+        text-align: start;
+        cursor: pointer;
+        font-size: 0.8rem;
+
+        &:hover {
+            background-color: $o-gray-200;
+        }
+
+        .fa {
+            color: $text-muted;
+        }
+    }
+
+    .o_dma_dossier_file_name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_dossier_file_meta,
+    .o_dma_dossier_file_size {
+        color: $text-muted;
+        font-size: 0.74rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .o_dma_dossier_file_flag {
+        padding: 0 0.35rem;
+        border-radius: 8px;
+        background-color: $o-gray-200;
+        color: $text-muted;
+        font-size: 0.68rem;
+    }
+
+    // A previous version is evidence, not clutter: dimmed, never hidden.
+    .o_dma_dossier_file.o_dma_superseded button {
+        opacity: 0.65;
+    }
+
+    // ------------------------------------------------------------- history
+    .o_dma_dossier_history {
+        width: 100%;
+        font-size: 0.8rem;
+        border-collapse: collapse;
+
+        th {
+            text-align: start;
+            font-weight: 600;
+            color: $text-muted;
+            font-size: 0.74rem;
+            padding: 0.2rem 0.4rem;
+            border-block-end: 1px solid $border-color;
+        }
+
+        td {
+            padding: 0.25rem 0.4rem;
+            border-block-end: 1px solid $border-color;
+            font-variant-numeric: tabular-nums;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-block-end: 0;
+        }
+    }
+
+    .o_dma_dossier_role {
+        display: block;
+        color: $text-muted;
+        font-size: 0.72rem;
+    }
+
+    // Where the file is now.
+    .o_dma_dossier_open_visit td {
+        background-color: rgba($o-brand-primary, 0.06);
+        font-weight: 600;
+    }
+}
+
+// The duplicate notice on the evidence form. Not part of the dossier panel, so
+// it sits at the top level: the icon introduces the sentence and needs air
+// after it rather than being glued to the first word.
+.o_dma_duplicate_notice > .fa {
+    margin-inline-end: 0.4rem;
+}

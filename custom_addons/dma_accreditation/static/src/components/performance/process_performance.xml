@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.AccreditationPerformance">
+        <Layout className="'o_dma_performance'" display="{ controlPanel: {} }">
+            <div class="o_dma_perf_body" t-if="data"
+                 t-att-dir="data.rtl ? 'rtl' : 'ltr'">
+
+                <!-- Period. One row of controls above everything. -->
+                <div class="o_dma_perf_filters">
+                    <span class="o_dma_perf_filter_label" t-esc="label.period"/>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button t-foreach="periods" t-as="months" t-key="months"
+                                t-attf-class="btn {{ state.months === months ? 'btn-primary' : 'btn-secondary' }}"
+                                t-on-click="() => this.setPeriod(months)">
+                            <span dir="ltr" t-esc="months"/>&#160;<t t-esc="label.months"/>
+                        </button>
+                    </div>
+                    <span class="o_dma_perf_range" dir="ltr">
+                        <t t-esc="data.period.date_from"/> — <t t-esc="data.period.date_to"/>
+                    </span>
+                </div>
+
+                <!-- Headline numbers. Stat tiles, not one-bar charts. -->
+                <div class="o_dma_perf_kpis" t-if="state.sla">
+                    <div class="o_dma_perf_kpi o_dma_perf_kpi_lead">
+                        <span class="o_dma_perf_kpi_value" dir="ltr">
+                            <t t-esc="state.sla.on_time_percent"/>%
+                        </span>
+                        <span class="o_dma_perf_kpi_label" t-esc="label.onTime"/>
+                    </div>
+                    <button class="o_dma_perf_kpi o_dma_level_serious"
+                            t-on-click="() => this.openRequests(label.overdue, [['sla_state','in',['overdue','escalated']]])">
+                        <span class="o_dma_perf_kpi_value" dir="ltr" t-esc="overdueCount"/>
+                        <span class="o_dma_perf_kpi_label">
+                            <i class="fa fa-exclamation-triangle" role="img" aria-hidden="true"/>
+                            <t t-esc="label.overdue"/>
+                        </span>
+                    </button>
+                    <button class="o_dma_perf_kpi o_dma_level_critical"
+                            t-on-click="() => this.openRequests(label.escalated, [['sla_state','=','escalated']])">
+                        <span class="o_dma_perf_kpi_value" dir="ltr" t-esc="escalatedCount"/>
+                        <span class="o_dma_perf_kpi_label">
+                            <i class="fa fa-exclamation-circle" role="img" aria-hidden="true"/>
+                            <t t-esc="label.escalated"/>
+                        </span>
+                    </button>
+                    <div class="o_dma_perf_kpi">
+                        <span class="o_dma_perf_kpi_value" dir="ltr"
+                              t-esc="data.cycle_time.overall.label"/>
+                        <span class="o_dma_perf_kpi_label" t-esc="label.cycle"/>
+                        <span class="o_dma_perf_kpi_hint">
+                            <t t-if="data.cycle_time.overall.thin" t-esc="label.thin"/>
+                            <t t-else="">
+                                <span dir="ltr" t-esc="data.cycle_time.overall.count"/>&#160;<t t-esc="label.files"/>
+                            </t>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- ============ Where the time goes ============
+                     One series - the median wait - so the bar length carries
+                     it and no hue is spent on information already shown. -->
+                <section class="o_dma_perf_card">
+                    <h3 class="o_dma_perf_title" t-esc="label.stages"/>
+                    <p class="o_dma_perf_hint" t-esc="label.stagesHint"/>
+                    <ol class="o_dma_perf_bars">
+                        <li t-foreach="data.stages" t-as="stage" t-key="stage.key">
+                            <button class="o_dma_perf_bar_row"
+                                    t-on-click="() => this.openRequests(stage.label, stage.domain)">
+                                <span class="o_dma_perf_bar_label">
+                                    <t t-esc="stage.label"/>
+                                    <span class="o_dma_perf_bar_role" t-esc="stage.role"/>
+                                </span>
+                                <span class="o_dma_perf_bar_track">
+                                    <!-- A step nobody has ever completed paints
+                                         nothing: a minimum-width stub would read
+                                         as "a little", which is the one thing a
+                                         no-data must not say. -->
+                                    <span class="o_dma_perf_bar_fill" t-if="stage.median_hours"
+                                          t-attf-style="width: {{ stage.median_percent }}%;"/>
+                                </span>
+                                <span class="o_dma_perf_bar_value" dir="ltr">
+                                    <t t-esc="stage.median_label"/>
+                                </span>
+                                <span class="o_dma_perf_bar_meta">
+                                    <span class="o_dma_perf_p90" dir="ltr" t-if="stage.count">
+                                        <t t-esc="label.p90"/>&#160;<t t-esc="stage.p90_label"/>
+                                    </span>
+                                    <!-- The sample size, always: a median of
+                                         three files is not a figure, and the
+                                         reader has to be able to see that. -->
+                                    <span class="o_dma_perf_sample" dir="ltr" t-if="stage.count">
+                                        <t t-esc="stage.count"/>&#160;<t t-esc="label.files"/>
+                                    </span>
+                                    <span class="o_dma_perf_thin" t-if="stage.thin and stage.count"
+                                          t-esc="label.thin"/>
+                                    <span class="o_dma_perf_waiting" dir="ltr" t-if="stage.waiting">
+                                        <t t-esc="stage.waiting"/>&#160;<t t-esc="label.waitingNow"/>
+                                    </span>
+                                    <span class="o_dma_perf_overdue" t-if="stage.overdue">
+                                        <i class="fa fa-exclamation-triangle" role="img" aria-hidden="true"/>
+                                        <span dir="ltr" t-esc="stage.overdue"/>&#160;<t t-esc="label.overdueNow"/>
+                                    </span>
+                                </span>
+                            </button>
+                        </li>
+                    </ol>
+                </section>
+
+                <div class="o_dma_perf_cols">
+
+                    <!-- ============ The one chart ============ -->
+                    <section class="o_dma_perf_card">
+                        <h3 class="o_dma_perf_title">
+                            <t t-esc="label.throughput"/>
+                            <button class="o_dma_perf_link" t-on-click="toggleTable"
+                                    t-att-aria-expanded="state.showTable ? 'true' : 'false'">
+                                <t t-esc="state.showTable ? label.hideData : label.showData"/>
+                            </button>
+                        </h3>
+                        <p class="o_dma_perf_hint" t-esc="label.throughputHint"/>
+                        <div class="o_dma_perf_chart">
+                            <canvas t-ref="throughput" role="img"
+                                    t-att-aria-label="label.chartLabel"/>
+                        </div>
+                        <!-- The same numbers as a table: the chart is never the
+                             only way to read them. -->
+                        <table class="o_dma_perf_table" t-if="state.showTable">
+                            <thead>
+                                <tr>
+                                    <th t-esc="label.month"/>
+                                    <th class="text-end" t-esc="label.submitted"/>
+                                    <th class="text-end" t-esc="label.officeGranted"/>
+                                    <th class="text-end" t-esc="label.authorized"/>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="chartRows" t-as="row" t-key="row.month">
+                                    <td dir="ltr" t-esc="row.month"/>
+                                    <td class="text-end" dir="ltr" t-esc="row.submitted"/>
+                                    <td class="text-end" dir="ltr" t-esc="row.office"/>
+                                    <td class="text-end" dir="ltr" t-esc="row.authorized"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <div class="o_dma_perf_side">
+
+                        <!-- ============ Bottlenecks ============ -->
+                        <section class="o_dma_perf_card">
+                            <h3 class="o_dma_perf_title" t-esc="label.bottlenecks"/>
+                            <t t-foreach="[['slowest', label.slowest], ['latest', label.latest], ['busiest', label.busiest]]"
+                               t-as="group" t-key="group[0]">
+                                <h4 class="o_dma_perf_subtitle" t-esc="group[1]"/>
+                                <ol class="o_dma_perf_rank">
+                                    <li t-foreach="data.bottlenecks[group[0]]" t-as="stage"
+                                        t-key="stage.key">
+                                        <button t-on-click="() => this.openRequests(stage.label, stage.domain)">
+                                            <span class="o_dma_perf_rank_label" t-esc="stage.label"/>
+                                            <span class="o_dma_perf_rank_value" dir="ltr">
+                                                <t t-if="group[0] === 'slowest'" t-esc="stage.median_label"/>
+                                                <t t-elif="group[0] === 'latest'">
+                                                    <t t-esc="stage.overdue_rate"/>%
+                                                </t>
+                                                <t t-else="" t-esc="stage.waiting"/>
+                                            </span>
+                                        </button>
+                                    </li>
+                                </ol>
+                                <p class="o_dma_perf_empty" t-if="!data.bottlenecks[group[0]].length"
+                                   t-esc="label.empty"/>
+                            </t>
+                        </section>
+
+                        <!-- ============ Cycle times ============ -->
+                        <section class="o_dma_perf_card">
+                            <h3 class="o_dma_perf_title" t-esc="label.cycleTimes"/>
+                            <ul class="o_dma_perf_definitions">
+                                <li t-foreach="[['office', label.cycleOffice], ['operational', label.cycleOperational], ['overall', label.cycleOverall]]"
+                                    t-as="entry" t-key="entry[0]">
+                                    <span class="o_dma_perf_def_label" t-esc="entry[1]"/>
+                                    <span class="o_dma_perf_def_value" dir="ltr"
+                                          t-esc="data.cycle_time[entry[0]].label"/>
+                                    <span class="o_dma_perf_def_meta" dir="ltr">
+                                        <t t-esc="label.p90"/>&#160;<t t-esc="data.cycle_time[entry[0]].p90_label"/>
+                                        &#160;·&#160;
+                                        <t t-esc="data.cycle_time[entry[0]].count"/>&#160;<t t-esc="label.files"/>
+                                    </span>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- ============ Department workload ============ -->
+                <section class="o_dma_perf_card">
+                    <h3 class="o_dma_perf_title" t-esc="label.workload"/>
+                    <table class="o_dma_perf_table">
+                        <thead>
+                            <tr>
+                                <th/>
+                                <th class="text-end" t-esc="label.holding"/>
+                                <th class="text-end" t-esc="label.overdueNow"/>
+                                <th class="text-end" t-esc="label.completed"/>
+                                <th class="text-end" t-esc="label.medianAction"/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="data.workload" t-as="role" t-key="role.key"
+                                t-attf-class="{{ role.overdue ? 'o_dma_perf_row_alert' : '' }}">
+                                <td>
+                                    <button class="o_dma_perf_link"
+                                            t-on-click="() => this.openRequests(role.label, role.domain)"
+                                            t-esc="role.label"/>
+                                </td>
+                                <td class="text-end" dir="ltr" t-esc="role.holding"/>
+                                <td class="text-end" dir="ltr">
+                                    <span t-if="role.overdue" class="o_dma_perf_overdue">
+                                        <i class="fa fa-exclamation-triangle" role="img" aria-hidden="true"/>
+                                        <t t-esc="role.overdue"/>
+                                    </span>
+                                    <t t-else="">0</t>
+                                </td>
+                                <td class="text-end" dir="ltr" t-esc="role.completed"/>
+                                <td class="text-end" dir="ltr">
+                                    <t t-esc="role.median_label"/>
+                                    <span class="o_dma_perf_thin" t-if="role.thin and role.completed"
+                                          t-esc="label.thin"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <div class="o_dma_perf_cols">
+
+                    <!-- ============ Rework ============ -->
+                    <section class="o_dma_perf_card">
+                        <h3 class="o_dma_perf_title" t-esc="label.rework"/>
+                        <p class="o_dma_perf_empty" t-if="!data.rework.total" t-esc="label.noRework"/>
+                        <t t-else="">
+                            <h4 class="o_dma_perf_subtitle" t-esc="label.returnsByStep"/>
+                            <ol class="o_dma_perf_rank">
+                                <li t-foreach="data.rework.by_step" t-as="step" t-key="step.key">
+                                    <button t-on-click="() => this.openRequests(step.label, [['state','=',step.key]])">
+                                        <span class="o_dma_perf_rank_label" t-esc="step.label"/>
+                                        <span class="o_dma_perf_rank_value" dir="ltr" t-esc="step.count"/>
+                                    </button>
+                                </li>
+                            </ol>
+                            <t t-if="data.rework.repeat_offenders.length">
+                                <h4 class="o_dma_perf_subtitle" t-esc="label.repeatOffenders"/>
+                                <ol class="o_dma_perf_rank">
+                                    <li t-foreach="data.rework.repeat_offenders" t-as="item"
+                                        t-key="item.id">
+                                        <button t-on-click="() => this.openRecord(item.id)">
+                                            <span class="o_dma_perf_rank_label" t-esc="item.name"/>
+                                            <span class="o_dma_perf_rank_value" dir="ltr" t-esc="item.count"/>
+                                        </button>
+                                    </li>
+                                </ol>
+                            </t>
+                        </t>
+                    </section>
+
+                    <!-- ============ Documentation health ============ -->
+                    <section class="o_dma_perf_card" t-if="state.documents">
+                        <h3 class="o_dma_perf_title" t-esc="label.documents"/>
+                        <div class="o_dma_perf_chips">
+                            <button class="o_dma_perf_chip"
+                                    t-on-click="() => this.openEvidence([['is_provided','=',true],['review_result','=','pending'],['request_id.state','not in',['authorized','rejected']]])">
+                                <span dir="ltr" t-esc="state.documents.totals.pending_review"/>
+                                <t t-esc="label.pendingReview"/>
+                            </button>
+                            <button class="o_dma_perf_chip o_dma_level_critical"
+                                    t-on-click="() => this.openEvidence([['review_result','=','invalid'],['request_id.state','not in',['authorized','rejected']]])">
+                                <span dir="ltr" t-esc="state.documents.totals.invalid"/>
+                                <t t-esc="label.invalid"/>
+                            </button>
+                            <button class="o_dma_perf_chip o_dma_level_critical"
+                                    t-on-click="() => this.openEvidence([['is_required','=',true],['review_result','=','missing'],['request_id.state','not in',['authorized','rejected']]])">
+                                <span dir="ltr" t-esc="state.documents.totals.missing"/>
+                                <t t-esc="label.missing"/>
+                            </button>
+                            <button class="o_dma_perf_chip o_dma_level_warning"
+                                    t-on-click="() => this.openEvidence([['validity_state','=','expiring'],['request_id.state','not in',['authorized','rejected']]])">
+                                <span dir="ltr" t-esc="state.documents.totals.expiring"/>
+                                <t t-esc="label.expiring"/>
+                            </button>
+                            <button class="o_dma_perf_chip o_dma_level_critical"
+                                    t-on-click="() => this.openEvidence([['validity_state','=','expired'],['request_id.state','not in',['authorized','rejected']]])">
+                                <span dir="ltr" t-esc="state.documents.totals.expired"/>
+                                <t t-esc="label.expired"/>
+                            </button>
+                            <button class="o_dma_perf_chip"
+                                    t-on-click="() => this.openEvidence([['superseded_count','>',0],['request_id.state','not in',['authorized','rejected']]])">
+                                <span dir="ltr" t-esc="state.documents.totals.replaced"/>
+                                <t t-esc="label.replaced"/>
+                            </button>
+                        </div>
+
+                        <h4 class="o_dma_perf_subtitle" t-esc="label.blockedRequests"/>
+                        <p class="o_dma_perf_empty" t-if="!state.documents.blocked_requests.length"
+                           t-esc="label.noBlocked"/>
+                        <ol class="o_dma_perf_rank" t-else="">
+                            <li t-foreach="state.documents.blocked_requests" t-as="item"
+                                t-key="item.id">
+                                <button t-on-click="() => this.openRecord(item.id)">
+                                    <span class="o_dma_perf_rank_label">
+                                        <t t-esc="item.name"/>
+                                        <span class="o_dma_perf_rank_sub" t-esc="item.partner"/>
+                                    </span>
+                                    <span class="o_dma_perf_rank_value" dir="ltr" t-esc="item.progress"/>
+                                </button>
+                            </li>
+                        </ol>
+
+                        <t t-if="state.documents.worst_documents.length">
+                            <h4 class="o_dma_perf_subtitle" t-esc="label.worstDocuments"/>
+                            <ol class="o_dma_perf_rank">
+                                <li t-foreach="state.documents.worst_documents" t-as="item"
+                                    t-key="item.id">
+                                    <button t-on-click="() => this.openEvidence([['type_id','=',item.id],['is_blocking','=',true]])">
+                                        <span class="o_dma_perf_rank_label" t-esc="item.label"/>
+                                        <span class="o_dma_perf_rank_value" dir="ltr" t-esc="item.count"/>
+                                    </button>
+                                </li>
+                            </ol>
+                        </t>
+                    </section>
+                </div>
+            </div>
+
+            <div class="o_dma_perf_loading" t-if="state.loading and !data">
+                <i class="fa fa-circle-o-notch fa-spin" role="img" aria-hidden="true"/>
+            </div>
+        </Layout>
+    </t>
+
+</templates>

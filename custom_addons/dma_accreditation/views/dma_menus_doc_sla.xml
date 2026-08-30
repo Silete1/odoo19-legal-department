@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- New entries only, in a file of their own so the existing menu tree can
+         be reorganised elsewhere without a conflict here. -->
+
+    <!-- ================================================================
+         Monitoring - what is late and what is wrong with the paperwork.
+         Between "My Queue" (sequence 10) and "All Requests" (20).
+         ================================================================ -->
+    <menuitem id="menu_dma_monitoring"
+              name="Monitoring"
+              parent="dma_accreditation.menu_dma_root"
+              sequence="15"/>
+
+    <menuitem id="menu_dma_overdue"
+              name="Overdue Files"
+              parent="menu_dma_monitoring"
+              action="action_dma_overdue_requests"
+              sequence="10"/>
+
+    <menuitem id="menu_dma_escalations"
+              name="Escalations"
+              parent="menu_dma_monitoring"
+              action="action_dma_sla_escalation"
+              sequence="20"/>
+
+    <menuitem id="menu_dma_evidence"
+              name="Evidence"
+              parent="menu_dma_monitoring"
+              action="action_dma_request_document_evidence"
+              sequence="30"/>
+
+    <!-- The performance screen answers questions about departments, so it is
+         for the two roles that are accountable for the process as a whole. -->
+    <menuitem id="menu_dma_performance"
+              name="Process Performance"
+              parent="menu_dma_monitoring"
+              action="action_dma_process_performance"
+              groups="dma_accreditation.group_dma_manager,dma_accreditation.group_dma_general_director"
+              sequence="40"/>
+
+    <!-- ================================================================
+         Configuration - the Accreditation Manager owns the service levels,
+         exactly as they own the fees and the document types.
+         ================================================================ -->
+    <menuitem id="menu_dma_config_sla"
+              name="Service Levels"
+              parent="dma_accreditation.menu_dma_configuration"
+              action="action_dma_sla_rule"
+              groups="dma_accreditation.group_dma_manager"
+              sequence="25"/>
+
+</odoo>

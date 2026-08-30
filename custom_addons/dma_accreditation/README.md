@@ -17,7 +17,7 @@ log**, posted to the chatter and pushed to the next department as a scheduled
 activity.
 
 * License: **LGPL-3**
-* Version: `19.0.1.0.0`
+* Version: `19.0.1.1.0`
 * Depends: `base`, `mail`, `web` only — no Enterprise, no OCA modules.
 
 ---
@@ -288,13 +288,21 @@ then be unable to save it. The values are still ordinary system parameters.
 | SOP Reading Fee | `dma_accreditation.sop_fee` | `250.0` |
 | Operational Demonstration Fee | `dma_accreditation.demo_fee` | `500.0` |
 | Accreditation Validity (months) | `dma_accreditation.validity_months` | `12` |
+| Expiry Warning (days) | `dma_accreditation.expiry_warning_days` | `90` |
 
 The two fee amounts are proposed by default on a new fee line; an officer can
 still type a different amount. The validity drives the **expiry date** of the
 operational accreditation certificate (`issue_date + N months − 1 day`).
 
+The expiry warning is how long before a certificate runs out the Accreditation
+Manager starts being reminded of it.
+
 The keys are plain system parameters, so they can also be set from a data file
-or from `Settings → Technical → System Parameters`.
+or from `Settings → Technical → System Parameters`. Two more parameters have no
+dialog because they are rarely touched:
+`dma_accreditation.dossier_max_bytes` (default 200 MB) caps the size of a
+generated dossier archive, and it is the only thing standing between a file with
+half a gigabyte of scans and a worker running out of memory.
 
 ### Document Types (الأوليات)
 
@@ -317,6 +325,25 @@ applies. **A request gets its checklist when it is created**, so changing the
 configuration does not rewrite existing files; use the **Reload Checklist**
 button on the Documents tab to pull in newly created types.
 
+### Service Levels
+
+*Configuration → Service Levels* is one editable table:
+**Step · Department · Target · Warn before · Escalate after**, all in days.
+
+The shipped rows are **starting values, not legal deadlines** — the module has
+no business deciding how long the Legal Department may hold a file, so the
+Accreditation Manager is expected to replace them with whatever the
+Directorate's service charter says. They are shipped anyway because a time
+control layer that arrives empty measures nothing and is quietly ignored.
+
+Two rows are worth pointing at:
+
+* the **dual confirmation** carries one row per department, because Finance and
+  Operations are answerable for it at the same time;
+* **Returned to Applicant** deliberately carries no row. The Directorate is not
+  holding the file then, so the engine reports it as *paused* rather than
+  letting a company's own delay count against a department.
+
 ### Accreditation Scopes
 
 Eight scopes are seeded: Manual Clearance, Battle Area Clearance, EOD, Mine
@@ -338,11 +365,17 @@ letter and the certificate.
 | `dma.approval.line` | **immutable** audit trail of every transition |
 | `dma.decision.reason` | transient wizard collecting the return/reject reason |
 | `dma.accreditation.settings` | transient settings dialog owned by the Accreditation Manager |
+| `dma.document.submission` | **immutable** superseded version of a checklist line's evidence |
+| `dma.sla.rule` | the target, warning and escalation delays of one step |
+| `dma.sla.escalation` | **immutable** record of one overrun of a service level |
+| `dma.document.replacement` | transient wizard that files a version away and attaches its replacement |
 
-Two server methods feed the interface and keep its logic testable in Python:
-`_compute_progress_payload` (the progress rail and its blockers) and
+Server methods feed the interface and keep its logic testable in Python:
+`_compute_progress_payload` (the progress rail and its blockers),
 `get_dashboard_data` (every number on the dashboard, counted through the record
-rules).
+rules), `_dossier_index` (the dossier, shared by the screen, the printed index
+and the archive) and the three analytics payloads of
+[§12](#12-time-control-and-process-performance).
 
 ### Why the approval log cannot be edited
 
@@ -469,7 +502,7 @@ odoo-bin -c odoo.conf -d dma_test -i dma_accreditation --with-demo          --te
 odoo-bin -c odoo.conf -d dma_test --test-enable --stop-after-init          --test-tags "/web:WebSuite.test_unit_desktop[@dma_accreditation]"
 ```
 
-78 Python tests in five files:
+165 Python tests in nine files:
 
 * `test_workflow.py` — the full happy path `draft → authorized` acted by a
   different user at every step, both dual-confirmation orders, the committee
@@ -501,13 +534,41 @@ odoo-bin -c odoo.conf -d dma_test --test-enable --stop-after-init          --tes
   the office accreditation entirely through the interface (watching the progress
   rail update and the blockers clear), and a department that does not own the
   step being offered no button at all.
+* `test_documents.py` — the validity states against the expiry date, an expiry
+  blocking only where the Directorate configured it to, replacing the evidence
+  of an accepted line superseding the acceptance (and not stamping the person
+  who swapped the file as its reviewer), the immutability of a superseded
+  version, the replacement wizard and its refusals, duplicate detection on the
+  checksum, every blocking reason, and the scheduled refresh of the stored
+  validity column.
+* `test_dossier.py` — the headings of the index, evidence collected from every
+  corner of the file, superseded versions marked as such, the decision trail,
+  and the security: never another accreditation's evidence, a partial right
+  producing a partial dossier rather than an error, sanitised and de-duplicated
+  archive entry names, the size ceiling, and the screen, the report and the
+  archive agreeing on one reading of the file.
+* `test_sla.py` — time frozen throughout: where the clock starts, the dual
+  confirmation's signatures not restarting it, a second visit to a step, all
+  four verdicts at their thresholds, paused and closed and archived files,
+  filtering, cron idempotency, escalation to the manager and its automatic
+  closure, re-escalation on a second visit, manager-only configuration, and the
+  same file being exactly as late in Baghdad as in UTC.
+* `test_analytics.py` — every figure asserted against a number worked out by
+  hand from a fixture with a known history: the duration on the log, the
+  percentile aggregate reaching PostgreSQL, per-visit stage durations, the live
+  backlog, the three bottleneck orderings, throughput by month, cycle time
+  measured between decisions, rework, departmental workload, and a file in
+  flight never dragging a cycle time down.
 
 Plus 7 **hoot** tests in `static/tests/accreditation_progress.test.js` covering
 the progress component itself: the step states, the pending department, the
 blocker list, the closed-file case, the rejected case and the RTL flip.
 
 The report tests render **HTML**, not PDF, so the suite is green on a CI machine
-without `wkhtmltopdf`.
+without `wkhtmltopdf`. The time-dependent suites freeze the clock with
+`odoo.tests.common.freeze_time`, so a service level is asserted against a date
+anybody reading the test can work out rather than against the day the suite
+happens to run.
 
 > **The browser suites SKIP rather than fail when they cannot run.** Odoo looks
 > for Chrome at fixed paths (on Windows: `%ProgramFiles%`, `%ProgramFiles(x86)%`
@@ -540,14 +601,251 @@ activity backlog instead of records with a hand-set status.
 
 ---
 
-## 11. Notes and limitations
+## 11. Document intelligence and the accreditation dossier
+
+The prerequisites checklist used to answer one question - has the Certifications
+Division accepted this document? It now answers the rest of what an officer and
+an auditor actually need.
+
+### What a checklist line knows about itself
+
+| Field | Why |
+|---|---|
+| `reference`, `issuer` | the number printed on the document and who issued it |
+| `issue_date`, `expiry_date` | only for the types marked **Expires** |
+| `validity_state` | `no_expiry` / `valid` / `expiring` / `expired`, stored so it can be filtered and grouped |
+| `version`, `superseded_count` | which version is on file, and how many came before |
+| `duplicate_of_id` | another requirement carrying byte-for-byte the same file |
+| `is_blocking`, `blocking_reason` | whether this line is what is holding the office accreditation up, and precisely why |
+
+**No validity period is ever assumed.** How long an Iraqi registration
+certificate or a third-party liability policy stays valid is a matter for the
+issuer and for the law, so the module records the expiry date the officer reads
+off the document and warns before it - nothing more. Whether a lapsed copy
+*blocks* the office accreditation is a decision of the Directorate, taken per
+document type with **Expiry Blocks Accreditation**, and it is off everywhere by
+default.
+
+`validity_state` is derived from today's date, so a stored value is a day stale
+by tomorrow. The daily job brings it back in line; the hard gate never reads it
+and asks the calendar directly, so it is never a day out.
+
+### Versions, and one defect this release fixes
+
+`review_result` used to survive a change of the files behind it. Reception has
+write access to the checklist because it assembles the file, so an accepted line
+could have its evidence swapped for something nobody had looked at - and the
+hard gate would still open on it.
+
+A sign-off says *"I checked **this** on that day"*. So from now on, replacing the
+evidence of a reviewed line:
+
+1. freezes the state it was in into a `dma.document.submission` - the files, the
+   verdict, who gave it and when, and the reason for the replacement;
+2. resets the line to *Pending*, without stamping the person who swapped the file
+   as its reviewer;
+3. says so in the chatter.
+
+Nothing else about the workflow moves. Previous evidence is never destroyed, the
+version rows are as immutable as the approval log, and the attachments are
+**referenced, never copied** - four versions of an insurance policy are four
+files in the filestore, not eight.
+
+The **Replace Document** dialog is the polite way in: it takes the new file, what
+the new document says about itself, and a reason, and the reason lands on the
+version being superseded, where it belongs.
+
+### Duplicate detection
+
+Matched on the SHA-1 checksum `ir.attachment` computes server side, so it is the
+bytes that are compared and not the name an applicant chose. It is a **warning,
+never a refusal**: one PDF can legitimately be both the registration certificate
+and the proof of legal representation, and it is the Certifications Division that
+decides whether that is acceptable.
+
+### The accreditation dossier
+
+*"Show me the complete evidence and decision trail for DMA/ACC/2026/0042."*
+
+The **Dossier** tab assembles exactly that, from the record itself, in the order
+an auditor reads a paper file: the application, the prerequisites (one block per
+requirement, with its verdict, its validity and every version), the SOP, the fee
+receipts, the committee minutes, the documents the Directorate issued, any other
+correspondence, and the decision trail with how long each step took.
+
+One reading of the file feeds three consumers, so they can never disagree:
+
+* the **panel** on the form;
+* the **printed index** (*Print Index*), a QWeb report in the same bilingual
+  house style as the letter and the certificate;
+* the **archive** (*Download Dossier*), built on demand and never stored, so a
+  dossier costs no second copy of a single byte. It carries the same index as
+  its cover sheet, in HTML: rendering that template through `wkhtmltopdf` costs
+  around a minute on a plain server against ten milliseconds for the markup, an
+  officer waiting on a download should not be waiting on a PDF engine, and the
+  archive then has an index even where no PDF engine is installed at all.
+
+The archive is laid out the way the index reads:
+
+```
+DMA_ACC_2026_0042/
+  00_DMA_ACC_2026_0042_index.html
+  02_prerequisites/registration/company-registration.pdf
+  02_prerequisites/insurance/insurance-2026.pdf
+  02_prerequisites/insurance/superseded/insurance-2025.pdf
+  03_sop/SANAD-SOP-2026.pdf
+  04_fees/receipt-0141.pdf
+  ...
+```
+
+Security, in the order it is applied:
+
+1. the route takes the **request**, never a list of attachment ids, so nobody can
+   ask for somebody else's evidence by guessing numbers;
+2. the reader is checked against the record before a single byte is read;
+3. every attachment is filtered through `ir.attachment`'s own access rules - a
+   reader who may not see one piece of evidence gets a dossier **without it**
+   rather than an error;
+4. anything filed against another accreditation is dropped and logged, however it
+   got into the set;
+5. archive entry names are sanitised and de-duplicated. Odoo's own ZIP builders
+   write the attachment name in verbatim, which lets a file called
+   `../../evil.exe` write outside the extraction directory on a careless
+   extractor; that is not repeated here.
+
+### Preparing for OCR, without doing OCR
+
+The document layer is deliberately structured so text extraction can be added
+later without a migration: content already flows through `ir.attachment`, whose
+`index_content` is the extension point, and Odoo Community ships
+`attachment_indexation` (LGPL-3, depends only on `web`) which extracts PDF, OOXML
+and OpenDocument text into it. Adding that module to `depends` is the whole
+integration; nothing here needs to change, and no cloud service is involved.
+
+---
+
+## 12. Time control and process performance
+
+### Where the clock starts, and why it cannot drift
+
+Every transition already appends one `dma.approval.line` carrying the step that
+was *left* and the moment it was left. Three stored, indexed columns now turn
+that log into something a database can aggregate:
+
+| Column | Meaning |
+|---|---|
+| `entered_on` | when the file reached the step this entry was decided on |
+| `duration_hours` | how long it had been there |
+| `is_transition` | whether this entry is the one that actually closed the step |
+
+All three are **computed off the log itself**, so they can never disagree with
+it, an upgrade backfills every historical file for free, and the log stays as
+immutable as it was. `is_transition` is what makes the dual confirmation honest:
+that step writes an entry per department while the file stays put, and only the
+last of them closed it - so *"how long does the dual confirmation take"* is
+measured once per visit and not three times.
+
+The request's `stage_entered_on` is then simply the date of the last entry that
+closed something.
+
+### The verdict
+
+| Verdict | When |
+|---|---|
+| **On Track** | more than the warning period left |
+| **Due Soon** | inside the warning period before the target |
+| **Overdue** | past the target |
+| **Escalated** | past the target plus the escalation delay |
+| **Paused** | returned to the applicant - the Directorate is not holding it |
+| **No Service Level** | a decided or archived file, or a step with no rule |
+
+The verdict is computed from the wall clock on every read and never stored, so a
+list stays honest as the day goes on. It is filterable (*Overdue*, *Due Soon*,
+*Escalated* in the search panel) and the deadline itself - which does not move
+with the clock - is stored and indexed so a queue can be sorted by it.
+
+The **dual confirmation** is the one step with two clocks. Each department has
+its own rule row; each drops off the list as soon as it signs; and the file as a
+whole is exactly as late as its latest party. The badge names both.
+
+### Reminders, escalation and the scheduled jobs
+
+Two crons, both safe to run as often as the Directorate likes because every
+record they write is keyed so a second run over unchanged data writes nothing:
+
+* **service level review** (every 4 h) - puts exactly one *Accreditation
+  deadline* to-do per responsible user, in that user's own language, and updates
+  it in place; raises a level-1 escalation for the department and a level-2
+  escalation to the Accreditation Manager once the escalation delay has passed;
+  closes the escalations of steps the file has since left. The idempotency key is
+  *(file, step, department, level, arrival)* - so a file that comes back to a
+  step it already overran gets a second row rather than silently reusing the
+  first. It walks the whole live caseload, reporting progress to the scheduler
+  rather than capping itself at a fixed batch, because a "first N per run" cap
+  would keep re-examining the head of the queue and never reach the tail.
+* **expiring evidence and certificates** (daily) - refreshes the stored validity
+  columns and reminds the Certifications Division about stale paperwork and the
+  Accreditation Manager about accreditations running out.
+
+Nothing here changes the legal status of anything. An accreditation whose
+certificate has run out is *reported* as expired and lands on the manager's desk;
+it is not silently revoked, and no renewal file is opened on the Directorate's
+behalf. Time passing is not a decision.
+
+### Urgency and lateness are different things
+
+The priority star is the officer's judgement; the service level badge is the
+clock's. A file can be one, the other, or both, and the list and the form let you
+tell which. Colour never carries the message alone: every verdict ships an icon
+and the written verdict beside the hue.
+
+### Process performance
+
+*Monitoring -> Process Performance* (Accreditation Manager and General Director)
+answers four questions, all from the approval log:
+
+* **Where does the time go** - median and p90 wait per step, with the current
+  backlog and how much of it is late. One series, so it is bar rows and not a
+  chart: length carries the magnitude and a hue would carry nothing.
+* **Is it getting faster** - the one chart on the screen: files submitted, office
+  accreditations granted and operational accreditations granted, by month. The
+  same numbers are one click away as a table.
+* **Who is holding what** - per department: files held, how many are late, how
+  many were completed in the period and the median action time.
+* **Where does it go wrong** - returns by step, files returned more than once,
+  and the state of the paperwork in the building.
+
+Percentiles are computed by PostgreSQL. Odoo's aggregate whitelist stops at
+`avg`/`min`/`max`, so `dma.approval.line` extends `_read_group_select` with
+`p50`, `p90` and `p95` through the documented per-model hook - the SQL is
+injected into the query `_search` built, so the record rules still apply to every
+aggregate, and the whole stage table is one query.
+
+**A median of three files is not a fact.** Every distribution ships its sample
+size and anything computed from fewer than five closed visits is flagged, so the
+screen says *"too few files to be a figure"* instead of quietly presenting an
+average as a performance figure.
+
+The three payloads - `get_process_performance_data`, `get_sla_dashboard_data` and
+`get_document_health_data` - are plain structures any screen can render, so
+another dashboard never has to know how a median is computed.
+
+---
+
+## 13. Notes and limitations
 
 * The public verification route (`/dma/verify/<token>`) is intentionally **not**
   implemented here: it belongs to the Directorate's public website, and the
   token is already exposed for it.
 * Documents are stored as `ir.attachment` records; the module does not add a
   virus scan or a retention policy.
-* Multi-company is supported through `company_id` and three global record rules,
+* Multi-company is supported through `company_id` and six global record rules,
   but the process itself assumes a single Directorate.
+* Service levels are measured in **calendar** time, not working hours. Working
+  time would mean depending on the `resource` addon and giving the Directorate a
+  calendar to maintain; until that is asked for, a target of "3 days" means three
+  days.
+* The dossier archive is built in memory, like every ZIP builder in Odoo, and is
+  capped by `dma_accreditation.dossier_max_bytes` (200 MB) for that reason.
 * PDF rendering needs `wkhtmltopdf`; without it the workflow completes and the
   chatter says the PDF could not be produced.

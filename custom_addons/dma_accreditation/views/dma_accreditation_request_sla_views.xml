@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         Everything this release adds to the accreditation request is added
+         through INHERITED views, in this one file. Nothing edits the base
+         arch, so the form, list and search of the module can be reworked by
+         anybody else without a conflict here - and this file can be dropped
+         whole without leaving a mark on them.
+         ================================================================ -->
+
+    <!-- ================================================================
+         FORM - the service level, right under the progress rail, and the
+         dossier as a page of its own.
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_form_sla" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.form.sla</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="inherit_id" ref="dma_accreditation.dma_accreditation_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- The badge belongs next to the rail: the rail says where the
+                 file is, the badge says how long it has been there. -->
+            <xpath expr="//field[@name='progress_payload']" position="after">
+                <field name="sla_payload" nolabel="1" readonly="1"
+                       widget="dma_sla_badge" invisible="not id"/>
+                <field name="escalation_level" invisible="1"/>
+                <field name="open_escalation_count" invisible="1"/>
+            </xpath>
+
+            <!-- A dossier and its escalations are things you open, not fields
+                 you read, so they go in a button box, which the form does not
+                 have yet. The name matters and the class does not: the Odoo 19
+                 form compiler selects the box with `div[name='button_box']`,
+                 and a box named anything else renders as a plain div. -->
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_download_dossier" type="object"
+                            class="oe_stat_button" icon="fa-archive"
+                            invisible="not id">
+                        <field name="dossier_document_count" widget="statinfo"
+                               string="Dossier"/>
+                    </button>
+                    <button name="action_open_blocking_documents" type="object"
+                            class="oe_stat_button" icon="fa-exclamation-triangle"
+                            invisible="blocking_document_count == 0">
+                        <field name="blocking_document_count" widget="statinfo"
+                               string="Blocking"/>
+                    </button>
+                    <button name="action_open_escalations" type="object"
+                            class="oe_stat_button" icon="fa-bell"
+                            invisible="open_escalation_count == 0">
+                        <field name="open_escalation_count" widget="statinfo"
+                               string="Escalations"/>
+                    </button>
+                </div>
+            </xpath>
+
+            <!-- Two more figures on the office accreditation summary. -->
+            <xpath expr="//page[@name='company']" position="after">
+                <page name="dossier" string="Dossier">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="o_form_label">Accreditation dossier</span>
+                            <span class="text-muted">
+                                every piece of evidence and every decision on this file
+                            </span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button name="action_print_dossier_index" type="object"
+                                    string="Print Index" class="btn btn-secondary btn-sm"
+                                    icon="fa-print" invisible="not id"/>
+                            <button name="action_download_dossier" type="object"
+                                    string="Download Dossier" class="btn btn-primary btn-sm"
+                                    icon="fa-download" invisible="not id"/>
+                        </div>
+                    </div>
+                    <field name="dossier_payload" nolabel="1" readonly="1"
+                           widget="dma_dossier" invisible="not id"/>
+                </page>
+
+                <page name="timing" string="Timing">
+                    <group>
+                        <group string="Current Step">
+                            <field name="stage_entered_on" readonly="1"/>
+                            <field name="stage_age_display" readonly="1"/>
+                            <field name="sla_target_days" readonly="1"/>
+                            <field name="sla_due_on" readonly="1"/>
+                            <field name="sla_state" readonly="1"/>
+                            <field name="sla_blocking_role" readonly="1"/>
+                        </group>
+                        <group string="Parallel Confirmation"
+                               invisible="not dual_confirm_started_on">
+                            <field name="dual_confirm_started_on" readonly="1"/>
+                            <field name="finance_pending_hours" widget="float_time"
+                                   readonly="1"/>
+                            <field name="operations_pending_hours" widget="float_time"
+                                   readonly="1"/>
+                            <field name="dual_confirm_first_on" readonly="1"/>
+                            <field name="dual_confirm_second_on" readonly="1"/>
+                            <field name="dual_confirm_hours" widget="float_time"
+                                   readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Accreditation Validity"
+                               invisible="accreditation_validity_state == 'not_issued'">
+                            <field name="accreditation_validity_state" readonly="1"/>
+                            <field name="days_to_accreditation_expiry" readonly="1"/>
+                        </group>
+                        <group string="Documentation">
+                            <field name="blocking_document_count" readonly="1"/>
+                            <field name="expiring_document_count" readonly="1"/>
+                            <field name="expired_document_count" readonly="1"/>
+                            <field name="document_replacement_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Escalations"/>
+                    <field name="escalation_ids" nolabel="1" readonly="1"
+                           invisible="not escalation_ids"/>
+                    <p class="text-muted" invisible="escalation_ids">
+                        No step of this file has overrun its service level.
+                    </p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         LIST - the waiting time and the verdict, off by default except the
+         one column a queue is actually sorted by.
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_list_sla" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.list.sla</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="inherit_id" ref="dma_accreditation.dma_accreditation_request_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pending_group']" position="after">
+                <field name="sla_payload" widget="dma_sla_badge" string="Service Level"
+                       optional="show" nolabel="1"/>
+                <field name="stage_age_display" string="Waiting" optional="hide"/>
+                <field name="sla_due_on" string="Due" optional="hide"/>
+                <field name="blocking_document_count" string="Blocking Docs" optional="hide"/>
+                <field name="escalation_level" string="Escalation" optional="hide"
+                       widget="badge" decoration-danger="escalation_level == '2'"
+                       decoration-warning="escalation_level == '1'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         KANBAN - one line under the department badge. Priority and lateness
+         are different things and stay visually different: the star is the
+         officer's judgement, the badge is the clock's.
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_kanban_sla" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.kanban.sla</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="inherit_id" ref="dma_accreditation.dma_accreditation_request_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pending_group'][@widget='badge']" position="after">
+                <field name="sla_payload" widget="dma_sla_badge" nolabel="1"
+                       options="{'compact': true}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         SEARCH - filter and sort on the clock.
+         ================================================================ -->
+    <record id="dma_accreditation_request_view_search_sla" model="ir.ui.view">
+        <field name="name">dma.accreditation.request.search.sla</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="inherit_id" ref="dma_accreditation.dma_accreditation_request_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_my_turn']" position="after">
+                <separator/>
+                <filter name="filter_sla_overdue" string="Overdue"
+                        domain="[('sla_state', 'in', ('overdue', 'escalated'))]"/>
+                <filter name="filter_sla_warning" string="Due Soon"
+                        domain="[('sla_state', '=', 'warning')]"/>
+                <filter name="filter_sla_escalated" string="Escalated"
+                        domain="[('sla_state', '=', 'escalated')]"/>
+                <filter name="filter_escalation_manager" string="On the Manager's Desk"
+                        domain="[('escalation_level', '=', '2')]"/>
+                <separator/>
+                <filter name="filter_blocked_documents" string="Blocked by Documentation"
+                        domain="[('blocking_document_count', '&gt;', 0), ('state', '=', 'cert_check')]"/>
+                <filter name="filter_expiring_evidence" string="Expiring Evidence"
+                        domain="['|', ('expiring_document_count', '&gt;', 0), ('expired_document_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_accreditation_expiring" string="Accreditation Expiring"
+                        domain="[('accreditation_validity_state', '=', 'expiring')]"/>
+                <filter name="filter_accreditation_expired" string="Accreditation Expired"
+                        domain="[('accreditation_validity_state', '=', 'expired')]"/>
+            </xpath>
+            <!-- A second group-by block, exactly like the one the base search
+                 view already carries: an Odoo 19 search <group> takes no
+                 `string`, the filters inside it name themselves. -->
+            <xpath expr="//search" position="inside">
+                <group>
+                    <filter name="group_waiting_on" string="Waiting On"
+                            context="{'group_by': 'sla_blocking_role'}"/>
+                    <filter name="group_escalation" string="Escalation Level"
+                            context="{'group_by': 'escalation_level'}"/>
+                    <filter name="group_accreditation_validity" string="Accreditation Validity"
+                            context="{'group_by': 'accreditation_validity_state'}"/>
+                    <filter name="group_due" string="Due Date"
+                            context="{'group_by': 'sla_due_on:week'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         The overdue queue: what a manager opens first thing on Sunday.
+         ================================================================ -->
+    <record id="action_dma_overdue_requests" model="ir.actions.act_window">
+        <field name="name">Overdue Files</field>
+        <field name="res_model">dma.accreditation.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="dma_accreditation.dma_accreditation_request_view_list_queue"/>
+        <field name="search_view_id" ref="dma_accreditation.dma_accreditation_request_view_search"/>
+        <field name="domain">[('sla_state', 'in', ('overdue', 'escalated'))]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                Nothing has overrun its service level.
+            </p><p>
+                A file appears here once it has been on its current step longer
+                than the target set in <b>Configuration &gt; Service Levels</b>.
+                The clock is measured from the moment the file reached the step,
+                read off the approval log, and it stops the moment the file
+                moves on - or is returned to the applicant, whose time is not
+                the Directorate's.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_dma_process_performance" model="ir.actions.client">
+        <field name="name">Process Performance</field>
+        <field name="tag">dma_accreditation_performance</field>
+    </record>
+
+</odoo>

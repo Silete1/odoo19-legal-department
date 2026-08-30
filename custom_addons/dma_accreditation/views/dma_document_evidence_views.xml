@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         REPLACEMENT WIZARD
+         The dialog the checklist offers instead of silently swapping a file:
+         the new document, what it says about itself, and why the old one is
+         gone. The reason lands on the version being superseded.
+         ================================================================ -->
+    <record id="dma_document_replacement_view_form" model="ir.ui.view">
+        <field name="name">dma.document.replacement.form</field>
+        <field name="model">dma.document.replacement</field>
+        <field name="arch" type="xml">
+            <form string="Replace Document">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="type_id" readonly="1"/></h1>
+                        <h4 class="text-muted">
+                            <field name="request_id" readonly="1" class="oe_inline"/>
+                        </h4>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="current_review == 'pending'">
+                        <i class="fa fa-exclamation-triangle" role="img" aria-hidden="true"/>
+                        This document has already been reviewed. Replacing it files the
+                        current version away and sends the document back to the
+                        Certifications Division: a sign-off is about the files it was
+                        given on.
+                    </div>
+                    <group>
+                        <group string="New Document">
+                            <field name="document_id" invisible="1"/>
+                            <field name="current_version" readonly="1"/>
+                            <field name="current_review" readonly="1"/>
+                            <field name="has_validity" invisible="1"/>
+                            <field name="attachment_ids" widget="many2many_binary"
+                                   string="New Files"/>
+                        </group>
+                        <group string="What the Document Says">
+                            <field name="reference" placeholder="e.g. 2026/INS/4471"/>
+                            <field name="issuer" placeholder="e.g. Iraqi Insurance Company"/>
+                            <field name="issue_date"/>
+                            <field name="expiry_date"
+                                   placeholder="As printed on the document"/>
+                        </group>
+                    </group>
+                    <!-- Separator rather than a group: a group keeps the label
+                         column, and a reason typed into a third of the dialog
+                         width is a reason nobody writes. -->
+                    <separator string="Reason for Replacement"/>
+                    <field name="reason" nolabel="1"
+                           placeholder="Why the previous version was not accepted, or what changed."/>
+                </sheet>
+                <footer>
+                    <button name="action_replace" type="object" string="Replace"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         DOCUMENT TYPES - the validity policy
+         ================================================================ -->
+    <record id="dma_document_type_view_form_validity" model="ir.ui.view">
+        <field name="name">dma.document.type.form.validity</field>
+        <field name="model">dma.document.type</field>
+        <field name="inherit_id" ref="dma_accreditation.dma_document_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='required_default']" position="after">
+                <field name="code" placeholder="e.g. insurance"/>
+            </xpath>
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="has_validity"/>
+                <field name="expiry_warning_days" invisible="not has_validity"/>
+                <field name="blocks_on_expiry" invisible="not has_validity"/>
+            </xpath>
+            <!-- Anchored on the sheet rather than on the Description group:
+                 Odoo 19 refuses `string` as an inheritance selector, and a
+                 translated label would be a poor anchor anyway. -->
+            <xpath expr="//sheet" position="inside">
+                <div class="alert alert-info" role="alert" invisible="not has_validity">
+                    The Certifications Division records the expiry date printed on this
+                    document. The module never assumes a duration: how long a document of
+                    this kind stays valid is a matter for the issuer and for the law.
+                    <b invisible="not blocks_on_expiry">
+                        An expired copy of this document blocks the office accreditation.
+                    </b>
+                    <b invisible="blocks_on_expiry">
+                        An expired copy is reported but does not block the office
+                        accreditation.
+                    </b>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="dma_document_type_view_list_validity" model="ir.ui.view">
+        <field name="name">dma.document.type.list.validity</field>
+        <field name="model">dma.document.type</field>
+        <field name="inherit_id" ref="dma_accreditation.dma_document_type_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='required_default']" position="after">
+                <field name="has_validity" optional="show"/>
+                <field name="expiry_warning_days" optional="hide"/>
+                <field name="blocks_on_expiry" optional="hide"/>
+                <field name="code" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         EVIDENCE - the standalone screen of the checklist lines.
+         Its own action rather than an edit of the request form, so the
+         Certifications Division can work through everything that is wrong in
+         the building rather than one file at a time.
+         ================================================================ -->
+    <record id="dma_request_document_view_list_evidence" model="ir.ui.view">
+        <field name="name">dma.request.document.list.evidence</field>
+        <field name="model">dma.request.document</field>
+        <field name="arch" type="xml">
+            <list string="Accreditation Evidence" create="false"
+                  default_order="request_id desc, sequence"
+                  decoration-success="review_result == 'accepted' and validity_state != 'expired'"
+                  decoration-danger="review_result in ('missing', 'invalid') or validity_state == 'expired'"
+                  decoration-warning="validity_state == 'expiring'"
+                  decoration-muted="not is_required">
+                <field name="request_id"/>
+                <field name="type_id"/>
+                <field name="is_required" string="Req." optional="show"/>
+                <field name="is_provided" widget="boolean_toggle" optional="show"/>
+                <field name="attachment_count" string="Files" optional="show"/>
+                <field name="version" optional="show"/>
+                <field name="review_result" widget="badge"
+                       decoration-success="review_result == 'accepted'"
+                       decoration-danger="review_result in ('missing', 'invalid')"
+                       decoration-warning="review_result == 'pending'"/>
+                <!-- Blank where there is nothing to say. Most accreditation
+                     prerequisites do not expire, and a grey "No Expiry" badge
+                     on sixty rows is noise that hides the three that matter. -->
+                <field name="validity_state" widget="badge" optional="show"
+                       invisible="validity_state == 'no_expiry'"
+                       decoration-success="validity_state == 'valid'"
+                       decoration-warning="validity_state == 'expiring'"
+                       decoration-danger="validity_state == 'expired'"/>
+                <field name="expiry_date" optional="show"/>
+                <field name="reviewed_by" optional="hide"/>
+                <field name="reviewed_on" optional="hide"/>
+                <field name="blocking_reason" string="Why" optional="show"/>
+                <field name="is_blocking" optional="hide" widget="boolean_toggle"/>
+                <field name="superseded_count" string="Replaced" optional="hide"/>
+                <button name="action_accept" type="object" string="Accept"
+                        icon="fa-check" title="Mark provided and accepted"
+                        invisible="review_result == 'accepted'"
+                        groups="dma_accreditation.group_dma_cert_officer"/>
+                <button name="action_mark_invalid" type="object" string="Invalid"
+                        icon="fa-ban" title="Reject the evidence as invalid"
+                        invisible="review_result == 'invalid'"
+                        groups="dma_accreditation.group_dma_cert_officer"/>
+                <button name="action_open_replacement_wizard" type="object"
+                        string="Replace" icon="fa-refresh"
+                        title="File the current version away and attach a replacement"/>
+                <button name="action_open_version_history" type="object"
+                        string="History" icon="fa-history"
+                        title="Previous versions of this document"
+                        invisible="superseded_count == 0"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dma_request_document_view_form_evidence" model="ir.ui.view">
+        <field name="name">dma.request.document.form.evidence</field>
+        <field name="model">dma.request.document</field>
+        <field name="arch" type="xml">
+            <form string="Accreditation Document">
+                <header>
+                    <button name="action_accept" type="object" string="Accept"
+                            class="btn-primary" invisible="review_result == 'accepted'"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <button name="action_mark_invalid" type="object" string="Invalid"
+                            invisible="review_result == 'invalid'"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <button name="action_mark_missing" type="object" string="Missing"
+                            invisible="review_result == 'missing'"
+                            groups="dma_accreditation.group_dma_cert_officer"/>
+                    <button name="action_open_replacement_wizard" type="object"
+                            string="Replace Document"/>
+                    <field name="review_result" widget="statusbar"
+                           statusbar_visible="pending,accepted"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Expired" bg_color="text-bg-danger"
+                            invisible="validity_state != 'expired'"/>
+                    <div class="oe_title">
+                        <h1><field name="type_id" readonly="1"/></h1>
+                        <h4 class="text-muted">
+                            <field name="request_id" readonly="1" class="oe_inline"/>
+                        </h4>
+                    </div>
+                    <div class="alert alert-warning o_dma_duplicate_notice" role="alert"
+                         invisible="not duplicate_warning">
+                        <i class="fa fa-files-o" role="img" title="Duplicate file"/>
+                        <field name="duplicate_warning" nolabel="1" readonly="1"
+                               class="oe_inline mb-0"/>
+                        <div class="text-muted">
+                            The same file serving two requirements is allowed; it is
+                            flagged so the reviewer decides deliberately.
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Status">
+                            <field name="is_required"
+                                   groups="dma_accreditation.group_dma_cert_officer"/>
+                            <field name="is_provided" widget="boolean_toggle"/>
+                            <field name="version" readonly="1"/>
+                            <field name="reviewed_by" readonly="1"/>
+                            <field name="reviewed_on" readonly="1"/>
+                            <field name="is_blocking" invisible="1"/>
+                            <field name="blocking_reason" readonly="1"
+                                   invisible="not is_blocking"/>
+                        </group>
+                        <group string="The Document">
+                            <field name="has_validity" invisible="1"/>
+                            <field name="duplicate_of_id" invisible="1"/>
+                            <field name="reference"/>
+                            <field name="issuer"/>
+                            <field name="issue_date"/>
+                            <field name="expiry_date" invisible="not has_validity"/>
+                            <field name="validity_state" widget="badge" readonly="1"
+                                   invisible="not has_validity"
+                                   decoration-success="validity_state == 'valid'"
+                                   decoration-warning="validity_state == 'expiring'"
+                                   decoration-danger="validity_state == 'expired'"/>
+                            <field name="days_to_expiry" readonly="1"
+                                   invisible="validity_state in ('no_expiry', False)"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="files" string="Files">
+                            <field name="attachment_ids" widget="many2many_binary"
+                                   nolabel="1"/>
+                        </page>
+                        <page name="history" string="Previous Versions"
+                              invisible="superseded_count == 0">
+                            <field name="superseded_count" invisible="1"/>
+                            <field name="submission_ids" nolabel="1" readonly="1"/>
+                        </page>
+                        <page name="notes" string="Notes">
+                            <field name="notes" nolabel="1"
+                                   placeholder="What the Certifications Division found."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dma_request_document_view_search_evidence" model="ir.ui.view">
+        <field name="name">dma.request.document.search.evidence</field>
+        <field name="model">dma.request.document</field>
+        <field name="arch" type="xml">
+            <search string="Accreditation Evidence">
+                <field name="request_id"/>
+                <field name="type_id"/>
+                <field name="reference"/>
+                <field name="issuer"/>
+                <filter name="filter_blocking" string="Blocking the Accreditation"
+                        domain="[('is_blocking', '=', True)]"/>
+                <filter name="filter_pending" string="Waiting for Review"
+                        domain="[('is_provided', '=', True), ('review_result', '=', 'pending')]"/>
+                <filter name="filter_invalid" string="Invalid"
+                        domain="[('review_result', '=', 'invalid')]"/>
+                <filter name="filter_missing" string="Missing"
+                        domain="[('review_result', '=', 'missing')]"/>
+                <separator/>
+                <filter name="filter_expiring" string="Expiring Soon"
+                        domain="[('validity_state', '=', 'expiring')]"/>
+                <filter name="filter_expired" string="Expired"
+                        domain="[('validity_state', '=', 'expired')]"/>
+                <separator/>
+                <filter name="filter_replaced" string="Replaced at Least Once"
+                        domain="[('superseded_count', '&gt;', 0)]"/>
+                <filter name="filter_open_files" string="Live Files Only"
+                        domain="[('request_id.state', 'not in', ('authorized', 'rejected'))]"/>
+                <group>
+                    <filter name="group_type" string="Document Type"
+                            context="{'group_by': 'type_id'}"/>
+                    <filter name="group_request" string="Request"
+                            context="{'group_by': 'request_id'}"/>
+                    <filter name="group_review" string="Review Result"
+                            context="{'group_by': 'review_result'}"/>
+                    <filter name="group_validity" string="Validity"
+                            context="{'group_by': 'validity_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dma_request_document_evidence" model="ir.actions.act_window">
+        <field name="name">Accreditation Evidence</field>
+        <field name="res_model">dma.request.document</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="dma_request_document_view_list_evidence"/>
+        <field name="search_view_id" ref="dma_request_document_view_search_evidence"/>
+        <field name="context">{'search_default_filter_open_files': 1, 'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No document matches this filter.
+            </p><p>
+                Every prerequisite of every accreditation file, in one place.
+                Filter on <b>Blocking the Accreditation</b> to see exactly what
+                is holding files up, or on <b>Expiring Soon</b> to catch an
+                insurance policy before it lapses.
+            </p>
+        </field>
+    </record>
+
+</odoo>

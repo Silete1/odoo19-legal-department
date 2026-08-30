@@ -40,5 +40,30 @@
             <field name="domain_force">[('state', '=', 'draft')]</field>
         </record>
 
+        <!-- The escalation log follows the file it belongs to, so the same
+             company boundary that applies to the request applies to it. -->
+        <record id="dma_sla_escalation_company_rule" model="ir.rule">
+            <field name="name">Accreditation escalation: multi-company</field>
+            <field name="model_id" ref="model_dma_sla_escalation"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('request_id.company_id', '=', False), ('request_id.company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="dma_document_submission_company_rule" model="ir.rule">
+            <field name="name">Document version: multi-company</field>
+            <field name="model_id" ref="model_dma_document_submission"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('request_id.company_id', '=', False), ('request_id.company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!-- A directorate wide service level (no company) applies everywhere;
+             a company specific one is only visible to that company. -->
+        <record id="dma_sla_rule_company_rule" model="ir.rule">
+            <field name="name">Service level: multi-company</field>
+            <field name="model_id" ref="model_dma_sla_rule"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
     </data>
 </odoo>

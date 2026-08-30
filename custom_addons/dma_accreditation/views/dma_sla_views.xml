@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         SERVICE LEVELS
+         A single editable table: Step | Department | Target | Warn | Escalate.
+         The whole configuration of the time control layer is meant to fit on
+         one screen and to be readable by an Accreditation Manager who is not
+         an Odoo administrator.
+         ================================================================ -->
+    <record id="dma_sla_rule_view_list" model="ir.ui.view">
+        <field name="name">dma.sla.rule.list</field>
+        <field name="model">dma.sla.rule</field>
+        <field name="arch" type="xml">
+            <list string="Service Levels" editable="bottom" default_order="sequence, id">
+                <field name="sequence" widget="handle"/>
+                <field name="state"/>
+                <field name="role"/>
+                <!-- No column sum: adding up the targets of thirteen different
+                     steps produces a number that means nothing. -->
+                <field name="target_days"/>
+                <field name="warning_days"/>
+                <field name="escalation_days"/>
+                <field name="note" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dma_sla_rule_view_form" model="ir.ui.view">
+        <field name="name">dma.sla.rule.form</field>
+        <field name="model">dma.sla.rule</field>
+        <field name="arch" type="xml">
+            <form string="Service Level">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <group>
+                        <group string="Step">
+                            <field name="state"/>
+                            <field name="role"/>
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Delays">
+                            <field name="target_days"/>
+                            <field name="warning_days"/>
+                            <field name="escalation_days"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        The file is <b>due soon</b> for the last
+                        <field name="warning_days" nolabel="1" readonly="1" class="oe_inline"/>
+                        day(s) before the target, <b>overdue</b> once the target has passed, and
+                        <b>escalated</b> to the Accreditation Manager
+                        <field name="escalation_days" nolabel="1" readonly="1" class="oe_inline"/>
+                        day(s) after that. The clock starts the moment the file reaches the step
+                        and is read off the approval log, so it can never disagree with the
+                        workflow.
+                    </div>
+                    <group string="Note">
+                        <field name="note" nolabel="1"
+                               placeholder="Which article of the service charter this delay comes from."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dma_sla_rule_view_search" model="ir.ui.view">
+        <field name="name">dma.sla.rule.search</field>
+        <field name="model">dma.sla.rule</field>
+        <field name="arch" type="xml">
+            <search string="Service Levels">
+                <field name="state"/>
+                <field name="role"/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_role" string="Department" context="{'group_by': 'role'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dma_sla_rule" model="ir.actions.act_window">
+        <field name="name">Service Levels</field>
+        <field name="res_model">dma.sla.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="dma_sla_rule_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Set how long each step of the accreditation may take.
+            </p><p>
+                One row per step and responsible department. The <b>target</b> is
+                how long the step may take from the moment the file reaches it;
+                the file shows as <b>due soon</b> for the warning period before
+                that, as <b>overdue</b> once it has passed, and is escalated to
+                the Accreditation Manager after the escalation delay.
+            </p><p>
+                The dual confirmation carries one row per department, because
+                Finance and Operations are answerable for it at the same time.
+                A file returned to the applicant has no service level: the
+                Directorate is not holding it, so its clock is paused.
+            </p>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         ESCALATIONS
+         An operational log, not an incident management system: what overran,
+         with whom, and whether anybody has picked it up.
+         ================================================================ -->
+    <record id="dma_sla_escalation_view_list" model="ir.ui.view">
+        <field name="name">dma.sla.escalation.list</field>
+        <field name="model">dma.sla.escalation</field>
+        <field name="arch" type="xml">
+            <list string="Escalations" create="false" delete="false"
+                  default_order="triggered_on desc"
+                  decoration-danger="level == '2' and is_open"
+                  decoration-warning="level == '1' and is_open"
+                  decoration-muted="not is_open">
+                <field name="triggered_on"/>
+                <field name="request_id"/>
+                <field name="partner_id" optional="show"/>
+                <field name="state" string="Step"/>
+                <field name="role"/>
+                <field name="level" widget="badge"
+                       decoration-danger="level == '2'"
+                       decoration-warning="level == '1'"/>
+                <field name="overdue_hours" string="Overdue (h)" optional="hide"
+                       widget="float_time"/>
+                <field name="reason" optional="show"/>
+                <field name="acknowledged_by" optional="show"/>
+                <field name="resolved_on" optional="show"/>
+                <field name="is_open" optional="hide" widget="boolean_toggle"/>
+                <button name="action_acknowledge" type="object" string="Acknowledge"
+                        icon="fa-hand-paper-o" title="Take this file on"
+                        invisible="acknowledged_on or not is_open"/>
+                <button name="action_open_request" type="object" string="Open"
+                        icon="fa-folder-open-o" title="Open the accreditation file"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dma_sla_escalation_view_form" model="ir.ui.view">
+        <field name="name">dma.sla.escalation.form</field>
+        <field name="model">dma.sla.escalation</field>
+        <field name="arch" type="xml">
+            <form string="Escalation" create="false" delete="false">
+                <header>
+                    <button name="action_acknowledge" type="object" string="Acknowledge"
+                            class="btn-primary" invisible="acknowledged_on or not is_open"/>
+                    <button name="action_open_request" type="object"
+                            string="Open the Accreditation File"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Resolved" bg_color="text-bg-success"
+                            invisible="is_open"/>
+                    <div class="oe_title">
+                        <h1><field name="request_id" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Overrun">
+                            <field name="state" string="Step" readonly="1"/>
+                            <field name="role" readonly="1"/>
+                            <field name="level" widget="badge" readonly="1"
+                                   decoration-danger="level == '2'"
+                                   decoration-warning="level == '1'"/>
+                            <field name="overdue_hours" widget="float_time" readonly="1"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="stage_entered_on" readonly="1"/>
+                            <field name="due_on" readonly="1"/>
+                            <field name="triggered_on" readonly="1"/>
+                            <field name="resolved_on" readonly="1"/>
+                            <field name="is_open" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Reason">
+                        <field name="reason" nolabel="1" readonly="1"/>
+                    </group>
+                    <group string="Acknowledgement">
+                        <field name="acknowledged_by" readonly="1"/>
+                        <field name="acknowledged_on" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dma_sla_escalation_view_search" model="ir.ui.view">
+        <field name="name">dma.sla.escalation.search</field>
+        <field name="model">dma.sla.escalation</field>
+        <field name="arch" type="xml">
+            <search string="Escalations">
+                <field name="request_id"/>
+                <field name="partner_id"/>
+                <filter name="filter_open" string="Open" domain="[('is_open', '=', True)]"/>
+                <filter name="filter_unacknowledged" string="Not Acknowledged"
+                        domain="[('acknowledged_on', '=', False), ('is_open', '=', True)]"/>
+                <separator/>
+                <filter name="filter_manager" string="Escalated to the Manager"
+                        domain="[('level', '=', '2')]"/>
+                <group>
+                    <filter name="group_state" string="Step" context="{'group_by': 'state'}"/>
+                    <filter name="group_role" string="Department" context="{'group_by': 'role'}"/>
+                    <filter name="group_level" string="Level" context="{'group_by': 'level'}"/>
+                    <filter name="group_month" string="Raised"
+                            context="{'group_by': 'triggered_on:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_dma_sla_escalation" model="ir.actions.act_window">
+        <field name="name">Escalations</field>
+        <field name="res_model">dma.sla.escalation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="dma_sla_escalation_view_search"/>
+        <field name="context">{'search_default_filter_open': 1, 'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No step has overrun its service level.
+            </p><p>
+                A file that stays on a step past its target is recorded here
+                once for the department that owns it, and a second time if it
+                is still there after the escalation delay - that second entry
+                is the one the Accreditation Manager is asked to look at.
+                Entries close by themselves when the file moves on.
+            </p>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         PREVIOUS VERSIONS OF A DOCUMENT
+         ================================================================ -->
+    <record id="dma_document_submission_view_list" model="ir.ui.view">
+        <field name="name">dma.document.submission.list</field>
+        <field name="model">dma.document.submission</field>
+        <field name="arch" type="xml">
+            <list string="Previous Versions" create="false" edit="false" delete="false"
+                  default_order="version desc"
+                  decoration-success="review_result == 'accepted'"
+                  decoration-danger="review_result in ('missing', 'invalid')">
+                <field name="version"/>
+                <field name="type_id" optional="hide"/>
+                <field name="attachment_count" string="Files"/>
+                <field name="review_result" widget="badge"
+                       decoration-success="review_result == 'accepted'"
+                       decoration-danger="review_result in ('missing', 'invalid')"
+                       decoration-warning="review_result == 'pending'"/>
+                <field name="reviewed_by" optional="show"/>
+                <field name="expiry_date" optional="hide"/>
+                <field name="superseded_on"/>
+                <field name="superseded_by" optional="show"/>
+                <field name="replacement_reason"/>
+                <button name="action_open_files" type="object" string="Files"
+                        icon="fa-paperclip" title="Open the files of this version"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dma_document_submission_view_form" model="ir.ui.view">
+        <field name="name">dma.document.submission.form</field>
+        <field name="model">dma.document.submission</field>
+        <field name="arch" type="xml">
+            <form string="Document Version" create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="type_id" readonly="1"/></h1>
+                        <h3 class="text-muted">
+                            Version <field name="version" nolabel="1" readonly="1" class="oe_inline"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Review at the time">
+                            <field name="review_result" widget="badge" readonly="1"
+                                   decoration-success="review_result == 'accepted'"
+                                   decoration-danger="review_result in ('missing', 'invalid')"
+                                   decoration-warning="review_result == 'pending'"/>
+                            <field name="reviewed_by" readonly="1"/>
+                            <field name="reviewed_on" readonly="1"/>
+                        </group>
+                        <group string="The document">
+                            <field name="reference" readonly="1"/>
+                            <field name="issuer" readonly="1"/>
+                            <field name="issue_date" readonly="1"/>
+                            <field name="expiry_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Replaced">
+                        <group>
+                            <field name="superseded_on" readonly="1"/>
+                            <field name="superseded_by" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Reason for Replacement">
+                        <field name="replacement_reason" nolabel="1" readonly="1"/>
+                    </group>
+                    <group string="Files">
+                        <field name="attachment_ids" nolabel="1" widget="many2many_binary"
+                               readonly="1"/>
+                    </group>
+                    <group string="Notes" invisible="not notes">
+                        <field name="notes" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
