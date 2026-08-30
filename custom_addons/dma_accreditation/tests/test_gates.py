@@ -68,7 +68,7 @@ class TestAccreditationGates(DmaAccreditationCommon):
             self._as(request, self.user_cert).action_grant_office_accreditation()
 
     def test_04_a_document_cannot_be_accepted_before_being_provided(self):
-        request = self._new_request()
+        request = self._drive_to_cert_check(self._new_request())
         with self.assertRaises(ValidationError):
             request.document_ids[0].with_user(self.user_cert).write({
                 "review_result": "accepted", "is_provided": False,

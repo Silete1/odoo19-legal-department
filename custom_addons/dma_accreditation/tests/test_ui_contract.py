@@ -214,7 +214,7 @@ class TestAccreditationUiContract(DmaAccreditationCommon):
         self.assertEqual(request.state, "gd_review")
         line = request.document_ids[0]
         line.with_user(self.user_reception).write({"is_provided": True})
-        with self.assertRaises(UserError):
+        with self.assertRaises(ValidationError):
             line.with_user(self.user_cert).action_accept()
         self.assertFalse(request.checklist_complete)
 
@@ -235,18 +235,22 @@ class TestAccreditationUiContract(DmaAccreditationCommon):
         })
         line.with_user(self.user_cert).action_mark_invalid()
         self.assertEqual(line.line_status, "invalid")
-        # "Missing" needs no note: never handed over says itself.
-        line.with_user(self.user_cert).write({"notes": False})
+        # "Missing" needs no note: never handed over says itself. The note
+        # can only be cleared once the verdict it explains is gone, which is
+        # the constraint doing its job.
+        with self.assertRaises(ValidationError):
+            line.with_user(self.user_cert).write({"notes": False})
         line.with_user(self.user_cert).action_mark_missing()
+        line.with_user(self.user_cert).write({"notes": False})
         self.assertEqual(line.line_status, "missing")
 
     def test_11d_the_checklist_of_a_closed_file_is_history(self):
         request = self._new_request()
         self._drive_to_authorized(request)
         line = request.document_ids[0]
-        with self.assertRaises(UserError):
+        with self.assertRaises(ValidationError):
             line.with_user(self.user_cert).write({"is_provided": False})
-        with self.assertRaises(UserError):
+        with self.assertRaises(ValidationError):
             line.with_user(self.user_reception).write({"notes": "late note"})
 
     def test_12_the_checklist_cannot_be_reloaded_on_a_closed_file(self):
@@ -271,7 +275,7 @@ class TestAccreditationUiContract(DmaAccreditationCommon):
         request = self._new_request()
         line = request.document_ids[0]
         self.assertEqual(line.attachment_count, 0)
-        attachment = self.env["ir.attachment"].create({
+        attachment = self.env["ir.attachment"].with_user(self.user_reception).create({
             "name": "registration.pdf", "type": "binary", "raw": b"%PDF-1.4\n",
         })
         line.with_user(self.user_reception).write(
@@ -435,9 +439,13 @@ class TestAccreditationUiContract(DmaAccreditationCommon):
             "returning from the Certifications check sends the file back to Legal, "
             "which is the fact the reviewer is deciding about",
         )
+        promised = wizard.resume_state
         wizard.action_confirm()
         self.assertEqual(request.state, "returned")
-        self.assertEqual(request.return_to_state, wizard.resume_state)
+        self.assertEqual(
+            request.return_to_state, promised,
+            "the dialog promised the step the file actually resumes at",
+        )
 
     # ------------------------------------------------------------------
     # Every view the module ships still compiles
@@ -481,13 +489,6 @@ class TestAccreditationUiContract(DmaAccreditationCommon):
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
-    def _drive_to_cert_check(self, request):
-        self._as(request, self.user_reception).action_submit()
-        self._as(request, self.user_reception).action_send_to_general_director()
-        self._as(request, self.user_gd).action_gd_accept()
-        self._as(request, self.user_legal).action_legal_approve()
-        return request
-
     def _drive_to_authorized(self, request):
         self._drive_to_dual_confirm(request)
         self._as(request, self.user_finance).action_finance_confirm()

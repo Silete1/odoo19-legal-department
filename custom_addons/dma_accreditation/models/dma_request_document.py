@@ -1,6 +1,6 @@
 # Part of the DMA Accreditation module. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models
-from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.exceptions import AccessError, ValidationError
 
 from .dma_constants import state_label
 
@@ -191,7 +191,7 @@ class DmaRequestDocument(models.Model):
         early = self.filtered(lambda line: line.request_id.state != "cert_check")
         if early:
             request = early[0].request_id
-            raise UserError(self.env._(
+            raise ValidationError(self.env._(
                 "A prerequisite can only be verified while the file is with the "
                 "Certifications Division. %(request)s is at “%(state)s”.",
                 request=request.name,
@@ -207,7 +207,7 @@ class DmaRequestDocument(models.Model):
         )
         if closed:
             request = closed[0].request_id
-            raise UserError(self.env._(
+            raise ValidationError(self.env._(
                 "The prerequisites of %(request)s can no longer be changed: the "
                 "file is closed (%(state)s).",
                 request=request.name,

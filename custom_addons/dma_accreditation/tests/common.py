@@ -90,11 +90,20 @@ class DmaAccreditationCommon(TransactionCase):
         request.sudo().write({"sop_attachment_ids": [(6, 0, attachment.ids)]})
         return attachment
 
-    def _drive_to_office_granted(self, request):
+    def _drive_to_cert_check(self, request):
+        """Put the file on the Certifications desk.
+
+        Verifying a prerequisite is only legal there, so any test about the
+        checklist has to say where the file is standing.
+        """
         self._as(request, self.user_reception).action_submit()
         self._as(request, self.user_reception).action_send_to_general_director()
         self._as(request, self.user_gd).action_gd_accept()
         self._as(request, self.user_legal).action_legal_approve()
+        return request
+
+    def _drive_to_office_granted(self, request):
+        self._drive_to_cert_check(request)
         self._accept_all_documents(request)
         self._as(request, self.user_cert).action_grant_office_accreditation()
         return request

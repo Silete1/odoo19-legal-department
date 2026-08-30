@@ -184,7 +184,7 @@ class TestAccreditationSecurity(DmaAccreditationCommon):
 
     def test_07e_checklist_verification_is_reserved_to_certifications(self):
         """Reception assembles the file; only Certifications decides."""
-        request = self._new_request()
+        request = self._drive_to_cert_check(self._new_request())
         line = request.document_ids[0]
         # Reception may attach and tick "provided"...
         line.with_user(self.user_reception).write({"is_provided": True})
