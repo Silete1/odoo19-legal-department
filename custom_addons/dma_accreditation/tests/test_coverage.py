@@ -505,9 +505,24 @@ class TestAccreditationCoverage(DmaAccreditationCommon):
         data = self.env["dma.accreditation.request"].with_user(
             self.user_gd
         ).get_dashboard_data()
-        self.assertEqual(len(data["pipeline"]), 13)
+        # Twelve, not thirteen: `authorized` is where files come to rest, not
+        # a step they pass through. Leaving it in meant the chart accumulated
+        # every organisation ever accredited, so one bar was full and the other
+        # eleven were slivers. Outcomes are reported separately.
+        self.assertEqual(len(data["pipeline"]), 12)
         self.assertEqual(
             [step["key"] for step in data["pipeline"]][:2], ["draft", "submitted"],
+        )
+        self.assertNotIn(
+            "authorized", [step["key"] for step in data["pipeline"]],
+            "a finished file is not standing at a step",
+        )
+        self.assertEqual(
+            data["totals"]["authorized"],
+            self.env["dma.accreditation.request"].with_user(
+                self.user_gd
+            ).search_count([("state", "=", "authorized")]),
+            "the accredited count moves to the ledger rather than disappearing",
         )
         by_key = {step["key"]: step["count"] for step in data["pipeline"]}
         self.assertGreaterEqual(by_key["gd_review"], 1)
@@ -529,10 +544,20 @@ class TestAccreditationCoverage(DmaAccreditationCommon):
 
     def test_24_the_dashboard_flags_expiring_accreditations(self):
         request = self._drive_to("authorized")
-        self.assertFalse(
-            self.env["dma.accreditation.request"].with_user(
-                self.user_manager
-            ).get_dashboard_data()["expiring"],
+
+        def expiring_ids():
+            return [
+                row["id"] for row in self.env["dma.accreditation.request"].with_user(
+                    self.user_manager
+                ).get_dashboard_data()["expiring"]
+            ]
+
+        # Scoped to the record under test. The demo database now ships a
+        # generated caseload whose accreditations legitimately fall inside the
+        # ninety-day horizon, so asserting the whole list is empty would only
+        # be testing how little demo data there is.
+        self.assertNotIn(
+            request.id, expiring_ids(),
             "a year-long accreditation is not expiring yet",
         )
         today = fields.Date.context_today(request)
@@ -547,11 +572,14 @@ class TestAccreditationCoverage(DmaAccreditationCommon):
                 expiring = self.env["dma.accreditation.request"].with_user(
                     self.user_manager
                 ).get_dashboard_data()["expiring"]
-                self.assertEqual(len(expiring), 1)
-                self.assertEqual(expiring[0]["level"], level)
-                self.assertEqual(expiring[0]["id"], request.id)
+                # Picked out by id rather than by position: the demo database
+                # ships a caseload of its own, and this test is about one
+                # record's level, not about how many others are expiring.
+                row = next((e for e in expiring if e["id"] == request.id), None)
+                self.assertIsNotNone(row, "the record under test is listed")
+                self.assertEqual(row["level"], level)
                 self.assertTrue(
-                    expiring[0]["level_label"],
+                    row["level_label"],
                     "the level is written out, never colour alone",
                 )
 
