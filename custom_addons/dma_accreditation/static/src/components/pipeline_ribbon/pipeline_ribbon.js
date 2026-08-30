@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 
 /**
@@ -39,10 +39,6 @@ export class PipelineRibbon extends Component {
         empty: _t("No file is in process."),
     };
 
-    setup() {
-        this.state = useState({ open: false });
-    }
-
     get label() {
         return PipelineRibbon.labels;
     }
@@ -72,9 +68,5 @@ export class PipelineRibbon extends Component {
                 ? FLOOR
                 : s.width - (spare ? (owed * (s.width - FLOOR)) / spare : 0),
         }));
-    }
-
-    toggle() {
-        this.state.open = !this.state.open;
     }
 }

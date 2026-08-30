@@ -6,9 +6,10 @@
             <header class="o_dma_card_head">
                 <h3 class="o_dma_card_title" t-esc="label.title"/>
                 <span class="o_dma_card_meta">
-                    <b dir="ltr" t-esc="props.total"/> <t t-esc="label.inProcess"/>
+                    <b dir="ltr" t-esc="props.total"/><t>&#160;</t><t t-esc="label.inProcess"/>
                     <t t-if="props.withApplicant">
-                        · <b dir="ltr" t-esc="props.withApplicant"/>
+                        <t>&#160;&#183;&#160;</t>
+                        <b dir="ltr" t-esc="props.withApplicant"/><t>&#160;</t>
                         <t t-esc="label.withApplicant"/>
                     </t>
                 </span>
@@ -41,8 +42,11 @@
                 <!-- The canvas-free equivalent of a data table: the same figures
                      as text, for a screen reader, a printer, and anyone who
                      wants the exact number rather than the sweep. -->
-                <details class="o_dma_details" t-att-open="state.open or null">
-                    <summary t-on-click="() => this.toggle()" t-esc="label.showTable"/>
+                <!-- No `open` attribute: HTML opens a details on the
+                     attribute being present, whatever its value, and the
+                     element tracks its own state perfectly well. -->
+                <details class="o_dma_details">
+                    <summary t-esc="label.showTable"/>
                     <table class="table table-sm o_dma_table">
                         <thead>
                             <tr>

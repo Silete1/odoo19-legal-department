@@ -32,4 +32,16 @@ export class KpiTile extends Component {
             this.props.onOpen();
         }
     }
+
+    /**
+     * A div carrying role="button" has to answer the keyboard itself.
+     * Written as a method rather than inline: the OWL template compiler takes
+     * an expression, not a statement block.
+     */
+    onKeydown(ev) {
+        if (ev.key === "Enter" || ev.key === " ") {
+            ev.preventDefault();
+            this.onClick();
+        }
+    }
 }

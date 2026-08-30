@@ -6,7 +6,7 @@
              t-att-role="clickable ? 'button' : null"
              t-att-tabindex="clickable ? 0 : null"
              t-on-click="() => this.onClick()"
-             t-on-keydown="(ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); this.onClick(); } }">
+             t-on-keydown="onKeydown">
             <div class="o_dma_tile_head">
                 <i t-if="props.icon" t-attf-class="fa {{ props.icon }} o_dma_tile_icon"
                    role="img" aria-hidden="true"/>

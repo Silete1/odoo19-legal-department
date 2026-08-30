@@ -1,0 +1,96 @@
+// Where the open caseload is sitting, as one segmented bar.
+//
+// The steps are ORDERED, so the scale that colours them is ordered too: one
+// hue running light to dark along the procedure. A categorical palette here
+// would say the steps are unrelated kinds, and a rainbow would say the order
+// is arbitrary. Neither is true.
+//
+// Colour is not the only carrier: every segment holds its count, has a title
+// and an aria-label, and the same figures appear in the table underneath.
+
+$dma-ribbon-from: #A8CDF2;
+$dma-ribbon-to: #10416F;
+$dma-ribbon-steps: 12;
+
+.o_dma_ribbon_card {
+    margin-block-start: 0.65rem;
+}
+
+.o_dma_ribbon {
+    display: flex;
+    gap: 2px;                       // the card shows between segments
+    inline-size: 100%;
+    block-size: 34px;
+    margin-block: 0.6rem 0.5rem;
+    border-radius: 4px;
+    overflow: hidden;
+
+    // No `row-reverse` for Arabic. The component stamps `dir="rtl"` on its own
+    // body, so a flex row already lays itself out from the right; reversing it
+    // as well flips the procedure back to left-to-right, which is how the
+    // ramp ended up running the wrong way.
+}
+
+.o_dma_seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 0;
+    border: 0;
+    padding: 0;
+    background-color: $dma-ribbon-from;
+    color: #fff;
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: filter 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+        filter: brightness(1.12);
+        transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $o-brand-primary;
+        outline-offset: 2px;
+    }
+}
+
+// The ramp. Generated rather than listed so the twelve stops stay evenly
+// spaced if a step is ever added to or removed from the procedure.
+@for $i from 1 through $dma-ribbon-steps {
+    .o_dma_ribbon .o_dma_seg:nth-child(#{$i}) {
+        background-color: mix(
+            $dma-ribbon-to,
+            $dma-ribbon-from,
+            percentage(($i - 1) / ($dma-ribbon-steps - 1))
+        );
+    }
+}
+
+.o_dma_seg_count {
+    padding-inline: 0.2rem;
+    // A count that will not fit is dropped rather than clipped: the segment
+    // still carries its title, its aria-label and its row in the table.
+    overflow: hidden;
+}
+
+.o_dma_details {
+    summary {
+        list-style: none;
+        &::-webkit-details-marker { display: none; }
+
+        &::before {
+            content: "\f0da";       // fa-caret-right
+            font-family: FontAwesome;
+            margin-inline-end: 0.4rem;
+            display: inline-block;
+            transition: transform 0.15s ease;
+        }
+
+        [dir="rtl"] &::before { transform: scaleX(-1); }
+    }
+
+    &[open] summary::before { transform: rotate(90deg); }
+    &[open] [dir="rtl"] summary::before { transform: rotate(90deg) scaleY(-1); }
+}

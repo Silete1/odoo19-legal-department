@@ -3,133 +3,237 @@
 
     <t t-name="dma_accreditation.AccreditationDashboard">
         <Layout className="'o_dma_dashboard'" display="{ controlPanel: {} }">
+
+            <div class="o_dma_loading" t-if="!data">
+                <span class="o_dma_spinner" role="status" aria-hidden="true"/>
+                <span t-esc="label.loading"/>
+            </div>
+
+            <!-- Odoo mirrors the interface by running rtlcss over the physical
+                 CSS properties and never sets `direction`, so a component that
+                 lays itself out has to declare which way round it is. -->
             <div class="o_dma_dashboard_body" t-if="data"
                  t-att-dir="data.rtl ? 'rtl' : 'ltr'">
 
-                <!-- Headline numbers. Stat tiles, not a one-bar bar chart. -->
-                <div class="o_dma_kpis">
-                    <button class="o_dma_kpi o_dma_kpi_lead" t-on-click="() => this.openMyTurn()">
-                        <span class="o_dma_kpi_value" t-esc="data.my_turn"/>
-                        <span class="o_dma_kpi_label" t-esc="label.myTurn"/>
-                    </button>
-                    <button class="o_dma_kpi"
-                            t-on-click="() => this.openRequests(label.inProgress, [['state','not in',['draft','authorized','rejected']]])">
-                        <span class="o_dma_kpi_value" t-esc="data.totals.in_progress"/>
-                        <span class="o_dma_kpi_label" t-esc="label.inProgress"/>
-                    </button>
-                    <button class="o_dma_kpi"
-                            t-on-click="() => this.openRequests(label.authorized, [['state','=','authorized']])">
-                        <span class="o_dma_kpi_value" t-esc="data.totals.authorized"/>
-                        <span class="o_dma_kpi_label" t-esc="label.authorized"/>
-                    </button>
-                    <button class="o_dma_kpi"
-                            t-on-click="() => this.openRequests(label.returned, [['state','=','returned']])">
-                        <span class="o_dma_kpi_value" t-esc="data.totals.returned"/>
-                        <span class="o_dma_kpi_label" t-esc="label.returned"/>
-                    </button>
-                    <button class="o_dma_kpi"
-                            t-on-click="() => this.openRequests(label.rejected, [['state','=','rejected']])">
-                        <span class="o_dma_kpi_value" t-esc="data.totals.rejected"/>
-                        <span class="o_dma_kpi_label" t-esc="label.rejected"/>
-                    </button>
+                <!-- ============================================ BAND A - DESK -->
+                <header class="o_dma_band_head">
+                    <h2 class="o_dma_band_title" t-esc="label.deskTitle"/>
+                    <span class="o_dma_band_sub" t-esc="data.user.role_label"/>
+                </header>
+
+                <div class="o_dma_desk">
+                  <div class="o_dma_desk_left">
+                    <section t-attf-class="o_dma_card o_dma_hero {{ data.hero.count ? 'o_dma_hero_active' : '' }}">
+                        <span class="o_dma_hero_label" t-esc="label.waitingForMe"/>
+                        <button class="o_dma_hero_value" dir="ltr"
+                                t-if="data.hero.count"
+                                t-on-click="() => this.openMyTurn()"
+                                t-esc="data.hero.count"/>
+                        <span class="o_dma_hero_value o_dma_hero_zero" dir="ltr"
+                              t-else="" t-esc="0"/>
+                        <p class="o_dma_hero_note" t-if="data.hero.count">
+                            <span t-if="data.hero.urgent" class="o_dma_hero_urgent">
+                                <i class="fa fa-star" role="img" aria-hidden="true"/>
+                                <t t-esc="data.hero.urgent"/> <t t-esc="label.urgentSuffix"/>
+                            </span>
+                            <span t-if="data.hero.oldest_days">
+                                <t t-esc="label.oldestSuffix"/><t>&#160;</t>
+                                <b dir="ltr"><t t-esc="data.hero.oldest_days"/><t t-esc="label.days"/></b>
+                            </span>
+                        </p>
+                        <p class="o_dma_hero_note" t-else="" t-esc="label.nothingWaiting"/>
+                    </section>
+
+                    <div class="o_dma_tiles">
+                        <KpiTile label="label.stalled" value="data.hero.stalled"
+                                 hint="label.stalledHint" icon="'fa-hourglass-half'"
+                                 tone="data.hero.stalled ? 'critical' : 'neutral'"
+                                 onOpen.bind="openStalled"/>
+                        <KpiTile label="label.withApplicant" value="data.with_applicant"
+                                 hint="label.withApplicantHint" icon="'fa-reply'"
+                                 tone="data.with_applicant ? 'attention' : 'neutral'"
+                                 onOpen.bind="openWithApplicant"/>
+                        <KpiTile label="label.expiringTile" value="data.expiring.length"
+                                 hint="label.expiringHint" icon="'fa-calendar-times-o'"
+                                 tone="data.expiring.length ? 'attention' : 'neutral'"
+                                 onOpen.bind="openExpiring"/>
+                    </div>
+                  </div>
+
+                    <ActionWorklist files="data.my_files" total="data.my_turn"
+                                    onOpenRecord.bind="openRecord"
+                                    onOpenAll.bind="openMyTurn"/>
                 </div>
 
-                <!-- The worklist. Counts say how much there is; this says what
-                     to open first, so it leads. -->
-                <section class="o_dma_card o_dma_worklist" t-if="data.my_files.length">
-                    <h3 class="o_dma_card_title">
-                        <t t-esc="label.needsYou"/>
-                        <span class="o_dma_card_count" dir="ltr" t-esc="data.my_turn"/>
-                    </h3>
-                    <ul class="o_dma_worklist_rows">
-                        <li t-foreach="data.my_files" t-as="file" t-key="file.id"
-                            t-attf-class="o_dma_worklist_row {{ file.urgent ? 'o_dma_urgent' : '' }}">
-                            <button t-on-click="() => this.openRecord(file.id)">
-                                <span class="o_dma_wl_ref">
-                                    <i class="fa fa-star o_dma_wl_star" t-if="file.urgent"
-                                       role="img" t-att-title="label.urgent"/>
-                                    <t t-esc="file.name"/>
-                                </span>
-                                <span class="o_dma_wl_partner" t-esc="file.partner"/>
-                                <span class="o_dma_wl_step" t-esc="file.state_label"/>
-                                <!-- Always rendered: dropping the cell
-                                     would shift the age into its column. -->
-                                <span class="o_dma_wl_next" t-esc="file.next_step"/>
-                                <span class="o_dma_wl_age">
-                                    <t t-esc="label.waiting"/>&#160;<t t-esc="file.waiting_label"/>
-                                </span>
-                            </button>
-                        </li>
-                    </ul>
-                </section>
+                <!-- ======================================== BAND B - CASELOAD -->
+                <header class="o_dma_band_head">
+                    <h2 class="o_dma_band_title" t-esc="label.caseloadTitle"/>
+                </header>
 
-                <section class="o_dma_card o_dma_allclear" t-if="!data.my_files.length">
-                    <i class="fa fa-check-circle" role="img" aria-hidden="true"/>
-                    <span t-esc="label.allClear"/>
-                </section>
+                <PipelineRibbon steps="data.pipeline" total="data.in_process"
+                                withApplicant="data.with_applicant"
+                                onOpen.bind="openStep"/>
 
-                <div class="o_dma_dashboard_cols">
-
-                    <!-- Files by step: one series, so magnitude is the bar
-                         length and a legend would only restate the title. -->
+                <div class="o_dma_grid o_dma_grid_wide">
                     <section class="o_dma_card">
-                        <h3 class="o_dma_card_title" t-esc="label.pipeline"/>
-                        <ol class="o_dma_bars">
-                            <li t-foreach="data.pipeline" t-as="step" t-key="step.key">
-                                <button class="o_dma_bar_row"
-                                        t-on-click="() => this.openRequests(step.label, step.domain)">
-                                    <span class="o_dma_bar_label" t-esc="step.label"/>
-                                    <span class="o_dma_bar_track">
-                                        <!-- A step holding no files paints
-                                             nothing: a minimum-width stub would
-                                             read as "one or two", which is the
-                                             one thing a zero must not say. -->
-                                        <span class="o_dma_bar_fill" t-if="step.count"
-                                              t-attf-style="width: {{ step.percent }}%;"/>
-                                    </span>
-                                    <span class="o_dma_bar_value" dir="ltr" t-esc="step.count"/>
-                                </button>
-                            </li>
-                        </ol>
+                        <header class="o_dma_card_head">
+                            <h3 class="o_dma_card_title" t-esc="label.ageingTitle"/>
+                            <span class="o_dma_card_meta" t-if="data.ageing.worst">
+                                <b t-esc="data.ageing.worst"/> · <t t-esc="label.mostStalled"/>
+                            </span>
+                        </header>
+                        <p class="o_dma_card_hint" t-esc="label.ageingHint"/>
+
+                        <p class="o_dma_empty_hint" t-if="!data.ageing.sufficient"
+                           t-esc="label.ageingEmpty"/>
+                        <t t-else="">
+                            <DmaChart type="'bar'" data="ageingChart"
+                                      options="ageingOptions" rtl="data.rtl"
+                                      height="Math.max(200, data.ageing.labels.length * 44 + 60)"
+                                      ariaLabel="label.ageingTitle"/>
+                            <!-- The same figures as text: a canvas tells a
+                                 screen reader nothing, and a printout loses it. -->
+                            <table class="table table-sm o_dma_table o_dma_sr_table">
+                                <tbody>
+                                    <tr t-foreach="ageingRows" t-as="row" t-key="row.label">
+                                        <td>
+                                            <button class="btn btn-link btn-sm p-0"
+                                                    t-on-click="() => this.openDepartment(row.role)"
+                                                    t-esc="row.label"/>
+                                        </td>
+                                        <td t-foreach="row.bands" t-as="band" t-key="band.key"
+                                            class="text-end" dir="ltr" t-att-title="band.label"
+                                            t-esc="band.value"/>
+                                        <td class="text-end fw-bold" dir="ltr" t-esc="row.total"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
                     </section>
 
                     <div class="o_dma_side">
-                        <!-- One tile per department the reader belongs to. -->
                         <section class="o_dma_card" t-if="data.queues.length">
                             <h3 class="o_dma_card_title" t-esc="label.queues"/>
                             <p class="o_dma_card_hint" t-esc="label.queuesHint"/>
-                            <ul class="o_dma_queues">
+                            <ul class="o_dma_list">
                                 <li t-foreach="data.queues" t-as="queue" t-key="queue.role">
-                                    <button class="o_dma_queue_row"
-                                            t-on-click="() => this.openRequests(queue.label, queue.domain)">
-                                        <span class="o_dma_queue_label" t-esc="queue.label"/>
-                                        <span class="o_dma_queue_count" dir="ltr" t-esc="queue.count"/>
+                                    <button t-on-click="() => this.openRequests(queue.label, queue.domain)">
+                                        <span t-esc="queue.label"/>
+                                        <span class="o_dma_list_value" dir="ltr" t-esc="queue.count"/>
                                     </button>
                                 </li>
                             </ul>
                         </section>
 
-                        <!-- Status, never colour alone: every row carries an
-                             icon and a written level. -->
                         <section class="o_dma_card">
-                            <h3 class="o_dma_card_title" t-esc="label.expiring"/>
-                            <p class="o_dma_empty" t-if="!data.expiring.length" t-esc="label.noExpiring"/>
-                            <ul class="o_dma_expiring" t-else="">
+                            <h3 class="o_dma_card_title" t-esc="label.expiringTitle"/>
+                            <p class="o_dma_empty_hint" t-if="!data.expiring.length"
+                               t-esc="label.noExpiring"/>
+                            <ul class="o_dma_list o_dma_expiring" t-else="">
                                 <li t-foreach="data.expiring" t-as="item" t-key="item.id"
-                                    t-attf-class="o_dma_expiring_row o_dma_level_{{ item.level }}">
+                                    t-attf-class="o_dma_level_{{ item.level }}">
                                     <button t-on-click="() => this.openRecord(item.id)">
-                                        <i class="fa" t-attf-class="fa {{ item.level === 'critical' ? 'fa-times-circle' : 'fa-exclamation-triangle' }}"
+                                        <i t-attf-class="fa {{ item.level === 'critical' ? 'fa-times-circle' : 'fa-exclamation-triangle' }}"
                                            role="img" aria-hidden="true"/>
-                                        <span class="o_dma_expiring_name" t-esc="item.name"/>
-                                        <span class="o_dma_expiring_partner" t-esc="item.partner"/>
-                                        <span class="o_dma_expiring_level" t-esc="item.level_label"/>
-                                        <span class="o_dma_expiring_date" dir="ltr" t-esc="item.expiry_date"/>
+                                        <span class="o_dma_exp_name" t-esc="item.name"/>
+                                        <span class="o_dma_exp_partner" t-esc="item.partner"/>
+                                        <span class="o_dma_exp_level" t-esc="item.level_label"/>
                                     </button>
                                 </li>
                             </ul>
                         </section>
                     </div>
                 </div>
+
+                <!-- ===================================== BAND C - PERFORMANCE -->
+                <header class="o_dma_band_head">
+                    <h2 class="o_dma_band_title" t-esc="label.performanceTitle"/>
+                    <!-- The control sits on the band it scopes, not in the
+                         control panel: up there it would read as filtering the
+                         whole page, including the reader's own worklist. -->
+                    <div class="o_dma_window" role="group" t-att-aria-label="label.scopeNote">
+                        <button t-foreach="windows" t-as="win" t-key="win.days"
+                                t-attf-class="btn btn-sm {{ state.window === win.days ? 'btn-primary' : 'btn-secondary' }}"
+                                t-att-aria-pressed="state.window === win.days"
+                                t-on-click="() => this.setWindow(win.days)"
+                                t-esc="win.label"/>
+                        <span class="o_dma_window_note" t-esc="label.scopeNote"/>
+                    </div>
+                </header>
+
+                <div class="o_dma_grid">
+                    <section class="o_dma_card">
+                        <h3 class="o_dma_card_title" t-esc="label.cycleTitle"/>
+                        <p class="o_dma_card_hint" t-esc="label.cycleHint"/>
+                        <p class="o_dma_empty_hint" t-if="!data.cycle.rows.length"
+                           t-esc="label.cycleThin"/>
+                        <t t-else="">
+                            <p class="o_dma_cohort" t-if="!data.cycle.sufficient">
+                                <i class="fa fa-info-circle" role="img" aria-hidden="true"/>
+                                <t t-esc="cohortNote(data.cycle.cohort)"/>
+                            </p>
+                            <ol class="o_dma_bars">
+                                <li t-foreach="data.cycle.rows" t-as="row" t-key="row.key">
+                                    <button class="o_dma_bar_row"
+                                            t-on-click="() => this.openStep(row)"
+                                            t-attf-title="{{ row.label }}: {{ row.median_days }} {{ label.days }} {{ label.median }}">
+                                        <span class="o_dma_bar_label" t-esc="row.label"/>
+                                        <span class="o_dma_bar_track">
+                                            <span class="o_dma_bar_fill" t-if="row.percent"
+                                                  t-attf-style="width: {{ row.percent }}%;"/>
+                                        </span>
+                                        <span class="o_dma_bar_value" dir="ltr">
+                                            <t t-esc="row.median_days"/><t t-esc="label.days"/>
+                                        </span>
+                                        <span class="o_dma_bar_note" dir="ltr"
+                                              t-attf-title="{{ label.p90 }} {{ row.p90_days }}{{ label.days }}">
+                                            <t t-esc="row.p90_days"/><t t-esc="label.days"/>
+                                        </span>
+                                    </button>
+                                </li>
+                            </ol>
+                        </t>
+                    </section>
+
+                    <section class="o_dma_card">
+                        <h3 class="o_dma_card_title" t-esc="label.throughputTitle"/>
+                        <p class="o_dma_card_hint" t-esc="label.throughputHint"/>
+                        <p class="o_dma_empty_hint" t-if="!data.throughput.sufficient"
+                           t-esc="label.throughputThin"/>
+                        <DmaChart t-else="" type="'line'" data="throughputChart"
+                                  options="throughputOptions" rtl="data.rtl"
+                                  height="240" ariaLabel="label.throughputTitle"/>
+                    </section>
+                </div>
+
+                <section class="o_dma_card o_dma_returns">
+                    <h3 class="o_dma_card_title" t-esc="label.returnsTitle"/>
+                    <p class="o_dma_card_hint" t-esc="label.returnsHint"/>
+                    <p class="o_dma_empty_hint" t-if="!data.returns.rows.length"
+                       t-esc="label.returnsEmpty"/>
+                    <ol class="o_dma_bars" t-else="">
+                        <li t-foreach="data.returns.rows" t-as="row" t-key="row.key">
+                            <button class="o_dma_bar_row o_dma_bar_returns"
+                                    t-on-click="() => this.openStep(row)">
+                                <span class="o_dma_bar_label" t-esc="row.label"/>
+                                <span class="o_dma_bar_track">
+                                    <span class="o_dma_bar_fill o_dma_fill_returned"
+                                          t-if="row.returned"
+                                          t-attf-style="width: {{ row.percent * row.returned / row.total }}%;"/>
+                                    <span class="o_dma_bar_fill o_dma_fill_rejected"
+                                          t-if="row.rejected"
+                                          t-attf-style="width: {{ row.percent * row.rejected / row.total }}%;"/>
+                                </span>
+                                <span class="o_dma_bar_value" dir="ltr" t-esc="row.total"/>
+                            </button>
+                        </li>
+                    </ol>
+                    <p class="o_dma_legend" t-if="data.returns.rows.length">
+                        <span class="o_dma_key o_dma_fill_returned"/><t t-esc="label.returned"/>
+                        <span class="o_dma_key o_dma_fill_rejected"/><t t-esc="label.rejected"/>
+                    </p>
+                </section>
+
             </div>
         </Layout>
     </t>

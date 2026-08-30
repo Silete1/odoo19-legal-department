@@ -1,0 +1,88 @@
+// One actionable number.
+//
+// The tone is a STATUS, never a series colour, and it never travels alone: an
+// icon and the caption carry the same meaning, so the tile still reads on a
+// monochrome print and to a colour-blind reader. The accent is a rule down the
+// leading edge rather than a tinted ground, because a tinted ground behind a
+// large number costs contrast for no information.
+
+.o_dma_tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    background-color: $o-view-background-color;
+    // The accent lives on the inline-start edge, so it moves to the right in
+    // Arabic with the rest of the layout.
+    border-inline-start: 3px solid $border-color;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+
+    &.o_dma_tile_open {
+        cursor: pointer;
+
+        &:hover {
+            border-color: $o-brand-primary;
+            transform: translateY(-1px);
+        }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: 2px;
+        }
+    }
+}
+
+.o_dma_tile_head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: $text-muted;
+    font-size: 0.8rem;
+}
+
+.o_dma_tile_icon { font-size: 0.85rem; }
+
+.o_dma_tile_value {
+    font-size: 2rem;
+    line-height: 1.1;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: $body-color;
+}
+
+.o_dma_tile_hint {
+    font-size: 0.75rem;
+    color: $text-muted;
+}
+
+.o_dma_tile_go {
+    position: absolute;
+    inset-block-start: 0.85rem;
+    inset-inline-end: 0.9rem;
+    color: $text-muted;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+
+    // The chevron points along the reading direction, so it turns around with
+    // the page rather than pointing back the way the reader came.
+    [dir="rtl"] & { transform: scaleX(-1); }
+}
+
+.o_dma_tile_open:hover .o_dma_tile_go { opacity: 1; }
+
+// Status accents. Neutral tiles keep the plain border: a tile reading zero is
+// not an alarm, and colouring every tile would leave nothing for the ones that
+// matter.
+.o_dma_tone_attention {
+    border-inline-start-color: $warning;
+    .o_dma_tile_icon { color: $warning; }
+}
+
+.o_dma_tone_critical {
+    border-inline-start-color: $danger;
+    .o_dma_tile_icon { color: $danger; }
+}

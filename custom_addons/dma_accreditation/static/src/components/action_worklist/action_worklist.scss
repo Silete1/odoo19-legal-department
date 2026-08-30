@@ -1,0 +1,189 @@
+// The files on the reader's desk.
+//
+// The one panel an officer uses every day, so it is a dense table rather than
+// a set of cards: a card grid would fit four files where a table fits twelve,
+// and twelve is a working morning.
+
+.o_dma_worklist {
+    display: flex;
+    flex-direction: column;
+
+    .o_dma_rows {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex: 1 1 auto;
+    }
+
+    .o_dma_row {
+        button {
+            display: grid;
+            grid-template-columns: 11rem minmax(6rem, 1fr) 12rem minmax(0, 1.3fr) 9.5rem;
+            align-items: center;
+            gap: 0.75rem;
+            inline-size: 100%;
+            padding: 0.45rem 0.4rem;
+            border: 0;
+            border-radius: 4px;
+            background: none;
+            text-align: start;
+            font-size: 0.84rem;
+            transition: background-color 0.12s ease;
+
+            &:hover { background-color: $o-gray-100; }
+
+            &:focus-visible {
+                outline: 2px solid $o-brand-primary;
+                outline-offset: -2px;
+            }
+
+            @media (max-width: 1399px) {
+                grid-template-columns: 10rem minmax(0, 1fr) 11rem 8rem;
+                .o_dma_row_block { display: none; }
+            }
+
+            @media (max-width: 991px) {
+                grid-template-columns: minmax(0, 1fr) 7rem;
+                .o_dma_row_partner, .o_dma_row_step { display: none; }
+            }
+        }
+
+        + .o_dma_row button {
+            border-block-start: 1px solid $border-color;
+            border-radius: 0;
+        }
+    }
+
+    .o_dma_row_ref {
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: $body-color;
+    }
+
+    .o_dma_row_star {
+        color: $warning;
+        margin-inline-end: 0.25rem;
+    }
+
+    .o_dma_row_partner,
+    .o_dma_row_block {
+        color: $text-muted;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_row_block { font-size: 0.78rem; }
+
+    // The step is a chip rather than plain text: it is the one field the eye
+    // scans down the column, and a chip gives it an edge to catch on.
+    .o_dma_chip {
+        display: inline-block;
+        max-inline-size: 100%;
+        padding: 0.1rem 0.45rem;
+        border-radius: 10px;
+        background-color: $o-gray-200;
+        color: $body-color;
+        font-size: 0.75rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_row_age {
+        display: grid;
+        grid-template-columns: minmax(2.5rem, 1fr) 2.4rem 2.4rem;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    // A display scale capped at a fortnight, not a deadline. The Directorate
+    // has never agreed per-step targets, so the exact number sits beside the
+    // bar and the word "target" appears nowhere.
+    .o_dma_meter {
+        display: block;
+        block-size: 6px;
+        background-color: $o-gray-200;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .o_dma_meter_fill {
+        display: block;
+        block-size: 100%;
+        border-start-end-radius: 3px;
+        border-end-end-radius: 3px;
+        transition: width 0.35s ease;
+    }
+
+    .o_dma_row_days {
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        text-align: end;
+        color: $body-color;
+    }
+
+    // Time since submission: the number the applicant feels. Quieter than the
+    // time at this step, because the reader acts on the first and is
+    // accountable for the second.
+    .o_dma_row_total {
+        font-variant-numeric: tabular-nums;
+        text-align: end;
+        font-size: 0.76rem;
+        color: $text-muted;
+    }
+
+    // The same three status hues the ageing chart uses, so a colour means the
+    // same thing wherever it appears - and the day count is always beside it.
+    .o_dma_age_fresh .o_dma_meter_fill { background-color: $success; }
+    .o_dma_age_slipping .o_dma_meter_fill { background-color: $warning; }
+    .o_dma_age_stuck {
+        .o_dma_meter_fill { background-color: $danger; }
+        .o_dma_row_days { color: $danger; }
+    }
+
+    .o_dma_empty {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1.5rem 0.5rem;
+        color: $text-muted;
+
+        .fa {
+            color: $success;
+            font-size: 1.3rem;
+        }
+    }
+
+    .o_dma_empty_title {
+        margin: 0;
+        font-weight: 600;
+        color: $body-color;
+    }
+
+    .o_dma_empty_hint {
+        margin: 0.15rem 0 0;
+        font-size: 0.82rem;
+    }
+
+    .o_dma_card_foot {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-block-start: 0.5rem;
+        padding-block-start: 0.5rem;
+        border-block-start: 1px solid $border-color;
+    }
+
+    .o_dma_more {
+        padding: 0;
+        .fa { margin-inline-start: 0.25rem; }
+        [dir="rtl"] & .fa { transform: scaleX(-1); }
+    }
+
+    .o_dma_foot_note {
+        font-size: 0.72rem;
+        color: $text-muted;
+    }
+}
