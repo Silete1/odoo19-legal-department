@@ -71,9 +71,40 @@ class DmaAccreditationRequest(models.Model):
                 self.env._("today") if waiting <= 0
                 else self.env._("%s day(s)", waiting)
             ),
+            "sla": self._brief_sla(),
             "note": note or "",
             "chips": chips or [],
             "meter": meter or False,
+        }
+
+    def _brief_sla(self):
+        """The agreed verdict on this file's wait, where one applies.
+
+        The service level is defined once, in ``dma.sla.rule``, and rendered
+        once, by the badge on the form. A desk row asks the same question -
+        "is this late" - so it reuses that answer rather than re-deriving a
+        second opinion from a day count: two numbers on two screens that
+        disagree is worse than one number on one.
+        """
+        self.ensure_one()
+        payload = self.sla_payload or {}
+        state = payload.get("state")
+        if not state or state in ("not_applicable",):
+            return False
+        return {
+            "state": state,
+            "label": payload.get("state_label") or "",
+            "icon": payload.get("icon") or "",
+            "age": payload.get("age") or "",
+            # A tone the band already knows how to paint, so the desk and the
+            # form agree without sharing a stylesheet.
+            "tone": {
+                "on_track": "neutral",
+                "warning": "attention",
+                "overdue": "critical",
+                "escalated": "critical",
+                "paused": "neutral",
+            }.get(state, "neutral"),
         }
 
     def _brief_waiting_days(self):

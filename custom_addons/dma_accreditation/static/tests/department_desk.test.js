@@ -116,6 +116,35 @@ test("a file row shows the sentence, the ratio and the age", async () => {
     expect(".o_dma_sec_age").toHaveText("3d");
 });
 
+test("a row carries the service-level verdict when the step has one", async () => {
+    await mount(brief([section({
+        count: 1,
+        rows: [row({
+            sla: {
+                state: "overdue",
+                label: "Overdue",
+                icon: "fa-exclamation-triangle",
+                age: "Waiting 9 days",
+                tone: "critical",
+            },
+        })],
+    })]));
+
+    // The agreed verdict replaces the raw wait rather than sitting beside it:
+    // two answers to "is this late" invite the reader to pick one.
+    expect(".o_dma_sla").toHaveText("Overdue");
+    expect(".o_dma_sla").toHaveClass("o_dma_tone_critical");
+    expect(".o_dma_sla .fa-exclamation-triangle").toHaveCount(1);
+    expect(".o_dma_sec_age").toHaveCount(0);
+});
+
+test("a row falls back to the raw wait where no service level applies", async () => {
+    await mount(brief([section({ count: 1, rows: [row()] })]));
+
+    expect(".o_dma_sla").toHaveCount(0);
+    expect(".o_dma_sec_age").toHaveText("3d");
+});
+
 test("the parallel step draws two signatures, not one status", async () => {
     await mount(brief([section({
         key: "dual_confirm",

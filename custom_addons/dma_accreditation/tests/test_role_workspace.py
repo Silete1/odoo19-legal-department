@@ -491,6 +491,33 @@ class TestRoleWorkspace(DmaAccreditationCommon):
         ]
         self.assertLess(refs.index(stale.name), refs.index(fresh.name))
 
+    def test_20c_a_row_reuses_the_agreed_service_level(self):
+        """The desk asks "is this late" and the SLA model already answers it.
+
+        Two numbers on two screens that disagree is worse than one number on
+        one, so a row carries the verdict the badge on the form carries rather
+        than deriving a second opinion from a day count.
+        """
+        request = self._new_request()
+        self._to_state(request, "gd_review")
+        row = next(
+            row for row in self._sections(self.user_gd)["gd_review"]["rows"]
+            if row["name"] == request.name
+        )
+        payload = request.sla_payload or {}
+        if not payload.get("state") or payload["state"] == "not_applicable":
+            self.assertFalse(
+                row["sla"], "with no service level the row shows the raw wait",
+            )
+            return
+        self.assertTrue(row["sla"])
+        self.assertEqual(row["sla"]["state"], payload["state"])
+        self.assertEqual(row["sla"]["label"], payload["state_label"])
+        # Colour is never the only carrier: a verdict ships an icon and the
+        # written label beside its tone.
+        self.assertTrue(row["sla"]["icon"])
+        self.assertIn(row["sla"]["tone"], ("neutral", "attention", "critical"))
+
     def test_21_every_row_carries_the_id_the_link_opens(self):
         request = self._new_request()
         self._to_state(request, "gd_review")

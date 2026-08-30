@@ -110,7 +110,19 @@
                                                   t-esc="chip.label"/>
                                         </span>
 
-                                        <span class="o_dma_sec_age" dir="ltr"
+                                        <!-- The agreed verdict where the step
+                                             has a service level, the raw wait
+                                             where it has none. Never both: two
+                                             answers to "is this late" invite
+                                             the reader to pick one. -->
+                                        <span t-if="row.sla"
+                                              t-attf-class="o_dma_chip o_dma_sla o_dma_tone_{{ row.sla.tone }}"
+                                              t-attf-title="{{ row.sla.age }}">
+                                            <i t-attf-class="fa {{ row.sla.icon }}"
+                                               role="img" aria-hidden="true"/>
+                                            <t t-esc="row.sla.label"/>
+                                        </span>
+                                        <span class="o_dma_sec_age" dir="ltr" t-else=""
                                               t-att-title="label.atThisStep">
                                             <t t-esc="row.waiting_days"/><t t-esc="label.days"/>
                                         </span>
