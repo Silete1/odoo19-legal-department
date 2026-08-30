@@ -12,8 +12,22 @@
 
             <div class="o_dma_progress_head">
                 <span class="o_dma_progress_state" t-esc="payload.current_label"/>
-                <span class="o_dma_progress_pending" t-if="payload.pending_role &amp;&amp; !payload.closed">
-                    <t t-esc="label.blocked"/><t>&#160;</t><b t-esc="payload.pending_role"/>
+                <!-- "Is this waiting for me?" is the question the reader opens
+                     the file with, and the server already knows the answer, so
+                     they should not have to match the module's role vocabulary
+                     against their own group memberships to work it out. -->
+                <span class="o_dma_progress_mine" t-if="payload.mine">
+                    <i class="fa fa-hand-o-right" role="img" aria-hidden="true"/><t>&#160;</t>
+                    <t t-esc="label.mine"/>
+                </span>
+                <span class="o_dma_progress_pending"
+                      t-if="pendingRoles.length &amp;&amp; !payload.closed &amp;&amp; !payload.mine">
+                    <t t-esc="label.blocked"/><t>&#160;</t>
+                    <!-- Both departments during the parallel step. "+" rather
+                         than a comma: it needs no bidi handling in Arabic. -->
+                    <t t-foreach="pendingRoles" t-as="role" t-key="role_index">
+                        <t t-if="!role_first">&#160;+&#160;</t><b t-esc="role"/>
+                    </t>
                 </span>
                 <!-- dir="ltr": a bare "4 / 13" is reordered to "13 / 4" by the
                      bidi algorithm inside an Arabic paragraph. -->
@@ -29,15 +43,21 @@
                      t-attf-style="width: {{ payload.percent }}%;"/>
             </div>
 
-            <ol class="o_dma_rail">
+            <ol class="o_dma_rail" t-att-aria-label="label.progress">
                 <li t-foreach="steps" t-as="step" t-key="step.key"
-                    t-att-class="stepClass(step)" t-att-title="stepTitle(step)">
+                    t-att-class="stepClass(step)" tabindex="0"
+                    t-att-aria-current="step.status === 'current' ? 'step' : false"
+                    t-att-data-tooltip="stepTitle(step)">
                     <span class="o_dma_step_marker">
                         <i class="fa fa-check" t-if="step.status === 'done'" role="img"
-                           t-att-aria-label="label.done"/>
+                           aria-hidden="true"/>
                         <t t-else="" t-esc="step.number"/>
                     </span>
                     <span class="o_dma_step_label" t-esc="step.label"/>
+                    <!-- Status in words as well as in colour, so the rail is
+                         readable without seeing the border tint and audible to
+                         a screen reader. -->
+                    <span class="visually-hidden" t-esc="statusLabel(step)"/>
                     <span class="o_dma_step_role" t-esc="step.role"/>
                     <span class="o_dma_step_user" t-if="step.user" t-esc="step.user"/>
                 </li>
@@ -52,10 +72,12 @@
                 </ul>
             </div>
 
-            <div class="o_dma_exception alert alert-danger" role="alert"
-                 t-if="payload.exception">
-                <b t-esc="payload.exception_label"/>
-            </div>
+            <!-- No exception banner here. "Returned" and "Rejected" are stated
+                 by the status bar and, with the reason and the step the file
+                 resumes at - which is the part that matters - by the alert
+                 above the sheet. A third echo inside the rail only interrupts
+                 the rail's own job. The payload still carries `exception` for
+                 automation. -->
         </section>
     </t>
 

@@ -9,31 +9,43 @@
         <field name="model">dma.accreditation.settings</field>
         <field name="arch" type="xml">
             <form string="Accreditation Settings">
-                <sheet>
-                    <div class="oe_title">
-                        <h1>Accreditation Settings</h1>
-                        <p class="text-muted">
-                            Directorate wide defaults applied to every new accreditation file.
-                        </p>
+                <!-- No oe_title: the dialog header already carries the action
+                     name, and a second heading one line below it read as a
+                     different screen. The look is borrowed from a settings
+                     screen - one stacked column, each value carrying its unit
+                     beside the input and its explanation underneath - without
+                     switching to res.config.settings, which the Accreditation
+                     Manager would not be allowed to save. -->
+                <field name="currency_id" invisible="1"/>
+                <group>
+                    <label for="sop_fee"/>
+                    <div name="sop_fee_setting">
+                        <field name="sop_fee" class="oe_inline"/>
+                        <div class="text-muted">
+                            Proposed by default on a new SOP reading fee line. The
+                            Finance Department can still record a different amount
+                            against the receipt.
+                        </div>
                     </div>
-                    <group>
-                        <group string="Fees">
-                            <field name="currency_id" invisible="1"/>
-                            <field name="sop_fee" widget="monetary"
-                                   options="{'currency_field': 'currency_id'}"/>
-                            <field name="demo_fee" widget="monetary"
-                                   options="{'currency_field': 'currency_id'}"/>
-                        </group>
-                        <group string="Validity">
-                            <field name="validity_months"/>
-                        </group>
-                    </group>
-                    <div class="text-muted mt-3">
-                        The fee amounts are proposed by default on new fee lines and
-                        the validity drives the expiry date of the operational
-                        accreditation certificate.
+                    <label for="demo_fee"/>
+                    <div name="demo_fee_setting">
+                        <field name="demo_fee" class="oe_inline"/>
+                        <div class="text-muted">
+                            Proposed by default on a new operational demonstration
+                            fee line.
+                        </div>
                     </div>
-                </sheet>
+                    <label for="validity_months"/>
+                    <div name="validity_setting">
+                        <field name="validity_months" class="oe_inline w-25"/>
+                        <span class="ms-1">months</span>
+                        <div class="text-muted">
+                            How long an operational accreditation certificate stays
+                            valid. It sets the expiry date printed on the certificate
+                            when the accreditation is issued.
+                        </div>
+                    </div>
+                </group>
                 <footer>
                     <button name="action_apply" type="object" string="Save"
                             class="btn-primary" data-hotkey="q"/>
@@ -45,11 +57,13 @@
     </record>
 
     <record id="action_dma_accreditation_settings" model="ir.actions.act_window">
-        <field name="name">Settings</field>
+        <field name="name">Accreditation Settings</field>
         <field name="res_model">dma.accreditation.settings</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="dma_accreditation_settings_view_form"/>
         <field name="target">new</field>
+        <!-- Three numeric inputs do not need the default large modal. -->
+        <field name="context">{'dialog_size': 'medium'}</field>
     </record>
 
 </odoo>

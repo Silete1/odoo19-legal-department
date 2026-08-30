@@ -40,6 +40,7 @@ chatter and pushed to the next responsible group as a scheduled activity.
         "report/report_actions.xml",
         "wizard/dma_decision_reason_views.xml",
         "views/dma_document_type_views.xml",
+        "views/dma_request_document_views.xml",
         "views/dma_accreditation_scope_views.xml",
         "views/dma_fee_payment_views.xml",
         "views/dma_approval_line_views.xml",
@@ -54,6 +55,9 @@ chatter and pushed to the next responsible group as a scheduled activity.
     ],
     "assets": {
         "web.assets_backend": [
+            # A handful of targeted rules for the request form. Kept out of
+            # the component glob below because it is not a component.
+            "dma_accreditation/static/src/scss/dma_backend.scss",
             # Every component of the workspace and of the request form.
             # A glob rather than a list: the components are small and split by
             # responsibility, and a new one should not need a manifest edit.

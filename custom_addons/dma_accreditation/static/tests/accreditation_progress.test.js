@@ -27,6 +27,8 @@ class DmaAccreditationRequest extends models.Model {
                 exception: false,
                 exception_label: false,
                 pending_role: "Certifications Division Officer",
+                pending_roles: ["Certifications Division Officer"],
+                mine: false,
                 steps_done: 4,
                 steps_total: 6,
                 percent: 67,
@@ -172,9 +174,37 @@ test("an Arabic payload flips the rail to right-to-left", async () => {
     expect(".o_dma_progress_counter").toHaveAttribute("dir", "ltr");
 });
 
-test("a rejected file is called out", async () => {
+test("a file waiting on the reader says so instead of naming a department", async () => {
+    // The reader should not have to match the module's role vocabulary against
+    // their own group memberships to answer "do I act, or am I just reading?".
+    DmaAccreditationRequest._records[0].progress_payload.mine = true;
+    await mount(1);
+    expect(".o_dma_progress_mine").toHaveCount(1);
+    expect(".o_dma_progress_mine").toHaveText("Waiting for you");
+    expect(".o_dma_progress_pending").toHaveCount(0);
+    DmaAccreditationRequest._records[0].progress_payload.mine = false;
+});
+
+test("the parallel step names both departments that still owe a move", async () => {
+    DmaAccreditationRequest._records[0].progress_payload.pending_roles = [
+        "Finance Department",
+        "Operations Department",
+    ];
+    await mount(1);
+    expect(".o_dma_progress_pending").toHaveText(
+        /Finance Department.*Operations Department/
+    );
+    DmaAccreditationRequest._records[0].progress_payload.pending_roles = [
+        "Certifications Division Officer",
+    ];
+});
+
+test("a rejected file does not repeat its status inside the rail", async () => {
+    // The status bar states it, and the alert above the sheet states it with
+    // the reason. The rail draws the steps; a third echo would only interrupt
+    // them. The payload still carries `exception` for automation.
     await mount(3);
-    expect(".o_dma_exception").toHaveCount(1);
-    expect(".o_dma_exception").toHaveText("Rejected");
+    expect(".o_dma_exception").toHaveCount(0);
     expect(".o_dma_blockers").toHaveCount(0);
+    expect(".o_dma_progress_state").toHaveText("Rejected");
 });

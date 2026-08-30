@@ -8,13 +8,38 @@
     .o_dma_progress_head {
         display: flex;
         align-items: baseline;
+        flex-wrap: wrap;
         gap: 0.75rem;
         margin-block-end: 0.35rem;
-        // The form corner belongs to the status ribbon - Rejected, Returned,
-        // Accredited, Archived - which is drawn over anything under it. The
-        // space is reserved on every record rather than only on the ribboned
-        // ones, so the step counter does not jump sideways when a file closes.
-        padding-inline-end: 7.5rem;
+    }
+
+    // The form corner belongs to the status ribbon, which is drawn over
+    // anything under it. Only two states raise one - Accredited and Expired -
+    // so the clearance is asked for on those, through the technical hook the
+    // widget already emits, instead of costing 120px of the most valuable
+    // strip on the screen on all thirteen working states.
+    //
+    // A *physical* property, deliberately, and the one exception to the
+    // logical-property discipline at the top of this file: web_ribbon is
+    // anchored with a physical `right: 0` and does not mirror, while this
+    // section carries its own dir="rtl" in Arabic. With `padding-inline-end`
+    // the gap opened on the left, where nothing is, and the status label ran
+    // straight under the ribbon.
+    /*rtl:ignore*/
+    &[data-state="authorized"] .o_dma_progress_head,
+    &[data-state="expired"] .o_dma_progress_head {
+        padding-right: 7.5rem;
+    }
+
+    .o_dma_progress_mine {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.05rem 0.45rem;
+        border-radius: 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $o-brand-primary;
+        background-color: rgba($o-brand-primary, 0.1);
     }
 
     .o_dma_progress_state {
@@ -64,9 +89,11 @@
         margin: 0;
         padding: 0;
 
+        // Not a grid breakpoint: the width at which seven cards stop holding a
+        // readable label. The two below it are Bootstrap's.
         @media (max-width: 1533px) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-        @media (max-width: 1199px) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-        @media (max-width: 767px)  { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @include media-breakpoint-down(lg) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        @include media-breakpoint-down(md) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     .o_dma_step {
@@ -83,8 +110,9 @@
         min-width: 0;                       // let the grid track do the sizing
         transition: box-shadow 0.15s ease, transform 0.15s ease;
 
-        &:hover {
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+        &:hover,
+        &:focus-visible {
+            box-shadow: $box-shadow-sm;
         }
     }
 
@@ -98,8 +126,10 @@
         border-radius: 50%;
         font-size: 0.68rem;
         font-weight: 700;
-        color: #fff;
-        background-color: $text-muted;
+        color: $o-white;
+        // A background-role grey. $text-muted is a *foreground* token and,
+        // behind a 0.68rem bold numeral, lands under the AA contrast floor.
+        background-color: $o-gray-500;
     }
 
     .o_dma_step_label {
@@ -138,8 +168,18 @@
         }
     }
 
+    // Not `opacity`: dimming the whole card takes the step number - the one
+    // glyph that says which of thirteen steps this is - to roughly 2:1 against
+    // white. The sub-lines already carry $text-muted, which is enough
+    // de-emphasis, and every step also states its status in words for a screen
+    // reader.
     .o_dma_step_todo {
-        opacity: 0.55;
+        border-block-start-color: $o-gray-300;
+
+        .o_dma_step_label {
+            color: $text-muted;
+            font-weight: 500;
+        }
     }
 
     .o_dma_step_blocked {
@@ -162,11 +202,5 @@
             margin: 0.25rem 0 0;
             padding-inline-start: 1.1rem;
         }
-    }
-
-    .o_dma_exception {
-        margin-block-start: 0.75rem;
-        margin-block-end: 0;
-        padding: 0.5rem 0.75rem;
     }
 }

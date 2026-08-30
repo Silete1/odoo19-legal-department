@@ -7,15 +7,24 @@
         <field name="name">dma.fee.payment.list</field>
         <field name="model">dma.fee.payment</field>
         <field name="arch" type="xml">
-            <list string="Accreditation Fees" editable="bottom"
-                  decoration-bf="state == 'draft'"
-                  decoration-muted="state == 'confirmed'">
+            <!-- The two fees of a file are sequential - the SOP reading fee
+                 then the demonstration fee - so they read oldest first, and a
+                 line appended at the bottom stays where it was typed.
+                 No row decoration: in Odoo a muted row means cancelled or
+                 archived, so painting the *confirmed* ones grey said the
+                 opposite of what happened. The badge carries the status. -->
+            <list string="Accreditation Fees" editable="bottom" sample="1"
+                  open_form_view="True"
+                  default_order="receipt_date asc, id asc">
                 <field name="currency_id" column_invisible="True"/>
                 <field name="fee_type"/>
-                <field name="amount" widget="monetary" sum="Total"/>
                 <field name="receipt_number"/>
                 <field name="receipt_date"/>
-                <field name="attachment_ids" widget="many2many_binary" string="Receipt Scan"/>
+                <field name="amount" widget="monetary" sum="Recorded"/>
+                <!-- The upload widget belongs on the form; here the count says
+                     whether the receipt is on file and the row expander opens
+                     the scan. -->
+                <field name="attachment_count" string="Scans" width="80px"/>
                 <field name="notes" optional="hide"/>
                 <field name="confirmed_by" optional="hide"/>
                 <field name="confirmed_on" optional="hide"/>
@@ -41,10 +50,15 @@
         <field name="model">dma.fee.payment</field>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <list string="Accreditation Fees" create="false"
-                  default_order="receipt_date desc, id desc"
-                  decoration-bf="state == 'draft'"
-                  decoration-muted="state == 'confirmed'">
+            <list string="Accreditation Fees" create="false" sample="1"
+                  default_order="receipt_date desc, id desc">
+                <!-- The screen exists to confirm a batch of receipts against a
+                     batch of fees; one button per row made that a row-at-a-time
+                     job. action_confirm already iterates its recordset. -->
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            groups="dma_accreditation.group_dma_finance"/>
+                </header>
                 <field name="currency_id" column_invisible="True"/>
                 <field name="request_id" string="Request"/>
                 <field name="partner_id" string="Applicant" optional="show"/>
@@ -52,6 +66,10 @@
                 <field name="receipt_number"/>
                 <field name="receipt_date"/>
                 <field name="amount" widget="monetary" sum="Total"/>
+                <!-- Finance confirms a fee against its receipt, so the screen
+                     where that happens has to say whether a scan is on file. -->
+                <field name="attachment_count" string="Scans" width="80px"/>
+                <field name="request_state" string="File Status" optional="hide"/>
                 <field name="confirmed_by" optional="hide"/>
                 <field name="confirmed_on" optional="hide"/>
                 <field name="state" widget="badge"
@@ -79,41 +97,61 @@
                             groups="dma_accreditation.group_dma_manager"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
                 </header>
+                <!-- The three things Confirm refuses without, said on the
+                     screen instead of in a modal one blocker at a time. -->
+                <div class="alert alert-warning" role="alert"
+                     invisible="state == 'confirmed' or (receipt_number and receipt_date and amount &gt; 0)">
+                    <b>Not ready to confirm.</b>
+                    A receipt number, a receipt date and a non-zero amount are required before
+                    the Finance Department can confirm this fee.
+                </div>
                 <sheet>
                     <div class="oe_title">
-                        <label for="fee_type" string="Fee"/>
+                        <span class="o_form_label">Accreditation fee</span>
                         <h1><field name="fee_type" readonly="state == 'confirmed'"/></h1>
+                        <div class="text-muted" invisible="not request_id">
+                            <field name="request_id" nolabel="1" readonly="1" class="oe_inline"/>
+                        </div>
                     </div>
                     <group>
                         <group string="Accreditation File">
-                            <field name="request_id" readonly="1"
-                                   options="{'no_create': True}"/>
                             <field name="partner_id" readonly="1"/>
                             <field name="request_state" readonly="1"/>
                         </group>
-                        <group string="Payment">
-                            <field name="amount" readonly="state == 'confirmed'"/>
-                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        <group string="Receipt">
+                            <!-- The monetary widget prints a bare number when
+                                 currency_id is not in the arch, and the visible
+                                 copy is stripped for every single-currency
+                                 user, so the technical copy is unconditional. -->
+                            <field name="currency_id" invisible="1"
+                                   groups="!base.group_multi_currency"/>
+                            <label for="amount"/>
+                            <div name="amount_div" class="o_row">
+                                <field name="amount" readonly="state == 'confirmed'"/>
+                                <field name="currency_id" groups="base.group_multi_currency"
+                                       options="{'no_create': True, 'no_open': True}"/>
+                            </div>
                             <field name="receipt_number" readonly="state == 'confirmed'"
                                    placeholder="e.g. REC/2026/0141"/>
                             <field name="receipt_date" readonly="state == 'confirmed'"/>
                         </group>
                     </group>
-                    <group string="Confirmation" invisible="state != 'confirmed'">
-                        <group>
-                            <field name="confirmed_by"/>
-                        </group>
-                        <group>
-                            <field name="confirmed_on"/>
-                        </group>
-                    </group>
-                    <group string="Receipt Scan">
-                        <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
-                    </group>
-                    <group string="Notes">
-                        <field name="notes" nolabel="1"
-                               placeholder="Anything the Finance Department should record about this payment."/>
-                    </group>
+                    <!-- A record of something that happened, so it appears only
+                         once it has, as one line rather than two blank rows. -->
+                    <div class="text-muted mb-3" invisible="state != 'confirmed'">
+                        <i class="fa fa-check text-success me-1" role="img" aria-label="Confirmed"/>
+                        Confirmed by
+                        <field name="confirmed_by" nolabel="1" readonly="1" class="oe_inline fw-bold"/> on
+                        <field name="confirmed_on" nolabel="1" readonly="1" class="oe_inline"/>.
+                    </div>
+                    <separator string="Receipt Scan"/>
+                    <div class="text-muted small mb-1" invisible="attachment_ids">
+                        No scan of the receipt has been attached yet.
+                    </div>
+                    <field name="attachment_ids" widget="many2many_binary" nolabel="1" class="w-100"/>
+                    <separator string="Notes"/>
+                    <field name="notes" nolabel="1" rows="3"
+                           placeholder="Anything the Finance Department should record about this payment."/>
                 </sheet>
             </form>
         </field>
@@ -133,8 +171,10 @@
                 <filter name="filter_sop" string="SOP Reading Fee" domain="[('fee_type', '=', 'sop_reading')]"/>
                 <filter name="filter_demo" string="Demonstration Fee" domain="[('fee_type', '=', 'operational_demo')]"/>
                 <separator/>
-                <filter name="filter_this_year" string="This Year"
-                        domain="[('receipt_date', '&gt;=', context_today().strftime('%Y-01-01'))]"/>
+                <!-- Odoo's own period control: this year, this quarter,
+                     last month and their comparisons, instead of one
+                     hand-rolled year filter. -->
+                <filter name="filter_receipt_date" string="Receipt Date" date="receipt_date"/>
                 <group>
                     <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
                     <filter name="group_fee_type" string="Fee Type" context="{'group_by': 'fee_type'}"/>
@@ -156,10 +196,16 @@
         <!-- Explicitly empty rather than absent: removing the element would
              leave whatever an earlier version wrote in the database, and this
              screen used to land on a collapsed group-by that hid every row. -->
-        <field name="context">{}</field>
+        <!-- A worklist first: the screen opens on the fees Finance still has
+             to confirm, and one click on the filter shows the whole register.
+             Explicitly set rather than absent, because removing the element
+             would leave whatever an earlier version wrote in the database, and
+             this screen used to land on a collapsed group-by that hid every
+             row. -->
+        <field name="context">{'search_default_filter_draft': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_empty_folder">
-                No accreditation fee has been recorded yet.
+                Nothing left to confirm.
             </p><p>
                 Fees are raised from the accreditation file itself, on its
                 <b>Fees</b> tab: the SOP reading fee during the SOP step, and the

@@ -49,8 +49,19 @@
         <field name="arch" type="xml">
             <search string="Document Types">
                 <field name="name"/>
-                <filter name="filter_required" string="Required by Default" domain="[('required_default', '=', True)]"/>
-                <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <field name="description"/>
+                <filter name="required" string="Required by Default" domain="[('required_default', '=', True)]"/>
+                <filter name="optional" string="Optional" domain="[('required_default', '=', False)]"/>
+                <!-- Without the separator the two filters share a group and OR:
+                     ticking both asked for "required by default OR archived",
+                     which is a set nobody wants. Core always keeps Archived in
+                     a group of its own. -->
+                <separator/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_required" string="Requirement"
+                            context="{'group_by': 'required_default'}"/>
+                </group>
             </search>
         </field>
     </record>

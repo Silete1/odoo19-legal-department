@@ -22,10 +22,10 @@ export class AccreditationProgress extends Component {
         current: _t("In progress"),
         todo: _t("Not started"),
         blocked: _t("Waiting on"),
+        mine: _t("Waiting for you"),
         blockers: _t("Before this step can be completed:"),
-        noBlockers: _t("Nothing is blocking this step."),
-        closed: _t("This file is closed."),
-        progress: _t("Progress"),
+        blocked_step: _t("Blocked"),
+        progress: _t("Accreditation progress"),
     };
 
     get payload() {
@@ -38,6 +38,19 @@ export class AccreditationProgress extends Component {
 
     get blockers() {
         return this.payload.blockers || [];
+    }
+
+    /** Every department that still owes a move; two of them at the parallel step. */
+    get pendingRoles() {
+        return this.payload.pending_roles || [];
+    }
+
+    /** The status of a step in words, for readers who cannot see the tint. */
+    statusLabel(step) {
+        if (step.status === "current" && this.blockers.length) {
+            return AccreditationProgress.labels.blocked_step;
+        }
+        return AccreditationProgress.labels[step.status] || "";
     }
 
     get label() {
@@ -56,10 +69,6 @@ export class AccreditationProgress extends Component {
         return step.role;
     }
 
-    get stepKeys() {
-        return this.steps.map((step) => step.key);
-    }
-
     stepClass(step) {
         const blocked = step.status === "current" && this.blockers.length;
         return [
@@ -74,4 +83,11 @@ registry.category("fields").add("dma_accreditation_progress", {
     component: AccreditationProgress,
     displayName: _t("Accreditation Progress"),
     supportedTypes: ["json"],
+    // The rail is placed straight in the sheet rather than inside a <group>, so
+    // it never inherits the width: 100% Odoo grants group descendants, and the
+    // seven column grid would be shrink-to-fit.
+    additionalClasses: ["d-block", "w-100"],
+    // A payload that ever came back empty would make the whole rail disappear
+    // rather than render as an empty one.
+    isEmpty: () => false,
 });

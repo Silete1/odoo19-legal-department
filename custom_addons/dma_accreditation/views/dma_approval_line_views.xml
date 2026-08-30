@@ -5,24 +5,32 @@
         <field name="name">dma.approval.line.list</field>
         <field name="model">dma.approval.line</field>
         <field name="arch" type="xml">
-            <!-- Sorted by file, then chronologically inside it: read top to
-                 bottom this is the decision history of one request after
-                 another, which is how an auditor reads it. -->
+            <!-- Reverse chronological, and clustered by file through the
+                 action's default group-by: grouped, the reader gets a header
+                 and a count per request; ungrouped, one click away, they get a
+                 clean ledger of every decision across every file.
+                 Widths are pinned because `notes` carries the return and
+                 reject reasons: left to the automatic algorithm one long
+                 reason pushes that column toward 1200px and squeezes the five
+                 columns an auditor actually scans down to their minimum.
+                 Only the badge carries colour - a whole log painted green
+                 stops signalling anything. -->
             <list string="Approvals Log" create="false" edit="false" delete="false"
-                  default_order="request_id, date"
-                  decoration-success="decision in ('approved', 'confirmed')"
-                  decoration-danger="decision == 'rejected'"
-                  decoration-warning="decision == 'returned'">
-                <field name="request_id"/>
-                <field name="date"/>
+                  default_order="date desc, id desc">
+                <field name="request_id" width="180px"/>
+                <field name="date" width="150px"/>
+                <field name="user_id" widget="many2one_avatar_user" width="180px"/>
+                <!-- Never optional: the parallel dual confirmation writes two
+                     lines with the same step and the same decision, and the
+                     role is the only thing that tells Finance from Operations. -->
+                <field name="role" width="200px"/>
                 <field name="step"/>
-                <field name="role" optional="show"/>
-                <field name="user_id"/>
-                <field name="decision" widget="badge"
+                <field name="decision" widget="badge" width="120px"
                        decoration-success="decision in ('approved', 'confirmed')"
                        decoration-danger="decision == 'rejected'"
                        decoration-warning="decision == 'returned'"/>
-                <field name="notes"/>
+                <field name="notes" width="360px"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </list>
         </field>
     </record>
@@ -33,29 +41,42 @@
         <field name="name">dma.approval.line.form</field>
         <field name="model">dma.approval.line</field>
         <field name="arch" type="xml">
+            <!-- One immutable statement, so it reads as a statement: a
+                 sentence naming who decided what, when and on which file,
+                 rather than an eight-row data-entry grid whose every cell
+                 repeats readonly="1". -->
             <form string="Decision" create="false" edit="false" delete="false">
                 <sheet>
                     <div class="oe_title">
-                        <label for="step" string="Step"/>
-                        <h1><field name="step" readonly="1"/></h1>
-                    </div>
-                    <group>
-                        <group string="File">
-                            <field name="request_id" readonly="1"/>
-                            <field name="date" readonly="1"/>
-                        </group>
-                        <group string="Decision">
+                        <span class="o_form_label">Recorded decision</span>
+                        <h1 class="d-flex align-items-center gap-2">
                             <field name="decision" widget="badge" readonly="1"
                                    decoration-success="decision in ('approved', 'confirmed')"
                                    decoration-danger="decision == 'rejected'"
                                    decoration-warning="decision == 'returned'"/>
-                            <field name="role" readonly="1"/>
-                            <field name="user_id" readonly="1"/>
-                        </group>
-                    </group>
-                    <group string="Notes">
-                        <field name="notes" nolabel="1" readonly="1"/>
-                    </group>
+                            <field name="step" readonly="1"/>
+                        </h1>
+                    </div>
+                    <div class="mb-3">
+                        <field name="user_id" readonly="1" nolabel="1"
+                               widget="many2one_avatar_user" class="oe_inline"/>
+                        <span class="ms-2">
+                            <field name="user_id" readonly="1" nolabel="1" class="oe_inline fw-bold"/>
+                            acting as
+                            <field name="role" readonly="1" nolabel="1" class="oe_inline"/>
+                            on
+                            <field name="date" readonly="1" nolabel="1" class="oe_inline"/>,
+                            for
+                            <field name="request_id" readonly="1" nolabel="1" class="oe_inline fw-bold"/>.
+                        </span>
+                    </div>
+                    <div class="alert alert-secondary py-2" role="alert" invisible="not notes">
+                        <field name="notes" nolabel="1" readonly="1" class="mb-0 text-prewrap"/>
+                    </div>
+                    <div class="text-muted small">
+                        <i class="fa fa-lock me-1" role="img" aria-label="Immutable"/>
+                        Entries of the approvals log can never be modified nor deleted.
+                    </div>
                 </sheet>
             </form>
         </field>
@@ -67,15 +88,24 @@
         <field name="arch" type="xml">
             <search string="Approvals Log">
                 <field name="request_id"/>
-                <field name="user_id"/>
+                <field name="user_id" string="Decided By"/>
+                <field name="role"/>
+                <field name="step"/>
+                <field name="notes"/>
                 <filter name="filter_approved" string="Approved" domain="[('decision', 'in', ('approved', 'confirmed'))]"/>
                 <filter name="filter_returned" string="Returned" domain="[('decision', '=', 'returned')]"/>
                 <filter name="filter_rejected" string="Rejected" domain="[('decision', '=', 'rejected')]"/>
+                <separator/>
+                <!-- The first question asked of an audit trail is a period
+                     question; there was no way to ask it. -->
+                <filter name="filter_date" string="Decision Date" date="date"/>
                 <group>
                     <filter name="group_request" string="Request" context="{'group_by': 'request_id'}"/>
                     <filter name="group_step" string="Step" context="{'group_by': 'step'}"/>
                     <filter name="group_role" string="Role" context="{'group_by': 'role'}"/>
                     <filter name="group_user" string="Decided By" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_decision" string="Decision" context="{'group_by': 'decision'}"/>
+                    <filter name="group_month" string="Month" context="{'group_by': 'date:month'}"/>
                 </group>
             </search>
         </field>
@@ -86,6 +116,10 @@
         <field name="res_model">dma.approval.line</field>
         <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="dma_approval_line_view_search"/>
+        <!-- Clustered by file: grouped, each request gets a header and a
+             count, which is the structure a flat list of a few hundred lines
+             cannot show. One click on the facet gives the flat ledger back. -->
+        <field name="context">{'search_default_group_request': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_empty_folder">
                 No decision has been recorded yet.

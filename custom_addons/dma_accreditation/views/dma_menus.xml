@@ -79,13 +79,23 @@
     <!-- ================================================================
          All requests, fees and the audit log.
          ================================================================ -->
+    <!-- Open to every department, because that is what the record rules
+         already say: "every department sees every accreditation file: the
+         process is collegial and the approvals log must stay auditable by
+         all". Hiding the list while the data layer grants the read left an
+         officer able to reach any file by a chatter link but unable to find
+         it. Nothing becomes writable - every transition is guarded server
+         side by _guard, and WORKFLOW_OWNED_FIELDS refuses direct writes. -->
     <menuitem id="menu_dma_requests"
               name="All Requests"
               parent="menu_dma_root"
               action="action_dma_accreditation_request"
-              groups="dma_accreditation.group_dma_manager,dma_accreditation.group_dma_general_director"
+              groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_general_director,dma_accreditation.group_dma_legal_director,dma_accreditation.group_dma_cert_officer,dma_accreditation.group_dma_operations,dma_accreditation.group_dma_finance,dma_accreditation.group_dma_committee,dma_accreditation.group_dma_manager"
               sequence="20"/>
 
+    <!-- Deliberately narrower than the two around it: this is the work list of
+         the department that owns write access to the model, not a shared
+         reference screen. Do not "fix" the asymmetry by widening it. -->
     <menuitem id="menu_dma_fees"
               name="Fees"
               parent="menu_dma_root"
@@ -93,11 +103,14 @@
               groups="dma_accreditation.group_dma_finance,dma_accreditation.group_dma_manager"
               sequence="30"/>
 
+    <!-- Every role has read access to the log and none has write, so the
+         audit trail is visible to everybody and alterable by nobody - which is
+         exactly the claim the module makes about it. -->
     <menuitem id="menu_dma_approvals"
               name="Approvals Log"
               parent="menu_dma_root"
               action="action_dma_approval_line"
-              groups="dma_accreditation.group_dma_manager,dma_accreditation.group_dma_general_director"
+              groups="dma_accreditation.group_dma_reception,dma_accreditation.group_dma_general_director,dma_accreditation.group_dma_legal_director,dma_accreditation.group_dma_cert_officer,dma_accreditation.group_dma_operations,dma_accreditation.group_dma_finance,dma_accreditation.group_dma_committee,dma_accreditation.group_dma_manager"
               sequence="40"/>
 
     <!-- ================================================================
@@ -124,7 +137,7 @@
               sequence="20"/>
 
     <menuitem id="menu_dma_config_settings"
-              name="Settings"
+              name="Accreditation Settings"
               parent="menu_dma_configuration"
               action="action_dma_accreditation_settings"
               groups="dma_accreditation.group_dma_manager"
