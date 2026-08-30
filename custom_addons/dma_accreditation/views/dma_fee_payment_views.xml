@@ -19,8 +19,12 @@
                 <field name="currency_id" column_invisible="True"/>
                 <field name="fee_type"/>
                 <field name="receipt_number"/>
-                <field name="receipt_date"/>
-                <field name="amount" widget="monetary" sum="Recorded"/>
+                <field name="receipt_date" width="130px"/>
+                <!-- No column sum: the footer below already gives the two
+                     figures that mean something here - what is still awaiting
+                     confirmation and what is confirmed - and each of those
+                     carries its own label, which a list aggregate does not. -->
+                <field name="amount" widget="monetary"/>
                 <!-- The upload widget belongs on the form; here the count says
                      whether the receipt is on file and the row expander opens
                      the scan. -->

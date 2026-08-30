@@ -3,7 +3,7 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..models.dma_accreditation_request import RETURN_TARGET_STATE
-from ..models.dma_constants import STATE_SELECTION
+from ..models.dma_constants import state_label
 
 
 class DmaDecisionReason(models.TransientModel):
@@ -27,8 +27,14 @@ class DmaDecisionReason(models.TransientModel):
     current_state = fields.Selection(
         related="request_id.state", string="Current Step", readonly=True,
     )
-    resume_state = fields.Selection(
-        STATE_SELECTION, string="Resumes At", compute="_compute_resume_state",
+    # A Char holding the *label*, not a Selection holding the key: a new
+    # Selection field gets its own ir.model.fields.selection rows, and the
+    # Arabic entries in ar.po are bound to the fields that already existed - so
+    # a duplicate of the workflow states would have rendered in English inside
+    # an otherwise Arabic dialog. `state_label` reads the request's own field,
+    # which is translated once, for everyone.
+    resume_state = fields.Char(
+        string="Resumes At", compute="_compute_resume_state",
         help="Step the file re-enters once the reception desk resumes it.",
     )
 
@@ -36,9 +42,9 @@ class DmaDecisionReason(models.TransientModel):
     def _compute_resume_state(self):
         for wizard in self:
             state = wizard.request_id.state
-            wizard.resume_state = (
-                RETURN_TARGET_STATE.get(state, "draft") if state else False
-            )
+            wizard.resume_state = state_label(
+                self.env, RETURN_TARGET_STATE.get(state, "draft")
+            ) if state else False
 
     @api.model
     def default_get(self, fields_list):

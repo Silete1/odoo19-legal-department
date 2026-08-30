@@ -433,9 +433,10 @@ class TestAccreditationUiContract(DmaAccreditationCommon):
         wizard = self.env["dma.decision.reason"].with_user(self.user_cert).create({
             "request_id": request.id, "mode": "return", "reason": "incomplete",
         })
+        from ..models.dma_constants import state_label
         self.assertEqual(wizard.current_state, "cert_check")
         self.assertEqual(
-            wizard.resume_state, "legal_review",
+            wizard.resume_state, state_label(self.env, "legal_review"),
             "returning from the Certifications check sends the file back to Legal, "
             "which is the fact the reviewer is deciding about",
         )
@@ -443,7 +444,7 @@ class TestAccreditationUiContract(DmaAccreditationCommon):
         wizard.action_confirm()
         self.assertEqual(request.state, "returned")
         self.assertEqual(
-            request.return_to_state, promised,
+            state_label(self.env, request.return_to_state), promised,
             "the dialog promised the step the file actually resumes at",
         )
 
