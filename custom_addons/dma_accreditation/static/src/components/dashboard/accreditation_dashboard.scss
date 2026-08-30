@@ -30,6 +30,19 @@ $dma-radius: 8px;
 
 .o_dma_dashboard {
 
+    // This class lands on the Layout's `.o_content`, and the page is taller
+    // than the viewport by design - a desk, a department band and, for the
+    // manager, the analytics. `.o_action_manager` above it is `overflow:
+    // hidden`, so unless this element is the scroller everything below the
+    // fold is simply unreachable.
+    //
+    // Both halves are needed. Without the cap the element grows to its content
+    // and there is nothing for `auto` to scroll; without `auto` the cap just
+    // clips. `max-` rather than a fixed height so a short desk still ends
+    // where its content does instead of painting a screen of empty ground.
+    max-block-size: 100%;
+    overflow-y: auto;
+
     // A faintly tinted ground. Flat bordered cards need something to sit on,
     // and a tint costs no ink where a shadow would add some to every card.
     background-color: mix($o-gray-200, $o-view-background-color, 45%);
