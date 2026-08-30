@@ -1,0 +1,458 @@
+// The department band of the workspace.
+//
+// Same rules as the rest of the workspace: every colour is an Odoo 19 backend
+// SCSS token resolved at compile time ($border-color, $text-muted, $body-color,
+// $success, $warning, $danger, $o-view-background-color, $o-gray-*), never a
+// CSS custom property - Odoo 19 declares none of those, so --card-bg and
+// friends resolve to their fallback and bypass the theme in silence.
+//
+// Spacing is written in logical properties throughout. Odoo mirrors the
+// interface by running rtlcss over the *physical* properties and never sets
+// `direction`, so the workspace body stamps `dir` from a server-computed flag
+// and everything below follows it without a second mirroring.
+//
+// Colour carries status only, and never alone: every tone below ships beside
+// a word - "not provided", "2 to review", "Text drafted" - so the panel reads
+// identically in greyscale and under any colour vision.
+
+$dma-dept-radius: 8px;
+
+.o_dma_dashboard {
+
+    // ------------------------------------------------------------ department
+    .o_dma_dept {
+        border: 1px solid $border-color;
+        border-radius: $dma-dept-radius;
+        background-color: $o-view-background-color;
+        overflow: hidden;
+
+        + .o_dma_dept { margin-block-start: 1rem; }
+    }
+
+    .o_dma_dept_head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding: 0.9rem 1.1rem;
+        border-block-end: 1px solid $border-color;
+        background-color: mix($o-gray-100, $o-view-background-color, 60%);
+    }
+
+    .o_dma_dept_name {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+        color: $body-color;
+    }
+
+    .o_dma_dept_mission {
+        margin: 0.15rem 0 0;
+        max-inline-size: 62ch;
+        font-size: 0.82rem;
+        color: $text-muted;
+    }
+
+    .o_dma_dept_actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .o_dma_dept_total {
+        font-size: 0.8rem;
+        color: $text-muted;
+
+        &.o_dma_dept_clearall { color: $success; }
+    }
+
+    .o_dma_new_request {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        white-space: nowrap;
+    }
+
+    // -------------------------------------------------------------- sections
+    .o_dma_dept_sections {
+        display: grid;
+        // One column while the panel is narrow, two once there is room for two
+        // readable measures side by side. A section is a list of sentences, so
+        // it stops being readable well before it stops fitting.
+        grid-template-columns: 1fr;
+        gap: 0;
+
+        @include media-breakpoint-up(xl) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .o_dma_dept_section {
+        padding: 0.9rem 1.1rem 1rem;
+        border-block-start: 1px solid $border-color;
+        min-inline-size: 0;
+
+        &:first-child { border-block-start: 0; }
+
+        @include media-breakpoint-up(xl) {
+            border-inline-start: 1px solid $border-color;
+
+            &:nth-child(odd) { border-inline-start: 0; }
+            &:nth-child(-n + 2) { border-block-start: 0; }
+        }
+
+        // A section with nothing outstanding keeps its heading - "nothing to
+        // verify today" is the answer - but stops competing for attention.
+        &.o_dma_dept_clear {
+            .o_dma_sec_title { color: $text-muted; }
+        }
+    }
+
+    .o_dma_sec_head { margin-block-end: 0.5rem; }
+
+    .o_dma_sec_title {
+        display: flex;
+        align-items: baseline;
+        gap: 0.45rem;
+        margin: 0;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: $body-color;
+    }
+
+    .o_dma_sec_hint {
+        margin: 0.2rem 0 0;
+        max-inline-size: 68ch;
+        font-size: 0.78rem;
+        line-height: 1.4;
+        color: $text-muted;
+    }
+
+    .o_dma_sec_empty {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0.6rem 0 0;
+        font-size: 0.82rem;
+        color: $text-muted;
+
+        .fa { color: $success; }
+    }
+
+    // ------------------------------------------------------------------ rows
+    .o_dma_sec_rows {
+        list-style: none;
+        margin: 0.35rem 0 0;
+        padding: 0;
+    }
+
+    .o_dma_sec_row > button {
+        display: grid;
+        // ref+applicant | the sentence | the facts.
+        //
+        // The facts column is fit-content, not auto: `auto` sizes to
+        // max-content, so a row carrying two signature pills or three chips
+        // took the width it wanted and crushed the sentence beside it to a
+        // single character per line. Capping it makes the chips wrap and
+        // leaves the sentence - the part that actually varies per file - a
+        // floor it cannot be squeezed below.
+        grid-template-columns:
+            minmax(9rem, 14rem) minmax(11rem, 1fr) fit-content(20rem);
+        align-items: center;
+        gap: 0.25rem 0.9rem;
+        inline-size: 100%;
+        padding: 0.5rem 0.55rem;
+        border: 0;
+        border-radius: 6px;
+        background: none;
+        text-align: start;
+        color: inherit;
+
+        &:hover { background-color: mix($o-gray-100, $o-view-background-color, 70%); }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: -2px;
+        }
+
+        // Below xl the three columns stack: a row is a sentence with a label,
+        // and squeezing it into three columns on a narrow panel truncates the
+        // one part that carries the information.
+        @include media-breakpoint-down(lg) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .o_dma_sec_main {
+        display: flex;
+        flex-direction: column;
+        min-inline-size: 0;
+    }
+
+    .o_dma_sec_ref {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-weight: 600;
+        font-size: 0.84rem;
+        color: $body-color;
+    }
+
+    .o_dma_sec_star { color: $warning; }
+
+    .o_dma_sec_partner {
+        font-size: 0.78rem;
+        color: $text-muted;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_sec_note {
+        font-size: 0.8rem;
+        line-height: 1.35;
+        color: $body-color;
+        min-inline-size: 0;
+        // A returned file carries the whole reason a department typed, which
+        // can be a paragraph. Two lines is enough to know whether it is yours
+        // to act on; the file itself carries the rest.
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .o_dma_sec_facts {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.5rem;
+
+        @include media-breakpoint-down(lg) { justify-content: flex-start; }
+    }
+
+    // ---------------------------------------------------------- ratio / meter
+    .o_dma_sec_meter {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+
+        // The worklist scopes its own meter, so this band declares one rather
+        // than reaching into another component's selector. Completion, not
+        // ageing: a checklist that is 7 of 10 done is not "late", so this bar
+        // is a single measure hue and never the status ramp.
+        .o_dma_meter {
+            display: block;
+            inline-size: 3.5rem;
+            block-size: 6px;
+            background-color: $o-gray-200;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .o_dma_meter_fill {
+            display: block;
+            block-size: 100%;
+            background-color: $o-brand-primary;
+            border-start-end-radius: 3px;
+            border-end-end-radius: 3px;
+            transition: width 0.35s ease;
+        }
+    }
+
+    .o_dma_sec_ratio {
+        font-variant-numeric: tabular-nums;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: $body-color;
+    }
+
+    // ------------------------------------------------- the parallel signatures
+    .o_dma_sec_dual {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .o_dma_sign {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.1rem 0.45rem;
+        border: 1px solid $border-color;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        white-space: nowrap;
+    }
+
+    // Signed and outstanding differ by icon and by border weight as well as by
+    // hue, so the pair stays legible without colour.
+    .o_dma_sign_done {
+        border-color: rgba($success, 0.55);
+        color: darken($success, 12%);
+    }
+
+    .o_dma_sign_todo {
+        border-style: dashed;
+        border-color: rgba($warning, 0.7);
+        color: $orange-700;
+    }
+
+    // ------------------------------------------------------------------ chips
+    .o_dma_sec_chips {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        flex-wrap: wrap;
+    }
+
+    .o_dma_sec_age {
+        font-variant-numeric: tabular-nums;
+        font-size: 0.78rem;
+        color: $text-muted;
+        min-inline-size: 2.4rem;
+        text-align: end;
+    }
+
+    // ------------------------------------------------------------------- fees
+    .o_dma_fee_row > button {
+        grid-template-columns:
+            minmax(8rem, 11rem) minmax(6rem, 9rem) minmax(10rem, 1fr) fit-content(18rem);
+
+        @include media-breakpoint-down(lg) { grid-template-columns: 1fr; }
+    }
+
+    .o_dma_fee_type {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $body-color;
+    }
+
+    .o_dma_fee_receipt {
+        font-size: 0.76rem;
+        color: $text-muted;
+    }
+
+    .o_dma_fee_amount {
+        font-variant-numeric: tabular-nums;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: $body-color;
+        min-inline-size: 5rem;
+        text-align: end;
+    }
+
+    .o_dma_sec_foot {
+        margin-block-start: 0.25rem;
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding-inline: 0.55rem;
+        }
+    }
+
+    // ------------------------------------------------- the analytics gate
+    // A quiet disclosure, not a tab: the figures behind it are the
+    // Accreditation Manager's screen, and an officer who never opens it should
+    // not feel they are missing half the page.
+    .o_dma_analytics_toggle {
+        margin: 0.35rem 0 0;
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding-inline: 0;
+            font-size: 0.82rem;
+            color: $text-muted;
+
+            &:hover { color: $o-brand-primary; }
+        }
+    }
+
+    // ----------------------------------------------------------------- recent
+    .o_dma_recent {
+        margin-block-start: 1rem;
+
+        .o_dma_list button {
+            display: grid;
+            grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr) auto auto;
+            gap: 0.5rem 0.75rem;
+            align-items: center;
+
+            @include media-breakpoint-down(md) { grid-template-columns: 1fr; }
+        }
+    }
+
+    .o_dma_recent_ref { font-weight: 600; font-size: 0.82rem; }
+
+    .o_dma_recent_step {
+        font-size: 0.8rem;
+        color: $text-muted;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_dma_recent_date {
+        font-variant-numeric: tabular-nums;
+        font-size: 0.76rem;
+        color: $text-muted;
+    }
+}
+
+// Chips of this band only.
+//
+// Scoped to `.o_dma_dept` and `.o_dma_recent` rather than declared globally:
+// the worklist already styles `.o_dma_chip` at the same specificity and loads
+// earlier in the bundle, so an unscoped rule here would silently restyle the
+// step chips of the panel above.
+.o_dma_dept,
+.o_dma_recent {
+
+    .o_dma_chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        max-inline-size: 100%;
+        padding: 0.1rem 0.45rem;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        background-color: $o-view-background-color;
+        color: $text-muted;
+        font-size: 0.72rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // Every tone ships beside a word, so the hue is a second signal and never
+    // the only one.
+    .o_dma_tone_done {
+        border-color: rgba($success, 0.5);
+        color: darken($success, 12%);
+        background-color: rgba($success, 0.08);
+    }
+
+    .o_dma_tone_attention {
+        border-color: rgba($warning, 0.6);
+        color: $orange-700;
+        background-color: rgba($warning, 0.1);
+    }
+
+    .o_dma_tone_critical {
+        border-color: rgba($danger, 0.5);
+        color: darken($danger, 8%);
+        background-color: rgba($danger, 0.08);
+    }
+
+    .o_dma_tone_neutral {
+        border-color: $border-color;
+        color: $text-muted;
+    }
+}

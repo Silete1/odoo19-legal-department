@@ -65,15 +65,50 @@
                                     onOpenAll.bind="openMyTurn"/>
                 </div>
 
-                <!-- ======================================== BAND B - CASELOAD -->
+                <!-- ====================================== BAND B - DEPARTMENT -->
+                <!-- What this officer's department is for, and what each of
+                     its steps is asking of them on these particular files.
+                     The desk above says how much; this says what to do with
+                     it, which is the question a count cannot answer. Absent
+                     for the Accreditation Manager, who holds every role and
+                     would be shown the whole directorate back. -->
+                <t t-if="data.role_brief.departments.length">
+                    <header class="o_dma_band_head">
+                        <h2 class="o_dma_band_title" t-esc="label.departmentTitle"/>
+                    </header>
+
+                    <DepartmentDesk brief="data.role_brief"
+                                    onOpenRecord.bind="openRecord"
+                                    onOpenFee.bind="openFee"
+                                    onOpenSection.bind="openSection"
+                                    onNewRequest.bind="newRequest"/>
+                </t>
+
+                <!-- ======================================== BAND C - CASELOAD -->
                 <header class="o_dma_band_head">
                     <h2 class="o_dma_band_title" t-esc="label.caseloadTitle"/>
+                    <span class="o_dma_band_sub" t-if="!data.role_brief.is_manager"
+                          t-esc="label.caseloadHint"/>
                 </header>
 
                 <PipelineRibbon steps="data.pipeline" total="data.in_process"
                                 withApplicant="data.with_applicant"
                                 onOpen.bind="openStep"/>
 
+                <!-- The directorate-wide analysis below is the Accreditation
+                     Manager's screen. An officer can ask for it, but does not
+                     have to scroll past a report to reach their own files. -->
+                <p class="o_dma_analytics_toggle" t-if="!data.role_brief.is_manager">
+                    <button class="btn btn-link btn-sm"
+                            t-att-aria-expanded="state.analytics ? 'true' : 'false'"
+                            t-on-click="() => this.toggleAnalytics()">
+                        <i t-attf-class="fa {{ state.analytics ? 'fa-caret-down' : 'fa-caret-right' }}"
+                           role="img" aria-hidden="true"/>
+                        <t t-esc="state.analytics ? label.hideCaseload : label.showCaseload"/>
+                    </button>
+                </p>
+
+                <t t-if="showsAnalytics">
                 <div class="o_dma_grid o_dma_grid_wide">
                     <section class="o_dma_card">
                         <header class="o_dma_card_head">
@@ -145,7 +180,7 @@
                     </div>
                 </div>
 
-                <!-- ===================================== BAND C - PERFORMANCE -->
+                <!-- ===================================== BAND D - PERFORMANCE -->
                 <header class="o_dma_band_head">
                     <h2 class="o_dma_band_title" t-esc="label.performanceTitle"/>
                     <!-- The control sits on the band it scopes, not in the
@@ -233,6 +268,7 @@
                         <span class="o_dma_key o_dma_fill_rejected"/><t t-esc="label.rejected"/>
                     </p>
                 </section>
+                </t>
 
             </div>
         </Layout>

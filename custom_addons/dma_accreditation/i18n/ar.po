@@ -6783,3 +6783,594 @@ msgid "“%(step)s” is %(late)s past its %(target)s target with %(role)s."
 msgstr ""
 "الخطوة “%(step)s” تأخرت %(late)s عن مدتها المستهدفة %(target)s لدى %(role)s."
 
+
+# The department band of the workspace: what each department is for,
+# what its current step expects, and why a file is not moving.
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "%s minute(s) attached"
+msgstr "%s من المحاضر مرفقة"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "%s more"
+msgstr "%s إضافية"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "%s not provided"
+msgstr "%s غير مقدَّمة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "%s scope(s)"
+msgstr "%s من النطاقات"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "%s to review"
+msgstr "%s بانتظار التدقيق"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "A department sent these back. Obtain what the reason asks for from the applicant, then resume the file."
+msgstr "أعادها أحد الأقسام. احصل مما يطلبه السبب من مقدِّم الطلب ثم استأنف الملف."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Accept to send it to the Legal Department, or return it with a reason."
+msgstr "اقبله لإحالته إلى القسم القانوني، أو أعِده مع بيان السبب."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Approve to send it to the Certifications Division, or return it with a reason."
+msgstr "وافق عليه لإحالته إلى شعبة التصديقات، أو أعِده مع بيان السبب."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Awaiting your initial acceptance"
+msgstr "بانتظار قبولك الأولي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Both copies are in. Confirm the SOP submission."
+msgstr "وردت النسختان. صادِق على تقديم الإجراءات التشغيلية."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Both departments have signed. The file can move to the demonstration fee."
+msgstr "وقّع القسمان كلاهما. يمكن نقل الملف إلى رسم المظاهرة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Check each payment against its receipt, then confirm it. A confirmed fee is evidence and cannot be deleted."
+msgstr "طابِق كل دفعة مع وصلها ثم صادِق عليها. والرسم المصادَق عليه سند إثبات لا يمكن حذفه."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Check each required document (الأوليات) and accept it, or record it as missing or invalid. Office accreditation is granted only once every required item is accepted."
+msgstr "دقّق كل مستند مطلوب من الأوليات واقبله، أو سجّله ناقصاً أو غير صالح. ولا يُمنح التفويض المكتبي إلا بعد قبول كل بند مطلوب."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Checklist complete"
+msgstr "قائمة الأوليات مكتملة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Collect the Standing Operating Procedures and confirm their receipt for appraisal."
+msgstr "استلام الإجراءات التشغيلية (SOP) والمصادقة على تسلّمها لغرض التقييم."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Confirm the accreditation fees against their receipts and sign the Finance half of the dual confirmation."
+msgstr "المصادقة على رسوم التفويض مقابل وصولاتها، وتوقيع الجانب المالي من مصادقة الطرفين."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Decide whether the Directorate accepts an application, and issue the operational accreditation once the Legal Department has refined the decision."
+msgstr "البتّ في قبول الدائرة للطلب، ومنح تفويض العمليات بعد تنقيح القسم القانوني للقرار."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Dual confirmation"
+msgstr "مصادقة الطرفين"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Every prerequisite is accepted. The office accreditation can be granted."
+msgstr "قُبلت جميع الأوليات. يمكن منح التفويض المكتبي."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Every registered file has been forwarded."
+msgstr "أُحيلت جميع الملفات المسجَّلة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Fees awaiting confirmation"
+msgstr "رسوم بانتظار المصادقة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Files being opened"
+msgstr "ملفات قيد الفتح"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Files for decision"
+msgstr "ملفات للبتّ"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Files the procedure cannot move past until Finance has settled the fee of the step."
+msgstr "ملفات لا يمكن للإجراء تجاوزها حتى يسوّي القسم المالي رسم المرحلة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Final legal refinement"
+msgstr "التنقيح القانوني النهائي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Finance and Operations sign this step independently. Neither waits for the other, and the file only moves on once both have."
+msgstr "يوقّع القسم المالي وقسم العمليات هذه المرحلة كلٌ على حدة. لا ينتظر أحدهما الآخر، ولا يمضي الملف إلا بتوقيعهما معاً."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Give the legal opinion on an application, and later put the committee decision into the wording the certificate is issued on."
+msgstr "إبداء الرأي القانوني في الطلب، ثم صياغة قرار اللجنة بالنص الذي تُصدَر الشهادة بموجبه."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Hide the directorate figures"
+msgstr "إخفاء أرقام الدائرة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Initial legal review"
+msgstr "التدقيق القانوني الأولي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Intake started but not yet registered. Complete the applicant and the requested scopes, then submit."
+msgstr "بدأ استلامها ولم تُسجَّل بعد. أكمل بيانات مقدِّم الطلب والنطاقات المطلوبة ثم قدِّمها."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Missing before it can be confirmed: %s."
+msgstr "ينقصه قبل المصادقة: %s."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "New Accreditation Request"
+msgstr "طلب تفويض جديد"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No application is waiting for the initial acceptance."
+msgstr "لا يوجد طلب بانتظار القبول الأولي."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No application is waiting for the initial legal review."
+msgstr "لا يوجد طلب بانتظار التدقيق القانوني الأولي."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No committee decision is waiting for refinement."
+msgstr "لا يوجد قرار لجنة بانتظار التنقيح."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No fee is waiting to be confirmed."
+msgstr "لا توجد رسوم بانتظار المصادقة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No file is at the dual confirmation."
+msgstr "لا يوجد ملف عند مصادقة الطرفين."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No file is before the Accreditation Committee."
+msgstr "لا يوجد ملف معروض على لجنة منح التفويض."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No file is half-open on the desk."
+msgstr "لا يوجد ملف غير مكتمل على المكتب."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No file is waiting for the SOP to be collected."
+msgstr "لا يوجد ملف بانتظار استلام الإجراءات التشغيلية."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No minutes attached"
+msgstr "لا محاضر مرفقة"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "No receipt number"
+msgstr "لا يوجد رقم وصل"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No scope yet"
+msgstr "لم يُحدَّد نطاق بعد"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "No step is held up by a fee."
+msgstr "لا توجد مرحلة متوقفة بسبب رسم."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Nothing has been returned to the reception desk."
+msgstr "لم يُعَد أي ملف إلى مكتب الاستلام."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "Nothing outstanding"
+msgstr "لا شيء معلَّق"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Open accreditation files, complete their intake and forward them to the General Director."
+msgstr "فتح ملفات التفويض واستكمال بيانات استلامها وإحالتها إلى مدير عام الدائرة."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "Open all"
+msgstr "فتح الكل"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Open the operational phase to start collecting the SOP."
+msgstr "افتح المرحلة العملياتية للبدء باستلام الإجراءات التشغيلية."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Open the operational phase, then record the paper and the electronic Standing Operating Procedures as they arrive."
+msgstr "افتح المرحلة العملياتية، ثم سجّل النسختين الورقية والإلكترونية من الإجراءات التشغيلية عند ورودهما."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Paper SOP"
+msgstr "النسخة الورقية"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Prerequisites to verify"
+msgstr "أوليات بانتظار التدقيق"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Ready to submit."
+msgstr "جاهز للتقديم."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Receipt details complete. Confirm the payment."
+msgstr "بيانات الوصل مكتملة. صادِق على الدفع."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Record the decision, the date of the session and the reasoned decision text, and attach the signed minutes. An approval goes on to the Legal Department for refinement; a rejection closes the file."
+msgstr "سجّل القرار وتاريخ الجلسة ونص القرار المسبَّب، وأرفق المحضر الموقَّع. الموافقة تُحال إلى القسم القانوني للتنقيح، والرفض يغلق الملف."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Recorded in full. Confirming it sends the file to the Legal Department for refinement."
+msgstr "سُجّل كاملاً. المصادقة عليه تُحيل الملف إلى القسم القانوني للتنقيح."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Refine the committee decision text before the certificate can be issued."
+msgstr "نقّح نص قرار اللجنة قبل أن يتسنى إصدار الشهادة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Refined text drafted. Issue the operational accreditation."
+msgstr "النص المنقَّح جاهز. امنح تفويض العمليات."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Register and confirm the SOP reading fee on the file."
+msgstr "سجّل رسم قراءة الإجراءات التشغيلية على الملف وصادِق عليه."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Register and confirm the operational demonstration fee."
+msgstr "سجّل رسم المظاهرة العملياتية وصادِق عليه."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Registered, not yet forwarded"
+msgstr "مسجَّلة ولم تُحَل بعد"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Registered. Forward it to the General Director."
+msgstr "مسجَّل. أحِله إلى مدير عام الدائرة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Resumes at %s"
+msgstr "يُستأنف عند %s"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Resumes at intake"
+msgstr "يُستأنف عند الاستلام"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Review the application itself, before the prerequisites are verified. The outcome is an approval, a return or a rejection."
+msgstr "تدقيق الطلب نفسه قبل تدقيق الأوليات. والنتيجة موافقة أو إعادة أو رفض."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "SOP collection"
+msgstr "استلام الإجراءات التشغيلية"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "Show the directorate figures"
+msgstr "عرض أرقام الدائرة"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Sit on the file, record the accreditation decision and the minutes of the session."
+msgstr "النظر في الملف وتسجيل قرار التفويض ومحضر الجلسة."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Steps waiting on Finance"
+msgstr "مراحل بانتظار القسم المالي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Still outstanding: %s."
+msgstr "ما يزال معلَّقاً: %s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Still to record: %s."
+msgstr "ما يزال يلزم تسجيل: %s."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Text drafted"
+msgstr "النص مُحرَّر"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Text outstanding"
+msgstr "النص غير مُحرَّر"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "The Accreditation Committee has decided. Put its decision into the legal wording that the certificate is issued on."
+msgstr "أصدرت لجنة منح التفويض قرارها. صُغ القرار بالنص القانوني الذي تُصدَر الشهادة بموجبه."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "The SOP reading fee is confirmed. Move the file to the dual confirmation."
+msgstr "صودق على رسم قراءة الإجراءات التشغيلية. انقل الملف إلى مصادقة الطرفين."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "The demonstration fee is confirmed. Send the file to the Accreditation Committee."
+msgstr "صودق على رسم المظاهرة. أحِل الملف إلى لجنة منح التفويض."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "The first decision on the application: whether the Directorate takes the file forward at all."
+msgstr "القرار الأول في الطلب: هل تمضي الدائرة بالملف أصلاً."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "The office accreditation stays blocked until every required prerequisite is provided and accepted."
+msgstr "يبقى التفويض المكتبي متوقفاً حتى تُقدَّم كل الأوليات المطلوبة وتُقبَل."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/dashboard/accreditation_dashboard.js:0
+msgid "The whole directorate's open files, for context. Your own work is above."
+msgstr "ملفات الدائرة المفتوحة كافة، للسياق. أما عملك أنت فأعلاه."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "These carry a reference and a submission date but are still on this desk."
+msgstr "تحمل إشارة وتاريخ تقديم لكنها ما تزال على هذا المكتب."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Verify the prerequisites of every application and grant the office accreditation once they are all in order."
+msgstr "تدقيق أوليات كل طلب ومنح التفويض المكتبي متى استوفيت جميعها."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "What you last put through"
+msgstr "آخر ما أنجزته"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "You have not recorded a decision yet."
+msgstr "لم تسجّل أي قرار بعد."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "You have signed. The file is waiting for the other department."
+msgstr "وقّعتَ أنت. الملف بانتظار القسم الآخر."
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "Your confirmation is outstanding."
+msgstr "مصادقتك ما تزال معلَّقة."
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "Your department"
+msgstr "قسمك"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "amount"
+msgstr "المبلغ"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "awaiting"
+msgstr "بالانتظار"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "d"
+msgstr "ي"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "electronic copy"
+msgstr "النسخة الإلكترونية"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "outstanding"
+msgstr "معلَّق"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "paper copy"
+msgstr "النسخة الورقية"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "receipt date"
+msgstr "تاريخ الوصل"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "receipt number"
+msgstr "رقم الوصل"
+
+#. module: dma_accreditation
+#. odoo-javascript
+#: code:addons/dma_accreditation/static/src/components/department/department_desk.js:0
+msgid "signed"
+msgstr "مُصادَق"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "the decision"
+msgstr "القرار"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "the decision text"
+msgstr "نص القرار"
+
+#. module: dma_accreditation
+#. odoo-python
+#: code:addons/dma_accreditation/models/dma_role_workspace.py:0
+msgid "the session date"
+msgstr "تاريخ الجلسة"

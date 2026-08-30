@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.DepartmentDesk">
+        <div class="o_dma_dept" t-foreach="props.brief.departments" t-as="dept"
+             t-key="dept.key">
+
+            <!-- What the department is for. One sentence, stated once, above
+                 its work - not repeated as a banner on every file below. -->
+            <header class="o_dma_dept_head">
+                <div class="o_dma_dept_id">
+                    <h3 class="o_dma_dept_name" t-esc="dept.label"/>
+                    <p class="o_dma_dept_mission" t-esc="dept.mission"/>
+                </div>
+                <div class="o_dma_dept_actions">
+                    <span class="o_dma_dept_total" t-if="dept.outstanding">
+                        <b dir="ltr" t-esc="dept.outstanding"/><t>&#160;</t>
+                        <t t-esc="label.outstanding"/>
+                    </span>
+                    <span class="o_dma_dept_total o_dma_dept_clearall" t-else=""
+                          t-esc="label.nothing"/>
+                    <!-- Reception is the department that opens files, so the
+                         action that starts one belongs on its desk rather than
+                         behind the record list of a shared menu. -->
+                    <button class="btn btn-primary btn-sm o_dma_new_request"
+                            t-if="props.brief.can_create and dept.key === 'reception'"
+                            t-on-click="() => this.props.onNewRequest()">
+                        <i class="fa fa-plus" role="img" aria-hidden="true"/>
+                        <t t-esc="label.newRequest"/>
+                    </button>
+                </div>
+            </header>
+
+            <div class="o_dma_dept_sections">
+                <section t-foreach="dept.sections" t-as="section" t-key="section.key"
+                         t-att-class="sectionClass(section)">
+
+                    <header class="o_dma_sec_head">
+                        <h4 class="o_dma_sec_title">
+                            <t t-esc="section.title"/>
+                            <span class="o_dma_count" dir="ltr" t-if="section.count"
+                                  t-esc="section.count"/>
+                        </h4>
+                        <p class="o_dma_sec_hint" t-esc="section.hint"/>
+                    </header>
+
+                    <!-- Empty is a result, not a blank. It says what would be
+                         here, so an officer knows the panel is working. -->
+                    <p class="o_dma_sec_empty" t-if="!section.rows.length">
+                        <i class="fa fa-check" role="img" aria-hidden="true"/>
+                        <t t-esc="section.empty"/>
+                    </p>
+
+                    <t t-else="">
+                        <!-- ================================ FILES / DUAL -->
+                        <ul class="o_dma_sec_rows" t-if="section.kind !== 'fees'">
+                            <li t-foreach="section.rows" t-as="row" t-key="row.id"
+                                class="o_dma_sec_row">
+                                <button t-on-click="() => this.props.onOpenRecord(row.id)"
+                                        t-attf-aria-label="{{ row.name }} - {{ row.state_label }}">
+                                    <span class="o_dma_sec_main">
+                                        <span class="o_dma_sec_ref">
+                                            <i class="fa fa-star o_dma_sec_star" t-if="row.urgent"
+                                               role="img" t-att-title="label.urgent"/>
+                                            <t t-esc="row.name"/>
+                                        </span>
+                                        <span class="o_dma_sec_partner" t-esc="row.partner"/>
+                                    </span>
+
+                                    <span class="o_dma_sec_note" t-esc="row.note"/>
+
+                                    <span class="o_dma_sec_facts">
+                                        <!-- A completion ratio where the step
+                                             has one. dir="ltr": a bare "7 / 10"
+                                             is reordered by the bidi algorithm
+                                             inside an Arabic paragraph. -->
+                                        <span class="o_dma_sec_meter" t-if="row.meter">
+                                            <span class="o_dma_meter" aria-hidden="true">
+                                                <span class="o_dma_meter_fill"
+                                                      t-attf-style="width: {{ row.meter.percent }}%;"/>
+                                            </span>
+                                            <span class="o_dma_sec_ratio" dir="ltr"
+                                                  t-esc="row.meter.label"/>
+                                        </span>
+
+                                        <!-- The parallel step, as two
+                                             signatures. Never one status: the
+                                             question here is which desk still
+                                             holds it, and a single badge
+                                             cannot say. -->
+                                        <span class="o_dma_sec_dual" t-if="row.dual">
+                                            <span t-attf-class="o_dma_sign {{ row.dual.mine_done ? 'o_dma_sign_done' : 'o_dma_sign_todo' }}"
+                                                  t-attf-title="{{ row.dual.mine_label }}: {{ row.dual.mine_done ? label.signed : label.awaiting }}">
+                                                <i t-attf-class="fa {{ row.dual.mine_done ? 'fa-check' : 'fa-clock-o' }}"
+                                                   role="img" aria-hidden="true"/>
+                                                <t t-esc="row.dual.mine_label"/>
+                                            </span>
+                                            <span t-attf-class="o_dma_sign {{ row.dual.other_done ? 'o_dma_sign_done' : 'o_dma_sign_todo' }}"
+                                                  t-attf-title="{{ row.dual.other_by ? row.dual.other_by + ' - ' + row.dual.other_on : row.dual.other_label }}">
+                                                <i t-attf-class="fa {{ row.dual.other_done ? 'fa-check' : 'fa-clock-o' }}"
+                                                   role="img" aria-hidden="true"/>
+                                                <t t-esc="row.dual.other_label"/>
+                                            </span>
+                                        </span>
+
+                                        <span class="o_dma_sec_chips">
+                                            <span t-foreach="row.chips" t-as="chip"
+                                                  t-key="chip_index"
+                                                  t-attf-class="o_dma_chip o_dma_tone_{{ chip.tone }}"
+                                                  t-esc="chip.label"/>
+                                        </span>
+
+                                        <span class="o_dma_sec_age" dir="ltr"
+                                              t-att-title="label.atThisStep">
+                                            <t t-esc="row.waiting_days"/><t t-esc="label.days"/>
+                                        </span>
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- ========================================= FEES -->
+                        <ul class="o_dma_sec_rows" t-else="">
+                            <li t-foreach="section.rows" t-as="row" t-key="row.id"
+                                class="o_dma_sec_row o_dma_fee_row">
+                                <button t-on-click="() => this.props.onOpenFee(row.id)"
+                                        t-attf-aria-label="{{ row.fee_type }} - {{ row.name }}">
+                                    <span class="o_dma_sec_main">
+                                        <span class="o_dma_sec_ref" t-esc="row.name"/>
+                                        <span class="o_dma_sec_partner" t-esc="row.partner"/>
+                                    </span>
+                                    <span class="o_dma_fee_type" t-esc="row.fee_type"/>
+                                    <span class="o_dma_sec_note" t-esc="row.note"/>
+                                    <span class="o_dma_sec_facts">
+                                        <span class="o_dma_fee_receipt"
+                                              t-if="row.receipt_number">
+                                            <t t-esc="label.receipt"/><t>&#160;</t>
+                                            <span dir="ltr" t-esc="row.receipt_number"/>
+                                        </span>
+                                        <span class="o_dma_chip o_dma_tone_attention"
+                                              t-else="" t-esc="label.noReceipt"/>
+                                        <span t-attf-class="o_dma_chip {{ row.attachments ? 'o_dma_tone_done' : 'o_dma_tone_attention' }}"
+                                              t-if="true">
+                                            <i class="fa fa-paperclip" role="img" aria-hidden="true"/>
+                                            <span dir="ltr" t-esc="row.attachments"/>
+                                        </span>
+                                        <span class="o_dma_fee_amount" dir="ltr">
+                                            <t t-esc="row.amount"/><t>&#160;</t>
+                                            <t t-esc="row.currency"/>
+                                        </span>
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <footer class="o_dma_sec_foot" t-if="overflow(section)">
+                            <button class="btn btn-link btn-sm"
+                                    t-on-click="() => this.props.onOpenSection(section)">
+                                <t t-esc="label.openAll"/>
+                                <span dir="ltr">
+                                    (<t t-esc="overflow(section)"/>)
+                                </span>
+                                <i class="fa fa-angle-right" role="img" aria-hidden="true"/>
+                            </button>
+                        </footer>
+                    </t>
+                </section>
+            </div>
+        </div>
+
+        <!-- Closing the loop on the morning's work. Deliberately last and
+             deliberately quiet: it is a receipt, not a queue. -->
+        <section class="o_dma_card o_dma_recent" t-if="props.brief.recent.length">
+            <h3 class="o_dma_card_title" t-esc="label.recentTitle"/>
+            <ul class="o_dma_list">
+                <li t-foreach="props.brief.recent" t-as="item" t-key="item_index">
+                    <button t-on-click="() => this.props.onOpenRecord(item.id)">
+                        <span class="o_dma_recent_ref" t-esc="item.name"/>
+                        <span class="o_dma_recent_step" t-esc="item.step"/>
+                        <span t-attf-class="o_dma_chip o_dma_tone_{{ item.tone }}"
+                              t-esc="item.decision"/>
+                        <span class="o_dma_recent_date" dir="ltr" t-esc="item.date"/>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </t>
+
+</templates>

@@ -11,6 +11,7 @@ import { DmaChart } from "../chart/dma_chart";
 import { KpiTile } from "../kpi_tile/kpi_tile";
 import { ActionWorklist } from "../action_worklist/action_worklist";
 import { PipelineRibbon } from "../pipeline_ribbon/pipeline_ribbon";
+import { DepartmentDesk } from "../department/department_desk";
 
 /**
  * The directorate workspace.
@@ -29,7 +30,9 @@ import { PipelineRibbon } from "../pipeline_ribbon/pipeline_ribbon";
  */
 export class AccreditationDashboard extends Component {
     static template = "dma_accreditation.AccreditationDashboard";
-    static components = { Layout, DmaChart, KpiTile, ActionWorklist, PipelineRibbon };
+    static components = {
+        Layout, DmaChart, KpiTile, ActionWorklist, PipelineRibbon, DepartmentDesk,
+    };
     static props = { ...standardActionServiceProps };
 
     static labels = {
@@ -45,7 +48,12 @@ export class AccreditationDashboard extends Component {
         expiringTile: _t("Expiring in 90 days"),
         expiringHint: _t("Accreditations to renew"),
 
+        departmentTitle: _t("Your department"),
+        newRequest: _t("New Accreditation Request"),
         caseloadTitle: _t("The caseload"),
+        caseloadHint: _t("The whole directorate's open files, for context. Your own work is above."),
+        showCaseload: _t("Show the directorate figures"),
+        hideCaseload: _t("Hide the directorate figures"),
         queues: _t("Department queues"),
         queuesHint: _t("Every step your department owns, including files a colleague already signed."),
         ageingTitle: _t("Where work is standing still"),
@@ -85,7 +93,12 @@ export class AccreditationDashboard extends Component {
         this.orm = useService("orm");
         this.action = useService("action");
         this.colorScheme = cookie.get("color_scheme");
-        this.state = useState({ data: null, window: 180, busy: false });
+        this.state = useState({
+            data: null, window: 180, busy: false,
+            // Off for an officer, irrelevant for a manager (who always
+            // sees the figures); the toggle only exists for the former.
+            analytics: false,
+        });
 
         onWillStart(() => this.load());
     }
@@ -314,6 +327,61 @@ export class AccreditationDashboard extends Component {
         if (queue) {
             this.openRequests(queue.label, queue.domain);
         }
+    }
+
+    openFee(feeId) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            res_model: "dma.fee.payment",
+            res_id: feeId,
+            views: [[false, "form"]],
+            target: "current",
+        });
+    }
+
+    /**
+     * A section's own "open all". Fees open on their own model; everything
+     * else is a request domain, and both come from the server so the browser
+     * never composes a domain the record rules would disagree with.
+     */
+    openSection(section) {
+        if (section.kind === "fees") {
+            this.action.doAction({
+                type: "ir.actions.act_window",
+                name: section.title,
+                res_model: "dma.fee.payment",
+                views: [[false, "list"], [false, "form"]],
+                domain: section.domain,
+                target: "current",
+            });
+            return;
+        }
+        this.openRequests(section.title, section.domain);
+    }
+
+    /** Reception opens files; the action that starts one belongs on its desk. */
+    newRequest() {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            name: this.label.newRequest,
+            res_model: "dma.accreditation.request",
+            views: [[false, "form"]],
+            target: "current",
+        });
+    }
+
+    /**
+     * The directorate-wide figures are the Accreditation Manager's screen.
+     * An officer gets them on request rather than by default: a reception
+     * clerk opening the app to a cycle-time percentile has to scroll past a
+     * report to reach their own three files.
+     */
+    get showsAnalytics() {
+        return this.data.role_brief.is_manager || this.state.analytics;
+    }
+
+    toggleAnalytics() {
+        this.state.analytics = !this.state.analytics;
     }
 
     /** The cohort caveat as one sentence, rather than two joined in markup. */
