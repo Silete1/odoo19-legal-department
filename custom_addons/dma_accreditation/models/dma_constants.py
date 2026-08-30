@@ -136,3 +136,43 @@ def role_label(env, role):
     """Return the *translated* label of ``role`` for the current user language."""
     field = env["dma.approval.line"]._fields["role"]
     return dict(field._description_selection(env)).get(role, role)
+
+
+# ---------------------------------------------------------------------------
+# Time control - which steps carry a service level, and which do not.
+# ---------------------------------------------------------------------------
+#: A decided file: nothing is owed by anybody any more, so no clock runs.
+CLOSED_STATES = ("authorized", "rejected")
+
+#: The ball is in the applicant's court. The Directorate cannot be late for
+#: something it is not holding, so the clock is *paused* rather than absent -
+#: the distinction matters when a manager asks why a file shows no deadline.
+PAUSED_STATES = ("returned",)
+
+#: Steps a service level can be defined on: everything the Directorate itself
+#: is expected to act on.
+SLA_TRACKED_STATES = [state for state in MAIN_PATH_STATES if state not in CLOSED_STATES]
+
+#: SLA verdicts, worst last: :func:`worst_sla_state` relies on this ordering.
+SLA_STATE_SELECTION = [
+    ("not_applicable", "No Service Level"),
+    ("paused", "Paused"),
+    ("on_track", "On Track"),
+    ("warning", "Due Soon"),
+    ("overdue", "Overdue"),
+    ("escalated", "Escalated"),
+]
+
+#: state -> ordinal, used to pick the worse of two verdicts.
+SLA_STATE_RANK = {key: index for index, (key, _label) in enumerate(SLA_STATE_SELECTION)}
+
+
+def worst_sla_state(states):
+    """Return the most severe verdict of ``states`` (empty -> not applicable).
+
+    The parallel dual confirmation has two responsible departments at once, so
+    the file as a whole is exactly as late as its latest party.
+    """
+    return max(
+        states, key=lambda state: SLA_STATE_RANK.get(state, 0), default="not_applicable",
+    )

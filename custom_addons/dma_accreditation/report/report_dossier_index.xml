@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         Accreditation dossier index - the cover sheet of the evidence file.
+
+         An auditor asked for "the complete evidence and decision trail of
+         DMA/ACC/2026/0042" gets this on top of the archive: what the file
+         contains, what state each piece of evidence is in, what is missing,
+         and every decision that was taken, in order, with how long each step
+         took.
+
+         Same bilingual house style as the letter and the certificate:
+         Arabic-first, Latin subtitles smaller and greyed, the shared
+         letterhead and the verification QR.
+         ================================================================ -->
+    <template id="report_dossier_index_document">
+        <t t-call="web.basic_layout">
+            <div class="page dma-page" dir="rtl">
+                <!-- One reading of the file, shared with the screen and the
+                     downloadable archive. -->
+                <t t-set="dossier" t-value="dossier_data[o.id]"/>
+                <t t-call="dma_accreditation.report_dma_letterhead"/>
+
+                <h2 class="dma-subject">فهرس ملف التفويض</h2>
+                <div class="dma-subject-en"><span t-out="'Accreditation Dossier Index'"/></div>
+
+                <div class="row dma-refs">
+                    <div class="col-6 text-start">
+                        <div><b>تاريخ الطباعة / Printed:</b>
+                            <span t-out="context_timestamp(datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M')"/>
+                        </div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <div><b>رقم الطلب / Request:</b> <span t-out="o.name"/></div>
+                        <div><b>الحالة / Status:</b> <span t-field="o.state"/></div>
+                    </div>
+                </div>
+
+                <table class="table table-sm dma-table">
+                    <tbody>
+                        <tr>
+                            <th style="width: 30%;">المؤسسة / Organisation</th>
+                            <td t-out="o.partner_id.name"/>
+                        </tr>
+                        <tr>
+                            <th>نطاقات العمل / Scopes</th>
+                            <td>
+                                <t t-if="o.scope_ids">
+                                    <span t-out="', '.join(o.scope_ids.mapped('name'))"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>التفويض المكتبي / Office accreditation</th>
+                            <td>
+                                <t t-if="o.office_ref">
+                                    <span t-out="o.office_ref"/> —
+                                    <span t-out="o.office_date" t-options='{"widget": "date"}'/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>شهادة تفويض العمليات / Operational certificate</th>
+                            <td>
+                                <t t-if="o.certificate_ref">
+                                    <span t-out="o.certificate_ref"/> —
+                                    <span t-out="o.issue_date" t-options='{"widget": "date"}'/>
+                                    → <span t-out="o.expiry_date" t-options='{"widget": "date"}'/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>عدد المرفقات / Documents in the dossier</th>
+                            <td dir="ltr" style="text-align: right;">
+                                <span t-out="dossier['file_count']"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- What is missing goes first: it is the reason a reader
+                     picks the index up. -->
+                <t t-if="dossier['missing']">
+                    <h4 class="dma-h4">أوليات ناقصة أو غير مقبولة / Missing or unaccepted evidence</h4>
+                    <table class="table table-sm dma-table">
+                        <tbody>
+                            <tr t-foreach="dossier['missing']" t-as="item">
+                                <td t-out="item"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <!-- One block per heading of the paper file. -->
+                <t t-foreach="dossier['sections']" t-as="section">
+                    <h4 class="dma-h4">
+                        <span t-out="section_index + 1"/>.
+                        <span t-out="section['label']"/>
+                    </h4>
+
+                    <t t-if="section.get('documents')">
+                        <table class="table table-sm dma-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 34%;">المستمسك / Document</th>
+                                    <th>مطلوب</th>
+                                    <th>النتيجة / Result</th>
+                                    <th>الصلاحية / Validity</th>
+                                    <th>الإصدار</th>
+                                    <th>المرفقات</th>
+                                    <th>المدقق / Reviewer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="section['documents']" t-as="doc">
+                                    <td t-out="doc['label']"/>
+                                    <td><span t-out="'نعم' if doc['required'] else 'لا'"/></td>
+                                    <td t-out="doc['review_label']"/>
+                                    <td>
+                                        <t t-if="doc['validity_state'] != 'no_expiry'">
+                                            <span t-out="doc['validity_label']"/>
+                                            <t t-if="doc['expiry_date']">
+                                                (<span dir="ltr" t-out="doc['expiry_date']"/>)
+                                            </t>
+                                        </t>
+                                        <t t-else="">-</t>
+                                    </td>
+                                    <td dir="ltr" t-out="doc['version']"/>
+                                    <td dir="ltr" t-out="len(doc['entries'])"/>
+                                    <td t-out="doc['reviewer'] or '-'"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+
+                    <t t-elif="section.get('history')">
+                        <table class="table table-sm dma-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 26%;">المرحلة / Step</th>
+                                    <th>الدائرة / Department</th>
+                                    <th>من / From</th>
+                                    <th>إلى / To</th>
+                                    <th>المدة / Duration</th>
+                                    <th>المسؤول / By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="section['history']" t-as="visit">
+                                    <td t-out="visit['step']"/>
+                                    <td t-out="visit['role'] or '-'"/>
+                                    <td dir="ltr" t-out="visit['entered_on'] or '-'"/>
+                                    <td dir="ltr">
+                                        <t t-if="visit['open']">—</t>
+                                        <t t-else="" t-out="visit['left_on'] or '-'"/>
+                                    </td>
+                                    <td dir="ltr" t-out="visit['duration']"/>
+                                    <td t-out="visit['user'] or '-'"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+
+                    <t t-else="">
+                        <t t-if="section['entries']">
+                            <table class="table table-sm dma-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 44%;">الملف / File</th>
+                                        <th>الوصف / Description</th>
+                                        <th>التاريخ / Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="section['entries']" t-as="entry">
+                                        <td>
+                                            <span t-out="entry['name']"/>
+                                            <t t-if="entry['superseded']">
+                                                <span class="dma-muted"> (مستبدل / superseded)</span>
+                                            </t>
+                                        </td>
+                                        <td t-out="entry['label']"/>
+                                        <td dir="ltr" t-out="entry['date'] or '-'"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <p t-else="" class="dma-muted">
+                            لا توجد مرفقات تحت هذا العنوان / Nothing filed under this heading.
+                        </p>
+                    </t>
+                </t>
+
+                <t t-call="dma_accreditation.report_dma_qr_block"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_dossier_index">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="dma_accreditation.report_dossier_index_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_dossier_index" model="ir.actions.report">
+        <field name="name">Accreditation Dossier Index</field>
+        <field name="model">dma.accreditation.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dma_accreditation.report_dossier_index</field>
+        <field name="report_file">dma_accreditation.report_dossier_index</field>
+        <field name="binding_model_id" ref="model_dma_accreditation_request"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_dma_letter"/>
+        <field name="print_report_name">'Accreditation Dossier Index - %s' % (object.name)</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ================================================================
+             Which prerequisites are pieces of evidence that go out of date,
+             and a stable code for each so a downloaded dossier has readable
+             folder names whatever the interface language.
+
+             What is deliberately NOT here: any default validity period. How
+             long an Iraqi company registration certificate or a third party
+             liability policy stays valid is written on the document and in the
+             law, not in a module. The Certifications Division types the expiry
+             date it reads; the module warns before it, and nothing more.
+
+             `blocks_on_expiry` is left off everywhere. Turning a lapsed
+             insurance policy into a hard gate on the office accreditation is a
+             decision of the Directorate, and the Accreditation Manager takes
+             it per document type in Configuration > Document Types.
+             ================================================================ -->
+
+        <record id="document_type_registration" model="dma.document.type">
+            <field name="code">registration</field>
+            <field name="has_validity" eval="True"/>
+            <field name="expiry_warning_days">60</field>
+        </record>
+
+        <record id="document_type_org_structure" model="dma.document.type">
+            <field name="code">org-structure</field>
+            <field name="has_validity" eval="False"/>
+        </record>
+
+        <record id="document_type_staff_cv" model="dma.document.type">
+            <field name="code">staff-cv</field>
+            <field name="has_validity" eval="False"/>
+        </record>
+
+        <record id="document_type_equipment" model="dma.document.type">
+            <field name="code">equipment</field>
+            <field name="has_validity" eval="False"/>
+        </record>
+
+        <!-- The one prerequisite whose expiry an accreditation officer really
+             does chase: an operator whose staff and third party cover has
+             lapsed is not insured on a minefield. -->
+        <record id="document_type_insurance" model="dma.document.type">
+            <field name="code">insurance</field>
+            <field name="has_validity" eval="True"/>
+            <field name="expiry_warning_days">30</field>
+        </record>
+
+        <record id="document_type_safety_policy" model="dma.document.type">
+            <field name="code">safety-policy</field>
+            <field name="has_validity" eval="False"/>
+        </record>
+
+        <record id="document_type_quality" model="dma.document.type">
+            <field name="code">quality</field>
+            <field name="has_validity" eval="True"/>
+            <field name="expiry_warning_days">60</field>
+        </record>
+
+        <record id="document_type_experience" model="dma.document.type">
+            <field name="code">experience</field>
+            <field name="has_validity" eval="False"/>
+        </record>
+
+        <record id="document_type_financial" model="dma.document.type">
+            <field name="code">financial</field>
+            <field name="has_validity" eval="True"/>
+            <field name="expiry_warning_days">30</field>
+        </record>
+
+        <record id="document_type_power_of_attorney" model="dma.document.type">
+            <field name="code">power-of-attorney</field>
+            <field name="has_validity" eval="True"/>
+            <field name="expiry_warning_days">30</field>
+        </record>
+
+    </data>
+</odoo>

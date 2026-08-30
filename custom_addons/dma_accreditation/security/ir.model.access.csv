@@ -44,3 +44,20 @@ access_dma_decision_reason_finance,dma.decision.reason finance,model_dma_decisio
 access_dma_decision_reason_committee,dma.decision.reason committee,model_dma_decision_reason,group_dma_committee,1,1,1,1
 access_dma_decision_reason_manager,dma.decision.reason manager,model_dma_decision_reason,group_dma_manager,1,1,1,1
 access_dma_settings_manager,dma.accreditation.settings manager,model_dma_accreditation_settings,group_dma_manager,1,1,1,1
+access_dma_sla_rule_user,dma.sla.rule read,model_dma_sla_rule,base.group_user,1,0,0,0
+access_dma_sla_rule_manager,dma.sla.rule manager,model_dma_sla_rule,group_dma_manager,1,1,1,1
+access_dma_sla_escalation_reception,dma.sla.escalation reception,model_dma_sla_escalation,group_dma_reception,1,1,0,0
+access_dma_sla_escalation_general_director,dma.sla.escalation general director,model_dma_sla_escalation,group_dma_general_director,1,1,0,0
+access_dma_sla_escalation_legal_director,dma.sla.escalation legal director,model_dma_sla_escalation,group_dma_legal_director,1,1,0,0
+access_dma_sla_escalation_cert_officer,dma.sla.escalation certifications,model_dma_sla_escalation,group_dma_cert_officer,1,1,0,0
+access_dma_sla_escalation_operations,dma.sla.escalation operations,model_dma_sla_escalation,group_dma_operations,1,1,0,0
+access_dma_sla_escalation_finance,dma.sla.escalation finance,model_dma_sla_escalation,group_dma_finance,1,1,0,0
+access_dma_sla_escalation_committee,dma.sla.escalation committee,model_dma_sla_escalation,group_dma_committee,1,1,0,0
+access_dma_sla_escalation_manager,dma.sla.escalation manager,model_dma_sla_escalation,group_dma_manager,1,1,0,0
+access_dma_document_submission_user,dma.document.submission read,model_dma_document_submission,base.group_user,1,0,0,0
+access_dma_document_submission_reception,dma.document.submission reception,model_dma_document_submission,group_dma_reception,1,0,1,0
+access_dma_document_submission_cert_officer,dma.document.submission certifications,model_dma_document_submission,group_dma_cert_officer,1,0,1,0
+access_dma_document_submission_manager,dma.document.submission manager,model_dma_document_submission,group_dma_manager,1,0,1,0
+access_dma_document_replacement_reception,dma.document.replacement reception,model_dma_document_replacement,group_dma_reception,1,1,1,1
+access_dma_document_replacement_cert_officer,dma.document.replacement certifications,model_dma_document_replacement,group_dma_cert_officer,1,1,1,1
+access_dma_document_replacement_manager,dma.document.replacement manager,model_dma_document_replacement,group_dma_manager,1,1,1,1

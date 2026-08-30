@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ================================================================
+             Starting service levels.
+
+             These are STARTING VALUES, not legal deadlines. The module has no
+             business deciding how long the Legal Department may hold a file;
+             the Accreditation Manager replaces every row below with whatever
+             the Directorate's own service charter says, in
+             Configuration > Service Levels.
+
+             They are shipped nonetheless, because a time control layer that
+             arrives empty measures nothing and is quietly ignored. The numbers
+             are the shape of the real process - a committee that sits every
+             few weeks is given weeks, a reception desk is given days - so the
+             first screen a manager opens is already telling them something.
+
+             noupdate="1": once the Directorate has tuned a row, an upgrade of
+             the module must never overwrite it.
+
+             `returned` deliberately carries no row. The file is with the
+             applicant then, and the Directorate cannot be late for something
+             it is not holding: the engine reports that step as paused.
+             ================================================================ -->
+
+        <record id="sla_rule_draft" model="dma.sla.rule">
+            <field name="state">draft</field>
+            <field name="role">reception</field>
+            <field name="sequence">10</field>
+            <field name="target_days">5</field>
+            <field name="warning_days">1</field>
+            <field name="escalation_days">3</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Assembling the application at the reception desk.</field>
+        </record>
+
+        <record id="sla_rule_submitted" model="dma.sla.rule">
+            <field name="state">submitted</field>
+            <field name="role">reception</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="warning_days">0.5</field>
+            <field name="escalation_days">2</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Registering the application and forwarding it to the General Director.</field>
+        </record>
+
+        <record id="sla_rule_gd_review" model="dma.sla.rule">
+            <field name="state">gd_review</field>
+            <field name="role">general_director</field>
+            <field name="sequence">30</field>
+            <field name="target_days">3</field>
+            <field name="warning_days">1</field>
+            <field name="escalation_days">2</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Initial acceptance by the General Director.</field>
+        </record>
+
+        <record id="sla_rule_legal_review" model="dma.sla.rule">
+            <field name="state">legal_review</field>
+            <field name="role">legal_director</field>
+            <field name="sequence">40</field>
+            <field name="target_days">5</field>
+            <field name="warning_days">1</field>
+            <field name="escalation_days">3</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Legal Department review of the application.</field>
+        </record>
+
+        <record id="sla_rule_cert_check" model="dma.sla.rule">
+            <field name="state">cert_check</field>
+            <field name="role">cert_officer</field>
+            <field name="sequence">50</field>
+            <field name="target_days">7</field>
+            <field name="warning_days">2</field>
+            <field name="escalation_days">3</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Verification of the prerequisites checklist. Depends on the applicant answering queries, so it is given a week.</field>
+        </record>
+
+        <record id="sla_rule_office_granted" model="dma.sla.rule">
+            <field name="state">office_granted</field>
+            <field name="role">operations</field>
+            <field name="sequence">60</field>
+            <field name="target_days">10</field>
+            <field name="warning_days">2</field>
+            <field name="escalation_days">5</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Opening the operational phase once the office accreditation is granted.</field>
+        </record>
+
+        <record id="sla_rule_sop_submission" model="dma.sla.rule">
+            <field name="state">sop_submission</field>
+            <field name="role">operations</field>
+            <field name="sequence">70</field>
+            <field name="target_days">14</field>
+            <field name="warning_days">3</field>
+            <field name="escalation_days">7</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Waiting for the paper and electronic SOP of the company.</field>
+        </record>
+
+        <record id="sla_rule_sop_fee" model="dma.sla.rule">
+            <field name="state">sop_fee</field>
+            <field name="role">finance</field>
+            <field name="sequence">80</field>
+            <field name="target_days">5</field>
+            <field name="warning_days">1</field>
+            <field name="escalation_days">3</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Registration of the SOP reading fee.</field>
+        </record>
+
+        <!-- The dual confirmation is the one step with two responsible
+             departments at once, so it carries one row per party and the
+             engine reports the file as being as late as its latest signer. -->
+        <record id="sla_rule_dual_confirm_finance" model="dma.sla.rule">
+            <field name="state">dual_confirm</field>
+            <field name="role">finance</field>
+            <field name="sequence">90</field>
+            <field name="target_days">5</field>
+            <field name="warning_days">1</field>
+            <field name="escalation_days">3</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Finance half of the parallel confirmation.</field>
+        </record>
+
+        <record id="sla_rule_dual_confirm_operations" model="dma.sla.rule">
+            <field name="state">dual_confirm</field>
+            <field name="role">operations</field>
+            <field name="sequence">95</field>
+            <field name="target_days">5</field>
+            <field name="warning_days">1</field>
+            <field name="escalation_days">3</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Operations half of the parallel confirmation.</field>
+        </record>
+
+        <record id="sla_rule_demo_fee" model="dma.sla.rule">
+            <field name="state">demo_fee</field>
+            <field name="role">finance</field>
+            <field name="sequence">100</field>
+            <field name="target_days">10</field>
+            <field name="warning_days">2</field>
+            <field name="escalation_days">5</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Registration of the operational demonstration fee.</field>
+        </record>
+
+        <record id="sla_rule_committee" model="dma.sla.rule">
+            <field name="state">committee</field>
+            <field name="role">committee</field>
+            <field name="sequence">110</field>
+            <field name="target_days">30</field>
+            <field name="warning_days">5</field>
+            <field name="escalation_days">10</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">The Accreditation Committee sits periodically, so a file waits for the next session rather than for an officer.</field>
+        </record>
+
+        <record id="sla_rule_legal_refine" model="dma.sla.rule">
+            <field name="state">legal_refine</field>
+            <field name="role">legal_director</field>
+            <field name="sequence">120</field>
+            <field name="target_days">5</field>
+            <field name="warning_days">1</field>
+            <field name="escalation_days">3</field>
+            <field name="company_id" eval="False"/>
+            <field name="note">Legal refinement of the committee decision before the certificate is issued.</field>
+        </record>
+
+        <!-- ================================================================
+             Activity types.
+
+             Two of their own rather than the generic to-do: an officer has to
+             be able to tell "this file has reached your desk" from "this file
+             is late", and the engine has to be able to find its own reminders
+             again in order to update them instead of duplicating them.
+             ================================================================ -->
+        <record id="mail_activity_type_sla" model="mail.activity.type">
+            <field name="name">Accreditation deadline</field>
+            <field name="icon">fa-clock-o</field>
+            <field name="res_model">dma.accreditation.request</field>
+            <field name="decoration_type">warning</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="mail_activity_type_expiry" model="mail.activity.type">
+            <field name="name">Expiring accreditation evidence</field>
+            <field name="icon">fa-calendar-times-o</field>
+            <field name="res_model">dma.accreditation.request</field>
+            <field name="decoration_type">warning</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">21</field>
+        </record>
+
+        <!-- ================================================================
+             Scheduled jobs.
+
+             Both are safe to run as often as the Directorate likes: every
+             record they write is keyed so a second run over unchanged data
+             writes nothing at all.
+             ================================================================ -->
+        <record id="ir_cron_dma_sla_review" model="ir.cron">
+            <field name="name">DMA Accreditation: service level review</field>
+            <field name="model_id" ref="model_dma_accreditation_request"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_sla_review()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">4</field>
+            <field name="interval_type">hours</field>
+            <field name="priority">20</field>
+        </record>
+
+        <record id="ir_cron_dma_document_watch" model="ir.cron">
+            <field name="name">DMA Accreditation: expiring evidence and certificates</field>
+            <field name="model_id" ref="model_dma_accreditation_request"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_document_watch()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="priority">30</field>
+        </record>
+
+        <!-- Warning window for an accreditation certificate that is running
+             out. A number of days, editable in Configuration > Settings. -->
+        <record id="dma_param_expiry_warning_days" model="ir.config_parameter">
+            <field name="key">dma_accreditation.expiry_warning_days</field>
+            <field name="value">90</field>
+        </record>
+
+        <!-- Ceiling on the size of a dossier archive, in bytes. Every ZIP
+             builder in Odoo buffers the whole archive in memory, so an
+             accreditation carrying half a gigabyte of scans must fail with a
+             message rather than take a worker down. -->
+        <record id="dma_param_dossier_max_bytes" model="ir.config_parameter">
+            <field name="key">dma_accreditation.dossier_max_bytes</field>
+            <field name="value">209715200</field>
+        </record>
+
+    </data>
+</odoo>

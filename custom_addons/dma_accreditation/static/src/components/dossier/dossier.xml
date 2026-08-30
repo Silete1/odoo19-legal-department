@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.AccreditationDossier">
+        <section class="o_dma_dossier" t-att-dir="payload.rtl ? 'rtl' : 'ltr'"
+                 t-att-data-file-count="payload.file_count">
+
+            <!-- What the reader needs before the list: is anything missing? -->
+            <div class="o_dma_dossier_head">
+                <span class="o_dma_dossier_ref" t-esc="payload.reference"/>
+                <span class="o_dma_dossier_partner" t-esc="payload.partner"/>
+                <span class="o_dma_dossier_count" dir="ltr">
+                    <t t-esc="payload.file_count"/>&#160;<t t-esc="label.files"/>
+                </span>
+            </div>
+
+            <div class="o_dma_dossier_missing alert alert-warning" role="alert"
+                 t-if="missing.length">
+                <i class="fa fa-exclamation-triangle" role="img" aria-hidden="true"/>
+                <b t-esc="label.missing"/>
+                <ul>
+                    <li t-foreach="missing" t-as="item" t-key="item_index" t-esc="item"/>
+                </ul>
+            </div>
+            <div class="o_dma_dossier_complete alert alert-success" role="alert"
+                 t-else="">
+                <i class="fa fa-check-circle" role="img" aria-hidden="true"/>
+                <span t-esc="label.complete"/>
+            </div>
+
+            <!-- One collapsible block per heading of the paper file. -->
+            <ol class="o_dma_dossier_sections">
+                <li t-foreach="sections" t-as="section" t-key="section.key"
+                    t-attf-class="o_dma_dossier_section {{ isOpen(section) ? 'o_dma_open' : '' }}">
+                    <button class="o_dma_dossier_toggle" t-on-click="() => this.toggle(section)"
+                            t-att-aria-expanded="isOpen(section) ? 'true' : 'false'">
+                        <i t-attf-class="fa {{ isOpen(section) ? 'fa-caret-down' : 'fa-caret-right' }}"
+                           role="img" aria-hidden="true"/>
+                        <span class="o_dma_dossier_section_label" t-esc="section.label"/>
+                        <span class="o_dma_dossier_section_note" t-if="section.note"
+                              t-esc="section.note"/>
+                        <span class="o_dma_dossier_section_count" dir="ltr"
+                              t-if="sectionCount(section)" t-esc="sectionCount(section)"/>
+                        <span class="o_dma_dossier_generated" t-if="section.generated"
+                              t-esc="label.generated"/>
+                    </button>
+
+                    <div class="o_dma_dossier_body" t-if="isOpen(section)">
+
+                        <!-- Prerequisites: one block per requirement, because
+                             a checklist line has a verdict and a validity that
+                             a bare list of files cannot show. -->
+                        <ul class="o_dma_dossier_documents" t-if="section.documents">
+                            <li t-foreach="section.documents" t-as="doc" t-key="doc.document_id"
+                                t-attf-class="o_dma_dossier_document {{ doc.required and !doc.satisfied ? 'o_dma_incomplete' : '' }}">
+                                <div class="o_dma_dossier_document_head">
+                                    <i t-attf-class="fa {{ doc.satisfied ? 'fa-check-circle' : (doc.required ? 'fa-times-circle' : 'fa-circle-o') }}"
+                                       role="img" aria-hidden="true"/>
+                                    <span class="o_dma_dossier_document_label" t-esc="doc.label"/>
+                                    <span class="o_dma_dossier_tag" t-esc="doc.review_label"/>
+                                    <span t-if="doc.validity_state !== 'no_expiry'"
+                                          t-attf-class="o_dma_dossier_tag o_dma_validity_{{ doc.validity_state }}">
+                                        <t t-esc="doc.validity_label"/>
+                                        <t t-if="doc.expiry_date">&#160;<span dir="ltr" t-esc="doc.expiry_date"/></t>
+                                    </span>
+                                    <span class="o_dma_dossier_tag" t-if="doc.version > 1" dir="ltr">
+                                        <t t-esc="label.version"/>&#160;<t t-esc="doc.version"/>
+                                    </span>
+                                    <span class="o_dma_dossier_why" t-if="doc.blocking_reason"
+                                          t-esc="doc.blocking_reason"/>
+                                </div>
+                                <div class="o_dma_dossier_reviewer" t-if="doc.reviewer">
+                                    <t t-esc="label.reviewer"/>&#160;<t t-esc="doc.reviewer"/>
+                                    <t t-if="doc.reviewed_on">&#160;·&#160;<span dir="ltr" t-esc="doc.reviewed_on"/></t>
+                                </div>
+                                <ul class="o_dma_dossier_files" t-if="doc.entries.length">
+                                    <t t-call="dma_accreditation.AccreditationDossierFiles">
+                                        <t t-set="entries" t-value="doc.entries"/>
+                                    </t>
+                                </ul>
+                                <p class="o_dma_dossier_empty" t-else="" t-esc="label.noFiles"/>
+                            </li>
+                        </ul>
+
+                        <!-- The decision trail, rendered as the visits it is. -->
+                        <table class="o_dma_dossier_history" t-elif="section.history">
+                            <thead>
+                                <tr>
+                                    <th t-esc="label.step"/>
+                                    <th t-esc="label.entered"/>
+                                    <th t-esc="label.left"/>
+                                    <th t-esc="label.duration"/>
+                                    <th t-esc="label.reviewer"/>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="section.history" t-as="visit" t-key="visit_index"
+                                    t-attf-class="{{ visit.open ? 'o_dma_dossier_open_visit' : '' }}">
+                                    <td>
+                                        <t t-esc="visit.step"/>
+                                        <span class="o_dma_dossier_role" t-if="visit.role"
+                                              t-esc="visit.role"/>
+                                    </td>
+                                    <td dir="ltr" t-esc="visit.entered_on"/>
+                                    <td dir="ltr">
+                                        <t t-if="visit.open" t-esc="label.stillHere"/>
+                                        <t t-else="" t-esc="visit.left_on"/>
+                                    </td>
+                                    <td dir="ltr" t-esc="visit.duration"/>
+                                    <td t-esc="visit.user"/>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Every other heading is simply a list of files. -->
+                        <t t-else="">
+                            <ul class="o_dma_dossier_files" t-if="section.entries.length">
+                                <t t-call="dma_accreditation.AccreditationDossierFiles">
+                                    <t t-set="entries" t-value="section.entries"/>
+                                </t>
+                            </ul>
+                            <p class="o_dma_dossier_empty" t-else="" t-esc="label.empty"/>
+                        </t>
+                    </div>
+                </li>
+            </ol>
+        </section>
+    </t>
+
+    <!-- One row per file. Shared by the prerequisite blocks and the plain
+         sections so a file looks the same wherever it is filed. -->
+    <t t-name="dma_accreditation.AccreditationDossierFiles">
+        <li t-foreach="entries" t-as="entry" t-key="entry.attachment_id"
+            t-attf-class="o_dma_dossier_file {{ entry.superseded ? 'o_dma_superseded' : '' }}">
+            <button t-on-click="() => this.openFile(entry)" t-att-title="entry.name">
+                <i class="fa fa-paperclip" role="img" aria-hidden="true"/>
+                <span class="o_dma_dossier_file_name" t-esc="entry.name"/>
+                <span class="o_dma_dossier_file_meta" t-if="entry.meta" t-esc="entry.meta"/>
+                <span class="o_dma_dossier_file_flag" t-if="entry.superseded"
+                      t-esc="label.superseded"/>
+                <span class="o_dma_dossier_file_size" dir="ltr"
+                      t-esc="humanSize(entry.size)"/>
+            </button>
+        </li>
+    </t>
+
+</templates>

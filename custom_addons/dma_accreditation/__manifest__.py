@@ -18,8 +18,27 @@ TNMA 07.30/01 for the Directorate of Mine Action:
 
 Every transition is recorded in an immutable approval log, posted to the
 chatter and pushed to the next responsible group as a scheduled activity.
+
+On top of the procedure itself the module adds three operational layers:
+
+* **Document intelligence** - the prerequisites checklist becomes an evidence
+  file: what each document says about itself, whether it is still valid, which
+  version is current, what the previous ones were and why they were replaced,
+  and precisely which line is holding the office accreditation up.
+
+* **Service levels and escalation** - a configurable target per step, measured
+  from the moment the file reached it (read off the approval log, so it can
+  never drift), with reminders, escalation to the Accreditation Manager and a
+  scheduled job that is safe to run as often as you like.
+
+* **Process performance** - median and p90 waiting time per step, cycle times,
+  bottlenecks, departmental workload and rework, all derived from the immutable
+  approval log rather than estimated.
+
+Plus the **accreditation dossier**: the complete evidence and decision trail of
+one file, as a printed index and as a downloadable archive.
 """,
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Services",
     "license": "LGPL-3",
     "author": "Directorate of Mine Action",
@@ -32,22 +51,29 @@ chatter and pushed to the next responsible group as a scheduled activity.
         "data/ir_sequence_data.xml",
         "data/dma_accreditation_scope_data.xml",
         "data/dma_document_type_data.xml",
+        "data/dma_document_validity_data.xml",
         "data/mail_template_data.xml",
+        "data/dma_sla_data.xml",
         "report/paperformat.xml",
         "report/report_office_letter.xml",
         "report/report_certificate.xml",
         "report/report_request_summary.xml",
+        "report/report_dossier_index.xml",
         "report/report_actions.xml",
         "wizard/dma_decision_reason_views.xml",
         "views/dma_document_type_views.xml",
         "views/dma_request_document_views.xml",
+        "views/dma_document_evidence_views.xml",
         "views/dma_accreditation_scope_views.xml",
         "views/dma_fee_payment_views.xml",
         "views/dma_approval_line_views.xml",
         "views/dma_accreditation_request_views.xml",
         "views/dma_accreditation_settings_views.xml",
         "views/dma_accreditation_dashboard_views.xml",
+        "views/dma_sla_views.xml",
+        "views/dma_accreditation_request_sla_views.xml",
         "views/dma_menus.xml",
+        "views/dma_menus_doc_sla.xml",
     ],
     "demo": [
         "demo/dma_demo_users.xml",
@@ -58,9 +84,11 @@ chatter and pushed to the next responsible group as a scheduled activity.
             # A handful of targeted rules for the request form. Kept out of
             # the component glob below because it is not a component.
             "dma_accreditation/static/src/scss/dma_backend.scss",
-            # Every component of the workspace and of the request form.
-            # A glob rather than a list: the components are small and split by
-            # responsibility, and a new one should not need a manifest edit.
+            # Every component of the workspace, of the request form, of the
+            # service level badge, of the dossier and of the performance
+            # screen. A glob rather than a list: the components are small and
+            # split by responsibility, and a new one should not need a
+            # manifest edit.
             "dma_accreditation/static/src/components/**/*",
         ],
         "web.assets_unit_tests": [

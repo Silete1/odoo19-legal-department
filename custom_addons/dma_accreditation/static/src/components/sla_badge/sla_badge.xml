@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dma_accreditation.AccreditationSlaBadge">
+        <!-- data-sla-state is a stable technical hook: a tour or any
+             automation can target the verdict without matching translated
+             text, exactly as the progress rail does with data-state. -->
+        <div t-if="!isSilent" t-att-class="rootClass"
+             t-att-dir="payload.rtl ? 'rtl' : 'ltr'"
+             t-att-data-sla-state="payload.state"
+             t-att-data-sla-role="payload.role_key || ''"
+             t-att-title="title">
+
+            <!-- The chip. Icon + written verdict + waiting time: readable
+                 without colour, and identical in a list cell and on a form. -->
+            <span class="o_dma_sla_chip">
+                <i t-attf-class="fa {{ payload.icon }}" role="img" aria-hidden="true"/>
+                <span class="o_dma_sla_verdict" t-esc="payload.state_label"/>
+                <!-- dir="ltr": "2 day(s) 6 h" is reordered by the bidi
+                     algorithm inside an Arabic paragraph. -->
+                <span class="o_dma_sla_age" dir="ltr" t-if="payload.age" t-esc="payload.age"/>
+            </span>
+
+            <t t-if="!compact">
+                <div class="o_dma_sla_detail">
+                    <span class="o_dma_sla_due" t-if="payload.due_label" t-esc="payload.due_label"/>
+                    <span class="o_dma_sla_overdue" t-if="payload.overdue_label"
+                          t-esc="payload.overdue_label"/>
+                    <span class="o_dma_sla_role" t-if="payload.waiting_on"
+                          t-esc="payload.waiting_on"/>
+                    <span class="o_dma_sla_target" t-if="payload.target_label"
+                          t-esc="payload.target_label"/>
+                </div>
+
+                <!-- The dual confirmation is the one step a single verdict
+                     cannot describe: two departments, two clocks, and the
+                     reader needs to know which of them is the problem. -->
+                <div class="o_dma_sla_parties" t-if="payload.parties.length > 1">
+                    <span class="o_dma_sla_parties_title" t-esc="label.parties"/>
+                    <span t-foreach="payload.parties" t-as="party" t-key="party.role_key"
+                          t-attf-class="o_dma_sla_party o_dma_sla_{{ party.state }}">
+                        <i t-attf-class="fa {{ party.icon }}" role="img" aria-hidden="true"/>
+                        <t t-esc="party.role"/>
+                        <span class="o_dma_sla_party_state" t-esc="party.state_label"/>
+                    </span>
+                </div>
+
+                <div class="o_dma_sla_escalated" t-if="payload.escalation_label">
+                    <i class="fa fa-bell" role="img" aria-hidden="true"/>
+                    <t t-esc="payload.escalation_label"/>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>
