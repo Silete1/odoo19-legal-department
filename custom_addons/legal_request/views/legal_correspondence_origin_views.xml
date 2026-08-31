@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The origin link. A registered letter belongs to a matter, and the audit
+        found no UI path to say which one: the field existed on the model and
+        appeared on no form. It sits with the hand-off block - the questions
+        "who has it" and "what is it about" are asked together - and it is NOT
+        part of the locked register facts, so linking after registration stays
+        an ordinary write.
+    -->
+    <record id="view_legal_correspondence_form_origin" model="ir.ui.view">
+        <field name="name">legal.correspondence.form.origin.legal_request</field>
+        <field name="model">legal.correspondence</field>
+        <field name="inherit_id" ref="legal_correspondence.view_legal_correspondence_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='referral_date']" position="after">
+                <field name="request_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

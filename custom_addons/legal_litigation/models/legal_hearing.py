@@ -208,9 +208,16 @@ class LegalHearing(models.Model):
 
     @api.depends("date", "lawsuit_id.reference", "purpose")
     def _compute_display_name(self):
-        purposes = dict(self._fields["purpose"].selection)
+        # A calendar event title is read by a human: the date renders in the
+        # reader's language and timezone, never as a raw ISO timestamp.
+        from odoo.tools.misc import format_datetime
+
         for hearing in self:
-            when = fields.Datetime.to_string(hearing.date) if hearing.date else _("unscheduled")
+            when = (
+                format_datetime(self.env, hearing.date, dt_format="short")
+                if hearing.date
+                else _("unscheduled")
+            )
             hearing.display_name = "%s - %s" % (
                 hearing.lawsuit_id.reference or _("Hearing"),
                 when,

@@ -42,6 +42,7 @@ department, and the first place a researcher looks before drafting the next one.
         "security/legal_opinion_rules.xml",
         "data/legal_opinion_sequence.xml",
         "views/legal_opinion_views.xml",
+        "views/legal_correspondence_origin_views.xml",
         "views/legal_opinion_menus.xml",
     ],
     "installable": True,

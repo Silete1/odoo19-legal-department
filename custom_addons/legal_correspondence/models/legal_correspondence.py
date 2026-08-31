@@ -490,13 +490,16 @@ class LegalCorrespondence(models.Model):
             record.reply_expected = record.kind_id.expects_reply
             record.reply_days = record.kind_id.default_reply_days
 
-    @api.depends("state", "direction", "kind_id")
+    @api.depends("state", "kind_id")
     def _compute_is_substantive_reply(self):
+        # No direction condition: the answer to THEIR incoming letter is OUR
+        # outgoing one. The old "direction != 'out'" clause meant a registered
+        # صادر reply never counted, so the parent stayed بانتظار الرد forever -
+        # exactly the escalation everybody learns to ignore.
         for record in self:
             kind = record.kind_id
             record.is_substantive_reply = bool(
                 record.state == "registered"
-                and record.direction != "out"
                 and kind
                 and not kind.is_contact_note
                 and not kind.is_acknowledgement

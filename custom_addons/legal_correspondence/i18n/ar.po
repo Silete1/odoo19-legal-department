@@ -1278,7 +1278,7 @@ msgstr "عادي"
 #. module: legal_correspondence
 #: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__our_date
 msgid "Our Date"
-msgstr "تاريخ الصادر"
+msgstr "تاريخنا"
 
 #. module: legal_correspondence
 #: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
@@ -1290,7 +1290,7 @@ msgstr "قيدنا"
 #: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__our_number
 #: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_list
 msgid "Our Number"
-msgstr "رقم الصادر"
+msgstr "رقمنا"
 
 #. module: legal_correspondence
 #: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form

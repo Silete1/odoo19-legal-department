@@ -141,12 +141,12 @@ class LegalDeadline(models.Model):
         them to the same types, carries its literal source index in the
         synthetic id, and filters out everything its own register already
         considers discharged - so the board never needs a 'done' filter to
-        be readable. Translated jsonb names are read through their en_US
+        be readable. Translated jsonb names prefer the ar_001 value (Arabic-first product) and fall back to en_US
         key, which is the base language every value is guaranteed to carry.
         """
         return """
-        SELECT 1000000000::bigint * 1 + oi.id AS id,
-               COALESCE(s.name->>'en_US', s.code) || ' - ' || oi.period_key AS name,
+        SELECT 10000000::bigint * 1 + oi.id AS id,
+               COALESCE(COALESCE(s.name->>'ar_001', s.name->>'en_US'), s.code) || ' - ' || oi.period_key AS name,
                'obligation' AS kind,
                oi.due_on AS date_due,
                NULL::integer AS user_id,
@@ -163,7 +163,7 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 2 + c.id,
+        SELECT 10000000::bigint * 2 + c.id,
                c.name,
                'case_sla',
                c.sla_due_on::date,
@@ -180,8 +180,8 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 3 + co.id,
-               COALESCE(co.subject->>'en_US', co.our_number, co.their_number),
+        SELECT 10000000::bigint * 3 + co.id,
+               COALESCE(COALESCE(co.subject->>'ar_001', co.subject->>'en_US'), co.our_number, co.their_number),
                'correspondence_reply',
                co.reply_due_on,
                co.user_id,
@@ -204,7 +204,7 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 4 + d.id,
+        SELECT 10000000::bigint * 4 + d.id,
                d.name,
                'document_expiry',
                d.expiry_date,
@@ -215,13 +215,17 @@ class LegalDeadline(models.Model):
                CASE WHEN d.expiry_date < CURRENT_DATE THEN 'overdue' ELSE 'open' END,
                NULL::varchar
           FROM legal_document d
+          JOIN legal_document_type dt ON dt.id = d.document_type_id
          WHERE d.active
            AND d.state = 'active'
            AND d.expiry_date IS NOT NULL
+           -- the filed signed-contract copy mirrors the contract's own expiry
+           -- row; one renewal date must not appear twice on the board
+           AND COALESCE(dt.code, '') != 'SIGNED-CONTRACT'
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 5 + p.id,
+        SELECT 10000000::bigint * 5 + p.id,
                p.name,
                'poa_expiry',
                p.expiry_date,
@@ -238,8 +242,8 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 6 + h.id,
-               COALESCE(l.reference, l.title->>'en_US'),
+        SELECT 10000000::bigint * 6 + h.id,
+               COALESCE(l.reference, COALESCE(l.title->>'ar_001', l.title->>'en_US')),
                'hearing',
                h.date::date,
                h.lawyer_id,
@@ -259,8 +263,8 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 7 + j.id,
-               COALESCE(l.reference, l.title->>'en_US'),
+        SELECT 10000000::bigint * 7 + j.id,
+               COALESCE(l.reference, COALESCE(l.title->>'ar_001', l.title->>'en_US')),
                'appeal_window',
                j.appeal_deadline,
                j.lawyer_id,
@@ -278,8 +282,8 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 8 + ct.id,
-               COALESCE(ct.title->>'en_US', ct.name),
+        SELECT 10000000::bigint * 8 + ct.id,
+               COALESCE(COALESCE(ct.title->>'ar_001', ct.title->>'en_US'), ct.name),
                'contract_expiry',
                ct.expiry_date,
                COALESCE(ct.internal_owner_id, ct.legal_officer_id),
@@ -296,8 +300,8 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 9 + coi.id,
-               COALESCE(cob.name->>'en_US' || ' - ' || coi.period_key, coi.period_key),
+        SELECT 10000000::bigint * 9 + coi.id,
+               COALESCE(COALESCE(cob.name->>'ar_001', cob.name->>'en_US') || ' - ' || coi.period_key, coi.period_key),
                'contract_obligation',
                coi.due_date,
                coi.responsible_user_id,
@@ -315,8 +319,30 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 10 + r.id,
-               COALESCE(r.subject->>'en_US', r.reference),
+        -- One-off contractual obligations carry their own due date and never
+        -- materialise instance rows; without this arm a single bank-guarantee
+        -- renewal simply never reached the board (UAT scenario B).
+        SELECT 10000000::bigint * 12 + cob2.id,
+               COALESCE(cob2.name->>'ar_001', cob2.name->>'en_US'),
+               'contract_obligation',
+               cob2.due_date,
+               cob2.responsible_user_id,
+               ct2.company_id,
+               'legal.contract.obligation',
+               cob2.id,
+               CASE WHEN cob2.due_date < CURRENT_DATE THEN 'overdue' ELSE 'open' END,
+               NULL::varchar
+          FROM legal_contract_obligation cob2
+          JOIN legal_contract ct2 ON ct2.id = cob2.contract_id
+         WHERE cob2.frequency = 'one_off'
+           AND cob2.status = 'pending'
+           AND cob2.due_date IS NOT NULL
+           AND ct2.state NOT IN ('expired', 'terminated', 'closed')
+
+        UNION ALL
+
+        SELECT 10000000::bigint * 10 + r.id,
+               COALESCE(COALESCE(r.subject->>'ar_001', r.subject->>'en_US'), r.reference),
                'request_due',
                r.target_response_date,
                r.assigned_officer_id,
@@ -332,8 +358,8 @@ class LegalDeadline(models.Model):
 
         UNION ALL
 
-        SELECT 1000000000::bigint * 11 + o.id,
-               COALESCE(o.subject->>'en_US', o.name),
+        SELECT 10000000::bigint * 11 + o.id,
+               COALESCE(COALESCE(o.subject->>'ar_001', o.subject->>'en_US'), o.name),
                'opinion_due',
                o.due_date,
                o.legal_officer_id,

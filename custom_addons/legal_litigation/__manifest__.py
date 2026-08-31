@@ -44,6 +44,7 @@ they produce is flagged non-extendable and surfaced as a chase before it lapses.
         "views/legal_judgment_views.xml",
         "views/legal_lawsuit_views.xml",
         "wizard/legal_lawsuit_reason_views.xml",
+        "views/legal_correspondence_origin_views.xml",
         "views/legal_litigation_menus.xml",
     ],
     "installable": True,

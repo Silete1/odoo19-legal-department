@@ -61,9 +61,8 @@ class LegalRequestCategory(models.Model):
 
     @api.depends("name", "code")
     def _compute_display_name(self):
+        # The code is a configuration handle, not a name: appending it put a
+        # Latin "(CONTRACT)" after every Arabic category on every screen. It
+        # stays searchable through _rec_names_search; it does not print.
         for category in self:
-            category.display_name = (
-                "%s (%s)" % (category.name, category.code)
-                if category.code
-                else (category.name or "")
-            )
+            category.display_name = category.name or ""

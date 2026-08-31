@@ -462,8 +462,8 @@ class LegalOpinion(models.Model):
                         "Opinion %(ref)s is %(state)s and cannot move to "
                         "%(target)s from there.",
                         ref=opinion.name,
-                        state=dict(self._fields["state"].selection).get(opinion.state),
-                        target=dict(self._fields["state"].selection).get(target),
+                        state=dict(self._fields["state"]._description_selection(self.env)).get(opinion.state),
+                        target=dict(self._fields["state"]._description_selection(self.env)).get(target),
                     )
                 )
         self.write({"state": target})

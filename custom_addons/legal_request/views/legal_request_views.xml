@@ -82,9 +82,11 @@
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group string="Triage">
-                            <field name="urgency" widget="badge"
-                                   decoration-warning="urgency == 'high'"
-                                   decoration-danger="urgency == 'urgent'"/>
+                            <!-- Editable while the request is being shaped: a
+                                 badge is display-only and left urgency
+                                 unsettable anywhere in the UI. -->
+                            <field name="urgency"
+                                   readonly="state not in ('draft', 'received', 'triage', 'assigned')"/>
                             <field name="confidentiality"/>
                             <field name="assigned_officer_id"/>
                             <field name="manager_id"/>

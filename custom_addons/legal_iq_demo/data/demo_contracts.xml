@@ -57,7 +57,7 @@
         <!-- 1. In legal review -->
         <!-- ========================================================== -->
         <record id="contract_review" model="legal.contract">
-            <field name="title">IT Support Services - Head Office</field>
+            <field name="title">عقد خدمات الدعم التقني - المقر العام</field>
             <field name="type_id" ref="legal_contract.type_service"/>
             <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
             <field name="responsible_department_id" ref="legal_contract.dept_operations"/>
@@ -79,7 +79,7 @@
         <!-- 2. Awaiting internal approval -->
         <!-- ========================================================== -->
         <record id="contract_approval" model="legal.contract">
-            <field name="title">Annual Office Supplies Framework</field>
+            <field name="title">العقد الإطاري السنوي للوازم المكتبية</field>
             <field name="type_id" ref="legal_contract.type_supply"/>
             <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
             <field name="responsible_department_id" ref="legal_contract.dept_procurement"/>
@@ -101,7 +101,7 @@
         <!-- 3. Active, with obligations (one overdue, one due soon, one recurring) -->
         <!-- ========================================================== -->
         <record id="contract_active" model="legal.contract">
-            <field name="title">Head Office Lease - Karrada</field>
+            <field name="title">عقد إيجار المقر العام - الكرادة</field>
             <field name="type_id" ref="legal_contract.type_lease"/>
             <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
             <field name="responsible_department_id" ref="legal_contract.dept_admin"/>
@@ -129,7 +129,7 @@
 
         <record id="obl_active_rent" model="legal.contract.obligation">
             <field name="contract_id" ref="contract_active"/>
-            <field name="name">Monthly Rent</field>
+            <field name="name">بدل الإيجار الشهري</field>
             <field name="clause_reference">4.1</field>
             <field name="description">Rent payable on the first of each month.</field>
             <field name="responsible_party">ours</field>
@@ -141,7 +141,7 @@
 
         <record id="obl_active_insurance" model="legal.contract.obligation">
             <field name="contract_id" ref="contract_active"/>
-            <field name="name">Provide Renewed Fire Insurance Certificate</field>
+            <field name="name">تقديم شهادة تأمين ضد الحريق مجددة</field>
             <field name="clause_reference">9.3</field>
             <field name="description">Tenant to deliver a renewed fire insurance certificate.</field>
             <field name="responsible_party">ours</field>
@@ -152,7 +152,7 @@
 
         <record id="obl_active_overdue" model="legal.contract.obligation">
             <field name="contract_id" ref="contract_active"/>
-            <field name="name">Landlord Maintenance Of Lift</field>
+            <field name="name">صيانة المصعد على عاتق المؤجر</field>
             <field name="clause_reference">6.2</field>
             <field name="description">Annual servicing of the building lift by the landlord.</field>
             <field name="responsible_party">theirs</field>
@@ -174,7 +174,7 @@
         <!-- 4. Active but expiring within 30 days (drives the reminder) -->
         <!-- ========================================================== -->
         <record id="contract_expiring" model="legal.contract">
-            <field name="title">Sole Distribution Agency - Southern Region</field>
+            <field name="title">وكالة التوزيع الحصرية - المنطقة الجنوبية</field>
             <field name="type_id" ref="legal_contract.type_agency"/>
             <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
             <field name="responsible_department_id" ref="legal_contract.dept_operations"/>
@@ -207,7 +207,7 @@
         <!-- 5. Signed, with the signed document filed in the register -->
         <!-- ========================================================== -->
         <record id="signed_doc_construction" model="legal.document">
-            <field name="name">CON/2026/0005 - New Warehouse Construction</field>
+            <field name="name">CON/2026/0005 - إنشاء مخزن جديد</field>
             <field name="document_type_id" ref="legal_contract.doctype_signed_contract"/>
             <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
             <field name="issue_date">2026-08-15</field>
@@ -215,7 +215,7 @@
         </record>
 
         <record id="contract_signed" model="legal.contract">
-            <field name="title">New Warehouse Construction - Abu Ghraib</field>
+            <field name="title">إنشاء مخزن جديد - أبو غريب</field>
             <field name="type_id" ref="legal_contract.type_construction"/>
             <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
             <field name="responsible_department_id" ref="legal_contract.dept_procurement"/>
@@ -247,7 +247,7 @@
             <field name="contract_id" ref="contract_signed"/>
             <field name="number">Addendum 1</field>
             <field name="date">2026-08-20</field>
-            <field name="description">Scope increase: additional loading dock and perimeter wall.</field>
+            <field name="description">زيادة نطاق العمل: رصيف تحميل إضافي وسور محيطي.</field>
             <field name="value_change">75000000</field>
             <field name="state">applied</field>
         </record>

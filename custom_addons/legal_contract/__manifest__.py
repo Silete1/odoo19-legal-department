@@ -51,6 +51,7 @@ own.
         "views/legal_contract_modification_views.xml",
         "views/legal_contract_views.xml",
         "wizard/legal_contract_sign_views.xml",
+        "views/legal_correspondence_origin_views.xml",
         "views/legal_contract_menus.xml",
     ],
     "installable": True,

@@ -372,7 +372,9 @@ msgstr "يجب أن يكون رمز المرحلة فريدًا ضمن إجرا�
 msgid ""
 "A power of attorney that was in force cannot be deleted - files were "
 "presented under it. Revoke it with a reason, or archive it."
-msgstr "وكالة"
+msgstr ""
+"الوكالة التي كانت نافذة لا يجوز حذفها - فقد قُدّمت معاملات استناداً إليها. "
+"اعزلها مع بيان السبب بدلاً من ذلك، ليبقى ما فُعل بموجبها مقروءاً في السجل."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_case__parent_case_id

@@ -25,9 +25,9 @@
 
         <!-- 1. NEW - received, unassigned. The clerk's queue. -->
         <record id="request_fuel_contract" model="legal.request">
-            <field name="subject">Review of the fuel supply contract with Al-Nahrain</field>
+            <field name="subject">مراجعة عقد تجهيز الوقود مع شركة النهرين</field>
             <field name="category_id" ref="legal_request.category_contract_review"/>
-            <field name="requesting_department">Finance Department</field>
+            <field name="requesting_department">القسم المالي</field>
             <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
             <field name="request_date" eval="'2026-08-28'"/>
             <field name="target_response_date" eval="'2026-09-10'"/>
@@ -47,9 +47,9 @@
         <!-- 2. UNDER REVIEW - assigned and in progress, restricted, and OVERDUE.
              The officer's desk, with a clock already run out. -->
         <record id="request_hr_termination" model="legal.request">
-            <field name="subject">Opinion on the termination of a probationary employee</field>
+            <field name="subject">رأي في إنهاء خدمات موظف تحت التجربة</field>
             <field name="category_id" ref="legal_request.category_legal_consultation"/>
-            <field name="requesting_department">Human Resources</field>
+            <field name="requesting_department">الموارد البشرية</field>
             <field name="requester_id" ref="legal_iq_demo.user_manager"/>
             <field name="assigned_officer_id" ref="legal_iq_demo.user_officer"/>
             <field name="manager_id" ref="legal_iq_demo.user_manager"/>
@@ -68,9 +68,9 @@
 
         <!-- 3. AWAITING APPROVAL - the approver's queue, answer written. -->
         <record id="request_tender_bond" model="legal.request">
-            <field name="subject">Legal opinion on the tender bond wording for the pipeline works</field>
+            <field name="subject">رأي قانوني في صيغة خطاب ضمان مناقصة أعمال الأنابيب</field>
             <field name="category_id" ref="legal_request.category_legal_opinion"/>
-            <field name="requesting_department">Procurement</field>
+            <field name="requesting_department">قسم العقود والمشتريات</field>
             <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
             <field name="assigned_officer_id" ref="legal_iq_demo.user_officer"/>
             <field name="manager_id" ref="legal_iq_demo.user_manager"/>
@@ -97,7 +97,7 @@
 
         <!-- 4. CLOSED - answered, approved and filed. Everyone's history. -->
         <record id="request_poa_registrar" model="legal.request">
-            <field name="subject">Consultation on the power of attorney for the companies registrar</field>
+            <field name="subject">استشارة بشأن وكالة دائرة تسجيل الشركات</field>
             <field name="category_id" ref="legal_request.category_power_of_attorney"/>
             <field name="requesting_department">Baghdad Branch</field>
             <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
@@ -127,9 +127,9 @@
 
         <!-- 5. A second in-progress item, not late, so the board is not all red. -->
         <record id="request_property_lease" model="legal.request">
-            <field name="subject">Review of the warehouse lease renewal in Basra</field>
+            <field name="subject">مراجعة تجديد عقد إيجار مخزن البصرة</field>
             <field name="category_id" ref="legal_request.category_property"/>
-            <field name="requesting_department">Administration</field>
+            <field name="requesting_department">الإدارة</field>
             <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
             <field name="assigned_officer_id" ref="legal_iq_demo.user_officer"/>
             <field name="manager_id" ref="legal_iq_demo.user_manager"/>

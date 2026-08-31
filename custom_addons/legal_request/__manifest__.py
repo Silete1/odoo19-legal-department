@@ -47,6 +47,7 @@ available - an official letter on the correspondence register.
         "wizard/legal_request_cancel_views.xml",
         "wizard/legal_request_return_views.xml",
         "wizard/legal_request_approve_views.xml",
+        "views/legal_correspondence_origin_views.xml",
         "views/legal_request_menus.xml",
     ],
     "installable": True,

@@ -1513,3 +1513,14 @@ msgstr ""
 #: code:addons/legal_request/models/legal_request.py:0
 msgid "“%s” is already finished and cannot be cancelled."
 msgstr "«%s» منتهٍ أصلاً ولا يمكن إلغاؤه."
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid ""
+"%(ref)s has been decided. The question and the approved response are part of"
+" the record now - raise a new request and reference this one instead of "
+"rewriting it."
+msgstr ""
+"لقد حُسم الطلب %(ref)s. أصبح السؤال والجواب المصادق عليه جزءاً من السجل الآن"
+" - قدّم طلباً جديداً وأشر فيه إلى هذا الطلب بدلاً من إعادة كتابته."

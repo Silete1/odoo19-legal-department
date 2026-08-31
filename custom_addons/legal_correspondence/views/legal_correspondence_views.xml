@@ -58,7 +58,8 @@
                     <button name="action_reply" type="object" string="Next In Thread"
                             class="btn-secondary" invisible="state != 'registered'"/>
                     <button name="action_void" type="object" string="Void"
-                            class="btn-secondary" invisible="state != 'registered'"/>
+                            class="btn-secondary" invisible="state != 'registered'"
+                            groups="legal_core.group_legal_officer"/>
                     <button name="action_snapshot_pdf" type="object" string="Attach Filed PDF"
                             class="btn-secondary"
                             invisible="state != 'registered' or direction == 'in' or is_contact_note"/>

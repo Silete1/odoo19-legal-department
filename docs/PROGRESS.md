@@ -78,11 +78,50 @@ corporate Legal Affairs suite. A fresh session resumes from here.
 - [x] P1 security: SoD (terminal transitions need approver+, reopen officer+,
       waive approver+, void officer+), admin→Legal Manager, IQD via <function>
       (noupdate lesson: base.* records need function calls on upgrade)
-- [~] P1 core legal workflow: 4 new modules BUILT by agents
-      (legal_request/contract/opinion complete; litigation finishing via
-      completion agent) — NOT yet installed; next: lint→install→fix cycle
-- [ ] P1 remaining: unified deadlines, dashboards/role home, OWL wiring,
-      correspondence origin links smart buttons, menu rebuild
+- [x] P1 core legal workflow: legal_request, legal_contract, legal_litigation,
+      legal_opinion INSTALLED on legal_dept, zero errors/warnings; showcase in
+      legal_iq_demo (4 lawsuits/3 hearings/3 judgments/16 courts/20
+      jurisdictions/5 contracts/5 opinions/5 requests); source normalization of
+      the 3 existing modules done (252 strings; seeds in docs/ui-audit/i18n/)
+- [ ] i18n phase 2: export ar.po scaffolding (odoo-bin i18n export -l ar per
+      module — needs proper occurrence metadata; hand-authored po entries have
+      none so they don't apply yet), merge msgstr from module ar.po + seed
+      maps, -u to load, verify Arabic UI in browser
+      NOTE: throwaway DB legal_i18n exists (pre-normalization restore) but
+      export can run against legal_dept directly (it is current)
+      LESSON: Odoo's PoFileReader requires every entry's '#.' comment to start
+      'module: <name>' and applies entries only via '#:' occurrence lines
+- [x] Arabic translations COMPLETE & committed (700c859): 3,030 entries across
+      7 modules, verified 0 empty / 0 placeholder mismatches — NOT YET LOADED
+      into the DB (needs the combined upgrade below)
+- [x] legal_deadline union board built & committed (fcbd931) — NOT yet installed
+- [x] Demo integrity + menu dedup + corporate self-update committed (495c385):
+      opinion finalize records now updatable, SLA rules/fees/expiring POA
+      seeded, role landing actions, Registers→40, dup menus killed, expiry
+      cron + supersession guards
+- [~] Still in flight: legal_procedure UX finisher agent (role bands, honest
+      tiles, error states, auditor menus, OWL wiring) + legal_reports agent
+- [x] Combined upgrade DONE (zero errors/warnings): 13 modules, Arabic loaded
+      (1,792 field descriptions + menus in ar_001), deadline board live (94
+      rows), reports installed; delta export+translate for 204 new strings
+      DONE; Legal is now the FIRST app (Odoo 19 ignores res.users.action_id —
+      lands on first root menu) and My Desk is its first item; desk verified
+      in browser per role (Arabic role bands render)
+- [x] Test suite GREEN: 0 failed, 0 errors of 192 (commit 0b9ea7f) — four
+      real production bugs found & fixed on the way (phases payload, walk
+      cache, modification _order, is_overdue search exception, generator
+      idempotency, report configurator detour)
+- [x] AFTER sweep: 76/76 role×screen renders clean, zero JS errors
+- [x] §51 UAT: C/E/F passed; A/B/D findings ALL fixed same day and re-verified
+      (freeze on decided requests, editable urgency, translated decision
+      labels, reply-clock rule + stored flags, origin links on the register
+      form, officer implies contact-creation, one-off obligations on the
+      board, board Arabic-first + XML-RPC-safe ids, demo values Arabized,
+      po repairs) — suite re-run green 0/0 of 192
+- [x] FINAL_REPORT complete (docs/ui-audit/FINAL_REPORT.md)
+- [ ] Merge audit-redesign → main
+      NOTE: server err log tracebacks are all from unrelated dma_* databases
+      (multi-DB server); legal_dept clean
 - [ ] P2 operational UX (dashboard, queues, lists, search, forms)
 - [ ] P3 corporate legal coverage (records, licensing, POA, optional domains)
 - [ ] P4 polish (spacing, icons, empty states, reports, responsive)

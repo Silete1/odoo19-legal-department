@@ -45,7 +45,10 @@
         <field name="name">Follow-up Officer</field>
         <field name="sequence">20</field>
         <field name="privilege_id" ref="res_groups_privilege_legal"/>
-        <field name="implied_ids" eval="[(4, ref('group_legal_clerk'))]"/>
+        <!-- Contact creation: stock internal users are read-only on partners,
+             which left officers unable to register an opposing party or a
+             counterparty at all - the UAT dead-ended on an empty dropdown. -->
+        <field name="implied_ids" eval="[(4, ref('group_legal_clerk')), (4, ref('base.group_partner_manager'))]"/>
         <field name="comment">Owns the relationship with one or more government bodies: moves their files, chases them, and records what the counter said.</field>
     </record>
 

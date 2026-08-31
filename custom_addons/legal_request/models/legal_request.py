@@ -431,10 +431,47 @@ class LegalRequest(models.Model):
                     _(
                         "“%(ref)s” is %(state)s, and cannot be %(action)s from there.",
                         ref=request.display_name,
-                        state=dict(self._fields["state"].selection).get(request.state),
+                        state=dict(self._fields["state"]._description_selection(self.env)).get(request.state),
                         action=action_label,
                     )
                 )
+
+    # ==================================================================
+    # The decided request is a record, not a draft
+    # ==================================================================
+    _FROZEN_AFTER_DECISION = (
+        "subject",
+        "description",
+        "response",
+        "category_id",
+        "requesting_department",
+    )
+
+    def write(self, vals):
+        """An approved answer must not quietly change under its approval.
+
+        The approver signed a specific response to a specific question; editing
+        either afterwards turns the audit trail into a draft. Corrections go
+        through a new request that references this one.
+        """
+        frozen = [f for f in self._FROZEN_AFTER_DECISION if f in vals]
+        if frozen:
+            decided = self.filtered(lambda r: r.state in ("approved", "closed"))
+            for request in decided:
+                changed = [
+                    f for f in frozen
+                    if (vals[f] or False) != (request[f].id if request._fields[f].type == "many2one" else request[f] or False)
+                ]
+                if changed:
+                    raise UserError(
+                        _(
+                            "%(ref)s has been decided. The question and the approved "
+                            "response are part of the record now - raise a new request "
+                            "and reference this one instead of rewriting it.",
+                            ref=request.display_name,
+                        )
+                    )
+        return super().write(vals)
 
     # ==================================================================
     # Workflow
@@ -569,7 +606,7 @@ class LegalRequest(models.Model):
                 "approved_on": fields.Datetime.now(),
             }
         )
-        label = dict(self._fields["decision"].selection).get(decision)
+        label = dict(self._fields["decision"]._description_selection(self.env)).get(decision)
         body = _("Approved (%s).", label)
         if note:
             body += "\n" + note

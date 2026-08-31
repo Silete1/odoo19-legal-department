@@ -56,6 +56,7 @@ index on (schedule, period, company), so re-running it creates nothing.
         "views/legal_action_log_views.xml",
         "wizard/legal_case_return_views.xml",
         "wizard/legal_case_step_views.xml",
+        "views/legal_correspondence_origin_views.xml",
         "views/legal_procedure_menus.xml",
         "views/legal_dashboard_views.xml",
     ],
