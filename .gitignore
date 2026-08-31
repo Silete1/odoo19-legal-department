@@ -27,6 +27,8 @@
 !/custom_addons/legal_contract/
 !/custom_addons/legal_litigation/
 !/custom_addons/legal_opinion/
+!/custom_addons/legal_deadline/
+!/custom_addons/legal_reports/
 
 /docs/*
 !/docs/access_schema_analysis.md

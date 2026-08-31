@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            One global rule and nothing else: every arm of the view projects
+            its source's company_id, so the ordinary company fence is the
+            whole security story. The board never needs per-group rules of
+            its own, because a row a user may not read at the source carries
+            the same company_id here and is fenced the same way.
+        -->
+
+        <record id="rule_legal_deadline_company" model="ir.rule">
+            <field name="name">Deadline: own company</field>
+            <field name="model_id" ref="model_legal_deadline"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

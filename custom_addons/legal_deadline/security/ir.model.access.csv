@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_legal_deadline_clerk,legal.deadline clerk,model_legal_deadline,legal_core.group_legal_clerk,1,0,0,0
+access_legal_deadline_manager,legal.deadline manager,model_legal_deadline,legal_core.group_legal_manager,1,0,0,0
+access_legal_deadline_auditor,legal.deadline auditor,model_legal_deadline,legal_core.group_legal_auditor,1,0,0,0

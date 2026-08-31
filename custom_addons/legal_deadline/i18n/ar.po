@@ -1,0 +1,288 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* legal_deadline
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-31 12:00+0000\n"
+"PO-Revision-Date: 2026-08-31 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: legal_deadline
+#: model:ir.model,name:legal_deadline.model_legal_deadline
+msgid "Legal Deadline"
+msgstr "الموعد القانوني"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__name
+msgid "What Is Due"
+msgstr "المطلوب إنجازه"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__kind
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Kind"
+msgstr "النوع"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__date_due
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__user_id
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__company_id
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Company"
+msgstr "الشركة"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__res_model
+msgid "Source Model"
+msgstr "النموذج المصدر"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__res_id
+msgid "Source ID"
+msgstr "معرّف السجل المصدر"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: legal_deadline
+#: model:ir.model.fields,field_description:legal_deadline.field_legal_deadline__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: legal_deadline
+#: model:ir.model.fields,help:legal_deadline.field_legal_deadline__name
+msgid "One line naming the thing the clock is attached to."
+msgstr "سطر واحد يسمّي الأمر الذي يتعلق به هذا الأجل."
+
+#. module: legal_deadline
+#: model:ir.model.fields,help:legal_deadline.field_legal_deadline__kind
+msgid "Which register the deadline comes from."
+msgstr "السجل الذي ورد منه هذا الموعد."
+
+#. module: legal_deadline
+#: model:ir.model.fields,help:legal_deadline.field_legal_deadline__date_due
+msgid ""
+"The date the law, the contract or the undertaking sets. The board is ordered"
+" by it."
+msgstr "التاريخ الذي يحدده القانون أو العقد أو التعهد. وعليه تُرتَّب اللوحة."
+
+#. module: legal_deadline
+#: model:ir.model.fields,help:legal_deadline.field_legal_deadline__user_id
+msgid ""
+"Who is expected to act. Empty when the source register does not name a "
+"person."
+msgstr ""
+"من يُنتظر منه التصرف. يُترك فارغاً عندما لا يسمّي السجل المصدر شخصاً بعينه."
+
+#. module: legal_deadline
+#: model:ir.model.fields,help:legal_deadline.field_legal_deadline__state
+msgid ""
+"Overdue the moment the due date is behind today. Rows already discharged at "
+"their source never reach this board."
+msgstr ""
+"يصبح الموعد متأخراً حالما يسبق تاريخ الاستحقاق يومنا هذا. أما ما أُنجز في "
+"سجله المصدر فلا يظهر على هذه اللوحة أصلاً."
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__obligation
+msgid "Statutory Obligation"
+msgstr "التزام قانوني"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__case_sla
+msgid "Case SLA"
+msgstr "أمد إنجاز المعاملة"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__correspondence_reply
+msgid "Awaited Reply"
+msgstr "جواب منتظر"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__document_expiry
+msgid "Document Expiry"
+msgstr "انتهاء صلاحية وثيقة"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__poa_expiry
+msgid "Power Of Attorney Expiry"
+msgstr "انتهاء الوكالة"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__hearing
+msgid "Court Hearing"
+msgstr "جلسة قضائية"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__appeal_window
+msgid "Appeal Window"
+msgstr "مدة الطعن"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__contract_obligation
+msgid "Contract Obligation"
+msgstr "التزام تعاقدي"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__contract_expiry
+msgid "Contract Expiry"
+msgstr "انتهاء العقد"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__request_due
+msgid "Request Response"
+msgstr "جواب طلب"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__kind__opinion_due
+msgid "Opinion Due"
+msgstr "استحقاق رأي قانوني"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__state__open
+msgid "Open"
+msgstr "مفتوح"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__state__overdue
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__state__done
+msgid "Done"
+msgstr "منجز"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__priority__0
+msgid "Normal"
+msgstr "اعتيادي"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__priority__1
+msgid "Urgent"
+msgstr "عاجل"
+
+#. module: legal_deadline
+#: model:ir.model.fields.selection,name:legal_deadline.selection__legal_deadline__priority__2
+msgid "Critical"
+msgstr "حرج"
+
+#. module: legal_deadline
+#: model:ir.actions.act_window,name:legal_deadline.action_legal_deadline
+#: model:ir.ui.menu,name:legal_deadline.menu_legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_list
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_calendar
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Deadlines"
+msgstr "المواعيد القانونية"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_list
+msgid "Open Source Record"
+msgstr "فتح السجل المصدر"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "My Deadlines"
+msgstr "مواعيدي"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Today"
+msgstr "اليوم"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "This Week"
+msgstr "هذا الأسبوع"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "This Month"
+msgstr "هذا الشهر"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Hearings"
+msgstr "الجلسات"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Obligations"
+msgstr "الالتزامات"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Expiries"
+msgstr "انتهاء الصلاحيات"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Replies"
+msgstr "الأجوبة"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Appeal Windows"
+msgstr "مدد الطعن"
+
+#. module: legal_deadline
+#: model_terms:ir.ui.view,arch_db:legal_deadline.view_legal_deadline_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: legal_deadline
+#: model_terms:ir.actions.act_window,help:legal_deadline.action_legal_deadline
+msgid "Nothing is due"
+msgstr "لا يوجد ما هو مستحق"
+
+#. module: legal_deadline
+#: model_terms:ir.actions.act_window,help:legal_deadline.action_legal_deadline
+msgid ""
+"Every clock the legal department runs - court hearings, statutory\n"
+"                filings, awaited replies, expiring documents and powers of attorney,\n"
+"                appeal windows, contract and request deadlines - lands on this one\n"
+"                board the moment it exists at its source. An empty board means the\n"
+"                department is ahead of every date it knows about."
+msgstr ""
+"كل المهل التي تديرها الدائرة القانونية - جلسات المحاكم، والالتزامات الدورية،"
+" والأجوبة المنتظرة، والوثائق والوكالات المشارفة على الانتهاء، ومدد الطعن، "
+"ومواعيد العقود والطلبات - تظهر على هذه اللوحة الواحدة لحظة نشوئها في سجلها "
+"المصدر. واللوحة الفارغة تعني أن الدائرة سابقة لكل موعد تعلم به."
+
+#. module: legal_deadline
+#: code:addons/legal_deadline/models/legal_deadline.py:0
+msgid "The source record of this deadline is no longer installed."
+msgstr "السجل المصدر لهذا الموعد لم يعد منصّباً في النظام."
