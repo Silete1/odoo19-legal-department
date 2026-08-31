@@ -39,6 +39,14 @@ class LegalCorrespondenceVoidWizard(models.TransientModel):
     def action_void(self):
         """تأكيد الإلغاء"""
         self.ensure_one()
+        if not self.env.user.has_group("legal_core.group_legal_officer"):
+            raise UserError(
+                _(
+                    "Striking a numbered entry out of the register is reserved for "
+                    "the follow-up officer and above. The clerk who typed a wrong "
+                    "entry asks their officer to void it."
+                )
+            )
         entry = self.correspondence_id
         if entry.state == "void":
             raise UserError(_("That entry is already void."))

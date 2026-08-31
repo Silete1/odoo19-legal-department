@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The system administrator joins the Legal Manager group.
+
+        Without this, admin is a member of no legal group: the Legal application
+        is invisible in the app switcher and every legal action is an access-error
+        modal, so the one account that maintains the system cannot see the
+        configuration the content packs shipped. A <function> call rather than a
+        <record id="base.user_admin"> override, because base's ir.model.data row
+        is noupdate and a record override is silently skipped on module update.
+    -->
+    <data>
+        <function model="res.users" name="write">
+            <value eval="[ref('base.user_admin')]"/>
+            <value eval="{'group_ids': [(4, ref('legal_core.group_legal_manager'))]}"/>
+        </function>
+    </data>
+</odoo>

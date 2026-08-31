@@ -734,6 +734,7 @@ class LegalCase(models.Model):
         been told what their job is.
         """
         user_groups = self.env.user.all_group_ids
+        is_approver = self.env.user.has_group("legal_core.group_legal_approver")
         for case in self:
             transitions = case.procedure_type_id.transition_ids.filtered(
                 lambda transition: transition.from_step_id == case.step_id
@@ -741,7 +742,13 @@ class LegalCase(models.Model):
             )
             allowed = transitions.filtered(
                 lambda transition: (
-                    not transition.group_ids or (transition.group_ids & user_groups)
+                    (transition.group_ids & user_groups)
+                    if transition.group_ids
+                    # An ungated move that CLOSES the file still needs the
+                    # approver. The shipped packs leave group_ids empty, and a
+                    # clerk must never be able to drive a file to a terminal
+                    # outcome with no second pair of eyes.
+                    else (is_approver or transition.to_step_id.kind != "terminal")
                 )
                 and transition._matches(case)
             )
@@ -1034,6 +1041,17 @@ class LegalCase(models.Model):
                         case.step_id.name,
                     )
                 )
+            if following.kind == "terminal" and not self.env.user.has_group(
+                "legal_core.group_legal_approver"
+            ):
+                raise UserError(
+                    _(
+                        "The next step closes “%s”, and closing a file is an approver's "
+                        "act. Ask the approver or the legal manager to make the final "
+                        "move.",
+                        case.display_name,
+                    )
+                )
             case._move_to(
                 following,
                 "advance",
@@ -1074,8 +1092,40 @@ class LegalCase(models.Model):
             }
         return self._fire(transition)
 
+    def _check_transition_authority(self, transition):
+        """Separation of duties, enforced on every server path into a move.
+
+        The button filter (:meth:`_compute_available_transitions`) hides moves a
+        user may not make, but a hidden button is a suggestion; this raise is the
+        rule. A gated move needs one of its named groups; an ungated move that
+        ends the procedure needs the approver, because the packs ship their
+        transitions ungated and closure must never be a clerk's keystroke.
+        """
+        user = self.env.user
+        if transition.group_ids:
+            if not (transition.group_ids & user.all_group_ids):
+                raise UserError(
+                    _(
+                        "“%(move)s” is reserved for: %(groups)s.",
+                        move=transition.name,
+                        groups=", ".join(transition.group_ids.mapped("name")),
+                    )
+                )
+        elif transition.to_step_id.kind == "terminal" and not user.has_group(
+            "legal_core.group_legal_approver"
+        ):
+            raise UserError(
+                _(
+                    "“%s” ends the procedure, and closing a file is an approver's "
+                    "act. Ask the approver or the legal manager to make the final "
+                    "move.",
+                    transition.name,
+                )
+            )
+
     def _fire(self, transition, reason=None):
         self.ensure_one()
+        self._check_transition_authority(transition)
         blockers = self._blockers(transition=transition)
         if blockers:
             raise UserError(
@@ -1168,6 +1218,13 @@ class LegalCase(models.Model):
         that was closed and re-opened is a fact about the department, and hiding
         it makes every closure statistic optimistic.
         """
+        if not self.env.user.has_group("legal_core.group_legal_officer"):
+            raise UserError(
+                _(
+                    "Re-opening a closed file reverses a closure somebody approved. "
+                    "It is reserved for the follow-up officer and above."
+                )
+            )
         for case in self:
             if case.step_id.kind != "terminal":
                 raise UserError(_("“%s” is not closed.", case.display_name))

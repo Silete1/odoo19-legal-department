@@ -2,22 +2,24 @@
 <odoo>
     <!--
         The Iraqi dinar, made the company currency and made to read the way an
-        Iraqi office writes money: whole dinars, no fils. ``rounding = 1`` drives
-        ``decimal_places`` to zero, so 750,000,000 prints as a round figure rather
-        than 750,000,000.000.
+        Iraqi office writes money: whole dinars, no fils (rounding 1 drives
+        decimal_places to zero, so 750,000,000 prints as a round figure).
 
-        This file is deliberately NOT noupdate: it must take effect on a plain
-        ``-u legal_iq_demo`` of an already-installed database, unlike the rest of
-        the demo pack whose records the engine and the register refuse to rewrite.
+        These are <function> calls, not <record> overrides, for a reason: the
+        target records belong to `base` and their ir.model.data rows are
+        noupdate, so a <record id="base.IQD"> is silently skipped when this
+        module is UPDATED rather than freshly installed - which is exactly when
+        an existing database needs the fix. A write() runs on every upgrade and
+        is idempotent.
     -->
     <data>
-        <record id="base.IQD" model="res.currency">
-            <field name="active">True</field>
-            <field name="rounding">1</field>
-        </record>
-
-        <record id="base.main_company" model="res.company">
-            <field name="currency_id" ref="base.IQD"/>
-        </record>
+        <function model="res.currency" name="write">
+            <value eval="[ref('base.IQD')]"/>
+            <value eval="{'active': True, 'rounding': 1.0}"/>
+        </function>
+        <function model="res.company" name="write">
+            <value eval="[ref('base.main_company')]"/>
+            <value eval="{'currency_id': ref('base.IQD')}"/>
+        </function>
     </data>
 </odoo>

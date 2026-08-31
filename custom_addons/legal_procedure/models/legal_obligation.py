@@ -496,6 +496,14 @@ class LegalObligationInstance(models.Model):
         return True
 
     def action_waive(self):
+        if not self.env.user.has_group("legal_core.group_legal_approver"):
+            raise UserError(
+                _(
+                    "Waiving a statutory obligation excuses the company from a filing "
+                    "the law expects. That is the approver's or the manager's decision, "
+                    "not a clerk's keystroke."
+                )
+            )
         self.write({"state": "waived"})
         return True
 
