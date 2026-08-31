@@ -51,13 +51,13 @@
               parent="legal_core.menu_legal_root"
               action="action_legal_mail_room"
               groups="legal_core.group_legal_clerk,legal_core.group_legal_auditor"
-              sequence="1"/>
+              sequence="2"/>
 
     <menuitem id="menu_legal_desk"
               name="My Desk"
               parent="legal_core.menu_legal_root"
               action="action_legal_desk"
               groups="legal_core.group_legal_clerk,legal_core.group_legal_auditor"
-              sequence="2"/>
+              sequence="1"/>
 
 </odoo>

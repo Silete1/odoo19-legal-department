@@ -12,7 +12,7 @@
     <menuitem id="menu_legal_root"
               name="Legal"
               web_icon="legal_core,static/description/icon.png"
-              sequence="45"/>
+              sequence="1"/>
 
     <!-- Sequence 40: the domain menus (Requests 15, Contracts 20, Litigation
          25, Opinions 30, Deadlines 35) come before the reference registers. -->

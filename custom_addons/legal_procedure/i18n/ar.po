@@ -6,15 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 09:30+0000\n"
-"PO-Revision-Date: 2026-08-31 09:30+0000\n"
+"POT-Creation-Date: 2026-08-31 10:04+0000\n"
+"PO-Revision-Date: 2026-08-31 10:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: \n"
 
 #. module: legal_procedure
 #. odoo-python
@@ -165,6 +164,12 @@ msgstr "%s يوم عمل"
 #. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "%s — open files"
+msgstr "%s — المعاملات المفتوحة"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "(no subject recorded)"
 msgstr "(بلا موضوع مقيد)"
 
@@ -263,6 +268,14 @@ msgstr ""
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "A file appears here the moment it reaches a step you own."
 msgstr "تظهر المعاملة هنا لحظة وصولها إلى خطوة أنت مسؤول عنها."
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid ""
+"A file appears here when it stands at a step whose closing move you may "
+"make."
+msgstr "تظهر المعاملة هنا عندما تقف عند خطوة تكون حركة إغلاقها بيدك."
 
 #. module: legal_procedure
 #. odoo-python
@@ -667,6 +680,11 @@ msgid "Agent's System User"
 msgstr "مستخدم النظام الخاص بالوكيل"
 
 #. module: legal_procedure
+#: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_case_form
+msgid "All Rounds And Refusals"
+msgstr "كل الجولات وحالات الرفض"
+
+#. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_fee_rule__amount
 msgid "Amount"
 msgstr "المبلغ"
@@ -797,6 +815,12 @@ msgstr "يضع الختم"
 #. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Approvals"
+msgstr "المصادقات"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Approver"
 msgstr "المصادِق"
 
@@ -826,6 +850,13 @@ msgstr ""
 "شيوعًا على الإطلاق لعودة كتاب سمة الدخول."
 
 #. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid "Ask the legal manager for a role in the Legal Department."
+msgstr "اطلب من مدير الشؤون القانونية دورًا في الدائرة القانونية."
+
+#. module: legal_procedure
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_procedure_step_search
 msgid "At A Counter"
 msgstr "عند شباك"
@@ -850,6 +881,12 @@ msgstr "ربط بمعاملة"
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_sla_escalation__message_attachment_count
 msgid "Attachment Count"
 msgstr "عدد المرفقات"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Auditor"
+msgstr "المدقق"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_procedure_type__automated_sequence
@@ -883,6 +920,12 @@ msgstr "بانتظار جوابهم"
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Awaiting your approval"
 msgstr "بانتظار مصادقتك"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Awaiting your signature"
+msgstr "بانتظار توقيعك"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_poa__bar_association_id
@@ -1123,6 +1166,11 @@ msgid "Checklist"
 msgstr "قائمة المستمسكات"
 
 #. module: legal_procedure
+#: model:ir.model.fields,field_description:legal_procedure.field_legal_case__checklist_payload
+msgid "Checklist Payload"
+msgstr "حمولة قائمة المستمسكات"
+
+#. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_case__child_case_count
 msgid "Child Case Count"
 msgstr "عدد المعاملات الفرعية"
@@ -1161,6 +1209,12 @@ msgstr "مغلقة"
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_case__date_closed
 msgid "Closed On"
 msgstr "أُغلقت في"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Closed files"
+msgstr "المعاملات المغلقة"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_action_log__closes_step
@@ -1237,6 +1291,12 @@ msgstr "الشركة"
 #. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Company documents"
+msgstr "مستمسكات الشركة"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Company documents to renew"
 msgstr "مستمسكات الشركة الواجب تجديدها"
 
@@ -1302,6 +1362,12 @@ msgid "Contract Value"
 msgstr "قيمة العقد"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Contracts in internal approval"
+msgstr "عقود قيد المصادقة الداخلية"
+
+#. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_procedure_type__lead_time_days
 msgid ""
 "Copied onto the document this procedure produces, so the renewal board can "
@@ -1324,7 +1390,7 @@ msgstr "عدد المراسلات"
 #. module: legal_procedure
 #: model:ir.model,name:legal_procedure.model_legal_correspondence
 msgid "Correspondence Entry"
-msgstr "قيد مراسلات"
+msgstr "قيد المراسلات"
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_sla_rule__target_days
@@ -1534,6 +1600,12 @@ msgid "Deadlines"
 msgstr "المواعيد النهائية"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Deadlines today"
+msgstr "المواعيد النهائية لليوم"
+
+#. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_poa__number
 msgid "Deed Number"
 msgstr "رقم الصك"
@@ -1669,7 +1741,7 @@ msgstr "المستمسكات المطلوبة"
 #: model:ir.model,name:legal_procedure.model_legal_document_type
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_case_subject__document_type
 msgid "Document Type"
-msgstr "نوع المستمسك"
+msgstr "نوع الوثيقة"
 
 #. module: legal_procedure
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_procedure_type_form
@@ -2190,6 +2262,12 @@ msgid "From The Register"
 msgstr "من السجل"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_case.py:0
+msgid "From the start"
+msgstr "من البداية"
+
+#. module: legal_procedure
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_obligation_schedule_form
 msgid "GCT-ANNUAL"
 msgstr "GCT-ANNUAL"
@@ -2261,6 +2339,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_sla_escalation__has_message
 msgid "Has Message"
 msgstr "لديه رسالة"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Hearings within 7 days"
+msgstr "الجلسات خلال 7 أيام"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_case_step_wizard_line__help_text
@@ -3004,17 +3088,17 @@ msgstr "الموعد النهائي لنشاطي"
 #. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
-#: model:ir.actions.act_window,name:legal_procedure.action_legal_case_my_desk
 #: model:ir.actions.client,name:legal_procedure.action_legal_desk
 #: model:ir.ui.menu,name:legal_procedure.menu_legal_desk
 msgid "My Desk"
 msgstr "مكتبي"
 
 #. module: legal_procedure
+#: model:ir.actions.act_window,name:legal_procedure.action_legal_case_my_desk
 #: model:ir.ui.menu,name:legal_procedure.menu_legal_case_my_desk
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_case_search
 msgid "My Files"
-msgstr "معاملاتي"
+msgstr "مكتبي"
 
 #. module: legal_procedure
 #. odoo-python
@@ -3081,6 +3165,12 @@ msgstr "تتطلب اكتمال قائمة المستمسكات"
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_procedure_transition__require_fees_paid
 msgid "Needs The Fees Paid"
 msgstr "تتطلب تسديد الرسوم"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Needs attention"
+msgstr "بحاجة إلى انتباه"
 
 #. module: legal_procedure
 #. odoo-python
@@ -3153,6 +3243,12 @@ msgstr "لا توجد معاملات بانتظار التسجيل - كل ما �
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "No letter is waiting to be written."
 msgstr "لا كتاب بانتظار التحرير."
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "No open files are assigned to anybody."
+msgstr "لا توجد معاملات مفتوحة مسندة إلى أحد."
 
 #. module: legal_procedure
 #. odoo-python
@@ -3258,6 +3354,12 @@ msgstr "لا شيء مؤشَّر على أنه عاجل."
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Nothing is waiting for you."
 msgstr "لا شيء بانتظارك."
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Nothing is waiting for your signature."
+msgstr "لا شيء ينتظر توقيعك."
 
 #. module: legal_procedure
 #. odoo-python
@@ -3524,6 +3626,18 @@ msgid "Open all my files"
 msgstr "فتح كل معاملاتي"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Open files"
+msgstr "المعاملات المفتوحة"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Open files per officer"
+msgstr "المعاملات المفتوحة بحسب الموظف"
+
+#. module: legal_procedure
 #. odoo-javascript
 #: code:addons/legal_procedure/static/src/components/checklist/legal_checklist.js:0
 msgid "Open the document"
@@ -3534,6 +3648,12 @@ msgstr "فتح المستمسك"
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Open the scan"
 msgstr "فتح الصورة الضوئية"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Open, and nobody is named on them"
+msgstr "مفتوحة، ولم يُسمّ عليها أحد"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_case__date_open
@@ -3553,6 +3673,12 @@ msgstr "أوقات الدوام"
 #: model:ir.ui.menu,name:legal_procedure.menu_legal_operations
 msgid "Operations"
 msgstr "العمليات"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Opinions awaiting approval"
+msgstr "آراء بانتظار المصادقة"
 
 #. module: legal_procedure
 #: model:ir.model.fields.selection,name:legal_procedure.selection__legal_procedure_type__has_fee__optional
@@ -3617,6 +3743,12 @@ msgstr "معلقة"
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_case_search
 msgid "Overdue"
 msgstr "متجاوز الموعد"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Overdue files"
+msgstr "المعاملات المتجاوزة الموعد"
 
 #. module: legal_procedure
 #. odoo-python
@@ -3702,8 +3834,8 @@ msgstr "متجاوزة هدفها عند %s."
 #. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
-msgid "Past the target, counted in their working days"
-msgstr "متجاوزة الهدف، محسوبًا بأيام عملهم"
+msgid "Past their target, or already escalated"
+msgstr "تجاوزت هدفها، أو صُعّدت أصلًا"
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_procedure_step__rotting_threshold_days
@@ -3820,6 +3952,12 @@ msgstr "الوكالة"
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_poa_list
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_poa_search
 msgid "Powers Of Attorney"
+msgstr "الوكالات"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Powers of attorney"
 msgstr "الوكالات"
 
 #. module: legal_procedure
@@ -3948,6 +4086,11 @@ msgid "Profession"
 msgstr "المهنة"
 
 #. module: legal_procedure
+#: model:ir.model.fields,field_description:legal_procedure.field_legal_case__progress_payload
+msgid "Progress Payload"
+msgstr "حمولة التقدم"
+
+#. module: legal_procedure
 #. odoo-javascript
 #: code:addons/legal_procedure/static/src/components/phase_rail/legal_phase_rail.js:0
 msgid "Progress through the procedure"
@@ -4064,6 +4207,12 @@ msgid "Receipt number"
 msgstr "رقم الوصل"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Recent trail entries"
+msgstr "أحدث قيود سجل الوقائع"
+
+#. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_poa__days_to_expiry
 msgid "Recomputed on read, never stored, because it changes every midnight."
 msgstr "يعاد احتسابه عند القراءة ولا يُخزن أبدًا، لأنه يتغير كل منتصف ليل."
@@ -4134,6 +4283,12 @@ msgstr "قيد في السجل"
 #. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Register entries"
+msgstr "قيود السجل"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Registered, and not yet attached to any file"
 msgstr "مقيد، وغير مربوط بأي معاملة بعد"
 
@@ -4196,6 +4351,18 @@ msgstr "الرد فات موعده"
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Reply due %s"
 msgstr "الرد مستحق %s"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Requests awaiting triage"
+msgstr "طلبات بانتظار الفرز"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Requests ready for approval"
+msgstr "طلبات جاهزة للمصادقة"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_procedure_transition__require_reason
@@ -4538,6 +4705,12 @@ msgid "Service Levels"
 msgstr "مستويات الخدمة"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Service-level breaches"
+msgstr "خروقات مستوى الخدمة"
+
+#. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_case_document__subject_id
 msgid ""
 "Set on a per-person requirement, so eight experts produce eight passport "
@@ -4800,6 +4973,12 @@ msgstr "آخر موعد لبدء التجديد"
 #: code:addons/legal_procedure/static/src/components/checklist/legal_checklist.js:0
 msgid "Start the procedure that issues it"
 msgstr "ابدأ الإجراء الذي يصدره"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_case.py:0
+msgid "Start: %s"
+msgstr "البداية: %s"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_fee__state
@@ -5276,6 +5455,7 @@ msgstr "الشباك يريد"
 #: model:ir.model.fields,help:legal_procedure.field_legal_poa__expiry_date
 msgid ""
 "The date the artefact ceases to be in force. Empty means it does not expire."
+" Tracked: quietly moving an expiry date is how a lapsed licence hides."
 msgstr "التاريخ الذي يزول فيه نفاذ الوثيقة. والفارغ يعني أنها لا تنتهي."
 
 #. module: legal_procedure
@@ -5314,11 +5494,29 @@ msgid ""
 msgstr "كتاب رسمي"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "The department"
+msgstr "الدائرة"
+
+#. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+msgid "The desk could not be refreshed, so it is showing what it already had."
+msgstr "تعذر تحديث المكتب، فهو يعرض ما كان لديه أصلًا."
+
+#. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_procedure_step_check__produces_stamp
 msgid ""
 "The endorsement itself, in the words the counter uses: the tax-liens stamp, "
 "the no-objection confirmation."
 msgstr "ختم الحجوزات الضريبية، تأييد عدم الممانعة"
+
+#. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid "The entry could not be attached to the file."
+msgstr "تعذر ربط القيد بالمعاملة."
 
 #. module: legal_procedure
 #. odoo-python
@@ -5374,6 +5572,19 @@ msgid "The instruction or schedule that sets the figure."
 msgstr "التعليمات أو الجدول الذي يحدد الرقم."
 
 #. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid "The mail room could not be loaded."
+msgstr "تعذر تحميل الوارد والصادر."
+
+#. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid ""
+"The mail room could not be refreshed, so it is showing what it already had."
+msgstr "تعذر تحديث الوارد والصادر، فهو يعرض ما كان لديه أصلًا."
+
+#. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_case__last_letter_id
 msgid ""
 "The most recent entry on the file, which is what a desk panel shows and what"
@@ -5390,6 +5601,12 @@ msgid ""
 msgstr ""
 "اسم الانتقال هو الزر الذي يضغطه الموظف، فاكتبه بكلماتهم - «تحويل المعاملة "
 "إلى دائرة الإقامة» لا «موافقة»."
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "The next move on these files closes them, and it is yours to make."
+msgstr "الحركة التالية على هذه المعاملات تغلقها، وهي بيدك أنت."
 
 #. module: legal_procedure
 #. odoo-python
@@ -5430,6 +5647,17 @@ msgstr ""
 "جدول «ت» المرقّم للأشخاص الذي يطبعه الكتاب. الاسم العربي هو ما تقيّده "
 "الوزارة والاسم اللاتيني هو ما يكتبه الجواز - وكلاهما يُطبع في الصفحة نفسها، "
 "ولذلك يُخزن كلاهما."
+
+#. module: legal_procedure
+#: model:ir.model.fields,help:legal_procedure.field_legal_case__walk_payload
+msgid ""
+"The ordered counter walk of the current step. The inverse consumes the "
+"widget's batched ticks through the ordinary ORM, as the reader, so the ACL "
+"on the check lines decides - never the widget."
+msgstr ""
+"جولة المراجعة المرتبة للخطوة الحالية. تستهلك الدالة العكسية تأشيرات الأداة "
+"المجمّعة عبر ORM الاعتيادي بصفة القارئ، فتكون الكلمة الفصل لقواعد ACL على "
+"سطور الفحص - لا للأداة أبدًا."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_case__capture_values
@@ -5549,6 +5777,21 @@ msgid "The register is clear. Nothing is waiting to be handled."
 msgstr "السجل خالٍ. لا شيء بانتظار المعالجة."
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "The registers, read only"
+msgstr "السجلات، اطلاع فقط"
+
+#. module: legal_procedure
+#: model:ir.model.fields,help:legal_procedure.field_legal_case__checklist_payload
+msgid ""
+"The required documents as the task-list widget draws them, grouped by the "
+"step that demands each line."
+msgstr ""
+"المستمسكات المطلوبة كما ترسمها أداة قائمة المهام، مجمّعة بحسب الخطوة التي "
+"تطلب كل سطر."
+
+#. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_case_subject__sequence
 msgid ""
 "The row number on the letter's numbered list. It is quoted back by the "
@@ -5583,6 +5826,17 @@ msgid ""
 msgstr "راجعنا الشعبة وأفادوا بأن المعاملة قيد التدقيق"
 
 #. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid ""
+"The server could not be reached, or it reported an error. Nothing you did "
+"caused this."
+msgstr ""
+"تعذر الوصول إلى الخادم، أو أنه أبلغ عن خطأ. ولم يكن شيء مما فعلته سببًا في "
+"ذلك."
+
+#. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_procedure_phase__kind
 msgid ""
 "The shape of the phase, so the rail can colour it without reading its name. "
@@ -5614,6 +5868,12 @@ msgid ""
 msgstr ""
 "التعليمات الثابتة للإجراء كله: أي طابق، وكم مستنسخة، وما الذي يُجلب، وعمّن "
 "يُسأل."
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "The trail holds no entries yet."
+msgstr "لا قيود في سجل الوقائع بعد."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_procedure_type__is_current
@@ -5653,6 +5913,12 @@ msgstr ""
 #: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
 msgid "Their reference"
 msgstr "رقم كتابهم"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Their reply deadline has passed"
+msgstr "فات موعد الجواب المنتظر منها"
 
 #. module: legal_procedure
 #: model:ir.model.constraint,message:legal_procedure.constraint_legal_sla_rule_step_company_uniq
@@ -5806,6 +6072,13 @@ msgid "Transitions"
 msgstr "الانتقالات"
 
 #. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid "Try again"
+msgstr "حاول مرة أخرى"
+
+#. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Two ages on every row: at this step, and since the file was opened."
@@ -5834,6 +6107,12 @@ msgstr "نوع النشاط الاستثنائي المسجل."
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_procedure_type__expected_duration_days
 msgid "Typical Duration (working days)"
 msgstr "المدة المعتادة (أيام عمل)"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Unassigned files"
+msgstr "المعاملات غير المُسندة"
 
 #. module: legal_procedure
 #: model:ir.model.fields.selection,name:legal_procedure.selection__legal_case_document__line_status__under_review
@@ -5868,6 +6147,12 @@ msgstr "عادةً الخطوة التي أعدّت ما رفضه الشباك."
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_poa__body_ids
 msgid "Valid At"
 msgstr "نافذة لدى"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_case.py:0
+msgid "Valid until %s"
+msgstr "نافذة حتى %s"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_poa__expiry_state
@@ -5923,6 +6208,12 @@ msgstr "بانتظار"
 #. module: legal_procedure
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "Waiting on an approver"
+msgstr "بانتظار المصادِق"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "Waiting on us"
 msgstr "بانتظارنا"
 
@@ -5959,6 +6250,11 @@ msgid ""
 msgstr ""
 "الإعفاء من التزام قانوني يعفي الشركة من تقديمٍ يتوقعه القانون. وذلك قرار "
 "المصادِق أو المدير، لا ضغطة زر من موظف."
+
+#. module: legal_procedure
+#: model:ir.model.fields,field_description:legal_procedure.field_legal_case__walk_payload
+msgid "Walk Payload"
+msgstr "حمولة جولة المراجعة"
 
 #. module: legal_procedure
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_case__runner_partner_id
@@ -6118,6 +6414,17 @@ msgid ""
 msgstr ""
 "ما تقوله اللوحة عندما لا يوجد شيء هنا - النص الأكثر قراءة في أي قائمة "
 "انتظار، والأكثر تركًا على «لا توجد قيود»."
+
+#. module: legal_procedure
+#: model:ir.model.fields,help:legal_procedure.field_legal_case__progress_payload
+msgid ""
+"What the phase rail draws: the coarse phases, the fine step, whose turn it "
+"is and what is blocking. Composed server-side so the rail renders three "
+"phases or six without a line of JavaScript changing."
+msgstr ""
+"ما يرسمه مسار المراحل: المراحل الكبرى، والخطوة الدقيقة، ودور من الآن وما "
+"الذي يعرقل. يُركَّب في جانب الخادم ليعرض المسار ثلاث مراحل أو ستًّا من دون "
+"أن يتغير سطر واحد من JavaScript."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_case__result_document_id
@@ -6558,8 +6865,21 @@ msgstr "لست على قائمة متابعة أي جهة."
 #. module: legal_procedure
 #. odoo-javascript
 #: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid "You do not have permission to see this screen."
+msgstr "لا تملك صلاحية الاطلاع على هذه الشاشة."
+
+#. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
 msgid "Your desk"
 msgstr "مكتبك"
+
+#. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+msgid "Your desk could not be loaded."
+msgstr "تعذر تحميل مكتبك."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_sla_rule__escalation_days
@@ -6597,6 +6917,12 @@ msgid "colour"
 msgstr "colour"
 
 #. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "contracts"
+msgstr "عقود"
+
+#. module: legal_procedure
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_procedure_type_kanban
 msgid "document(s)"
 msgstr "مستمسك"
@@ -6615,12 +6941,6 @@ msgstr "كل خطوة"
 
 #. module: legal_procedure
 #. odoo-python
-#: code:addons/legal_procedure/models/legal_dashboard.py:0
-msgid "id"
-msgstr "id"
-
-#. module: legal_procedure
-#. odoo-python
 #: code:addons/legal_procedure/models/legal_procedure_type.py:0
 msgid "into"
 msgstr "إلى"
@@ -6630,6 +6950,12 @@ msgstr "إلى"
 #: code:addons/legal_procedure/models/legal_case_check.py:0
 msgid "no reason given"
 msgstr "دون ذكر سبب"
+
+#. module: legal_procedure
+#. odoo-python
+#: code:addons/legal_procedure/models/legal_dashboard.py:0
+msgid "opinions"
+msgstr "آراء"
 
 #. module: legal_procedure
 #. odoo-python

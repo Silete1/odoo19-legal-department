@@ -1,0 +1,1129 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* legal_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-31 10:04+0000\n"
+"PO-Revision-Date: 2026-08-31 10:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: legal_reports
+#: model:ir.actions.report,print_report_name:legal_reports.action_report_case_cover
+msgid "'إضبارة %s' % (object.name)"
+msgstr "'إضبارة %s' % (object.name)"
+
+#. module: legal_reports
+#: model:ir.actions.report,print_report_name:legal_reports.action_report_contract_summary
+msgid "'خلاصة العقد %s' % (object.name)"
+msgstr "'خلاصة العقد %s' % (object.name)"
+
+#. module: legal_reports
+#: model:ir.actions.report,print_report_name:legal_reports.action_report_register_book
+msgid "'دفتر %s' % (object.name or object.code)"
+msgstr "'دفتر %s' % (object.name or object.code)"
+
+#. module: legal_reports
+#: model:ir.actions.report,print_report_name:legal_reports.action_report_lawsuit_status
+msgid "'موقف الدعوى %s' % (object.reference)"
+msgstr "'موقف الدعوى %s' % (object.reference)"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid ""
+"-\n"
+"                    صفحة <span class=\"page\"/> من <span class=\"topage\"/>"
+msgstr ""
+"-\n"
+"                    صفحة <span class=\"page\"/> من <span class=\"topage\"/>"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid ""
+"- الخلاصة عرض للقيد الإلكتروني،\n"
+"                    والعبرة عند الاختلاف بنص العقد الموقع."
+msgstr ""
+"- الخلاصة عرض للقيد الإلكتروني،\n"
+"                    والعبرة عند الاختلاف بنص العقد الموقع."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid ""
+"- الدفتر المطبوع صورة عن القيد\n"
+"                    الإلكتروني، والعبرة عند الاختلاف بالسجل نفسه."
+msgstr ""
+"- الدفتر المطبوع صورة عن القيد\n"
+"                    الإلكتروني، والعبرة عند الاختلاف بالسجل نفسه."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "- موقف الدعوى كما هو مدون حتى تاريخ الطبع."
+msgstr "- موقف الدعوى كما هو مدون حتى تاريخ الطبع."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "/ وكيل خارجي:"
+msgstr "/ وكيل خارجي:"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "<b>(مانع)</b>"
+msgstr "<b>(مانع)</b>"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "<b>خلاصته:</b>"
+msgstr "<b>خلاصته:</b>"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid ""
+"<span><b>الرقم:</b> <span class=\"legal-rep-dots\"/></span>\n"
+"                       \n"
+"                    <span><b>التاريخ:</b> <span class=\"legal-rep-dots\"/></span>"
+msgstr ""
+"<span><b>الرقم:</b> <span class=\"legal-rep-dots\"/></span>\n"
+"                       \n"
+"                    <span><b>التاريخ:</b> <span class=\"legal-rep-dots\"/></span>"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_fee__body_id
+msgid "Body"
+msgstr "الجهة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_register_book_wizard_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_case
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_case_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_case_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_case_pivot
+msgid "Case Analysis"
+msgstr "تحليل الإضبارات"
+
+#. module: legal_reports
+#: model:ir.model,name:legal_reports.model_legal_fee
+msgid "Case Fee"
+msgstr "رسم المعاملة"
+
+#. module: legal_reports
+#: model:ir.actions.report,name:legal_reports.action_report_case_cover
+msgid "Case File Cover Sheet"
+msgstr "غلاف الإضبارة"
+
+#. module: legal_reports
+#: model:ir.model,name:legal_reports.model_report_legal_reports_report_case_cover
+msgid "Case File Cover Sheet Print"
+msgstr "مطبوع غلاف الإضبارة"
+
+#. module: legal_reports
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_cases
+msgid "Cases"
+msgstr "الإضبارات"
+
+#. module: legal_reports
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_compliance_fees
+msgid "Compliance & Fees"
+msgstr "الالتزامات والرسوم"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_obligation
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_compliance_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_obligation_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_obligation_pivot
+msgid "Compliance Analysis"
+msgstr "تحليل الالتزامات الدورية"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_contract
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_contract_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_contract_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_contract_pivot
+msgid "Contract Analysis"
+msgstr "تحليل العقود"
+
+#. module: legal_reports
+#: model:ir.actions.report,name:legal_reports.action_report_contract_summary
+msgid "Contract Summary"
+msgstr "خلاصة العقد"
+
+#. module: legal_reports
+#: model:ir.model,name:legal_reports.model_report_legal_reports_report_contract_summary
+msgid "Contract Summary Print"
+msgstr "مطبوع خلاصة العقد"
+
+#. module: legal_reports
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_contracts
+msgid "Contracts"
+msgstr "العقود"
+
+#. module: legal_reports
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_correspondence
+msgid "Correspondence"
+msgstr "المراسلات"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_correspondence
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_correspondence_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_correspondence_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_correspondence_pivot
+msgid "Correspondence Analysis"
+msgstr "تحليل المراسلات"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_fee__display_name
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__display_name
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_case_cover__display_name
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_contract_summary__display_name
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_lawsuit_status__display_name
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_register_book__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_fee
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_fee_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_fee_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_fee_pivot
+msgid "Fee Analysis"
+msgstr "تحليل الرسوم"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_fee__id
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__id
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_case_cover__id
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_contract_summary__id
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_lawsuit_status__id
+#: model:ir.model.fields,field_description:legal_reports.field_report_legal_reports_report_register_book__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_lawsuit
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_lawsuit_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_lawsuit_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_lawsuit_pivot
+msgid "Lawsuit Analysis"
+msgstr "تحليل الدعاوى"
+
+#. module: legal_reports
+#: model:ir.actions.report,name:legal_reports.action_report_lawsuit_status
+msgid "Lawsuit Status Report"
+msgstr "تقرير موقف الدعوى"
+
+#. module: legal_reports
+#: model:ir.model,name:legal_reports.model_report_legal_reports_report_lawsuit_status
+msgid "Lawsuit Status Report Print"
+msgstr "مطبوع تقرير موقف الدعوى"
+
+#. module: legal_reports
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_litigation
+msgid "Litigation"
+msgstr "الدعاوى"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_contract
+msgid "No contracts to analyse yet"
+msgstr "لا توجد عقود للتحليل بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_fee
+msgid "No fees recorded yet"
+msgstr "لا توجد رسوم مسجلة بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_case
+msgid "No files to analyse yet"
+msgstr "لا توجد إضبارات للتحليل بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_lawsuit
+msgid "No lawsuits recorded yet"
+msgstr "لا توجد دعاوى مسجلة بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_obligation
+msgid "No obligation periods yet"
+msgstr "لا توجد فترات التزام بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_opinion
+msgid "No opinions to analyse yet"
+msgstr "لا توجد آراء للتحليل بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_request
+msgid "No requests to analyse yet"
+msgstr "لا توجد طلبات للتحليل بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_correspondence
+msgid "Nothing in the register yet"
+msgstr "لا توجد قيود في السجل بعد"
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_lawsuit
+msgid ""
+"Once cases are on the litigation register, this pivot shows the\n"
+"                exposure: claimed amounts by court, stage and our capacity."
+msgstr ""
+"متى ما قُيدت الدعاوى في سجل المرافعات، يعرض هذا الجدول المحوري حجم التعرض: "
+"المبالغ المدعى بها بحسب المحكمة والمرحلة وصفتنا في الدعوى."
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_contract
+msgid ""
+"Once contracts are recorded, this pivot shows the portfolio's\n"
+"                value by type and state - as signed, and as amended."
+msgstr ""
+"متى ما سُجلت العقود، يعرض هذا الجدول المحوري قيمة المحفظة بحسب النوع والحالة"
+" - كما وُقعت وكما عُدلت."
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_request
+msgid ""
+"Once departments start sending requests, this pivot shows the\n"
+"                intake by category and month - and old months still open are\n"
+"                the backlog, visible at a glance."
+msgstr ""
+"متى ما بدأت الدوائر بإرسال طلباتها، يعرض هذا الجدول المحوري الوارد بحسب "
+"الفئة والشهر - والأشهر القديمة التي ما تزال مفتوحة هي المتراكمات، ظاهرة "
+"بنظرة واحدة."
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_fee
+msgid ""
+"Once fees are paid on files, this pivot answers the annual\n"
+"                question: what did we pay each body, per procedure, and where\n"
+"                did the counter and the schedule disagree."
+msgstr ""
+"متى ما دُفعت الرسوم على الإضبارات، يجيب هذا الجدول المحوري عن سؤال نهاية "
+"السنة: كم دفعنا لكل جهة، ولكل إجراء، وأين اختلف شباك الدائرة عن الجدول "
+"المنشور."
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_correspondence
+msgid ""
+"Once letters are registered, this pivot shows the traffic per\n"
+"                body and per month, outgoing against incoming."
+msgstr ""
+"متى ما قُيدت الكتب، يعرض هذا الجدول المحوري حركة المراسلات لكل جهة ولكل شهر،"
+" الصادر مقابل الوارد."
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_opinion
+msgid ""
+"Once opinions are drafted, this pivot shows who asks the legal\n"
+"                department for advice and where their questions stand."
+msgstr ""
+"متى ما حُررت الآراء، يعرض هذا الجدول المحوري من يستشير القسم القانوني وأين "
+"تقف أسئلته."
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_obligation
+msgid ""
+"Once recurring obligations generate their periods, this pivot\n"
+"                shows the compliance picture: filed, in progress and late, per\n"
+"                body and per month."
+msgstr ""
+"متى ما ولّدت الالتزامات الدورية فتراتها، يعرض هذا الجدول المحوري صورة "
+"الامتثال: المقدَّم وقيد الإنجاز والمتأخر، لكل جهة ولكل شهر."
+
+#. module: legal_reports
+#: model_terms:ir.actions.act_window,help:legal_reports.action_legal_reports_case
+msgid ""
+"Open files in Operations and this pivot answers where they sit -\n"
+"                by step, by body, by the month they were opened."
+msgstr ""
+"افتح الإضبارات في قائمة العمليات ليجيب هذا الجدول المحوري أين تقف: بحسب "
+"المرحلة، وبحسب الجهة، وبحسب شهر فتحها."
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_opinion
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_opinion_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_opinion_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_opinion_pivot
+msgid "Opinion Analysis"
+msgstr "تحليل الآراء القانونية"
+
+#. module: legal_reports
+#: model:ir.model,name:legal_reports.model_legal_register_book_wizard
+msgid "Print A Register Book"
+msgstr "طباعة دفتر سجل"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_register_book_wizard_form
+msgid "Print Book"
+msgstr "طباعة الدفتر"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_register_book_wizard
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_register_book
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_register_book_wizard_form
+msgid "Print Register Book"
+msgstr "طباعة دفتر السجل"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_fee__procedure_type_id
+msgid "Procedure"
+msgstr "الإجراء"
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__register_id
+msgid "Register"
+msgstr "السجل"
+
+#. module: legal_reports
+#: model:ir.actions.report,name:legal_reports.action_report_register_book
+msgid "Register Book"
+msgstr "دفتر السجل"
+
+#. module: legal_reports
+#: model:ir.model,name:legal_reports.model_report_legal_reports_report_register_book
+msgid "Register Book Print"
+msgstr "مطبوع دفتر السجل"
+
+#. module: legal_reports
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_root
+msgid "Reports"
+msgstr "التقارير"
+
+#. module: legal_reports
+#: model:ir.actions.act_window,name:legal_reports.action_legal_reports_request
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_request_analysis
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_request_graph
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_reports_request_pivot
+msgid "Request Analysis"
+msgstr "تحليل الطلبات"
+
+#. module: legal_reports
+#: model:ir.ui.menu,name:legal_reports.menu_legal_reports_requests_opinions
+msgid "Requests & Opinions"
+msgstr "الطلبات والآراء"
+
+#. module: legal_reports
+#: model:ir.model.fields,help:legal_reports.field_legal_fee__body_id
+msgid ""
+"The body the file belongs to. Read by the record rule that scopes a follow-"
+"up officer to the counters they actually deal with."
+msgstr ""
+"الجهة التي تعود إليها المعاملة. تقرؤها قاعدة السجلات التي تحصر مسؤول "
+"المتابعة بالشبابيك التي يتعامل معها فعلًا."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.view_legal_register_book_wizard_form
+msgid ""
+"The book prints exactly as the paper register reads: every\n"
+"                    numbered entry of the year in order, voided rows struck\n"
+"                    through with their reason. Telephone notes never touched\n"
+"                    the book, so they do not print."
+msgstr ""
+"يُطبع الدفتر كما يُقرأ السجل الورقي تماماً: كل قيد مرقم في سنته بترتيبه، "
+"والقيود الملغاة مشطوبة مع سببها. تدوينات الهاتف لم تدخل الدفتر أصلاً فلا "
+"تُطبع."
+
+#. module: legal_reports
+#: model:ir.model.fields,help:legal_reports.field_legal_register_book_wizard__year
+msgid ""
+"The book restarts on 1 January, so a printed book is a year's book. Defaults"
+" to the current Baghdad year."
+msgstr ""
+"يبدأ الدفتر من جديد في الأول من كانون الثاني، فالدفتر المطبوع دفتر سنة "
+"واحدة. القيمة الافتراضية هي سنة بغداد الحالية."
+
+#. module: legal_reports
+#: model:ir.model.fields,help:legal_reports.field_legal_register_book_wizard__register_id
+msgid ""
+"The bound book to print. A department usually keeps two - outgoing and "
+"incoming - and prints each on its own."
+msgstr ""
+"الدفتر المراد طباعته. تحتفظ الدائرة عادة بدفترين - الصادر والوارد - ويُطبع "
+"كل منهما على حدة."
+
+#. module: legal_reports
+#. odoo-python
+#: code:addons/legal_reports/wizard/legal_register_book_wizard.py:0
+msgid "The register book year must be between 1950 and 2100."
+msgstr "يجب أن تكون سنة دفتر السجل بين 1950 و2100."
+
+#. module: legal_reports
+#: model:ir.model.fields,field_description:legal_reports.field_legal_register_book_wizard__year
+msgid "Year"
+msgstr "السنة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "آخر الإجراءات (الأحدث أولاً)"
+msgstr "آخر الإجراءات (الأحدث أولاً)"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "آخر تطور"
+msgstr "آخر تطور"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "آخر يوم للطعن"
+msgstr "آخر يوم للطعن"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "أثر التعديلات النافذة"
+msgstr "أثر التعديلات النافذة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "أثره على القيمة"
+msgstr "أثره على القيمة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "أطراف الدعوى"
+msgstr "أطراف الدعوى"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "أطراف العقد"
+msgstr "أطراف العقد"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "أغلقت في"
+msgstr "أغلقت في"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "إضبارة"
+msgstr "إضبارة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الأحكام والقرارات ومدد الطعن"
+msgstr "الأحكام والقرارات ومدد الطعن"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "الإجراء"
+msgstr "الإجراء"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الاستحقاق"
+msgstr "الاستحقاق"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الاسم"
+msgstr "الاسم"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "الاسم والتوقيع"
+msgstr "الاسم والتوقيع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الالتزام"
+msgstr "الالتزام"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الالتزامات التعاقدية"
+msgstr "الالتزامات التعاقدية"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "البند"
+msgstr "البند"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "البيان"
+msgstr "البيان"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "التاريخ"
+msgstr "التاريخ"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "التبليغ"
+msgstr "التبليغ"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "التجديد التلقائي"
+msgstr "التجديد التلقائي"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "التكرار"
+msgstr "التكرار"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "التواريخ الأساسية"
+msgstr "التواريخ الأساسية"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الجلسات"
+msgstr "الجلسات"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "الجهة"
+msgstr "الجهة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "الجهة الحالية"
+msgstr "الجهة الحالية"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الجهة المستفيدة"
+msgstr "الجهة المستفيدة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "الجولة"
+msgstr "الجولة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "الحالة"
+msgstr "الحالة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الحضور"
+msgstr "الحضور"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الخصوم"
+msgstr "الخصوم"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الدعوى"
+msgstr "الدعوى"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "الرسوم"
+msgstr "الرسوم"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "الشخص المعني"
+msgstr "الشخص المعني"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الصفة"
+msgstr "الصفة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الطرف الآخر"
+msgstr "الطرف الآخر"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "العدد"
+msgstr "العدد"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "العقد"
+msgstr "العقد"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الغرض"
+msgstr "الغرض"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "القانون الواجب التطبيق"
+msgstr "القانون الواجب التطبيق"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "القيمة الأصلية"
+msgstr "القيمة الأصلية"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "القيمة الحالية"
+msgstr "القيمة الحالية"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "المبلغ"
+msgstr "المبلغ"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "المبلغ المحكوم به"
+msgstr "المبلغ المحكوم به"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "المجموع"
+msgstr "المجموع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "المحامي"
+msgstr "المحامي"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "المحامي المسؤول"
+msgstr "المحامي المسؤول"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "المحكمة"
+msgstr "المحكمة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "المدفوع"
+msgstr "المدفوع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "المرجع"
+msgstr "المرجع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "المرحلة"
+msgstr "المرحلة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "المرحلة الحالية"
+msgstr "المرحلة الحالية"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "المسؤول"
+msgstr "المسؤول"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "المستند"
+msgstr "المستند"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "المقرر"
+msgstr "المقرر"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الملحق"
+msgstr "الملحق"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "الموضوع"
+msgstr "الموضوع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الموظف القانوني المسؤول"
+msgstr "الموظف القانوني المسؤول"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "الموعد القادم"
+msgstr "الموعد القادم"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "الموعد القانوني"
+msgstr "الموعد القانوني"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "الموقّع عنه"
+msgstr "الموقّع عنه"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "النتيجة"
+msgstr "النتيجة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "النوع"
+msgstr "النوع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "الوكالة"
+msgstr "الوكالة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "انتهاء جديد"
+msgstr "انتهاء جديد"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "بواسطة"
+msgstr "بواسطة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "بيانات الإضبارة"
+msgstr "بيانات الإضبارة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "بيانات الدعوى"
+msgstr "بيانات الدعوى"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "بيانات العقد"
+msgstr "بيانات العقد"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "تاريخ الانتهاء"
+msgstr "تاريخ الانتهاء"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "تاريخ التدقيق"
+msgstr "تاريخ التدقيق"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "تاريخ التوقيع"
+msgstr "تاريخ التوقيع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "تاريخ الجلسة"
+msgstr "تاريخ الجلسة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "تاريخ الدفع"
+msgstr "تاريخ الدفع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "تاريخ المباشرة"
+msgstr "تاريخ المباشرة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "تاريخ النفاذ"
+msgstr "تاريخ النفاذ"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "تاريخه"
+msgstr "تاريخه"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "تقرير موقف الدعوى"
+msgstr "تقرير موقف الدعوى"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "حالة التوقيع"
+msgstr "حالة التوقيع"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "حالته"
+msgstr "حالته"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "خلاصة العقد"
+msgstr "خلاصة العقد"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "درجة الخطورة"
+msgstr "درجة الخطورة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "دفتر"
+msgstr "دفتر"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "رقم الدعوى / السنة"
+msgstr "رقم الدعوى / السنة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "رقم الوصل"
+msgstr "رقم الوصل"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "رمز السجل"
+msgstr "رمز السجل"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "سجل التعديلات (الملاحق)"
+msgstr "سجل التعديلات (الملاحق)"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "سنوات"
+msgstr "سنوات"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "صفتنا"
+msgstr "صفتنا"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "صفته"
+msgstr "صفته"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "طبع بتاريخ"
+msgstr "طبع بتاريخ"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "طرفنا"
+msgstr "طرفنا"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "طريق الطعن"
+msgstr "طريق الطعن"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "على من"
+msgstr "على من"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "غلاف الإضبارة"
+msgstr "غلاف الإضبارة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "فتحت في"
+msgstr "فتحت في"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "قيدت في"
+msgstr "قيدت في"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "قيمة العقد"
+msgstr "قيمة العقد"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "كتابهم (العدد / التاريخ)"
+msgstr "كتابهم (العدد / التاريخ)"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "كشف المستندات"
+msgstr "كشف المستندات"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "لا إجراءات مدونة بعد."
+msgstr "لا إجراءات مدونة بعد."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "لا التزامات مدونة."
+msgstr "لا التزامات مدونة."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "لا توجد قيود في هذا الدفتر لسنة"
+msgstr "لا توجد قيود في هذا الدفتر لسنة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "لا جلسات مدونة."
+msgstr "لا جلسات مدونة."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "لا رسوم على هذه الإضبارة."
+msgstr "لا رسوم على هذه الإضبارة."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "لا مستندات مطلوبة."
+msgstr "لا مستندات مطلوبة."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "لا ملاحق على هذا العقد."
+msgstr "لا ملاحق على هذا العقد."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "لسنة"
+msgstr "لسنة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "لم تدون الأطراف بعد."
+msgstr "لم تدون الأطراف بعد."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "لم يصدر حكم أو قرار بعد."
+msgstr "لم يصدر حكم أو قرار بعد."
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "ما جرى فيها"
+msgstr "ما جرى فيها"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "مبلغ الدعوى"
+msgstr "مبلغ الدعوى"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "مجموع القيود:"
+msgstr "مجموع القيود:"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "مدة الحفظ"
+msgstr "مدة الحفظ"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "مدة الطعن"
+msgstr "مدة الطعن"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "مدير القسم القانوني"
+msgstr "مدير القسم القانوني"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "مسؤول السجل"
+msgstr "مسؤول السجل"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "مطلوب؟"
+msgstr "مطلوب؟"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_case_cover_document
+msgid "منظم الإضبارة"
+msgstr "منظم الإضبارة"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_register_book_document
+msgid "منها الملغاة:"
+msgstr "منها الملغاة:"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "مهلة الإشعار"
+msgstr "مهلة الإشعار"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "موضوعه"
+msgstr "موضوعه"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_lawsuit_status_document
+msgid "موقعه في الدعوى"
+msgstr "موقعه في الدعوى"
+
+#. module: legal_reports
+#: model_terms:ir.ui.view,arch_db:legal_reports.report_contract_summary_document
+msgid "يوماً"
+msgstr "يوماً"
