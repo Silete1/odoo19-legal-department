@@ -477,3 +477,88 @@ other than the PostgreSQL version notice.
 | `after-office/` | The same sweep against the redesign |
 | `scripts/legal_ui_capture.py` | The harness, re-runnable |
 | `scripts/legal_stamp_view_class.py` | The view-class stamper, `--check` for CI |
+
+---
+
+## 12. Second pass — structure, against named references
+
+The first pass fixed *what the screen contains*. This one fixes *how it is
+built*, against five references inspected in a real browser rather than
+recalled. Business logic, models, permissions, role behaviour, data sources and
+workflows are untouched; every change below is structure, hierarchy or type.
+
+### What the references actually said
+
+Two of the seven URLs could not be read: `horizon.servicenow.com` returns an
+Akamai **Access Denied** to this network for both the structure and the
+navigation-components pages — `WebFetch` gets HTTP 403 and a real headless
+Chromium with a normal user agent gets the same edge block, so it is an
+IP/fingerprint deny rather than a user-agent one. The ServiceNow structure was
+taken instead from their own published description of the same model, which
+names the regions directly. Screenshots of all seven attempts, and the extracted
+prose, are in the session scratchpad.
+
+| Reference | The rule that changed the screen |
+|---|---|
+| **ServiceNow workspace structure** | A workspace has a **landing page** whose job is to "provide actionable data to help the user orient their day to the activities and issues that require the most attention", **list pages**, and a **contextual side panel** with "a panel header that indicates the purpose … and a content area". That is exactly مكتبي, the registers, and the agenda - so the agenda was rebuilt as a contextual panel with a stated purpose rather than a squeezed list. |
+| **Linear, My Issues** | The mechanic I had missed: assigned work is **"grouped in a focus order such as urgent work, SLA-bound work, blockers … Some sections only appear when they apply"**. My queue was a flat sorted table. |
+| **Linear, UI refresh + design blog** | *"Don't compete for attention you haven't earned"* - navigation and orientation recede so the content area leads. *"Structure should be felt not seen"* - separators "had quietly proliferated … sometimes appearing without clear reason"; the fix was **fewer of them at softer contrast**. Also: reduce icon usage and size, and make tabs compact rather than full-width. |
+| **Jira Service Management queues** | "Queues let you quickly **view, triage and assign**… they provide high-level information - usually a summary, status and customer name." And: **"Queues are usually sorted by an SLA … a clock on the work item indicates the time until your team's next target is due."** The queue is the workspace; the clock is a first-class column. |
+
+### What changed
+
+**Focus bands replace the flat list.** The queue now groups into
+`متأخر · 8` / `اليوم` / `خلال الأسبوع · 1` / `لاحقًا · 3` / `بلا تاريخ`, each a
+quiet band header with a tone dot and a count, and a band with nothing in it is
+never drawn. The bands *are* the server's existing `bucket` - the component only
+draws boundaries the payload had already implied. No row moves, none is
+filtered, nothing is recomputed.
+
+**The header left Odoo's control panel.** It was a 30px strip in which the
+title, the role, the date, a refresh and the only primary action competed on one
+line. The screen now renders `display="{}"` - no control panel - and owns a real
+header: مكتبي at 22px, `role · date` beneath it, a quiet icon-only refresh, and
+`+ جديد` as the single filled control on the page. Drilling into a record still
+breadcrumbs back, because the action stack builds the trail, not this screen.
+
+**Rows lost their separators and gained a hierarchy.** 44px → **54px**; the
+subject is now 15px/500 in primary ink and the loudest thing in the row;
+reference and owner recede to faint; the status badge became a **7px dot plus a
+muted word**; the reason is plain text; the deadline is bold red only once it
+has bitten. There is **no hairline under a row** - the band header above is the
+structure, and thirteen lines to say what four already say is noise.
+
+**The rail stopped being a widget.** Segments size to their content instead of
+stretching, so `0 بلا مسؤول` no longer occupies the same width, and therefore
+claims the same importance, as `23 متأخر على مستوى الدائرة`. The icons went; the
+tone lands on the figure alone, never on a segment background.
+
+**The agenda became a timeline.** Date over title over source, per the
+contextual-panel pattern, with sticky day headers carrying counts.
+
+**Full desktop width.** The `max-inline-size: 112rem` centring is gone - a
+workspace is not an article, and the two things a legal desk is short of are
+queue rows and column width.
+
+**Palette fixed to the brief**: ground `#f6f7f9`, surfaces `#ffffff`, one
+separator `#e5e7eb`, ink `#111827` / `#6b7280` / `#9ca3af`, radius 6-8px, Odoo
+purple on the CTA, the focus ring and the selected tab only, and semantic red /
+amber / green solely where the meaning requires them.
+
+### Two defects the pass exposed
+
+- **The agenda hid the year.** Every date read `25 مايو` whether it fell this
+  year or fourteen months ago - on a board whose whole purpose is overdue legal
+  deadlines. The year now appears whenever the date is not in the current one.
+- **The month names were the wrong Arabic.** `ar_001` yields the Egyptian set
+  (`مايو`, `نوفمبر`); Iraq uses the Levantine set (`أيار`, `تشرين الثاني`).
+  Formatting now goes through babel with `ar_IQ` **directly** - Odoo's
+  `format_date` resolves a language code through `res.lang` and silently falls
+  back to the reader's own language when the code is not an *installed* one,
+  which is why the first attempt still printed `مايو`.
+
+One latent bug was fixed while it was cheap: the keyboard walk indexed
+`querySelectorAll` results by the payload's order. That happened to agree with
+paint order only because the payload arrives bucket-sorted; it now indexes the
+painted order explicitly, so a future ordering change cannot make ↓ open the
+wrong record.

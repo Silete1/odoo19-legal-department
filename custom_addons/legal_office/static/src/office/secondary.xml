@@ -2,16 +2,21 @@
 <templates xml:space="preserve">
 
     <t t-name="legal_office.LegalSecondary">
-        <section class="o_legal_panel o_legal_secondary">
+        <!-- Deliberately the quietest region on the screen: no panel border,
+             no header, a tab strip that reads as text until it is used. It is
+             orientation, and orientation that competes with the work area has
+             stopped orienting anybody. -->
+        <section class="o_legal_secondary">
 
-            <div class="o_legal_tabs" role="tablist">
+            <div class="o_legal_stabs" role="tablist">
                 <button type="button" role="tab"
                         t-foreach="tabs" t-as="tab" t-key="tab.key"
-                        t-attf-class="o_legal_tab {{ tab.key === state.active ? 'o_legal_tab--on' : '' }}"
+                        t-attf-class="o_legal_stab {{ tab.key === state.active ? 'o_legal_stab--on' : '' }}"
                         t-att-aria-selected="tab.key === state.active ? 'true' : 'false'"
                         t-on-click="() => this.select(tab.key)">
                     <span t-esc="tab.label"/>
-                    <span class="o_legal_pill o_legal_num" dir="ltr" t-esc="tab.count_label"/>
+                    <span class="o_legal_stab__count o_legal_num" dir="ltr"
+                          t-esc="tab.count_label"/>
                 </button>
             </div>
 
@@ -40,12 +45,6 @@
                     </li>
                 </ul>
             </div>
-
-            <footer class="o_legal_panel__foot" t-if="current and current.action">
-                <button type="button" class="btn btn-link btn-sm"
-                        t-on-click="() => this.props.onOpenRow({ open: current.action })"
-                        t-esc="current.label"/>
-            </footer>
         </section>
     </t>
 

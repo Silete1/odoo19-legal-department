@@ -2,15 +2,18 @@
 <templates xml:space="preserve">
 
     <t t-name="legal_office.LegalAgenda">
+        <!-- The contextual column beside the work area, in the ServiceNow
+             sense: a panel with a header that states its purpose and a content
+             area, persistent beside the primary work. It is the *second*
+             question the reader has - what is coming - and it gets a quarter
+             of the width because the first question gets the rest. -->
         <section class="o_legal_panel o_legal_agenda">
 
             <header class="o_legal_panel__head">
-                <div class="o_legal_panel__title">
-                    <h2 t-esc="props.agenda.title"/>
-                    <span class="o_legal_pill o_legal_num" dir="ltr"
-                          t-if="props.agenda.total" t-esc="props.agenda.total"/>
-                </div>
-                <p class="o_legal_panel__hint" t-esc="props.agenda.hint"/>
+                <h2 class="o_legal_panel__name" t-att-title="props.agenda.hint"
+                    t-esc="props.agenda.title"/>
+                <span class="o_legal_pill o_legal_num" dir="ltr"
+                      t-if="props.agenda.total" t-esc="props.agenda.total"/>
             </header>
 
             <div class="o_legal_blank o_legal_blank--slim" t-if="!props.agenda.groups.length">
@@ -24,24 +27,36 @@
                          under it, so a reader three weeks down the rail still
                          knows which day they are looking at. -->
                     <h3 t-attf-class="o_legal_agenda__day o_legal_tone--{{ group.tone }}">
-                        <span t-esc="group.label"/>
-                        <span class="o_legal_pill o_legal_num" dir="ltr"
+                        <span class="o_legal_agenda__dayname" t-esc="group.label"/>
+                        <span class="o_legal_agenda__daysep" aria-hidden="true">·</span>
+                        <span class="o_legal_agenda__daycount o_legal_num" dir="ltr"
                               t-esc="group.count_label"/>
                     </h3>
+
                     <ul class="o_legal_agenda__list">
                         <li t-foreach="group.rows" t-as="row" t-key="row.id">
                             <button type="button" class="o_legal_agenda__row"
                                     t-att-disabled="row.open ? undefined : 'disabled'"
                                     t-on-click="() => this.open(row)">
-                                <i t-attf-class="fa {{ row.icon }} o_legal_agenda__icon"
-                                   role="img" t-att-title="row.kind_label"
-                                   t-att-aria-label="row.kind_label"/>
-                                <span class="o_legal_agenda__date o_legal_num" dir="ltr"
+                                <!-- Date over title over source, the way a
+                                     diary entry reads. One line each, so the
+                                     column never wraps and every entry is the
+                                     same height. -->
+                                <!-- No dir="ltr" here: "25 أيار" is a phrase,
+                                     not a reference, and pinning it LTR puts
+                                     the month on the wrong side of the day. -->
+                                <span class="o_legal_agenda__date"
+                                      t-att-title="row.date_iso"
                                       t-esc="row.date_label"/>
                                 <span class="o_legal_agenda__name" t-att-title="row.name"
                                       t-esc="row.name"/>
-                                <i class="fa fa-exclamation o_legal_agenda__urgent"
-                                   t-if="row.urgent" role="img" aria-hidden="true"/>
+                                <span class="o_legal_agenda__kind">
+                                    <i t-attf-class="fa {{ row.icon }}" role="img"
+                                       aria-hidden="true"/>
+                                    <span t-esc="row.kind_label"/>
+                                    <i class="fa fa-exclamation o_legal_agenda__urgent"
+                                       t-if="row.urgent" role="img" aria-hidden="true"/>
+                                </span>
                             </button>
                         </li>
                     </ul>
@@ -49,7 +64,7 @@
             </div>
 
             <footer class="o_legal_panel__foot" t-if="props.agenda.action">
-                <button type="button" class="btn btn-link btn-sm"
+                <button type="button" class="o_legal_linkbtn"
                         t-on-click="() => props.onOpenAction(props.agenda.action)"
                         t-esc="label.board"/>
             </footer>

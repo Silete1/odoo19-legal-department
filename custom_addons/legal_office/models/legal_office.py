@@ -33,7 +33,10 @@ uses ``sudo()``.
 import logging
 from datetime import timedelta
 
+import babel.dates
+
 from odoo import api, fields, models
+from odoo.tools import format_date
 
 _logger = logging.getLogger(__name__)
 
@@ -1254,7 +1257,12 @@ class LegalOffice(models.AbstractModel):
                 "kind": record.kind or "",
                 "kind_label": kinds.get(record.kind, record.kind or ""),
                 "icon": self._agenda_icon(record.kind),
-                "date_label": fields.Date.to_string(record.date_due),
+                # "28 آب" rather than "2026-08-28": the agenda is read as a
+                # diary, and a diary entry that has to be parsed back from ISO
+                # into a day of the month is one the reader skips. The full
+                # date stays available as the row's title attribute.
+                "date_label": self._agenda_date_label(record.date_due),
+                "date_iso": fields.Date.to_string(record.date_due),
                 "day_label": self._weekday_label(record.date_due) if record.date_due else "",
                 "owner": record.user_id.display_name if record.user_id else "",
                 "urgent": record.priority in ("1", "2"),
@@ -1276,6 +1284,40 @@ class LegalOffice(models.AbstractModel):
                 [("state", "!=", "done")],
                 views=[[False, "list"], [False, "calendar"]]),
         }
+
+    def _agenda_date_label(self, day):
+        """Day and month, the way a diary in this office writes them.
+
+        Two decisions, both of which a legal board gets wrong by default.
+
+        The month names are the Levantine set Iraq actually uses - آب, تشرين
+        الأول - rather than the Egyptian set a generic ``ar`` locale returns.
+        The product is an Iraqi legal department and its deadlines are read
+        against Iraqi paperwork, so the locale is narrowed to ``ar_IQ`` when
+        the reader's language is Arabic at all.
+
+        The year appears whenever the date is not in the current one. An
+        overdue board is full of last year's dates, and "25 أيار" beside
+        "8 حزيران" hides which of the two is fourteen months late.
+        """
+        if not day:
+            return ""
+        pattern = "d MMM" if day.year == fields.Date.context_today(self).year             else "d MMM y"
+        lang = (self.env.lang or "en_US")
+        if lang.lower().startswith("ar"):
+            # Babel directly, not `format_date`: that helper resolves the code
+            # through `res.lang` and silently falls back to the reader's own
+            # language when the code is not an *installed* one - and ar_IQ is
+            # a formatting locale here, not a language anybody is running the
+            # interface in. Going through it produced أيار as مايو.
+            try:
+                return babel.dates.format_date(day, format=pattern, locale="ar_IQ")
+            except Exception:  # noqa: BLE001
+                pass
+        try:
+            return format_date(self.env, day, date_format=pattern)
+        except Exception:  # noqa: BLE001 - a malformed lang must not lose the row
+            return fields.Date.to_string(day)
 
     def _agenda_icon(self, kind):
         return {

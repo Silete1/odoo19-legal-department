@@ -1,0 +1,175 @@
+{
+ "clerk": {
+  "console": [],
+  "metrics": {
+   "office": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": null,
+    "sections": [],
+    "cards": 2,
+    "tiles": 5,
+    "queueRows": 12,
+    "agendaRows": 25,
+    "attention": [
+     "1بانتظار التسجيل",
+     "2غير مربوط بمعاملة",
+     "1بلا مسؤول",
+     "5مستندات ناقصة",
+     "3تجديدات خلال 30 يومًا"
+    ],
+    "hero": null,
+    "firstQueue": {
+     "top": 189,
+     "h": 762,
+     "w": 1018
+    },
+    "rtlLeak": 0
+   }
+  }
+ },
+ "officer": {
+  "console": [],
+  "metrics": {
+   "office": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": null,
+    "sections": [],
+    "cards": 2,
+    "tiles": 5,
+    "queueRows": 25,
+    "agendaRows": 37,
+    "attention": [
+     "10متأخر",
+     "1يستحق اليوم",
+     "3خلال سبعة أيام",
+     "3لدى الجهة",
+     "8الرد متأخر"
+    ],
+    "hero": null,
+    "firstQueue": {
+     "top": 189,
+     "h": 762,
+     "w": 1018
+    },
+    "rtlLeak": 0
+   }
+  }
+ },
+ "approver": {
+  "console": [],
+  "metrics": {
+   "office": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": null,
+    "sections": [],
+    "cards": 2,
+    "tiles": 5,
+    "queueRows": 7,
+    "agendaRows": 18,
+    "attention": [
+     "1بانتظار توقيعك",
+     "1طلبات للبتّ فيها",
+     "1عقود بانتظار مصادقتك",
+     "4آراء للمراجعة",
+     "0أُعيدت إليك"
+    ],
+    "hero": null,
+    "firstQueue": {
+     "top": 189,
+     "h": 627,
+     "w": 1018
+    },
+    "rtlLeak": 0
+   }
+  }
+ },
+ "manager": {
+  "console": [],
+  "metrics": {
+   "office": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": null,
+    "sections": [],
+    "cards": 2,
+    "tiles": 5,
+    "queueRows": 13,
+    "agendaRows": 46,
+    "attention": [
+     "23متأخر على مستوى الدائرة",
+     "0بلا مسؤول",
+     "1طلبات غير مسندة",
+     "2دعاوى عالية المخاطر",
+     "1عقود تنتهي خلال 60 يومًا"
+    ],
+    "hero": null,
+    "firstQueue": {
+     "top": 189,
+     "h": 762,
+     "w": 1018
+    },
+    "rtlLeak": 0
+   }
+  }
+ },
+ "auditor": {
+  "console": [],
+  "metrics": {
+   "office": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": null,
+    "sections": [],
+    "cards": 2,
+    "tiles": 4,
+    "queueRows": 16,
+    "agendaRows": 46,
+    "attention": [
+     "23متأخر على مستوى الدائرة",
+     "5المعاملات المفتوحة",
+     "19الإجراءات هذا الأسبوع",
+     "0قيود ملغاة في السجل"
+    ],
+    "hero": null,
+    "firstQueue": {
+     "top": 189,
+     "h": 762,
+     "w": 1018
+    },
+    "rtlLeak": 0
+   }
+  }
+ },
+ "admin": {
+  "console": [],
+  "metrics": {
+   "office": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": null,
+    "sections": [],
+    "cards": 2,
+    "tiles": 5,
+    "queueRows": 13,
+    "agendaRows": 46,
+    "attention": [
+     "23متأخر على مستوى الدائرة",
+     "0بلا مسؤول",
+     "1طلبات غير مسندة",
+     "2دعاوى عالية المخاطر",
+     "1عقود تنتهي خلال 60 يومًا"
+    ],
+    "hero": null,
+    "firstQueue": {
+     "top": 189,
+     "h": 762,
+     "w": 1018
+    },
+    "rtlLeak": 0
+   }
+  }
+ }
+}

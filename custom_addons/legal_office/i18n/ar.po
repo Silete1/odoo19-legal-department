@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 13:08+0000\n"
-"PO-Revision-Date: 2026-08-31 13:08+0000\n"
+"POT-Creation-Date: 2026-08-31 15:07+0000\n"
+"PO-Revision-Date: 2026-08-31 15:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -530,8 +530,10 @@ msgid "Last %(n)s months"
 msgstr "آخر %(n)s أشهر"
 
 #. module: legal_office
+#. odoo-javascript
 #. odoo-python
 #: code:addons/legal_office/models/legal_office.py:0
+#: code:addons/legal_office/static/src/office/work_queue.js:0
 msgid "Later"
 msgstr "لاحقًا"
 
@@ -675,6 +677,12 @@ msgstr "جديد"
 #: code:addons/legal_office/models/legal_office.py:0
 msgid "Next hearing: %(when)s"
 msgstr "الجلسة القادمة: %(when)s"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "No date"
+msgstr "بلا تاريخ"
 
 #. module: legal_office
 #. odoo-python
@@ -921,9 +929,11 @@ msgid "Outgoing"
 msgstr "صادر"
 
 #. module: legal_office
+#. odoo-javascript
 #. odoo-python
 #: code:addons/legal_office/models/legal_analytics.py:0
 #: code:addons/legal_office/models/legal_office.py:0
+#: code:addons/legal_office/static/src/office/work_queue.js:0
 msgid "Overdue"
 msgstr "متأخر"
 
@@ -1277,8 +1287,10 @@ msgid "Timeliness"
 msgstr "الالتزام بالمواعيد"
 
 #. module: legal_office
+#. odoo-javascript
 #. odoo-python
 #: code:addons/legal_office/models/legal_office.py:0
+#: code:addons/legal_office/static/src/office/work_queue.js:0
 msgid "Today"
 msgstr "اليوم"
 
@@ -1487,6 +1499,12 @@ msgstr "لدى الجهة"
 #: code:addons/legal_office/models/legal_office.py:0
 msgid "Within seven days"
 msgstr "خلال سبعة أيام"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Within the week"
+msgstr "خلال الأسبوع"
 
 #. module: legal_office
 #. odoo-python

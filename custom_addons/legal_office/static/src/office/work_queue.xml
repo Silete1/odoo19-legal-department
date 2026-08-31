@@ -5,26 +5,27 @@
         <section class="o_legal_panel o_legal_queue">
 
             <header class="o_legal_panel__head">
-                <div class="o_legal_panel__title">
-                    <h2 t-esc="props.queue.title"/>
-                    <span class="o_legal_pill o_legal_num" dir="ltr"
-                          t-if="props.queue.total" t-esc="props.queue.total"/>
-                </div>
-                <p class="o_legal_panel__hint" t-esc="props.queue.hint"/>
+                <h2 class="o_legal_panel__name" t-att-title="props.queue.hint"
+                    t-esc="props.queue.title"/>
+                <span class="o_legal_pill o_legal_num" dir="ltr"
+                      t-if="props.queue.total" t-esc="props.queue.total"/>
             </header>
 
-            <!-- Scope chips. Drawn only when the queue actually mixes
-                 registers: a single-source queue with one chip beside an "All"
-                 chip is a control that cannot change anything. -->
-            <div class="o_legal_scopes" t-if="props.queue.scopes.length" role="tablist">
+            <!-- Queue tabs. Compact text tabs with counts rather than filled
+                 pills: they switch which register is in view and belong with
+                 the list, not on top of it as a row of buttons. Drawn only
+                 when the queue actually mixes registers - a single-source
+                 queue with one tab beside "All" is a control that cannot
+                 change anything. -->
+            <div class="o_legal_qtabs" t-if="props.queue.scopes.length" role="tablist">
                 <button type="button" role="tab"
                         t-foreach="props.queue.scopes" t-as="scope" t-key="scope.key"
-                        t-attf-class="o_legal_scope {{ isScope(scope.key) ? 'o_legal_scope--on' : '' }}"
+                        t-attf-class="o_legal_qtab {{ isScope(scope.key) ? 'o_legal_qtab--on' : '' }}"
                         t-att-aria-selected="isScope(scope.key) ? 'true' : 'false'"
                         t-on-click="() => this.setScope(scope.key)">
-                    <i t-attf-class="fa {{ scope.icon }}" role="img" aria-hidden="true"/>
-                    <span t-esc="scope.label"/>
-                    <span class="o_legal_pill o_legal_num" dir="ltr" t-esc="scope.count_label"/>
+                    <span class="o_legal_qtab__label" t-esc="scope.label"/>
+                    <span class="o_legal_qtab__count o_legal_num" dir="ltr"
+                          t-esc="scope.count_label"/>
                 </button>
             </div>
 
@@ -54,16 +55,32 @@
                             <th class="o_legal_col_due" scope="col" t-esc="label.due"/>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr t-foreach="rows" t-as="row" t-key="row.id"
+
+                    <!-- One tbody per focus band, so the band header sits in
+                         the same column grid as its rows and the table keeps
+                         its alignment. -->
+                    <tbody t-foreach="bands" t-as="band" t-key="band.bucket">
+                        <tr class="o_legal_band">
+                            <th class="o_legal_band__head" colspan="6" scope="colgroup">
+                                <span t-attf-class="o_legal_band__dot o_legal_tone--{{ band.tone }}"
+                                      aria-hidden="true"/>
+                                <span class="o_legal_band__label" t-esc="band.label"/>
+                                <span class="o_legal_band__sep" aria-hidden="true">·</span>
+                                <span class="o_legal_band__count o_legal_num" dir="ltr"
+                                      t-esc="band.count"/>
+                            </th>
+                        </tr>
+
+                        <tr t-foreach="band.rows" t-as="entry" t-key="entry.row.id"
                             tabindex="0"
-                            t-attf-class="o_legal_queue__row o_legal_spine--{{ row.due_tone }} {{ row.priority > 1 ? 'o_legal_queue__row--urgent' : '' }}"
-                            t-on-click="() => this.open(row)"
-                            t-on-focus="() => this.onRowFocus(row_index)">
+                            t-attf-class="o_legal_queue__row {{ entry.row.priority > 1 ? 'o_legal_queue__row--urgent' : '' }}"
+                            t-on-click="() => this.open(entry.row)"
+                            t-on-focus="() => this.onRowFocus(entry.index)">
 
                             <td class="o_legal_col_kind">
-                                <i t-attf-class="fa {{ row.icon }}" role="img"
-                                   t-att-title="row.kind_label" t-att-aria-label="row.kind_label"/>
+                                <i t-attf-class="fa {{ entry.row.icon }}" role="img"
+                                   t-att-title="entry.row.kind_label"
+                                   t-att-aria-label="entry.row.kind_label"/>
                             </td>
 
                             <!-- References are quoted over the telephone and
@@ -73,29 +90,45 @@
                                  renders 2026/0498/ق back to front. -->
                             <td class="o_legal_col_ref">
                                 <span class="o_legal_ref o_legal_num" dir="ltr"
-                                      t-esc="row.reference"/>
+                                      t-att-title="entry.row.reference"
+                                      t-esc="entry.row.reference"/>
                             </td>
 
                             <td class="o_legal_col_subject">
-                                <span class="o_legal_subject" t-att-title="row.subject"
-                                      t-esc="row.subject"/>
-                                <span class="o_legal_owner" t-if="row.owner" t-esc="row.owner"/>
+                                <span class="o_legal_subject" t-att-title="entry.row.subject"
+                                      t-esc="entry.row.subject"/>
+                                <span class="o_legal_owner" t-if="entry.row.owner"
+                                      t-esc="entry.row.owner"/>
                             </td>
 
+                            <!-- A dot and a word, not an outlined box. At
+                                 thirteen rows a box per row is the loudest
+                                 thing on the screen and it is never the
+                                 thing the reader came for. -->
                             <td class="o_legal_col_state">
-                                <span t-attf-class="o_legal_badge o_legal_badge--{{ row.state_tone }}"
-                                      t-esc="row.state_label"/>
+                                <span class="o_legal_state">
+                                    <span t-attf-class="o_legal_state__dot o_legal_tone--{{ entry.row.state_tone }}"
+                                          aria-hidden="true"/>
+                                    <span class="o_legal_state__label"
+                                          t-att-title="entry.row.state_label"
+                                          t-esc="entry.row.state_label"/>
+                                </span>
                             </td>
 
-                            <!-- The column the screen exists for. -->
+                            <!-- The column the screen exists for. Plain text:
+                                 it is a sentence, and a sentence in a colour
+                                 competes with the deadline beside it. -->
                             <td class="o_legal_col_why">
-                                <span t-attf-class="o_legal_why o_legal_tone--{{ row.reason_tone }}"
-                                      t-att-title="row.reason" t-esc="row.reason"/>
+                                <span class="o_legal_why" t-att-title="entry.row.reason"
+                                      t-esc="entry.row.reason"/>
                             </td>
 
+                            <!-- Emphasised only when the clock has already
+                                 bitten. A future date is information; an
+                                 overdue one is an instruction. -->
                             <td class="o_legal_col_due">
-                                <span t-attf-class="o_legal_due o_legal_tone--{{ row.due_tone }}"
-                                      t-esc="row.due_label"/>
+                                <span t-attf-class="o_legal_due o_legal_due--{{ entry.row.due_tone }}"
+                                      t-esc="entry.row.due_label"/>
                             </td>
                         </tr>
                     </tbody>

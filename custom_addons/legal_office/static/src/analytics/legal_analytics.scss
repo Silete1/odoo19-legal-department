@@ -185,3 +185,28 @@
 
 // The chart wrapper from legal_procedure, given this screen's rhythm.
 .o_legal_analytics .o_legal_chart { inline-size: 100%; }
+
+// -------------------------------------------------------------------------
+// Two classes the analytics screen still needs. They used to live in
+// legal_office.scss and served both screens; the مكتبي redesign replaced its
+// panel header with a flatter one, so they moved here rather than being kept
+// alive on a screen that no longer draws them.
+// -------------------------------------------------------------------------
+
+// The analytics screen keeps Odoo's control panel, so it keeps the inline
+// context line that goes in it.
+.o_legal_whoami {
+    display: inline-flex;
+    align-items: center;
+    gap: $ds-space-2;
+    font-size: $ds-font-meta;
+    color: $ds-ink-muted;
+    margin-inline-start: $ds-space-3;
+}
+
+// A panel title beside its count, stacked under the panel's question.
+.o_legal_panel__title {
+    display: flex;
+    align-items: baseline;
+    gap: $ds-space-2;
+}

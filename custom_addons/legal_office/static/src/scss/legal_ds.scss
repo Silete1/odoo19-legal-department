@@ -72,28 +72,46 @@ $ds-leading-ar: 1.65;
 // Three levels and no more. `ground` is the page, `panel` is the working
 // surface, `sunken` is a header strip or an inset region *inside* a panel.
 // A fourth level would have to be invented before it could be used.
-$ds-ground: mix($o-gray-200, $o-view-background-color, 42%);
-$ds-panel: $o-view-background-color;
-$ds-sunken: mix($o-gray-100, $o-view-background-color, 70%);
-$ds-hover: mix($o-gray-200, $o-view-background-color, 30%);
-$ds-selected: mix($o-brand-primary, $o-view-background-color, 7%);
+//
+// The values are fixed rather than mixed off Odoo's tokens because the
+// workspace needs a warm-neutral ground that reads as *behind* the work,
+// and Odoo's default view background is pure white - which leaves a white
+// panel on a white page and nothing to separate them but a border.
+$ds-ground: #f6f7f9;
+$ds-panel: #ffffff;
+$ds-sunken: #fafbfc;
+$ds-hover: #f4f5f7;
+$ds-selected: rgba($o-brand-primary, 0.07);
 
 // ------------------------------------------------------------- borders
-// Hairline separates rows; rule separates regions; the spine is the 3px
-// state marker on the inline start of a work row and is the only border
-// in the system that carries colour as information.
-$ds-hairline: 1px solid mix($border-color, $o-view-background-color, 62%);
-$ds-rule: 1px solid $border-color;
+// One separator colour for the whole suite. Linear's refresh note is the
+// argument for having exactly one and using it sparingly: dividing lines
+// "quietly proliferated ... sometimes appearing without clear reason", and
+// the fix was fewer of them at lower contrast, not thinner ones.
+$ds-line: #e5e7eb;
+$ds-line-strong: #d8dbe0;
+
+$ds-hairline: 1px solid $ds-line;
+$ds-rule: 1px solid $ds-line;
 $ds-spine-width: 3px;
 
-$ds-radius-control: 4px;   // chips, buttons, inputs
-$ds-radius-panel: 6px;     // panels
+$ds-radius-control: 6px;   // chips, buttons, inputs
+$ds-radius-panel: 8px;     // panels
 // Pills are reserved for counts. Nothing else in the suite is fully round.
 
+// ----------------------------------------------------------------- ink
+$ds-ink: #111827;          // primary text
+$ds-ink-muted: #6b7280;    // secondary text
+$ds-ink-faint: #9ca3af;    // tertiary - references, timestamps
+
 // --------------------------------------------------------- row heights
-$ds-row-queue: 2.75rem;   // 44px - a work row, two lines of content
-$ds-row-agenda: 2rem;     // 32px - an agenda entry, one line
-$ds-row-compact: 1.75rem; // 28px - a secondary list entry
+// 54px carries a dominant subject line plus a meta line without either
+// touching the row above. Below ~50px the two lines fuse; above ~58px the
+// list stops being a list and starts being a stack of cards.
+$ds-row-queue: 3.375rem;  // 54px - a work row, subject over meta
+$ds-row-group: 2rem;      // 32px - a focus-band header inside the queue
+$ds-row-agenda: 3.25rem;  // 52px - an agenda entry, date over title
+$ds-row-compact: 2rem;    // 32px - a secondary list entry
 $ds-control-h: 1.75rem;   // 28px - chips and small buttons
 
 // --------------------------------------------------------------- tones
@@ -101,11 +119,11 @@ $ds-control-h: 1.75rem;   // 28px - chips and small buttons
 // `waiting` is deliberately a desaturated slate rather than a blue: the
 // ball being with the Tax Commission is not an alert, and a screen that
 // paints it like one teaches people to ignore alerts.
-$ds-tone-critical: $danger;
+$ds-tone-critical: #dc2626;
 $ds-tone-warning: #b45309;               // amber-700; readable on white, unlike $warning
-$ds-tone-waiting: mix($o-gray-600, #1e3a5f, 55%);
-$ds-tone-calm: mix($success, $o-gray-700, 70%);
-$ds-tone-neutral: $o-gray-600;
+$ds-tone-waiting: #5b6b7f;
+$ds-tone-calm: #15803d;
+$ds-tone-neutral: $ds-ink-muted;
 
 $ds-tones: (
     "critical": $ds-tone-critical,
@@ -160,7 +178,7 @@ $ds-tones: (
     font-weight: $ds-weight-strong;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: $o-gray-600;
+    color: $ds-ink-faint;
 
     [dir="rtl"] & {
         font-size: $ds-font-micro-ar;
