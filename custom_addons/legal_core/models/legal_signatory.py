@@ -35,6 +35,15 @@ class LegalSignatory(models.Model):
     entity_id = fields.Many2one(
         "legal.entity", string="Signs For", required=True, ondelete="cascade", index=True
     )
+    company_id = fields.Many2one(
+        "res.company",
+        related="entity_id.company_id",
+        store=True,
+        index=True,
+        help="Carried from the entity so the specimen signature and the seal - the "
+        "assets that make a letter a letter - are scoped to one company and never "
+        "readable across companies.",
+    )
     user_id = fields.Many2one(
         "res.users",
         string="System User",

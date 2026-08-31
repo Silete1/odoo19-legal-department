@@ -5,6 +5,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Domain
 
+from odoo.addons.legal_core.models.legal_engine import engine_guard, in_engine
+
 
 class LegalCorrespondenceLine(models.Model):
     """A row of the numbered subject table - جدول الموضوع.
@@ -755,7 +757,32 @@ class LegalCorrespondence(models.Model):
         The number, the date, the book and the direction of a registered entry
         are what the ministry has in *its* book, so the refusal has to be here.
         """
-        allocating = self.env.context.get("legal_allocating_number")
+        # A register entry moves draft -> registered -> void and never back. The
+        # number is quoted in the ministry's own book and in replies already
+        # written, so un-registering it (state -> draft, then edit or unlink) or
+        # un-voiding it must be refused for every caller, engine included - none
+        # of them has a legitimate reason to walk the book backwards.
+        if "state" in vals:
+            allowed_from = {
+                "draft": {"draft", "registered", "void"},
+                "registered": {"registered", "void"},
+                "void": {"void"},
+            }
+            for record in self:
+                target = vals["state"]
+                if target not in allowed_from.get(record.state, {record.state}):
+                    raise UserError(
+                        _(
+                            "Entry %(entry)s cannot go from %(old)s back to %(new)s. "
+                            "A register moves forward only: a mistake is voided with a "
+                            "reason, never un-registered.",
+                            entry=record.display_name,
+                            old=record.state,
+                            new=target,
+                        )
+                    )
+
+        allocating = in_engine()
         if not allocating:
             locked = [name for name in self._LOCKED_ONCE_REGISTERED if name in vals]
             if locked:
@@ -852,9 +879,8 @@ class LegalCorrespondence(models.Model):
                 record.register_id._check_may_allocate()
             if not record.kind_id.is_contact_note:
                 if not record.our_date:
-                    record.with_context(legal_allocating_number=True).our_date = (
-                        fields.Date.context_today(record)
-                    )
+                    with engine_guard():
+                        record.our_date = fields.Date.context_today(record)
                 if not record.our_number:
                     record._set_next_sequence()
             record._freeze_snapshot()

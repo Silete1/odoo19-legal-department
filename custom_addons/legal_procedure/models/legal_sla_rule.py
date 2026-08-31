@@ -1,6 +1,8 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.legal_core.models.legal_engine import in_engine
+
 
 class LegalSlaRule(models.Model):
     """How long a step may sit, and who is told when it does not - مستوى الخدمة.
@@ -220,7 +222,7 @@ class LegalSlaEscalation(models.Model):
         """
         frozen = {"case_id", "step_id", "round", "reason", "raised_on", "step_code"}
         forbidden = frozen.intersection(vals)
-        if forbidden and not self.env.context.get("legal_workflow"):
+        if forbidden and not in_engine():
             raise UserError(
                 _(
                     "An escalation records that somebody was told something on a date. "

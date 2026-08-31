@@ -36,6 +36,34 @@
         </record>
 
         <!--
+            The signature, the seal and the numbers filed at each window are the
+            assets that make an Iraqi official letter authentic, and they carry no
+            company scope of their own until now. Without these rules a clerk of one
+            company could read (and export) another company's specimen signature and
+            ختم - the cross-company leak the audit flagged.
+        -->
+        <record id="rule_legal_signatory_company" model="ir.rule">
+            <field name="name">Signatory: own company</field>
+            <field name="model_id" ref="model_legal_signatory"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_entity_identifier_company" model="ir.rule">
+            <field name="name">Entity identifier: own company</field>
+            <field name="model_id" ref="model_legal_entity_identifier"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_gov_body_contact_company" model="ir.rule">
+            <field name="name">Government body contact: own company or shared</field>
+            <field name="model_id" ref="model_legal_gov_body_contact"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!--
             Confidentiality. A legal department holds scanned passports, personal
             powers of attorney and privileged papers, so a confidential document
             is visible to the manager and to the officers of the body that issued

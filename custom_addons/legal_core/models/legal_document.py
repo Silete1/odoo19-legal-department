@@ -44,10 +44,12 @@ class LegalDocument(models.Model):
     entity_id = fields.Many2one(
         "legal.entity",
         string="Belongs To",
-        ondelete="cascade",
+        ondelete="restrict",
         index=True,
         help="The legal person this document belongs to. Empty for a document that "
-        "belongs to a person rather than to the company.",
+        "belongs to a person rather than to the company. Deletion is restricted: the "
+        "document register is permanent, so an entity that still owns documents is "
+        "archived, never deleted out from under its own certificate of incorporation.",
     )
     partner_id = fields.Many2one(
         "res.partner",

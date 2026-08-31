@@ -67,6 +67,7 @@ file numbers are invented.
     ],
     "data": [
         "data/demo_language.xml",
+        "data/demo_currency.xml",
         "data/demo_company.xml",
         "data/demo_users.xml",
         "data/demo_documents.xml",

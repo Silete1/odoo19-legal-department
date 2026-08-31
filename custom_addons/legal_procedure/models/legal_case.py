@@ -4,6 +4,8 @@ from datetime import timedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.legal_core.models.legal_engine import engine_guard, in_engine
+
 from .legal_constants import SLA_STATE_SELECTION, WORKFLOW_OWNED_FIELDS
 
 _logger = logging.getLogger(__name__)
@@ -908,8 +910,18 @@ class LegalCase(models.Model):
         likes and skips every guard, every log entry and every approval on the
         way. So the rule lives here, where it cannot be bypassed by a client.
         """
-        if not self.env.context.get("legal_workflow"):
+        if not in_engine():
             forbidden = sorted(set(WORKFLOW_OWNED_FIELDS).intersection(vals))
+            # ``procedure_type_id`` is chosen once, at intake. Changing it later
+            # relocates ``step_id`` (the procedures do not share steps) with no
+            # log entry - a second door into the same forgery the field guard
+            # above closes - so it is locked once the file exists.
+            if "procedure_type_id" in vals and any(
+                record.procedure_type_id
+                and record.procedure_type_id.id != vals["procedure_type_id"]
+                for record in self
+            ):
+                forbidden.append("procedure_type_id")
             if forbidden:
                 raise UserError(
                     _(
@@ -929,9 +941,15 @@ class LegalCase(models.Model):
     # ==================================================================
     # The engine
     # ==================================================================
-    def _engine(self):
-        """The one place the workflow context is applied."""
-        return self.with_context(legal_workflow=True)
+    def _engine_write(self, vals):
+        """The one path allowed to write the engine-owned fields.
+
+        Private (leading underscore) so it is unreachable over RPC, and it
+        carries no client-forgeable signal: the trusted marker is a process-local
+        set inside :func:`engine_guard`, never a context key a payload can spoof.
+        """
+        with engine_guard():
+            return self.write(vals)
 
     def _log(self, action, description, to_step=None, from_step=None, transition=None,
              reason=None, closes_step=True):
@@ -960,7 +978,7 @@ class LegalCase(models.Model):
         """
         self.ensure_one()
         previous = self.step_id
-        self._engine().write({"step_id": step.id, "sla_paused": False})
+        self._engine_write({"step_id": step.id, "sla_paused": False})
         self._log(
             action,
             description,
@@ -970,7 +988,7 @@ class LegalCase(models.Model):
             reason=reason,
         )
         if step.kind == "terminal":
-            self._engine().write({"date_closed": fields.Datetime.now()})
+            self._engine_write({"date_closed": fields.Datetime.now()})
             self._close_open_escalations()
             if step.outcome in ("granted", "granted_conditional"):
                 self._produce_result_document()
@@ -1114,7 +1132,7 @@ class LegalCase(models.Model):
             )
         target = step or self.step_id.return_to_step_id or self.procedure_type_id._first_step()
         previous = self.step_id
-        self._engine().write(
+        self._engine_write(
             {
                 "step_id": target.id,
                 "round": self.round + 1,
@@ -1154,7 +1172,7 @@ class LegalCase(models.Model):
             if case.step_id.kind != "terminal":
                 raise UserError(_("“%s” is not closed.", case.display_name))
             target = case.procedure_type_id._first_step()
-            case._engine().write(
+            case._engine_write(
                 {"date_closed": False, "round": case.round + 1, "sla_paused": False}
             )
             case._move_to(target, "reopen", _("Re-opened at %s.", target.name))
@@ -1289,7 +1307,7 @@ class LegalCase(models.Model):
             }
         )
         document.expiry_date = document._compute_expiry_from_type()
-        self._engine().write({"result_document_id": document.id})
+        self._engine_write({"result_document_id": document.id})
         self._log(
             "document",
             _("Produced %s and filed it in the register.", document.display_name),

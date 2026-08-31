@@ -47,6 +47,9 @@ class LegalGovBodyContact(models.Model):
     body_id = fields.Many2one(
         "legal.gov.body", string="Body", required=True, ondelete="cascade", index=True
     )
+    company_id = fields.Many2one(
+        "res.company", related="body_id.company_id", store=True, index=True
+    )
     name = fields.Char(required=True, translate=True)
     role = fields.Char(translate=True, help="مدير القسم، معاون، موظف الاستعلامات")
     section = fields.Char(translate=True, help="The section or window inside the body.")

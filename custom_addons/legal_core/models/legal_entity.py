@@ -211,6 +211,9 @@ class LegalEntityIdentifier(models.Model):
     entity_id = fields.Many2one(
         "legal.entity", required=True, ondelete="cascade", index=True
     )
+    company_id = fields.Many2one(
+        "res.company", related="entity_id.company_id", store=True, index=True
+    )
     body_id = fields.Many2one(
         "legal.gov.body", string="Issued By", required=True, ondelete="restrict", index=True
     )

@@ -345,8 +345,16 @@
                 <field name="step_id"/>
                 <field name="ready_to_advance"/>
                 <field name="is_closed"/>
-                <progressbar field="sla_state"
-                             colors="{'on_track': 'success', 'warning': 'warning', 'overdue': 'danger', 'escalated': 'danger'}"/>
+                <!--
+                    No kanban <progressbar> here. The natural field for it,
+                    ``sla_state``, is deliberately NOT stored (a service-level
+                    verdict is stale by the next midnight, so it is read live);
+                    an Odoo 19 progressbar aggregates its field in SQL and raises
+                    "Cannot convert ... to SQL because it is not stored". The
+                    per-file clock badge on each card carries the same signal
+                    without a column-level aggregate that the design forbids.
+                -->
+                <field name="sla_state"/>
                 <templates>
                     <t t-name="card">
                         <div class="d-flex justify-content-between">

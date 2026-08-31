@@ -1,3 +1,4 @@
+from . import legal_engine
 from . import legal_expiry_mixin
 from . import legal_jurisdiction
 from . import legal_gov_body

@@ -9,6 +9,8 @@ from odoo.exceptions import ValidationError
 from odoo.tools import SQL, date_utils, index_exists
 from odoo.tools.misc import format_date
 
+from odoo.addons.legal_core.models.legal_engine import engine_guard
+
 _logger = logging.getLogger(__name__)
 
 
@@ -392,8 +394,10 @@ class LegalSequenceMixin(models.AbstractModel):
         format_string, format_values = self._get_next_sequence_format()
         sequence = self._locked_increment(format_string, format_values)
         # The raw UPDATE above is invisible to the ORM cache, so write the same
-        # value through the ORM. The context flag lets the inheriting model's
-        # write lock recognise its own allocation and stand aside.
-        self.with_context(legal_allocating_number=True)[self._sequence_field] = sequence
+        # value through the ORM. The engine guard - a process-local marker a
+        # client payload cannot forge - lets the inheriting model's write lock
+        # recognise its own allocation and stand aside.
+        with engine_guard():
+            self[self._sequence_field] = sequence
         self._compute_split_sequence()
         return sequence
