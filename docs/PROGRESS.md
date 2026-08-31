@@ -119,7 +119,7 @@ corporate Legal Affairs suite. A fresh session resumes from here.
       board, board Arabic-first + XML-RPC-safe ids, demo values Arabized,
       po repairs) — suite re-run green 0/0 of 192
 - [x] FINAL_REPORT complete (docs/ui-audit/FINAL_REPORT.md)
-- [ ] Merge audit-redesign → main
+- [x] Merge audit-redesign → main — DONE; the branch is fully contained in main
       NOTE: server err log tracebacks are all from unrelated dma_* databases
       (multi-DB server); legal_dept clean
 - [ ] P2 operational UX (dashboard, queues, lists, search, forms)
