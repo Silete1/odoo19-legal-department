@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_appeal_rule_list" model="ir.ui.view">
+        <field name="name">legal.appeal.rule.list</field>
+        <field name="model">legal.appeal.rule</field>
+        <field name="arch" type="xml">
+            <list string="Appeal Window Rules">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="remedy"/>
+                <field name="ruling_type"/>
+                <field name="court_degree" optional="show"/>
+                <field name="days"/>
+                <field name="non_extendable" widget="boolean_toggle" optional="show"/>
+                <field name="jurisdiction_id" optional="hide"/>
+                <field name="verification_status" widget="badge"
+                       decoration-success="verification_status == 'verified'"
+                       decoration-warning="verification_status == 'stale'"
+                       decoration-danger="verification_status == 'not_researched'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_appeal_rule_form" model="ir.ui.view">
+        <field name="name">legal.appeal.rule.form</field>
+        <field name="model">legal.appeal.rule</field>
+        <field name="arch" type="xml">
+            <form string="Appeal Window Rule">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Cassation of a judgment"/></h1>
+                    </div>
+                    <group>
+                        <group string="When It Applies">
+                            <field name="remedy"/>
+                            <field name="ruling_type"/>
+                            <field name="court_degree"/>
+                            <field name="jurisdiction_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="The Period">
+                            <field name="days"/>
+                            <field name="non_extendable"/>
+                            <field name="verification_status"/>
+                            <field name="legal_basis"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning" role="alert">
+                        These periods are statutory and non-extendable. A shipped figure marked
+                        “Needs Re-check” must be confirmed against the current text before it is
+                        relied on at a court - missing an appeal period forfeits the right.
+                    </div>
+                    <field name="note" placeholder="Notes on how this period is counted."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_appeal_rule_search" model="ir.ui.view">
+        <field name="name">legal.appeal.rule.search</field>
+        <field name="model">legal.appeal.rule</field>
+        <field name="arch" type="xml">
+            <search string="Appeal Window Rules">
+                <field name="name"/>
+                <field name="remedy"/>
+                <field name="court_degree"/>
+                <filter name="non_extendable" string="Non-extendable" domain="[('non_extendable', '=', True)]"/>
+                <filter name="needs_recheck" string="Needs Re-check" domain="[('verification_status', 'in', ['stale', 'not_researched'])]"/>
+                <group>
+                    <filter name="group_remedy" string="Remedy" context="{'group_by': 'remedy'}"/>
+                    <filter name="group_ruling" string="Against" context="{'group_by': 'ruling_type'}"/>
+                    <filter name="group_degree" string="Court Degree" context="{'group_by': 'court_degree'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_appeal_rule" model="ir.actions.act_window">
+        <field name="name">Appeal Window Rules</field>
+        <field name="res_model">legal.appeal.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">State the statutory periods once, as data</p>
+            <p>
+                Objection, appeal and cassation each run to their own non-extendable clock, and
+                cassation runs differently again for a decision than for a judgment. Holding
+                the day-counts here - readable, correctable, marked for verification - is what
+                keeps a missed period a configuration question rather than a hidden bug.
+            </p>
+        </field>
+    </record>
+
+</odoo>

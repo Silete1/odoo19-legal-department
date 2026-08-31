@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Multi-company first. A category with no company is shared across the
+            group; a request always belongs to exactly one company and is scoped
+            the ordinary Odoo way.
+        -->
+
+        <record id="rule_legal_request_category_company" model="ir.rule">
+            <field name="name">Request category: own company or shared</field>
+            <field name="model_id" ref="model_legal_request_category"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_request_company" model="ir.rule">
+            <field name="name">Request: own company</field>
+            <field name="model_id" ref="model_legal_request"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!--
+            Confidentiality. A legal department fields questions that name people
+            about to be dismissed and deals it has not yet signed, so a restricted
+            request is visible only to the people working it - its requester, its
+            assigned officer, its named manager and whoever raised it - and to the
+            legal manager and auditor who see everything.
+
+            Written on the three working groups rather than globally so the
+            manager and the auditor keep an unrestricted view; a global rule would
+            have to be OR-ed with a manager clause and would be harder for exactly
+            the audience that has to trust it to read.
+        -->
+
+        <record id="rule_legal_request_confidential" model="ir.rule">
+            <field name="name">Request: restricted ones are visible only to those on them</field>
+            <field name="model_id" ref="model_legal_request"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', '|', '|', ('confidentiality', '=', 'normal'), ('requester_id', '=', user.id), ('assigned_officer_id', '=', user.id), ('manager_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_legal_request_manager" model="ir.rule">
+            <field name="name">Request: the legal manager and auditor see everything</field>
+            <field name="model_id" ref="model_legal_request"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

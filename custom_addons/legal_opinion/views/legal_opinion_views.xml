@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ LIST -->
+    <record id="view_legal_opinion_list" model="ir.ui.view">
+        <field name="name">legal.opinion.list</field>
+        <field name="model">legal.opinion</field>
+        <field name="arch" type="xml">
+            <list string="Legal Opinions"
+                  decoration-info="state == 'drafting'"
+                  decoration-muted="not is_current"
+                  decoration-danger="is_overdue"
+                  decoration-bf="is_overdue"
+                  decoration-success="state == 'issued'">
+                <field name="name" string="Reference"/>
+                <field name="subject"/>
+                <field name="requesting_department" optional="show"/>
+                <field name="requester_id" optional="hide" widget="many2one_avatar_user"/>
+                <field name="legal_officer_id" optional="show" widget="many2one_avatar_user"/>
+                <field name="due_date" optional="show"/>
+                <field name="issued_date" optional="hide"/>
+                <field name="register_number" optional="show"/>
+                <field name="is_overdue" column_invisible="1"/>
+                <field name="is_current" column_invisible="1"/>
+                <field name="confidential" optional="hide" widget="boolean_toggle"/>
+                <field name="entity_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge" optional="show"
+                       decoration-info="state in ('received','assigned','drafting')"
+                       decoration-warning="state in ('review','approval')"
+                       decoration-success="state == 'issued'"
+                       decoration-muted="state == 'closed'"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ FORM -->
+    <record id="view_legal_opinion_form" model="ir.ui.view">
+        <field name="name">legal.opinion.form</field>
+        <field name="model">legal.opinion</field>
+        <field name="arch" type="xml">
+            <form string="Legal Opinion">
+                <header>
+                    <button name="action_assign" type="object" string="Assign"
+                            class="btn-primary" invisible="state != 'received'"/>
+                    <button name="action_start_drafting" type="object" string="Start Drafting"
+                            class="btn-primary" invisible="state != 'assigned'"/>
+                    <button name="action_submit_review" type="object" string="Submit for Review"
+                            class="btn-primary" invisible="state != 'drafting'"/>
+                    <button name="action_request_approval" type="object" string="Request Approval"
+                            class="btn-primary" invisible="state != 'review'"/>
+                    <button name="action_approve_issue" type="object" string="Approve &amp; Issue"
+                            class="btn-primary" invisible="state != 'approval'"
+                            groups="legal_core.group_legal_approver"
+                            confirm="Issuing freezes the analysis and conclusion and books an outgoing register number. This cannot be undone - a later change requires a revision. Issue this opinion?"/>
+                    <button name="action_return_for_revision" type="object" string="Send Back"
+                            class="btn-secondary" invisible="state not in ('review','approval')"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="btn-secondary" invisible="state != 'issued'"
+                            groups="legal_core.group_legal_approver"/>
+                    <button name="action_revise" type="object" string="Draft a Revision"
+                            class="btn-secondary" invisible="state not in ('issued','closed') or superseded_by_id != False"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="received,assigned,drafting,review,approval,issued"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_revisions" type="object"
+                                class="oe_stat_button" icon="fa-history"
+                                invisible="revision_count &lt; 2">
+                            <field name="revision_count" widget="statinfo" string="Revisions"/>
+                        </button>
+                        <button name="action_view_correspondence" type="object"
+                                class="oe_stat_button" icon="fa-envelope-o">
+                            <field name="correspondence_count" widget="statinfo" string="Letters"/>
+                        </button>
+                    </div>
+
+                    <widget name="web_ribbon" title="Issued" bg_color="text-bg-success"
+                            invisible="state != 'issued'"/>
+                    <widget name="web_ribbon" title="Closed" bg_color="text-bg-secondary"
+                            invisible="state != 'closed'"/>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-warning"
+                            invisible="not superseded_by_id"/>
+                    <widget name="web_ribbon" title="Confidential" bg_color="text-bg-danger"
+                            invisible="not confidential or state in ('issued','closed')"/>
+
+                    <field name="is_frozen" invisible="1"/>
+                    <field name="is_overdue" invisible="1"/>
+                    <field name="superseded_by_id" invisible="1"/>
+
+                    <div class="oe_title">
+                        <label for="subject"/>
+                        <h1><field name="subject" placeholder="e.g. Forfeiture of a tender guarantee"/></h1>
+                        <div class="text-muted">
+                            <field name="name" readonly="1"/>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not supersedes_id">
+                        This opinion is a revision. It supersedes
+                        <field name="supersedes_id" readonly="1" class="oe_inline" nolabel="1"/>.
+                    </div>
+
+                    <group>
+                        <group string="The Request">
+                            <field name="requesting_department"/>
+                            <field name="requester_id" widget="many2one_avatar_user"/>
+                            <field name="due_date"/>
+                            <field name="entity_id"/>
+                            <field name="confidential"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="The Desk">
+                            <field name="legal_officer_id" widget="many2one_avatar_user"/>
+                            <field name="reviewer_id" widget="many2one_avatar_user"/>
+                            <field name="approver_id" widget="many2one_avatar_user"/>
+                            <field name="issued_date" invisible="not issued_date"/>
+                            <field name="register_number" invisible="not register_number"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Question &amp; Background" name="question">
+                            <group>
+                                <field name="question" nolabel="1" placeholder="The question as referred..."
+                                       readonly="is_frozen"/>
+                            </group>
+                            <separator string="Factual Background"/>
+                            <field name="factual_background" nolabel="1"
+                                   placeholder="The facts the opinion is given on..."
+                                   readonly="is_frozen"/>
+                        </page>
+                        <page string="Analysis &amp; Opinion" name="analysis">
+                            <div class="alert alert-info" role="alert" invisible="not is_frozen">
+                                This opinion is issued and frozen. The analysis and conclusion below
+                                are read-only. To change the advice, draft a revision.
+                            </div>
+                            <separator string="Legal References"/>
+                            <group>
+                                <field name="legal_basis" nolabel="1"
+                                       placeholder="Laws and articles relied on..."
+                                       readonly="is_frozen"/>
+                            </group>
+                            <group>
+                                <field name="legal_basis_url" widget="url" readonly="is_frozen"/>
+                                <field name="last_verified_on" readonly="is_frozen"/>
+                            </group>
+                            <separator string="Legal Analysis"/>
+                            <field name="analysis" nolabel="1"
+                                   placeholder="The reasoning..." readonly="is_frozen"/>
+                            <separator string="Opinion / Conclusion"/>
+                            <field name="conclusion" nolabel="1"
+                                   placeholder="The answer..." readonly="is_frozen"/>
+                        </page>
+                        <page string="Filed Copy" name="snapshot" invisible="not snapshot_html">
+                            <div class="alert alert-success" role="alert">
+                                The opinion as it read at the moment of issue. This is what a reprint
+                                returns.
+                            </div>
+                            <field name="snapshot_html" nolabel="1" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ SEARCH -->
+    <record id="view_legal_opinion_search" model="ir.ui.view">
+        <field name="name">legal.opinion.search</field>
+        <field name="model">legal.opinion</field>
+        <field name="arch" type="xml">
+            <search string="Legal Opinions">
+                <field name="name" string="Reference"/>
+                <field name="subject"
+                       filter_domain="['|', ('subject', 'ilike', self), ('name', 'ilike', self)]"/>
+                <field name="requesting_department"/>
+                <field name="legal_officer_id"/>
+                <field name="register_number"/>
+                <separator/>
+                <filter name="mine" string="My Opinions"
+                        domain="['|', '|', ('legal_officer_id', '=', uid), ('reviewer_id', '=', uid), ('requester_id', '=', uid)]"/>
+                <filter name="to_approve" string="Awaiting Approval"
+                        domain="[('state', '=', 'approval')]"/>
+                <filter name="overdue" string="Overdue"
+                        domain="[('is_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="drafting" string="Drafting"
+                        domain="[('state', 'in', ('received','assigned','drafting'))]"/>
+                <filter name="in_review" string="Under Review"
+                        domain="[('state', '=', 'review')]"/>
+                <filter name="issued" string="Precedent Library (Issued)"
+                        domain="[('state', 'in', ('issued','closed'))]"/>
+                <filter name="current" string="Current Only"
+                        domain="[('superseded_by_id', '=', False)]"/>
+                <separator/>
+                <filter name="confidential" string="Confidential"
+                        domain="[('confidential', '=', True)]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_officer" string="Researcher" context="{'group_by': 'legal_officer_id'}"/>
+                    <filter name="group_department" string="Department" context="{'group_by': 'requesting_department'}"/>
+                    <filter name="group_entity" string="Legal Entity" context="{'group_by': 'entity_id'}"/>
+                    <filter name="group_issued_month" string="Issued Month" context="{'group_by': 'issued_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ ACTIONS -->
+    <record id="action_legal_opinion" model="ir.actions.act_window">
+        <field name="name">Legal Opinions</field>
+        <field name="res_model">legal.opinion</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_legal_opinion_search"/>
+        <field name="context">{'search_default_current': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Record the first legal opinion
+            </p>
+            <p>
+                An opinion answers a question a department referred - and once issued it
+                is frozen, quotable and booked into the outgoing register. A change to a
+                signed opinion is a revision, never an edit.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_opinion_precedent" model="ir.actions.act_window">
+        <field name="name">Precedent Library</field>
+        <field name="res_model">legal.opinion</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_legal_opinion_search"/>
+        <field name="domain">[('state', 'in', ('issued','closed'))]</field>
+        <field name="context">{'search_default_current': 1, 'search_default_group_department': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No issued opinions yet
+            </p>
+            <p>
+                Every issued opinion lands here - the searchable record of what the
+                department has advised, read before the next one is drafted.
+            </p>
+        </field>
+    </record>
+
+</odoo>

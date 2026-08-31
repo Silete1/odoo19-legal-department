@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_request_return_form" model="ir.ui.view">
+        <field name="name">legal.request.return.form</field>
+        <field name="model">legal.request.return</field>
+        <field name="arch" type="xml">
+            <form string="Return For Rework">
+                <group>
+                    <field name="request_id" readonly="1"/>
+                    <field name="reason" required="1"
+                           placeholder="What the approver wants changed, in their words."/>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    The request goes back to the officer in progress. The reason is what the rework
+                    is corrected against, so “redo it” is not an answer.
+                </div>
+                <footer>
+                    <button name="action_confirm" type="object" string="Return"
+                            class="btn-primary"/>
+                    <button string="Back" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

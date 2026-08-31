@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_request_category_list" model="ir.ui.view">
+        <field name="name">legal.request.category.list</field>
+        <field name="model">legal.request.category</field>
+        <field name="arch" type="xml">
+            <list string="Request Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="default_target_kind"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_request_category_form" model="ir.ui.view">
+        <field name="name">legal.request.category.form</field>
+        <field name="model">legal.request.category</field>
+        <field name="arch" type="xml">
+            <form string="Request Category">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Legal Consultation"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identity">
+                            <field name="code" placeholder="CONSULT"/>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Triage">
+                            <field name="default_target_kind"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        The target kind is the triage desk's first guess at what a request of this
+                        category becomes. It pre-selects the conversion; it never forces it.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_request_category_search" model="ir.ui.view">
+        <field name="name">legal.request.category.search</field>
+        <field name="model">legal.request.category</field>
+        <field name="arch" type="xml">
+            <search string="Request Categories">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_target" string="Usually Becomes" context="{'group_by': 'default_target_kind'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_request_category" model="ir.actions.act_window">
+        <field name="name">Request Categories</field>
+        <field name="res_model">legal.request.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Name the kinds of question the department fields</p>
+            <p>
+                A category is a row, not a hard-coded list. A department that starts receiving a
+                new class of request adds one here, tells the triage desk what it usually becomes,
+                and every board understands it at once.
+            </p>
+        </field>
+    </record>
+
+</odoo>

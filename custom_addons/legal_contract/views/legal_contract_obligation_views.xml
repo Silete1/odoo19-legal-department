@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Obligation -->
+    <!-- ============================================================ -->
+    <record id="view_legal_contract_obligation_form" model="ir.ui.view">
+        <field name="name">legal.contract.obligation.form</field>
+        <field name="model">legal.contract.obligation</field>
+        <field name="arch" type="xml">
+            <form string="Obligation">
+                <header>
+                    <button name="action_generate" type="object" string="Generate Occurrences"
+                            class="btn-primary"
+                            invisible="frequency == 'one_off'"/>
+                    <button name="action_mark_done" type="object" string="Mark Done"
+                            invisible="status != 'pending' or frequency != 'one_off'"/>
+                    <button name="action_waive" type="object" string="Waive"
+                            invisible="status != 'pending'"
+                            groups="legal_core.group_legal_manager"/>
+                    <field name="status" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Monthly rent"/></h1>
+                    </div>
+                    <group>
+                        <group string="What">
+                            <field name="contract_id" readonly="context.get('default_contract_id')"/>
+                            <field name="clause_reference"/>
+                            <field name="responsible_party"/>
+                            <field name="responsible_user_id"/>
+                            <field name="amount"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="When">
+                            <field name="frequency"/>
+                            <field name="due_date" invisible="frequency != 'one_off'"
+                                   required="frequency == 'one_off'"/>
+                            <field name="start_date" invisible="frequency == 'one_off'"
+                                   required="frequency != 'one_off'"/>
+                            <field name="end_date" invisible="frequency == 'one_off'"/>
+                            <field name="reminder_lead_days"/>
+                            <field name="completion_date" invisible="status != 'done'"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="What must be done."/>
+                    <group string="Evidence">
+                        <field name="evidence_document_id"/>
+                    </group>
+                    <notebook invisible="frequency == 'one_off'">
+                        <page string="Occurrences" name="occurrences">
+                            <field name="instance_ids" readonly="1">
+                                <list decoration-danger="state == 'late'"
+                                      decoration-success="state == 'done'"
+                                      decoration-muted="state == 'waived'">
+                                    <field name="period_key"/>
+                                    <field name="due_date"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="responsible_user_id"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_contract_obligation_list" model="ir.ui.view">
+        <field name="name">legal.contract.obligation.list</field>
+        <field name="model">legal.contract.obligation</field>
+        <field name="arch" type="xml">
+            <list string="Obligations"
+                  decoration-danger="is_overdue"
+                  decoration-success="status == 'done'"
+                  decoration-muted="status == 'waived'">
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="clause_reference" optional="hide"/>
+                <field name="responsible_party"/>
+                <field name="responsible_user_id" optional="show"/>
+                <field name="frequency"/>
+                <field name="due_date" optional="show"/>
+                <field name="amount" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="is_overdue" optional="hide"/>
+                <field name="instance_count" string="Occurrences" optional="hide"/>
+                <field name="status" widget="badge"/>
+                <button name="action_mark_done" type="object" string="Done"
+                        icon="fa-check" class="btn-link"
+                        invisible="status != 'pending' or frequency != 'one_off'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_contract_obligation_search" model="ir.ui.view">
+        <field name="name">legal.contract.obligation.search</field>
+        <field name="model">legal.contract.obligation</field>
+        <field name="arch" type="xml">
+            <search string="Obligations">
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="responsible_user_id"/>
+                <filter name="ours" string="Owed By Us" domain="[('responsible_party', '=', 'ours')]"/>
+                <filter name="theirs" string="Owed By Them" domain="[('responsible_party', '=', 'theirs')]"/>
+                <separator/>
+                <filter name="pending" string="Pending" domain="[('status', '=', 'pending')]"/>
+                <filter name="overdue" string="Overdue" domain="[('is_overdue', '=', True)]"/>
+                <filter name="mine" string="My Obligations" domain="[('responsible_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="due" string="Due Date" date="due_date"/>
+                <group>
+                    <filter name="group_contract" string="Contract" context="{'group_by': 'contract_id'}"/>
+                    <filter name="group_party" string="Owed By" context="{'group_by': 'responsible_party'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_frequency" string="Frequency" context="{'group_by': 'frequency'}"/>
+                    <filter name="group_user" string="Responsible" context="{'group_by': 'responsible_user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_contract_obligation" model="ir.actions.act_window">
+        <field name="name">Obligations</field>
+        <field name="res_model">legal.contract.obligation</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_pending': 1}</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Obligation Occurrence (the dated rows for the deadline board) -->
+    <!-- ============================================================ -->
+    <record id="view_legal_contract_obligation_instance_list" model="ir.ui.view">
+        <field name="name">legal.contract.obligation.instance.list</field>
+        <field name="model">legal.contract.obligation.instance</field>
+        <field name="arch" type="xml">
+            <list string="Occurrences" create="false"
+                  decoration-danger="state == 'late'"
+                  decoration-success="state == 'done'"
+                  decoration-muted="state == 'waived'">
+                <field name="obligation_id"/>
+                <field name="contract_id"/>
+                <field name="period_key" optional="hide"/>
+                <field name="due_date"/>
+                <field name="amount"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="responsible_party" optional="show"/>
+                <field name="responsible_user_id" optional="show"/>
+                <field name="state" widget="badge"/>
+                <button name="action_mark_done" type="object" string="Done"
+                        icon="fa-check" class="btn-link"
+                        invisible="state in ['done', 'waived']"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_contract_obligation_instance_form" model="ir.ui.view">
+        <field name="name">legal.contract.obligation.instance.form</field>
+        <field name="model">legal.contract.obligation.instance</field>
+        <field name="arch" type="xml">
+            <form string="Occurrence">
+                <header>
+                    <button name="action_mark_done" type="object" string="Mark Done"
+                            class="btn-primary" invisible="state in ['done', 'waived']"/>
+                    <button name="action_waive" type="object" string="Waive"
+                            invisible="state in ['done', 'waived']"
+                            groups="legal_core.group_legal_manager"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="period_key" readonly="1"/></h1>
+                        <h3><field name="obligation_id" readonly="1"/></h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="contract_id" readonly="1"/>
+                            <field name="responsible_party" readonly="1"/>
+                            <field name="responsible_user_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="due_date"/>
+                            <field name="amount"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="completion_date" invisible="state != 'done'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="note"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_contract_obligation_instance_calendar" model="ir.ui.view">
+        <field name="name">legal.contract.obligation.instance.calendar</field>
+        <field name="model">legal.contract.obligation.instance</field>
+        <field name="arch" type="xml">
+            <calendar string="Contract Deadlines" date_start="due_date" color="contract_id"
+                      mode="month" quick_create="false">
+                <field name="obligation_id"/>
+                <field name="contract_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_legal_contract_obligation_instance_search" model="ir.ui.view">
+        <field name="name">legal.contract.obligation.instance.search</field>
+        <field name="model">legal.contract.obligation.instance</field>
+        <field name="arch" type="xml">
+            <search string="Occurrences">
+                <field name="obligation_id"/>
+                <field name="contract_id"/>
+                <field name="responsible_user_id"/>
+                <filter name="outstanding" string="Outstanding"
+                        domain="[('state', 'in', ['pending', 'late'])]"/>
+                <filter name="late" string="Late" domain="[('state', '=', 'late')]"/>
+                <filter name="mine" string="Mine" domain="[('responsible_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="due" string="Due Date" date="due_date"/>
+                <group>
+                    <filter name="group_contract" string="Contract" context="{'group_by': 'contract_id'}"/>
+                    <filter name="group_obligation" string="Obligation" context="{'group_by': 'obligation_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_party" string="Owed By" context="{'group_by': 'responsible_party'}"/>
+                    <filter name="group_due" string="Due Month" context="{'group_by': 'due_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_contract_obligation_instance" model="ir.actions.act_window">
+        <field name="name">Contract Deadlines</field>
+        <field name="res_model">legal.contract.obligation.instance</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="context">{'search_default_outstanding': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nothing outstanding</p>
+            <p>
+                Every recurring obligation is a dated row with a state, generated ahead of
+                time, so an empty screen means somebody has looked and done the work rather
+                than that nobody has looked.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,617 @@
+# Arabic translation for the legal_opinion module.
+# This file ships the Arabic-first UI; the source strings are English by policy.
+msgid ""
+msgstr ""
+"Project-Id-Version: legal_opinion 19.0.1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+#. module: legal_opinion
+msgid "Legal Opinion"
+msgstr "الرأي القانوني"
+
+#. module: legal_opinion
+msgid "Legal Opinions"
+msgstr "الآراء القانونية"
+
+#. module: legal_opinion
+msgid "New"
+msgstr "جديد"
+
+#. module: legal_opinion
+msgid "Reference"
+msgstr "الإشارة"
+
+#. module: legal_opinion
+msgid ""
+"The opinion's number, OPN/YYYY/####, allocated when the record is first "
+"saved and never reused."
+msgstr ""
+"رقم الرأي، بصيغة OPN/YYYY/####، يُمنح عند أول حفظ للسجل ولا يُعاد استعماله "
+"أبداً."
+
+#. module: legal_opinion
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: legal_opinion
+msgid "The one-line title the precedent library is searched by."
+msgstr "العنوان المختصر الذي تُبحث به مكتبة السوابق."
+
+#. module: legal_opinion
+msgid "Requesting Department"
+msgstr "القسم الطالب"
+
+#. module: legal_opinion
+msgid ""
+"The department that asked the question - the group the library is grouped "
+"by, because a department reads its own past opinions first."
+msgstr ""
+"القسم الذي طرح السؤال - وهو الحقل الذي تُجمَّع المكتبة عليه، لأن كل قسم يعود"
+" أولاً إلى آرائه السابقة."
+
+#. module: legal_opinion
+msgid "Requested By"
+msgstr "طلبه"
+
+#. module: legal_opinion
+msgid "The person who referred the question."
+msgstr "الشخص الذي أحال السؤال."
+
+#. module: legal_opinion
+msgid "Question Referred"
+msgstr "السؤال المُحال"
+
+#. module: legal_opinion
+msgid ""
+"The question as it was asked, kept verbatim. The answer is only as precise "
+"as the question it answers."
+msgstr ""
+"السؤال كما طُرح، محفوظاً بنصه. لا يكون الجواب أدقّ من السؤال الذي يجيب عنه."
+
+#. module: legal_opinion
+msgid "Factual Background"
+msgstr "الوقائع"
+
+#. module: legal_opinion
+msgid ""
+"The facts the opinion is given on. If they were wrong the opinion is "
+"revised, not blamed."
+msgstr ""
+"الوقائع التي بُني عليها الرأي. فإن تبيّن خطؤها يُنقّح الرأي ولا يُلام."
+
+#. module: legal_opinion
+msgid "Legal Researcher"
+msgstr "الباحث القانوني"
+
+#. module: legal_opinion
+msgid "The officer who researches and drafts the opinion."
+msgstr "الموظف الذي يبحث الرأي ويعدّ مسودته."
+
+#. module: legal_opinion
+msgid "Reviewer"
+msgstr "المراجِع"
+
+#. module: legal_opinion
+msgid "The officer who reviews the draft before it goes up for approval."
+msgstr "الموظف الذي يراجع المسودة قبل رفعها للمصادقة."
+
+#. module: legal_opinion
+msgid "Approver"
+msgstr "المصادِق"
+
+#. module: legal_opinion
+msgid "The head who issues the opinion. Only an approver may."
+msgstr "الرئيس الذي يُصدر الرأي. لا يجوز الإصدار إلا له."
+
+#. module: legal_opinion
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: legal_opinion
+msgid ""
+"When the answer is needed. An opinion past this date and not yet issued is "
+"overdue."
+msgstr ""
+"الموعد المطلوب فيه الجواب. والرأي الذي تجاوز هذا التاريخ ولم يصدر بعد يُعدّ "
+"متأخراً."
+
+#. module: legal_opinion
+msgid "Legal References"
+msgstr "الأسانيد القانونية"
+
+#. module: legal_opinion
+msgid ""
+"The laws and articles the opinion rests on - the same basis / source / last-"
+"verified triple the rest of the suite records."
+msgstr ""
+"القوانين والمواد التي يستند إليها الرأي - وهي ذات ثلاثية السند/الرابط/تاريخ "
+"التحقّق التي يوثّقها باقي النظام."
+
+#. module: legal_opinion
+msgid "Reference Link"
+msgstr "رابط السند"
+
+#. module: legal_opinion
+msgid "A link to the text of the law relied on."
+msgstr "رابط إلى نص القانون المُستنَد إليه."
+
+#. module: legal_opinion
+msgid "References Verified On"
+msgstr "تاريخ التحقّق من الأسانيد"
+
+#. module: legal_opinion
+msgid ""
+"When the cited law was last checked to be still in force. A citation nobody "
+"has re-read since 2019 is a liability, not a support."
+msgstr ""
+"آخر تاريخ تُحقّق فيه من أن القانون المستشهَد به ما يزال نافذاً. فالاستشهاد "
+"الذي لم يُراجَع منذ 2019 عبء لا سند."
+
+#. module: legal_opinion
+msgid "Legal Analysis"
+msgstr "التحليل القانوني"
+
+#. module: legal_opinion
+msgid ""
+"The reasoning. Read-only once the opinion is issued; a change is a revision."
+msgstr ""
+"التسبيب. يصبح للقراءة فقط بمجرد إصدار الرأي؛ وأي تغيير يكون بتنقيح جديد."
+
+#. module: legal_opinion
+msgid "Opinion / Conclusion"
+msgstr "الرأي / الخلاصة"
+
+#. module: legal_opinion
+msgid "The answer itself. Read-only once the opinion is issued."
+msgstr "الجواب نفسه. يصبح للقراءة فقط بمجرد إصدار الرأي."
+
+#. module: legal_opinion
+msgid "Legal Entity"
+msgstr "الكيان القانوني"
+
+#. module: legal_opinion
+msgid "Which of our registered persons the opinion is written for."
+msgstr "لأيّ من كياناتنا المسجَّلة كُتب هذا الرأي."
+
+#. module: legal_opinion
+msgid "Confidential"
+msgstr "سري"
+
+#. module: legal_opinion
+msgid ""
+"Restricts the opinion to the legal manager and the people named on it. Used "
+"for privileged advice - a labour complaint, a disciplinary question naming "
+"an employee."
+msgstr ""
+"يقصر الاطّلاع على الرأي على المدير القانوني والأشخاص المذكورين فيه. يُستعمل "
+"للمشورة المحمية - كشكوى عمالية أو مسألة انضباطية تسمّي موظفاً."
+
+#. module: legal_opinion
+msgid "Status"
+msgstr "الحالة"
+
+#. module: legal_opinion
+msgid "Received"
+msgstr "وارد"
+
+#. module: legal_opinion
+msgid "Assigned"
+msgstr "مُحال"
+
+#. module: legal_opinion
+msgid "Drafting"
+msgstr "قيد الإعداد"
+
+#. module: legal_opinion
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: legal_opinion
+msgid "Awaiting Approval"
+msgstr "بانتظار المصادقة"
+
+#. module: legal_opinion
+msgid "Issued"
+msgstr "صادر"
+
+#. module: legal_opinion
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: legal_opinion
+msgid "Issued On"
+msgstr "تاريخ الإصدار"
+
+#. module: legal_opinion
+msgid "The day the opinion was signed and frozen."
+msgstr "اليوم الذي وُقِّع فيه الرأي وجُمِّد."
+
+#. module: legal_opinion
+msgid "Filed Copy"
+msgstr "النسخة المحفوظة"
+
+#. module: legal_opinion
+msgid ""
+"The analysis and conclusion as they read at the moment of issue. A reprint "
+"returns this, not a re-render against a since-edited record."
+msgstr ""
+"التحليل والخلاصة كما كانا لحظة الإصدار. وإعادة الطبع تُرجع هذه النسخة، لا "
+"نصاً يُعاد توليده من سجل عُدِّل بعد ذلك."
+
+#. module: legal_opinion
+msgid "Filed PDF"
+msgstr "ملف PDF المحفوظ"
+
+#. module: legal_opinion
+msgid "Register Entry"
+msgstr "قيد السجل"
+
+#. module: legal_opinion
+msgid ""
+"The outgoing register line allocated when the opinion was issued. The "
+"opinion and the book agree because they are the same act."
+msgstr ""
+"سطر سجل الصادر الذي مُنح عند إصدار الرأي. يتطابق الرأي والدفتر لأنهما فعل "
+"واحد."
+
+#. module: legal_opinion
+msgid "Register Number"
+msgstr "رقم السجل"
+
+#. module: legal_opinion
+msgid "The صادر number the issued opinion carries."
+msgstr "رقم الصادر الذي يحمله الرأي بعد إصداره."
+
+#. module: legal_opinion
+msgid "Supersedes"
+msgstr "يحلّ محلّ"
+
+#. module: legal_opinion
+msgid "The earlier opinion this revision replaces."
+msgstr "الرأي الأسبق الذي يحلّ محلّه هذا التنقيح."
+
+#. module: legal_opinion
+msgid "Superseded By"
+msgstr "حلّ محلّه"
+
+#. module: legal_opinion
+msgid ""
+"The revision that replaced this opinion. Set, it means this is no longer the"
+" current advice."
+msgstr ""
+"التنقيح الذي حلّ محلّ هذا الرأي. ووجوده يعني أن هذا لم يعد الرأي النافذ."
+
+#. module: legal_opinion
+msgid "Current"
+msgstr "النافذ"
+
+#. module: legal_opinion
+msgid "The one opinion in its chain that the precedent library should show."
+msgstr "الرأي الوحيد في سلسلته الذي ينبغي أن تعرضه مكتبة السوابق."
+
+#. module: legal_opinion
+msgid "Revisions"
+msgstr "التنقيحات"
+
+#. module: legal_opinion
+msgid "Letters"
+msgstr "الكتب"
+
+#. module: legal_opinion
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: legal_opinion
+msgid "Past its due date and not yet issued."
+msgstr "تجاوز تاريخ استحقاقه ولم يصدر بعد."
+
+#. module: legal_opinion
+msgid "Frozen"
+msgstr "مُجمَّد"
+
+#. module: legal_opinion
+msgid "Issued or closed - its text can no longer be edited."
+msgstr "صادر أو مغلق - لم يعد نصّه قابلاً للتعديل."
+
+#. module: legal_opinion
+msgid "That opinion reference already exists in this company."
+msgstr "إشارة الرأي هذه موجودة مسبقاً في هذه الشركة."
+
+#. module: legal_opinion
+msgid ""
+"The issued opinion this outgoing entry books into the register. Empty for "
+"every ordinary letter."
+msgstr ""
+"الرأي الصادر الذي يقيّده هذا الكتاب الصادر في السجل. ويكون فارغاً في كل كتاب"
+" اعتيادي."
+
+#. module: legal_opinion
+# ------------------------------------------------------------------
+# Buttons
+# ------------------------------------------------------------------
+msgid "Assign"
+msgstr "إحالة"
+
+#. module: legal_opinion
+msgid "Start Drafting"
+msgstr "بدء الإعداد"
+
+#. module: legal_opinion
+msgid "Submit for Review"
+msgstr "إحالة للمراجعة"
+
+#. module: legal_opinion
+msgid "Request Approval"
+msgstr "طلب المصادقة"
+
+#. module: legal_opinion
+msgid "Approve & Issue"
+msgstr "المصادقة والإصدار"
+
+#. module: legal_opinion
+msgid "Send Back"
+msgstr "إعادة"
+
+#. module: legal_opinion
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: legal_opinion
+msgid "Draft a Revision"
+msgstr "إعداد تنقيح"
+
+#. module: legal_opinion
+msgid ""
+"Issuing freezes the analysis and conclusion and books an outgoing register "
+"number. This cannot be undone - a later change requires a revision. Issue "
+"this opinion?"
+msgstr ""
+"الإصدار يُجمّد التحليل والخلاصة ويمنح رقماً في سجل الصادر. ولا يمكن التراجع "
+"عنه - وأي تغيير لاحق يستلزم تنقيحاً. هل تُصدر هذا الرأي؟"
+
+#. module: legal_opinion
+# ------------------------------------------------------------------
+# Form sections, pages, separators, placeholders, alerts
+# ------------------------------------------------------------------
+msgid "The Request"
+msgstr "الطلب"
+
+#. module: legal_opinion
+msgid "The Desk"
+msgstr "المكتب"
+
+#. module: legal_opinion
+msgid "Question & Background"
+msgstr "السؤال والوقائع"
+
+#. module: legal_opinion
+msgid "Analysis & Opinion"
+msgstr "التحليل والرأي"
+
+#. module: legal_opinion
+msgid "e.g. Forfeiture of a tender guarantee"
+msgstr "مثال: مصادرة تأمينات مناقصة"
+
+#. module: legal_opinion
+msgid "The question as referred..."
+msgstr "السؤال كما أُحيل..."
+
+#. module: legal_opinion
+msgid "The facts the opinion is given on..."
+msgstr "الوقائع التي يُبنى عليها الرأي..."
+
+#. module: legal_opinion
+msgid "Laws and articles relied on..."
+msgstr "القوانين والمواد المُستنَد إليها..."
+
+#. module: legal_opinion
+msgid "The reasoning..."
+msgstr "التسبيب..."
+
+#. module: legal_opinion
+msgid "The answer..."
+msgstr "الجواب..."
+
+#. module: legal_opinion
+msgid "This opinion is a revision. It supersedes"
+msgstr "هذا الرأي تنقيح. وهو يحلّ محلّ"
+
+#. module: legal_opinion
+msgid ""
+"This opinion is issued and frozen. The analysis and conclusion below are "
+"read-only. To change the advice, draft a revision."
+msgstr ""
+"هذا الرأي صادر ومُجمَّد. التحليل والخلاصة أدناه للقراءة فقط. ولتغيير الرأي، "
+"أعِدّ تنقيحاً."
+
+#. module: legal_opinion
+msgid ""
+"The opinion as it read at the moment of issue. This is what a reprint "
+"returns."
+msgstr "الرأي كما كان لحظة الإصدار. وهذا ما تُرجعه إعادة الطبع."
+
+#. module: legal_opinion
+# ------------------------------------------------------------------
+# Search filters and group-by
+# ------------------------------------------------------------------
+msgid "My Opinions"
+msgstr "آرائي"
+
+#. module: legal_opinion
+msgid "Precedent Library (Issued)"
+msgstr "مكتبة السوابق (الصادرة)"
+
+#. module: legal_opinion
+msgid "Current Only"
+msgstr "النافذة فقط"
+
+#. module: legal_opinion
+msgid "Researcher"
+msgstr "الباحث"
+
+#. module: legal_opinion
+msgid "Department"
+msgstr "القسم"
+
+#. module: legal_opinion
+msgid "Issued Month"
+msgstr "شهر الإصدار"
+
+#. module: legal_opinion
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: legal_opinion
+# ------------------------------------------------------------------
+# Actions and menus
+# ------------------------------------------------------------------
+msgid "Opinions"
+msgstr "الآراء"
+
+#. module: legal_opinion
+msgid "Precedent Library"
+msgstr "مكتبة السوابق"
+
+#. module: legal_opinion
+msgid "Revision"
+msgstr "تنقيح"
+
+#. module: legal_opinion
+msgid "Revision Chain"
+msgstr "سلسلة التنقيحات"
+
+#. module: legal_opinion
+msgid "Record the first legal opinion"
+msgstr "سجّل أول رأي قانوني"
+
+#. module: legal_opinion
+msgid ""
+"An opinion answers a question a department referred - and once issued it is "
+"frozen, quotable and booked into the outgoing register. A change to a signed"
+" opinion is a revision, never an edit."
+msgstr ""
+"الرأي يجيب عن سؤال أحاله قسم - وبمجرد إصداره يُجمَّد ويصبح قابلاً للاقتباس "
+"ومقيَّداً في سجل الصادر. وأي تغيير لرأي موقَّع يكون بتنقيح لا بتعديل."
+
+#. module: legal_opinion
+msgid "No issued opinions yet"
+msgstr "لا توجد آراء صادرة بعد"
+
+#. module: legal_opinion
+msgid ""
+"Every issued opinion lands here - the searchable record of what the "
+"department has advised, read before the next one is drafted."
+msgstr ""
+"كل رأي صادر يستقرّ هنا - سجلٌّ قابل للبحث لما أفتى به القسم، يُقرأ قبل إعداد"
+" الرأي التالي."
+
+#. module: legal_opinion
+# ------------------------------------------------------------------
+# Server messages: errors and log posts
+# ------------------------------------------------------------------
+msgid "An opinion cannot supersede itself."
+msgstr "لا يجوز أن يحلّ الرأي محلّ نفسه."
+
+#. module: legal_opinion
+msgid ""
+"Opinion %(ref)s is issued, so its %(fields)s is frozen. The answer is signed"
+" and quoted as it stands. To change it, issue a revision that supersedes "
+"this one."
+msgstr ""
+"الرأي %(ref)s صادر، ولذلك فإن %(fields)s مُجمَّد. الجواب موقَّع ويُقتبس كما "
+"هو. ولتغييره، أصدر تنقيحاً يحلّ محلّه."
+
+#. module: legal_opinion
+msgid ""
+"%s has been issued and cannot be deleted. It is quoted and part of the "
+"record. Supersede it with a revision instead."
+msgstr ""
+"%s قد صدر ولا يمكن حذفه. فهو مقتبَس وجزء من السجل. استبدله بتنقيح بدلاً من "
+"ذلك."
+
+#. module: legal_opinion
+msgid "Only an approver or the legal manager may %s an opinion."
+msgstr "لا يجوز إلا للمصادِق أو المدير القانوني أن %s الرأي."
+
+#. module: legal_opinion
+msgid "issue"
+msgstr "يُصدر"
+
+#. module: legal_opinion
+msgid "close"
+msgstr "يُغلق"
+
+#. module: legal_opinion
+msgid "Opinion %(ref)s is %(state)s and cannot move to %(target)s from there."
+msgstr "الرأي %(ref)s في حالة %(state)s ولا يمكن نقله إلى %(target)s من هناك."
+
+#. module: legal_opinion
+msgid "Name a legal researcher before assigning opinion %s."
+msgstr "سمِّ باحثاً قانونياً قبل إحالة الرأي %s."
+
+#. module: legal_opinion
+msgid ""
+"There is nothing to review in opinion %s: write the analysis or the "
+"conclusion first."
+msgstr "لا يوجد ما يُراجَع في الرأي %s: اكتب التحليل أو الخلاصة أولاً."
+
+#. module: legal_opinion
+msgid ""
+"Opinion %s can only be sent back while under review or awaiting approval."
+msgstr "لا يمكن إعادة الرأي %s إلا وهو قيد المراجعة أو بانتظار المصادقة."
+
+#. module: legal_opinion
+msgid "Opinion %s must be awaiting approval before it is issued."
+msgstr "يجب أن يكون الرأي %s بانتظار المصادقة قبل إصداره."
+
+#. module: legal_opinion
+msgid ""
+"Opinion %s has no conclusion. An opinion is issued on its answer, so the "
+"conclusion cannot be empty."
+msgstr ""
+"الرأي %s بلا خلاصة. والرأي يُصدَر على جوابه، فلا يجوز أن تكون الخلاصة فارغة."
+
+#. module: legal_opinion
+msgid "Issued and frozen%(number)s."
+msgstr "صدر وجُمِّد%(number)s."
+
+#. module: legal_opinion
+msgid " as register %s"
+msgstr " بالرقم %s في السجل"
+
+#. module: legal_opinion
+msgid "Only an issued opinion is revised. A draft is edited in place."
+msgstr "لا يُنقَّح إلا الرأي الصادر. أما المسودة فتُعدَّل في مكانها."
+
+#. module: legal_opinion
+msgid "Opinion %(ref)s has already been revised by %(new)s."
+msgstr "الرأي %(ref)s نُقِّح مسبقاً بالرأي %(new)s."
+
+#. module: legal_opinion
+msgid "Superseded by revision %s."
+msgstr "حلّ محلّه التنقيح %s."
+
+#. module: legal_opinion
+msgid "Drafted as a revision of %s."
+msgstr "أُعِدّ بوصفه تنقيحاً للرأي %s."
+
+#. module: legal_opinion
+msgid ""
+"No outgoing register or letter kind is configured, so opinion %s cannot be "
+"booked into the register. Configure an outgoing register first."
+msgstr ""
+"لا يوجد سجل صادر أو نوع كتاب مُهيّأ، ولذلك لا يمكن تقييد الرأي %s في السجل. "
+"هيّئ سجل صادر أولاً."
+
+#. module: legal_opinion
+msgid "Legal Opinion %(ref)s - %(subject)s"
+msgstr "الرأي القانوني %(ref)s - %(subject)s"
+
+#. module: legal_opinion
+msgid "Overdue can only be tested for equality."
+msgstr "لا يمكن اختبار التأخر إلا بالمساواة."

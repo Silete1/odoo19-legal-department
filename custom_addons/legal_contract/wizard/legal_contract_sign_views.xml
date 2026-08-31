@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_contract_sign_form" model="ir.ui.view">
+        <field name="name">legal.contract.sign.form</field>
+        <field name="model">legal.contract.sign</field>
+        <field name="arch" type="xml">
+            <form string="File Signed Contract">
+                <group>
+                    <field name="contract_id" invisible="1"/>
+                    <field name="document_type_id"/>
+                    <field name="signature_date"/>
+                    <field name="fully_signed"/>
+                    <field name="attachment" filename="attachment_name"/>
+                    <field name="attachment_name" invisible="1"/>
+                    <field name="note"/>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    The signed contract is filed once in the company's permanent document
+                    register, so its expiry is chased on the same renewal board as every
+                    licence and identity the company holds.
+                </div>
+                <footer>
+                    <button name="action_confirm" type="object" string="File Document"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_contract_sign" model="ir.actions.act_window">
+        <field name="name">File Signed Contract</field>
+        <field name="res_model">legal.contract.sign</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

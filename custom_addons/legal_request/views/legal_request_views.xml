@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ FORM -->
+    <record id="view_legal_request_form" model="ir.ui.view">
+        <field name="name">legal.request.form</field>
+        <field name="model">legal.request</field>
+        <field name="arch" type="xml">
+            <form string="Legal Request">
+                <header>
+                    <button name="action_submit" type="object" string="Submit"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_triage" type="object" string="Start Triage"
+                            class="btn-primary" invisible="state != 'received'"
+                            groups="legal_core.group_legal_officer"/>
+                    <button name="action_assign" type="object" string="Assign"
+                            class="btn-primary" invisible="state not in ('received', 'triage')"
+                            groups="legal_core.group_legal_officer"/>
+                    <button name="action_start" type="object" string="Start Work"
+                            class="btn-primary" invisible="state != 'assigned'"/>
+                    <button name="action_start" type="object" string="Resume"
+                            class="btn-primary"
+                            invisible="state not in ('waiting_requester', 'waiting_external')"/>
+                    <button name="action_wait_requester" type="object" string="Wait On Requester"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_wait_external" type="object" string="Wait On External"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_submit_for_approval" type="object"
+                            string="Submit For Approval" class="btn-primary"
+                            invisible="state not in ('in_progress', 'waiting_requester', 'waiting_external')"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'ready_for_approval'"
+                            groups="legal_core.group_legal_approver"/>
+                    <button name="action_return" type="object" string="Return For Rework"
+                            invisible="state != 'ready_for_approval'"
+                            groups="legal_core.group_legal_approver"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="btn-primary" invisible="state != 'approved'"
+                            groups="legal_core.group_legal_officer"/>
+                    <button name="action_convert" type="object" string="Convert"
+                            invisible="state in ('draft', 'cancelled')"
+                            groups="legal_core.group_legal_officer"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset To Draft"
+                            invisible="state != 'cancelled'"
+                            groups="legal_core.group_legal_officer"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"
+                           statusbar_visible="draft,received,assigned,in_progress,ready_for_approval,approved,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <widget name="web_ribbon" title="Overdue" bg_color="text-bg-warning"
+                            invisible="not is_overdue"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_correspondence" type="object"
+                                class="oe_stat_button" icon="fa-envelope">
+                            <field name="correspondence_count" widget="statinfo" string="Letters"/>
+                        </button>
+                        <button name="action_open_converted" type="object"
+                                class="oe_stat_button" icon="fa-share"
+                                invisible="not converted_ref">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Became</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="subject"/>
+                        <h1><field name="subject" placeholder="Review of the fuel supply contract"/></h1>
+                        <h2><field name="reference" readonly="1"/></h2>
+                    </div>
+                    <group>
+                        <group string="The Request">
+                            <field name="category_id"/>
+                            <field name="requesting_department"/>
+                            <field name="requester_id"/>
+                            <field name="request_date"/>
+                            <field name="related_partner_id"/>
+                            <field name="entity_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Triage">
+                            <field name="urgency" widget="badge"
+                                   decoration-warning="urgency == 'high'"
+                                   decoration-danger="urgency == 'urgent'"/>
+                            <field name="confidentiality"/>
+                            <field name="assigned_officer_id"/>
+                            <field name="manager_id"/>
+                            <field name="target_response_date"/>
+                            <field name="age"/>
+                            <field name="is_overdue" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detail" name="detail">
+                            <field name="description"
+                                   placeholder="The full question, in the requester's own words."/>
+                        </page>
+                        <page string="Response" name="response">
+                            <field name="response"
+                                   placeholder="What the department answered."/>
+                        </page>
+                        <page string="Approval" name="approval"
+                              invisible="state not in ('approved', 'closed')">
+                            <group>
+                                <field name="decision"/>
+                                <field name="approved_by_id"/>
+                                <field name="approved_on"/>
+                                <field name="decision_note"/>
+                            </group>
+                        </page>
+                        <page string="Conversion" name="conversion"
+                              groups="legal_core.group_legal_officer">
+                            <group>
+                                <field name="converted_ref"/>
+                                <field name="converted_model"/>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                Convert turns the request into what it called for. The base raises an
+                                official letter on the register; an integrator wires a case, a
+                                contract or an opinion onto the same button.
+                            </div>
+                        </page>
+                        <page string="Cancellation" name="cancellation"
+                              invisible="state != 'cancelled'">
+                            <field name="cancel_reason" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ LIST -->
+    <record id="view_legal_request_list" model="ir.ui.view">
+        <field name="name">legal.request.list</field>
+        <field name="model">legal.request</field>
+        <field name="arch" type="xml">
+            <list string="Legal Requests"
+                  decoration-danger="is_overdue"
+                  decoration-warning="urgency == 'urgent' and not is_overdue"
+                  decoration-info="state == 'ready_for_approval' and not is_overdue"
+                  decoration-muted="state in ('closed', 'cancelled')">
+                <field name="reference"/>
+                <field name="subject"/>
+                <field name="category_id"/>
+                <field name="requester_id" optional="show"/>
+                <field name="requesting_department" optional="show"/>
+                <field name="assigned_officer_id" optional="show"/>
+                <field name="manager_id" optional="hide"/>
+                <field name="request_date" optional="hide"/>
+                <field name="target_response_date" optional="show"/>
+                <field name="age" optional="show"/>
+                <field name="is_overdue" optional="hide"/>
+                <field name="urgency" widget="badge"
+                       decoration-warning="urgency == 'high'"
+                       decoration-danger="urgency == 'urgent'" optional="show"/>
+                <field name="confidentiality" optional="hide"/>
+                <field name="correspondence_count" string="Letters" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'ready_for_approval'"
+                       decoration-success="state in ('approved', 'closed')"
+                       decoration-muted="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ========================================================== KANBAN -->
+    <record id="view_legal_request_kanban" model="ir.ui.view">
+        <field name="name">legal.request.kanban</field>
+        <field name="model">legal.request</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false" group_create="false">
+                <field name="state"/>
+                <field name="is_overdue"/>
+                <field name="urgency"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="reference"/></strong>
+                            <field name="urgency" widget="badge"
+                                   decoration-warning="urgency == 'high'"
+                                   decoration-danger="urgency == 'urgent'"/>
+                        </div>
+                        <div class="text-truncate fw-bold"><field name="subject"/></div>
+                        <div class="text-muted small"><field name="category_id"/></div>
+                        <div class="text-muted small">
+                            <i class="fa fa-building-o me-1" title="Requesting Department"/>
+                            <field name="requesting_department"/>
+                        </div>
+                        <div class="mt-1" invisible="not is_overdue">
+                            <span class="badge text-bg-danger">Overdue</span>
+                        </div>
+                        <footer class="pt-1">
+                            <field name="target_response_date"/>
+                            <div class="ms-auto d-flex align-items-center">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                                <field name="assigned_officer_id" widget="many2one_avatar_user"/>
+                            </div>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ========================================================== SEARCH -->
+    <record id="view_legal_request_search" model="ir.ui.view">
+        <field name="name">legal.request.search</field>
+        <field name="model">legal.request</field>
+        <field name="arch" type="xml">
+            <search string="Legal Requests">
+                <field name="reference"
+                       filter_domain="['|', '|', ('reference', 'ilike', self), ('subject', 'ilike', self), ('requesting_department', 'ilike', self)]"/>
+                <field name="subject"/>
+                <field name="category_id"/>
+                <field name="assigned_officer_id"/>
+                <field name="requester_id"/>
+                <field name="requesting_department"/>
+                <filter name="my_requests" string="My Requests"
+                        domain="['|', ('requester_id', '=', uid), ('assigned_officer_id', '=', uid)]"/>
+                <filter name="my_team" string="My Team"
+                        domain="[('manager_id', '=', uid)]"/>
+                <separator/>
+                <filter name="unassigned" string="Unassigned"
+                        domain="[('assigned_officer_id', '=', False), ('state', 'not in', ('approved', 'closed', 'cancelled'))]"/>
+                <filter name="awaiting_approval" string="Awaiting Approval"
+                        domain="[('state', '=', 'ready_for_approval')]"/>
+                <filter name="open" string="Open"
+                        domain="[('state', 'not in', ('approved', 'closed', 'cancelled'))]"/>
+                <separator/>
+                <filter name="overdue" string="Overdue" domain="[('is_overdue', '=', True)]"/>
+                <filter name="due_this_week" string="Due This Week"
+                        domain="['&amp;', '&amp;', ('target_response_date', '!=', False), ('state', 'not in', ('approved', 'closed', 'cancelled')), '&amp;', ('target_response_date', '&gt;=', context_today().strftime('%Y-%m-%d')), ('target_response_date', '&lt;=', (context_today() + relativedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="high_priority" string="High Priority"
+                        domain="[('urgency', 'in', ('high', 'urgent'))]"/>
+                <separator/>
+                <filter name="restricted" string="Restricted"
+                        domain="[('confidentiality', 'in', ('restricted', 'highly_restricted'))]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_category" string="Category" context="{'group_by': 'category_id'}"/>
+                    <filter name="group_department" string="Department" context="{'group_by': 'requesting_department'}"/>
+                    <filter name="group_officer" string="Officer" context="{'group_by': 'assigned_officer_id'}"/>
+                    <filter name="group_urgency" string="Urgency" context="{'group_by': 'urgency'}"/>
+                    <filter name="group_request_date" string="Request Date" context="{'group_by': 'request_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ========================================================= ACTIONS -->
+    <record id="action_legal_request" model="ir.actions.act_window">
+        <field name="name">Requests</field>
+        <field name="res_model">legal.request</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_legal_request_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Log the first request</p>
+            <p>
+                This is the department's front door. A department writes a question here - review
+                this contract, is this dismissal safe, what deed do we need - and the triage desk
+                turns it into whatever it takes to answer: a letter, an opinion, a file.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_request_my" model="ir.actions.act_window">
+        <field name="name">My Requests</field>
+        <field name="res_model">legal.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_legal_request_search"/>
+        <field name="context">{'search_default_my_requests': 1, 'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nothing on your desk</p>
+            <p>Requests you raised or were assigned appear here.</p>
+        </field>
+    </record>
+
+    <record id="action_legal_request_unassigned" model="ir.actions.act_window">
+        <field name="name">Unassigned</field>
+        <field name="res_model">legal.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_legal_request_search"/>
+        <field name="context">{'search_default_unassigned': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">The triage queue is empty</p>
+            <p>Requests that have arrived but nobody is yet working. Triage them onto an officer.</p>
+        </field>
+    </record>
+
+    <record id="action_legal_request_awaiting" model="ir.actions.act_window">
+        <field name="name">Awaiting Approval</field>
+        <field name="res_model">legal.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_legal_request_search"/>
+        <field name="context">{'search_default_awaiting_approval': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nothing waiting for a signature</p>
+            <p>Answers the officers have prepared and submitted, waiting for an approver to sign off.</p>
+        </field>
+    </record>
+
+    <record id="action_legal_request_overdue" model="ir.actions.act_window">
+        <field name="name">Overdue</field>
+        <field name="res_model">legal.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_legal_request_search"/>
+        <field name="context">{'search_default_overdue': 1, 'search_default_group_officer': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nothing is late</p>
+            <p>Open requests past the date the department undertook to respond.</p>
+        </field>
+    </record>
+
+</odoo>

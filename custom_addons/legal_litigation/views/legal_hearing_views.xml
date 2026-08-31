@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_hearing_list" model="ir.ui.view">
+        <field name="name">legal.hearing.list</field>
+        <field name="model">legal.hearing</field>
+        <field name="arch" type="xml">
+            <list string="Hearings" decoration-muted="is_held"
+                  decoration-bf="not is_held">
+                <field name="date"/>
+                <field name="lawsuit_id"/>
+                <field name="court_id" optional="show"/>
+                <field name="purpose"/>
+                <field name="attendance" optional="show"/>
+                <field name="is_held" widget="boolean_toggle" optional="hide"/>
+                <field name="next_hearing_date" optional="show"/>
+                <field name="lawyer_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_hearing_form" model="ir.ui.view">
+        <field name="name">legal.hearing.form</field>
+        <field name="model">legal.hearing</field>
+        <field name="arch" type="xml">
+            <form string="Hearing">
+                <header>
+                    <button name="action_schedule_next" type="object"
+                            string="Open Next Sitting" class="btn-primary"
+                            invisible="not next_hearing_date or next_hearing_id"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="lawsuit_id" options="{'no_create': True}"/></h1>
+                    </div>
+                    <group>
+                        <group string="The Sitting">
+                            <field name="date"/>
+                            <field name="court_id"/>
+                            <field name="location"/>
+                            <field name="purpose"/>
+                        </group>
+                        <group string="Outcome">
+                            <field name="attendance"/>
+                            <field name="is_held"/>
+                            <field name="lawyer_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Preparation">
+                        <field name="required_preparation" nolabel="1"
+                               placeholder="What must be ready: a memo, a witness, an original produced, a fee paid."/>
+                    </group>
+                    <notebook>
+                        <page string="Minutes" name="minutes">
+                            <field name="minutes" placeholder="What was said and done, in our own note."/>
+                        </page>
+                        <page string="Result &amp; Next Step" name="result">
+                            <group>
+                                <field name="result"
+                                       placeholder="What the sitting produced. Recording it marks the sitting held."/>
+                                <field name="next_step"
+                                       placeholder="What has to happen before the next sitting."/>
+                                <field name="next_hearing_date"/>
+                                <field name="next_hearing_id" readonly="1"
+                                       invisible="not next_hearing_id"/>
+                            </group>
+                            <div class="alert alert-info" role="alert"
+                                 invisible="next_hearing_id or not next_hearing_date">
+                                Saving the date the court fixed opens the next sitting as its own
+                                row and puts it on the advocate's activity list - once.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_hearing_calendar" model="ir.ui.view">
+        <field name="name">legal.hearing.calendar</field>
+        <field name="model">legal.hearing</field>
+        <field name="arch" type="xml">
+            <calendar string="Hearings" date_start="date" color="lawsuit_id" mode="month">
+                <field name="lawsuit_id" filters="1"/>
+                <field name="purpose"/>
+                <field name="court_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_legal_hearing_search" model="ir.ui.view">
+        <field name="name">legal.hearing.search</field>
+        <field name="model">legal.hearing</field>
+        <field name="arch" type="xml">
+            <search string="Hearings">
+                <field name="lawsuit_id"/>
+                <field name="court_id"/>
+                <filter name="upcoming" string="Upcoming" domain="[('date', '&gt;=', context_today().strftime('%Y-%m-%d')), ('result', '=', False)]"/>
+                <filter name="held" string="Held" domain="[('result', '!=', False)]"/>
+                <filter name="mine" string="My Hearings" domain="[('lawyer_id', '=', uid)]"/>
+                <separator/>
+                <filter name="date" string="Sitting Date" date="date"/>
+                <group>
+                    <filter name="group_lawsuit" string="Case" context="{'group_by': 'lawsuit_id'}"/>
+                    <filter name="group_court" string="Court" context="{'group_by': 'court_id'}"/>
+                    <filter name="group_purpose" string="Purpose" context="{'group_by': 'purpose'}"/>
+                    <filter name="group_lawyer" string="Advocate" context="{'group_by': 'lawyer_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_hearing" model="ir.actions.act_window">
+        <field name="name">Hearings</field>
+        <field name="res_model">legal.hearing</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="context">{'search_default_upcoming': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">The court diary</p>
+            <p>
+                Every sitting, past and fixed. Recording the date the court set for the next
+                one rolls that sitting forward on its own and puts it on the advocate's list.
+            </p>
+        </field>
+    </record>
+
+</odoo>

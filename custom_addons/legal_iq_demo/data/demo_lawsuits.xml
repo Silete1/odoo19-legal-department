@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <!--
+        A wholly FICTIONAL showcase, loaded as data (noupdate="1") because the
+        legal_dept database was created without demo. Every company, person and
+        claim below is invented; any resemblance to a real dispute is coincidence,
+        and nothing here alleges wrongdoing by a real party.
+
+        It references the demo entity and users from legal_iq_demo, which the
+        baseline database has installed. Where that module is absent the showcase
+        will not load - the module itself installs cleanly without it.
+    -->
+    <data noupdate="1">
+
+        <!-- ============================================================
+             Fictional opponents and the advocate's partner record
+             ============================================================ -->
+        <record id="partner_warka" model="res.partner">
+            <field name="name">شركة الوركاء للتجارة المحدودة</field>
+            <field name="is_company" eval="True"/>
+            <field name="city">بغداد</field>
+        </record>
+        <record id="partner_rafidain_contracting" model="res.partner">
+            <field name="name">شركة نهر الرافدين للمقاولات العامة</field>
+            <field name="is_company" eval="True"/>
+            <field name="city">البصرة</field>
+        </record>
+        <record id="partner_dijla_office" model="res.partner">
+            <field name="name">مكتب دجلة للخدمات اللوجستية</field>
+            <field name="is_company" eval="True"/>
+            <field name="city">بغداد</field>
+        </record>
+        <record id="partner_babel_modern" model="res.partner">
+            <field name="name">شركة بابل الحديثة للصناعات المحدودة</field>
+            <field name="is_company" eval="True"/>
+            <field name="city">النجف</field>
+        </record>
+        <record id="partner_advocate_zainab" model="res.partner">
+            <field name="name">المحامية زينب عادل محمود</field>
+            <field name="function">محامية أستاذة</field>
+            <field name="city">بغداد</field>
+        </record>
+
+        <!-- ============================================================
+             A valid litigation power of attorney for the advocate
+             ============================================================ -->
+        <record id="poa_litigation_showcase" model="legal.poa">
+            <field name="name">وكالة بالمرافعة - مصرف الرافدين النموذجي</field>
+            <field name="number">1256/ب/2026</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="agent_partner_id" ref="partner_advocate_zainab"/>
+            <field name="agent_user_id" ref="legal_iq_demo.user_officer"/>
+            <field name="agent_is_lawyer" eval="True"/>
+            <field name="scope">litigation</field>
+            <field name="state">active</field>
+            <field name="notary_office">كاتب عدل الرصافة</field>
+            <field name="issue_date" eval="'2026-01-15'"/>
+            <field name="expiry_date" eval="'2027-01-14'"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- ============================================================
+             Case 1 - live, plaintiff, with an upcoming hearing
+             ============================================================ -->
+        <record id="lawsuit_warka_wages" model="legal.lawsuit">
+            <field name="title">مطالبة شركة الوركاء بأجور خدمات متأخرة</field>
+            <field name="our_capacity">plaintiff</field>
+            <field name="court_id" ref="legal_litigation.court_bidaa_rusafa"/>
+            <field name="court_case_number">١٤٥٢/ب/٢٠٢٦</field>
+            <field name="court_case_year">2026</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="subject">مطالبة بأجور خدمات لوجستية غير مسددة عن عقد مبرم في 2025 مع فوائد التأخير.</field>
+            <field name="claim_amount">85000000</field>
+            <field name="lawyer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="poa_id" ref="poa_litigation_showcase"/>
+            <field name="state">in_progress</field>
+            <field name="risk">medium</field>
+            <field name="priority">1</field>
+            <field name="date_filed" eval="'2026-06-05'"/>
+            <field name="latest_development">بانتظار جلسة استماع الشهود المحددة في أيلول.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="party_warka_opponent" model="legal.lawsuit.party">
+            <field name="lawsuit_id" ref="lawsuit_warka_wages"/>
+            <field name="partner_id" ref="partner_warka"/>
+            <field name="role">opponent</field>
+            <field name="capacity">المدعى عليها - بصفتها التجارية</field>
+        </record>
+        <record id="hearing_warka_1" model="legal.hearing">
+            <field name="lawsuit_id" ref="lawsuit_warka_wages"/>
+            <field name="court_id" ref="legal_litigation.court_bidaa_rusafa"/>
+            <field name="date" eval="'2026-07-20 09:30:00'"/>
+            <field name="purpose">pleading</field>
+            <field name="attendance">we_attended</field>
+            <field name="minutes">حضر وكيل المدعية وقدّم لائحة الدعوى والمستندات.</field>
+            <field name="result">أُجّلت المرافعة لتبليغ المدعى عليها واستكمال المستندات.</field>
+        </record>
+        <record id="hearing_warka_2" model="legal.hearing">
+            <field name="lawsuit_id" ref="lawsuit_warka_wages"/>
+            <field name="court_id" ref="legal_litigation.court_bidaa_rusafa"/>
+            <field name="date" eval="'2026-09-10 09:30:00'"/>
+            <field name="purpose">witnesses</field>
+            <field name="required_preparation">إحضار شاهدين وكشف حساب معتمد من المصرف.</field>
+        </record>
+
+        <!-- ============================================================
+             Case 2 - defendant, judgment against us, appeal window closing soon
+             ============================================================ -->
+        <record id="lawsuit_rafidain_contracting" model="legal.lawsuit">
+            <field name="title">دعوى شركة نهر الرافدين بفسخ عقد والتعويض</field>
+            <field name="our_capacity">defendant</field>
+            <field name="court_id" ref="legal_litigation.court_bidaa_basra"/>
+            <field name="court_case_number">٩٨٧/ب/٢٠٢٦</field>
+            <field name="court_case_year">2026</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="subject">دعوى مقامة ضدنا تطلب فسخ عقد توريد والتعويض عن أضرار مزعومة.</field>
+            <field name="claim_amount">42000000</field>
+            <field name="lawyer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="poa_id" ref="poa_litigation_showcase"/>
+            <field name="state">judgment</field>
+            <field name="risk">high</field>
+            <field name="priority">2</field>
+            <field name="date_filed" eval="'2026-04-11'"/>
+            <field name="latest_development">صدر الحكم ضدنا؛ مدة الطعن استئنافاً على وشك الانتهاء.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="party_rafidain_opponent" model="legal.lawsuit.party">
+            <field name="lawsuit_id" ref="lawsuit_rafidain_contracting"/>
+            <field name="partner_id" ref="partner_rafidain_contracting"/>
+            <field name="role">opponent</field>
+            <field name="capacity">المدعية</field>
+        </record>
+        <record id="hearing_rafidain_1" model="legal.hearing">
+            <field name="lawsuit_id" ref="lawsuit_rafidain_contracting"/>
+            <field name="court_id" ref="legal_litigation.court_bidaa_basra"/>
+            <field name="date" eval="'2026-08-15 10:00:00'"/>
+            <field name="purpose">verdict</field>
+            <field name="attendance">we_attended</field>
+            <field name="result">صدر الحكم بإلزامنا بالتعويض جزئياً.</field>
+        </record>
+        <record id="judgment_rafidain" model="legal.judgment">
+            <field name="lawsuit_id" ref="lawsuit_rafidain_contracting"/>
+            <field name="court_id" ref="legal_litigation.court_bidaa_basra"/>
+            <field name="judgment_date" eval="'2026-08-15'"/>
+            <field name="ruling_type">judgment</field>
+            <field name="in_our_favour">against</field>
+            <field name="amount_awarded">28000000</field>
+            <field name="tabligh_date" eval="'2026-08-21'"/>
+            <field name="remedy">appeal</field>
+            <field name="summary">حكم بإلزام المصرف بدفع تعويض قدره ٢٨ مليون دينار مع الرسوم.</field>
+        </record>
+
+        <!-- ============================================================
+             Case 3 - plaintiff, won and enforced, now closed
+             ============================================================ -->
+        <record id="lawsuit_dijla_debt" model="legal.lawsuit">
+            <field name="title">تحصيل دين من مكتب دجلة للخدمات</field>
+            <field name="our_capacity">plaintiff</field>
+            <field name="court_id" ref="legal_litigation.court_bidaa_karkh"/>
+            <field name="court_case_number">٦٣٠/ب/٢٠٢٥</field>
+            <field name="court_case_year">2025</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="subject">دعوى دين مستحق بموجب سند تجاري، حُكم لصالحنا ونُفّذ.</field>
+            <field name="claim_amount">19500000</field>
+            <field name="lawyer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="poa_id" ref="poa_litigation_showcase"/>
+            <field name="state">closed</field>
+            <field name="risk">low</field>
+            <field name="date_filed" eval="'2025-11-03'"/>
+            <field name="date_closed" eval="'2026-05-20'"/>
+            <field name="close_reason">تنفيذ الحكم بالكامل واستلام كامل المبلغ المحكوم به.</field>
+            <field name="latest_development">أُغلقت الدعوى بعد التنفيذ الكامل.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="party_dijla_opponent" model="legal.lawsuit.party">
+            <field name="lawsuit_id" ref="lawsuit_dijla_debt"/>
+            <field name="partner_id" ref="partner_dijla_office"/>
+            <field name="role">opponent</field>
+            <field name="capacity">المدعى عليه</field>
+        </record>
+        <record id="judgment_dijla" model="legal.judgment">
+            <field name="lawsuit_id" ref="lawsuit_dijla_debt"/>
+            <field name="court_id" ref="legal_litigation.court_bidaa_karkh"/>
+            <field name="judgment_date" eval="'2026-02-10'"/>
+            <field name="ruling_type">judgment</field>
+            <field name="in_our_favour">favour</field>
+            <field name="amount_awarded">19500000</field>
+            <field name="summary">حكم بإلزام المدعى عليه بأداء الدين كاملاً مع الرسوم والمصاريف.</field>
+        </record>
+
+        <!-- ============================================================
+             Case 4 - defendant, adverse decision, appeal window LAPSED (overdue)
+             ============================================================ -->
+        <record id="lawsuit_babel" model="legal.lawsuit">
+            <field name="title">دعوى شركة بابل الحديثة - نزاع توريد</field>
+            <field name="our_capacity">defendant</field>
+            <field name="court_id" ref="legal_litigation.court_bidaa_najaf"/>
+            <field name="court_case_number">٤٠٢/ب/٢٠٢٦</field>
+            <field name="court_case_year">2026</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="subject">قرار صادر ضدنا في نزاع توريد، انقضت مدة الطعن تمييزاً دون طعن.</field>
+            <field name="claim_amount">15000000</field>
+            <field name="lawyer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="poa_id" ref="poa_litigation_showcase"/>
+            <field name="state">judgment</field>
+            <field name="risk">high</field>
+            <field name="priority">1</field>
+            <field name="date_filed" eval="'2026-03-18'"/>
+            <field name="latest_development">تنبيه: انقضت مدة الطعن على القرار دون تقديم طعن.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <record id="party_babel_opponent" model="legal.lawsuit.party">
+            <field name="lawsuit_id" ref="lawsuit_babel"/>
+            <field name="partner_id" ref="partner_babel_modern"/>
+            <field name="role">opponent</field>
+            <field name="capacity">المدعية</field>
+        </record>
+        <record id="judgment_babel" model="legal.judgment">
+            <field name="lawsuit_id" ref="lawsuit_babel"/>
+            <field name="court_id" ref="legal_litigation.court_bidaa_najaf"/>
+            <field name="judgment_date" eval="'2026-07-10'"/>
+            <field name="ruling_type">decision</field>
+            <field name="in_our_favour">against</field>
+            <field name="amount_awarded">15000000</field>
+            <field name="tabligh_date" eval="'2026-07-12'"/>
+            <field name="remedy">cassation</field>
+            <field name="summary">قرار بإلزامنا؛ مدة الطعن تمييزاً سبعة أيام من التبليغ وقد انقضت.</field>
+        </record>
+
+    </data>
+</odoo>

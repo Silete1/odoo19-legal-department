@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The Iraqi court network: the eighteen governorates as jurisdictions under
+        the two shipped roots, a handful of government bodies of type COURT so the
+        registers and calendars have something to hang on, and a representative
+        set of courts across the degrees. noupdate="1" so a customer's additions
+        and corrections survive an upgrade.
+    -->
+    <data noupdate="1">
+
+        <!-- ============================================================
+             Governorates - fifteen federal, three in the Region
+             ============================================================ -->
+
+        <record id="jurisdiction_gov_baghdad" model="legal.jurisdiction">
+            <field name="name">بغداد</field>
+            <field name="code">IQ-GOV-BGD</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">101</field>
+        </record>
+        <record id="jurisdiction_gov_basra" model="legal.jurisdiction">
+            <field name="name">البصرة</field>
+            <field name="code">IQ-GOV-BAS</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">102</field>
+        </record>
+        <record id="jurisdiction_gov_nineveh" model="legal.jurisdiction">
+            <field name="name">نينوى</field>
+            <field name="code">IQ-GOV-NIN</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">103</field>
+        </record>
+        <record id="jurisdiction_gov_kirkuk" model="legal.jurisdiction">
+            <field name="name">كركوك</field>
+            <field name="code">IQ-GOV-KIR</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">104</field>
+        </record>
+        <record id="jurisdiction_gov_anbar" model="legal.jurisdiction">
+            <field name="name">الأنبار</field>
+            <field name="code">IQ-GOV-ANB</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">105</field>
+        </record>
+        <record id="jurisdiction_gov_babil" model="legal.jurisdiction">
+            <field name="name">بابل</field>
+            <field name="code">IQ-GOV-BAB</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">106</field>
+        </record>
+        <record id="jurisdiction_gov_karbala" model="legal.jurisdiction">
+            <field name="name">كربلاء المقدسة</field>
+            <field name="code">IQ-GOV-KAR</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">107</field>
+        </record>
+        <record id="jurisdiction_gov_najaf" model="legal.jurisdiction">
+            <field name="name">النجف الأشرف</field>
+            <field name="code">IQ-GOV-NAJ</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">108</field>
+        </record>
+        <record id="jurisdiction_gov_diyala" model="legal.jurisdiction">
+            <field name="name">ديالى</field>
+            <field name="code">IQ-GOV-DIY</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">109</field>
+        </record>
+        <record id="jurisdiction_gov_dhiqar" model="legal.jurisdiction">
+            <field name="name">ذي قار</field>
+            <field name="code">IQ-GOV-DHQ</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">110</field>
+        </record>
+        <record id="jurisdiction_gov_maysan" model="legal.jurisdiction">
+            <field name="name">ميسان</field>
+            <field name="code">IQ-GOV-MAY</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">111</field>
+        </record>
+        <record id="jurisdiction_gov_muthanna" model="legal.jurisdiction">
+            <field name="name">المثنى</field>
+            <field name="code">IQ-GOV-MUT</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">112</field>
+        </record>
+        <record id="jurisdiction_gov_qadisiyah" model="legal.jurisdiction">
+            <field name="name">القادسية</field>
+            <field name="code">IQ-GOV-QAD</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">113</field>
+        </record>
+        <record id="jurisdiction_gov_wasit" model="legal.jurisdiction">
+            <field name="name">واسط</field>
+            <field name="code">IQ-GOV-WAS</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">114</field>
+        </record>
+        <record id="jurisdiction_gov_saladin" model="legal.jurisdiction">
+            <field name="name">صلاح الدين</field>
+            <field name="code">IQ-GOV-SAL</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="sequence">115</field>
+        </record>
+
+        <record id="jurisdiction_gov_erbil" model="legal.jurisdiction">
+            <field name="name">أربيل</field>
+            <field name="code">IQ-GOV-ERB</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_kri"/>
+            <field name="sequence">116</field>
+        </record>
+        <record id="jurisdiction_gov_sulaymaniyah" model="legal.jurisdiction">
+            <field name="name">السليمانية</field>
+            <field name="code">IQ-GOV-SUL</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_kri"/>
+            <field name="sequence">117</field>
+        </record>
+        <record id="jurisdiction_gov_duhok" model="legal.jurisdiction">
+            <field name="name">دهوك</field>
+            <field name="code">IQ-GOV-DUH</field>
+            <field name="parent_id" ref="legal_core.jurisdiction_iq_kri"/>
+            <field name="sequence">118</field>
+        </record>
+
+        <!-- ============================================================
+             A few courts as government bodies, so their calendars,
+             contacts and officers drive the same clocks as every counter
+             ============================================================ -->
+
+        <record id="body_court_cassation" model="legal.gov.body">
+            <field name="name">محكمة التمييز الاتحادية</field>
+            <field name="short_name">التمييز الاتحادية</field>
+            <field name="code">COURT-CASS-FED</field>
+            <field name="body_type_id" ref="legal_core.body_type_court"/>
+            <field name="jurisdiction_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="salutation">السيد رئيس محكمة التمييز الاتحادية المحترم</field>
+            <field name="channel">paper</field>
+        </record>
+
+        <record id="body_court_rusafa" model="legal.gov.body">
+            <field name="name">محكمة بداءة الرصافة</field>
+            <field name="short_name">بداءة الرصافة</field>
+            <field name="code">COURT-BID-RUSAFA</field>
+            <field name="body_type_id" ref="legal_core.body_type_court"/>
+            <field name="jurisdiction_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="salutation">السيد قاضي محكمة بداءة الرصافة المحترم</field>
+            <field name="channel">paper</field>
+        </record>
+
+        <record id="body_court_basra" model="legal.gov.body">
+            <field name="name">محكمة بداءة البصرة</field>
+            <field name="short_name">بداءة البصرة</field>
+            <field name="code">COURT-BID-BASRA</field>
+            <field name="body_type_id" ref="legal_core.body_type_court"/>
+            <field name="jurisdiction_id" ref="jurisdiction_gov_basra"/>
+            <field name="salutation">السيد قاضي محكمة بداءة البصرة المحترم</field>
+            <field name="channel">paper</field>
+        </record>
+
+        <!-- ============================================================
+             Cassation - the top of the ladder, defined first so the
+             appeal courts below can point up at it
+             ============================================================ -->
+
+        <record id="court_cassation_federal" model="legal.court">
+            <field name="name">محكمة التمييز الاتحادية</field>
+            <field name="code">CASS-FED</field>
+            <field name="degree">cassation</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="gov_body_id" ref="body_court_cassation"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ============================================================
+             Courts of appeal - one per region, pointing up at cassation
+             ============================================================ -->
+
+        <record id="court_appeal_rusafa" model="legal.court">
+            <field name="name">محكمة استئناف بغداد/الرصافة الاتحادية</field>
+            <field name="code">APP-BGD-RUSAFA</field>
+            <field name="degree">appeal</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="parent_court_id" ref="court_cassation_federal"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="court_appeal_karkh" model="legal.court">
+            <field name="name">محكمة استئناف بغداد/الكرخ الاتحادية</field>
+            <field name="code">APP-BGD-KARKH</field>
+            <field name="degree">appeal</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="parent_court_id" ref="court_cassation_federal"/>
+            <field name="sequence">21</field>
+        </record>
+        <record id="court_appeal_basra" model="legal.court">
+            <field name="name">محكمة استئناف البصرة الاتحادية</field>
+            <field name="code">APP-BASRA</field>
+            <field name="degree">appeal</field>
+            <field name="governorate_id" ref="jurisdiction_gov_basra"/>
+            <field name="parent_court_id" ref="court_cassation_federal"/>
+            <field name="sequence">22</field>
+        </record>
+        <record id="court_appeal_nineveh" model="legal.court">
+            <field name="name">محكمة استئناف نينوى الاتحادية</field>
+            <field name="code">APP-NINEVEH</field>
+            <field name="degree">appeal</field>
+            <field name="governorate_id" ref="jurisdiction_gov_nineveh"/>
+            <field name="parent_court_id" ref="court_cassation_federal"/>
+            <field name="sequence">23</field>
+        </record>
+        <record id="court_appeal_najaf" model="legal.court">
+            <field name="name">محكمة استئناف النجف الاتحادية</field>
+            <field name="code">APP-NAJAF</field>
+            <field name="degree">appeal</field>
+            <field name="governorate_id" ref="jurisdiction_gov_najaf"/>
+            <field name="parent_court_id" ref="court_cassation_federal"/>
+            <field name="sequence">24</field>
+        </record>
+        <record id="court_appeal_kurdistan" model="legal.court">
+            <field name="name">محكمة استئناف أربيل</field>
+            <field name="code">APP-ERBIL</field>
+            <field name="degree">appeal</field>
+            <field name="governorate_id" ref="jurisdiction_gov_erbil"/>
+            <field name="sequence">25</field>
+        </record>
+
+        <!-- ============================================================
+             First-instance courts (بداءة), pointing up at their appeal court
+             ============================================================ -->
+
+        <record id="court_bidaa_rusafa" model="legal.court">
+            <field name="name">محكمة بداءة الرصافة</field>
+            <field name="code">BID-RUSAFA</field>
+            <field name="degree">first_instance</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="parent_court_id" ref="court_appeal_rusafa"/>
+            <field name="gov_body_id" ref="body_court_rusafa"/>
+            <field name="sequence">40</field>
+        </record>
+        <record id="court_bidaa_karkh" model="legal.court">
+            <field name="name">محكمة بداءة الكرخ</field>
+            <field name="code">BID-KARKH</field>
+            <field name="degree">first_instance</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="parent_court_id" ref="court_appeal_karkh"/>
+            <field name="sequence">41</field>
+        </record>
+        <record id="court_bidaa_basra" model="legal.court">
+            <field name="name">محكمة بداءة البصرة</field>
+            <field name="code">BID-BASRA</field>
+            <field name="degree">first_instance</field>
+            <field name="governorate_id" ref="jurisdiction_gov_basra"/>
+            <field name="parent_court_id" ref="court_appeal_basra"/>
+            <field name="gov_body_id" ref="body_court_basra"/>
+            <field name="sequence">42</field>
+        </record>
+        <record id="court_bidaa_mosul" model="legal.court">
+            <field name="name">محكمة بداءة الموصل</field>
+            <field name="code">BID-MOSUL</field>
+            <field name="degree">first_instance</field>
+            <field name="governorate_id" ref="jurisdiction_gov_nineveh"/>
+            <field name="parent_court_id" ref="court_appeal_nineveh"/>
+            <field name="sequence">43</field>
+        </record>
+        <record id="court_bidaa_najaf" model="legal.court">
+            <field name="name">محكمة بداءة النجف</field>
+            <field name="code">BID-NAJAF</field>
+            <field name="degree">first_instance</field>
+            <field name="governorate_id" ref="jurisdiction_gov_najaf"/>
+            <field name="parent_court_id" ref="court_appeal_najaf"/>
+            <field name="sequence">44</field>
+        </record>
+        <record id="court_bidaa_erbil" model="legal.court">
+            <field name="name">محكمة بداءة أربيل</field>
+            <field name="code">BID-ERBIL</field>
+            <field name="degree">first_instance</field>
+            <field name="governorate_id" ref="jurisdiction_gov_erbil"/>
+            <field name="parent_court_id" ref="court_appeal_kurdistan"/>
+            <field name="sequence">45</field>
+        </record>
+
+        <!-- ============================================================
+             Specialised courts - administrative and labour
+             ============================================================ -->
+
+        <record id="court_civil_servants" model="legal.court">
+            <field name="name">محكمة قضاء الموظفين</field>
+            <field name="code">ADMIN-STAFF</field>
+            <field name="degree">administrative</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="sequence">60</field>
+        </record>
+        <record id="court_administrative_judiciary" model="legal.court">
+            <field name="name">محكمة القضاء الإداري</field>
+            <field name="code">ADMIN-JUD</field>
+            <field name="degree">administrative</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="sequence">61</field>
+        </record>
+        <record id="court_labor_baghdad" model="legal.court">
+            <field name="name">محكمة العمل - بغداد</field>
+            <field name="code">LABOR-BGD</field>
+            <field name="degree">labor</field>
+            <field name="governorate_id" ref="jurisdiction_gov_baghdad"/>
+            <field name="sequence">70</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            A fictional but honest morning at the intake desk. Every rung of the
+            ladder has something waiting: the clerk sees a new request nobody has
+            picked up, the officer sees work in progress (one of it already late),
+            the approver sees an answer waiting for a signature, and everyone can
+            look back at one that is closed. All parties are invented; no real
+            person or company is alleged to have done anything.
+        -->
+
+        <record id="partner_alnahrain_fuel" model="res.partner">
+            <field name="name">Al-Nahrain Fuel Trading Co. (fictional)</field>
+            <field name="is_company" eval="True"/>
+            <field name="company_type">company</field>
+        </record>
+
+        <record id="partner_karim_supplies" model="res.partner">
+            <field name="name">Karim General Supplies (fictional)</field>
+            <field name="is_company" eval="True"/>
+            <field name="company_type">company</field>
+        </record>
+
+        <!-- 1. NEW - received, unassigned. The clerk's queue. -->
+        <record id="request_fuel_contract" model="legal.request">
+            <field name="subject">Review of the fuel supply contract with Al-Nahrain</field>
+            <field name="category_id" ref="legal_request.category_contract_review"/>
+            <field name="requesting_department">Finance Department</field>
+            <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="request_date" eval="'2026-08-28'"/>
+            <field name="target_response_date" eval="'2026-09-10'"/>
+            <field name="urgency">high</field>
+            <field name="confidentiality">normal</field>
+            <field name="related_partner_id" ref="partner_alnahrain_fuel"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="state">received</field>
+            <field name="description" type="html">
+                <p>Finance has agreed heads of terms for a one-year fuel supply
+                contract worth about 480,000,000 IQD and asks the legal department
+                to vet the delay-penalty ceiling and the performance-bond clause
+                before signature.</p>
+            </field>
+        </record>
+
+        <!-- 2. UNDER REVIEW - assigned and in progress, restricted, and OVERDUE.
+             The officer's desk, with a clock already run out. -->
+        <record id="request_hr_termination" model="legal.request">
+            <field name="subject">Opinion on the termination of a probationary employee</field>
+            <field name="category_id" ref="legal_request.category_legal_consultation"/>
+            <field name="requesting_department">Human Resources</field>
+            <field name="requester_id" ref="legal_iq_demo.user_manager"/>
+            <field name="assigned_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="manager_id" ref="legal_iq_demo.user_manager"/>
+            <field name="request_date" eval="'2026-07-06'"/>
+            <field name="target_response_date" eval="'2026-07-20'"/>
+            <field name="urgency">urgent</field>
+            <field name="confidentiality">restricted</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="state">in_progress</field>
+            <field name="description" type="html">
+                <p>HR asks whether a probationary employee may be released before
+                the end of the probation period without a labour-court exposure,
+                and what notice and settlement the contract requires.</p>
+            </field>
+        </record>
+
+        <!-- 3. AWAITING APPROVAL - the approver's queue, answer written. -->
+        <record id="request_tender_bond" model="legal.request">
+            <field name="subject">Legal opinion on the tender bond wording for the pipeline works</field>
+            <field name="category_id" ref="legal_request.category_legal_opinion"/>
+            <field name="requesting_department">Procurement</field>
+            <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="assigned_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="manager_id" ref="legal_iq_demo.user_manager"/>
+            <field name="request_date" eval="'2026-08-15'"/>
+            <field name="target_response_date" eval="'2026-09-05'"/>
+            <field name="urgency">normal</field>
+            <field name="confidentiality">normal</field>
+            <field name="related_partner_id" ref="partner_karim_supplies"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="state">ready_for_approval</field>
+            <field name="description" type="html">
+                <p>Procurement asks the legal department to confirm that the
+                performance-bond clause in the pipeline tender follows the
+                Government Contracts Instructions and that the 5% figure is stated
+                correctly.</p>
+            </field>
+            <field name="response" type="html">
+                <p>The bond wording is sound. We recommend adding an explicit
+                validity date to the guarantee so it does not lapse before the
+                preliminary reception, and fixing the delay-penalty ceiling in the
+                same clause. Subject to those two edits, the clause may proceed.</p>
+            </field>
+        </record>
+
+        <!-- 4. CLOSED - answered, approved and filed. Everyone's history. -->
+        <record id="request_poa_registrar" model="legal.request">
+            <field name="subject">Consultation on the power of attorney for the companies registrar</field>
+            <field name="category_id" ref="legal_request.category_power_of_attorney"/>
+            <field name="requesting_department">Baghdad Branch</field>
+            <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="assigned_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="manager_id" ref="legal_iq_demo.user_manager"/>
+            <field name="request_date" eval="'2026-06-02'"/>
+            <field name="target_response_date" eval="'2026-06-15'"/>
+            <field name="urgency">normal</field>
+            <field name="confidentiality">normal</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="state">closed</field>
+            <field name="decision">approved</field>
+            <field name="decision_note">Cleared as drafted.</field>
+            <field name="approved_by_id" ref="legal_iq_demo.user_approver"/>
+            <field name="approved_on" eval="'2026-06-12 09:30:00'"/>
+            <field name="description" type="html">
+                <p>The branch asks which scope of power of attorney is needed to
+                file the annual accounts at the companies registrar and whether the
+                current general deed is sufficient.</p>
+            </field>
+            <field name="response" type="html">
+                <p>The existing general power of attorney names the registrar and
+                is in force until March 2027; it is sufficient to file the annual
+                accounts. No special deed is required.</p>
+            </field>
+        </record>
+
+        <!-- 5. A second in-progress item, not late, so the board is not all red. -->
+        <record id="request_property_lease" model="legal.request">
+            <field name="subject">Review of the warehouse lease renewal in Basra</field>
+            <field name="category_id" ref="legal_request.category_property"/>
+            <field name="requesting_department">Administration</field>
+            <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="assigned_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="manager_id" ref="legal_iq_demo.user_manager"/>
+            <field name="request_date" eval="'2026-08-25'"/>
+            <field name="target_response_date" eval="'2026-09-15'"/>
+            <field name="urgency">normal</field>
+            <field name="confidentiality">normal</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="state">in_progress</field>
+            <field name="description" type="html">
+                <p>Administration asks the legal department to review the renewal
+                terms of the Basra warehouse lease, in particular the rent-review
+                mechanism and the early-termination clause.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

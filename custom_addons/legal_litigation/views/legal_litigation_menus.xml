@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        One section under the shared Legal app root, so litigation sits beside
+        the file register and the mail room rather than in an app of its own.
+    -->
+
+    <menuitem id="menu_legal_litigation"
+              name="Litigation"
+              parent="legal_core.menu_legal_root"
+              sequence="25"/>
+
+    <menuitem id="menu_legal_lawsuit"
+              name="Lawsuits"
+              parent="menu_legal_litigation"
+              action="action_legal_lawsuit"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_lawsuit_my"
+              name="My Lawsuits"
+              parent="menu_legal_litigation"
+              action="action_legal_lawsuit_my"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_hearing"
+              name="Hearings"
+              parent="menu_legal_litigation"
+              action="action_legal_hearing"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_judgment"
+              name="Judgments"
+              parent="menu_legal_litigation"
+              action="action_legal_judgment"
+              sequence="40"/>
+
+    <menuitem id="menu_legal_judgment_closing"
+              name="Appeal Windows Closing"
+              parent="menu_legal_litigation"
+              action="action_legal_judgment_closing"
+              sequence="50"/>
+
+    <!-- Configuration -->
+
+    <menuitem id="menu_legal_config_litigation"
+              name="Litigation"
+              parent="legal_core.menu_legal_config"
+              sequence="25"/>
+
+    <menuitem id="menu_legal_config_court"
+              name="Courts"
+              parent="menu_legal_config_litigation"
+              action="action_legal_court"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_appeal_rule"
+              name="Appeal Window Rules"
+              parent="menu_legal_config_litigation"
+              action="action_legal_appeal_rule"
+              sequence="20"/>
+
+</odoo>

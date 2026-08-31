@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Form -->
+    <!-- ============================================================ -->
+    <record id="view_legal_contract_form" model="ir.ui.view">
+        <field name="name">legal.contract.form</field>
+        <field name="model">legal.contract</field>
+        <field name="arch" type="xml">
+            <form string="Contract">
+                <header>
+                    <button name="action_submit_review" type="object" string="Submit For Review"
+                            class="btn-primary" invisible="state != 'received'"/>
+                    <button name="action_start_negotiation" type="object" string="Start Negotiation"
+                            invisible="state != 'legal_review'"/>
+                    <button name="action_request_internal_approval" type="object"
+                            string="Request Approval"
+                            class="btn-primary"
+                            invisible="state not in ['legal_review', 'negotiation']"/>
+                    <button name="action_grant_internal_approval" type="object"
+                            string="Grant Approval" class="btn-primary"
+                            invisible="state != 'internal_approval'"
+                            groups="legal_core.group_legal_approver"/>
+                    <button name="action_counterparty_returned" type="object"
+                            string="Ready To Sign"
+                            invisible="state != 'counterparty_review'"/>
+                    <button name="action_mark_signed" type="object" string="Mark Signed"
+                            class="btn-primary"
+                            invisible="state not in ['to_sign', 'counterparty_review']"
+                            groups="legal_core.group_legal_approver"/>
+                    <button name="action_file_signed_document" type="object"
+                            string="File Signed Document"
+                            invisible="state not in ['to_sign', 'signed', 'active'] or signed_document_id"
+                            groups="legal_core.group_legal_approver"/>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="btn-primary" invisible="state != 'signed'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state not in ['active', 'expired']"/>
+                    <button name="action_terminate" type="object" string="Terminate"
+                            confirm="Terminate this contract? This is reserved for the legal manager."
+                            invisible="state not in ['active', 'signed']"
+                            groups="legal_core.group_legal_manager"/>
+                    <button name="action_reset_to_review" type="object" string="Back To Review"
+                            class="btn-secondary"
+                            invisible="state not in ['negotiation', 'internal_approval', 'counterparty_review', 'to_sign']"
+                            groups="legal_core.group_legal_approver"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"
+                           statusbar_visible="received,legal_review,internal_approval,to_sign,signed,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_obligations" type="object"
+                                class="oe_stat_button" icon="fa-tasks">
+                            <field name="obligation_count" widget="statinfo" string="Obligations"/>
+                        </button>
+                        <button name="action_open_modifications" type="object"
+                                class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="modification_count" widget="statinfo" string="Amendments"/>
+                        </button>
+                        <button name="action_open_correspondence" type="object"
+                                class="oe_stat_button" icon="fa-envelope-o">
+                            <field name="correspondence_count" widget="statinfo" string="Letters"/>
+                        </button>
+                        <button name="action_open_signed_document" type="object"
+                                class="oe_stat_button" icon="fa-file-pdf-o">
+                            <span class="o_stat_text">Signed Document</span>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Confidential" bg_color="text-bg-danger"
+                            invisible="not confidential"/>
+                    <widget name="web_ribbon" title="Expired" bg_color="text-bg-secondary"
+                            invisible="state != 'expired'"/>
+                    <div class="oe_title">
+                        <label for="title"/>
+                        <h1><field name="title" placeholder="Head office lease, Karrada"/></h1>
+                        <h3><field name="name" readonly="1"/></h3>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="expiry_state not in ['due_soon', 'expiring']">
+                        This contract is
+                        <field name="expiry_state" readonly="1" class="oe_inline"/> -
+                        it expires on <field name="expiry_date" readonly="1" class="oe_inline"/>
+                        (<field name="days_to_expiry" readonly="1" class="oe_inline"/> days).
+                        <span invisible="not auto_renew">
+                            It renews automatically unless notice is served
+                            <field name="notice_period_days" readonly="1" class="oe_inline"/> days before.
+                        </span>
+                    </div>
+                    <group>
+                        <group string="Contract">
+                            <field name="type_id"/>
+                            <field name="entity_id"/>
+                            <field name="counterparty_id" readonly="1"/>
+                            <field name="responsible_department_id"/>
+                            <field name="governing_law"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Owners &amp; Value">
+                            <field name="internal_owner_id"/>
+                            <field name="legal_officer_id"/>
+                            <field name="risk"/>
+                            <field name="confidential"/>
+                            <field name="value"/>
+                            <field name="current_value"
+                                   invisible="current_value == value"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Dates">
+                            <field name="effective_date"/>
+                            <field name="commencement_date"/>
+                            <field name="expiry_date"/>
+                            <field name="notice_days" string="Renewal Notice (days)"/>
+                            <field name="renewal_lead_days"/>
+                        </group>
+                        <group string="Signature">
+                            <field name="signature_status"/>
+                            <field name="signature_date"/>
+                            <field name="auto_renew"/>
+                            <field name="notice_period_days" invisible="not auto_renew"/>
+                            <field name="signed_document_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Parties" name="parties">
+                            <field name="party_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="partner_id"/>
+                                    <field name="role"/>
+                                    <field name="signatory_name"/>
+                                    <field name="reference"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Obligations" name="obligations">
+                            <field name="obligation_ids" context="{'default_contract_id': id}">
+                                <list decoration-danger="is_overdue"
+                                      decoration-success="status == 'done'"
+                                      decoration-muted="status == 'waived'">
+                                    <field name="name"/>
+                                    <field name="clause_reference"/>
+                                    <field name="responsible_party"/>
+                                    <field name="responsible_user_id"/>
+                                    <field name="frequency"/>
+                                    <field name="due_date"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="is_overdue" column_invisible="1"/>
+                                    <field name="instance_count" string="Occurrences"/>
+                                    <field name="status" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Amendments" name="amendments">
+                            <field name="modification_ids" context="{'default_contract_id': id}">
+                                <list editable="bottom"
+                                      decoration-muted="state == 'draft'">
+                                    <field name="number"/>
+                                    <field name="date"/>
+                                    <field name="description"/>
+                                    <field name="value_change" sum="Net Change"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="new_expiry_date"/>
+                                    <field name="state" widget="badge"/>
+                                    <button name="action_apply" type="object" string="Apply"
+                                            icon="fa-check" class="btn-link"
+                                            invisible="state == 'applied'"
+                                            groups="legal_core.group_legal_approver"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List -->
+    <!-- ============================================================ -->
+    <record id="view_legal_contract_list" model="ir.ui.view">
+        <field name="name">legal.contract.list</field>
+        <field name="model">legal.contract</field>
+        <field name="arch" type="xml">
+            <list string="Contracts"
+                  decoration-danger="expiry_state == 'expired'"
+                  decoration-warning="expiry_state in ['due_soon', 'expiring']"
+                  decoration-muted="is_closed">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="type_id"/>
+                <field name="counterparty_id"/>
+                <field name="responsible_department_id" optional="show"/>
+                <field name="internal_owner_id" optional="hide"/>
+                <field name="legal_officer_id" optional="show"/>
+                <field name="value" sum="Total Value" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="expiry_date" optional="show"/>
+                <field name="expiry_state" widget="badge" optional="show"
+                       decoration-danger="expiry_state == 'expired'"
+                       decoration-warning="expiry_state in ['due_soon', 'expiring']"
+                       decoration-success="expiry_state == 'valid'"/>
+                <field name="signature_status" optional="hide"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Kanban -->
+    <!-- ============================================================ -->
+    <record id="view_legal_contract_kanban" model="ir.ui.view">
+        <field name="name">legal.contract.kanban</field>
+        <field name="model">legal.contract</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false" group_create="false">
+                <field name="state"/>
+                <field name="expiry_state"/>
+                <field name="is_closed"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="title"/></strong>
+                            <span class="text-muted small"><field name="name"/></span>
+                        </div>
+                        <div class="text-muted small"><field name="type_id"/></div>
+                        <div class="mt-1 small">
+                            <i class="fa fa-handshake-o me-1" title="Counterparty"/><field name="counterparty_id"/>
+                        </div>
+                        <div class="mt-1 small" invisible="not value">
+                            <field name="value" widget="monetary"/>
+                        </div>
+                        <div class="mt-1" invisible="expiry_state not in ['due_soon', 'expiring', 'expired']">
+                            <field name="expiry_state" widget="badge"
+                                   decoration-danger="expiry_state == 'expired'"
+                                   decoration-warning="expiry_state in ['due_soon', 'expiring']"/>
+                        </div>
+                        <footer class="pt-1">
+                            <field name="risk" widget="badge"
+                                   decoration-danger="risk == 'high'"
+                                   decoration-warning="risk == 'medium'"/>
+                            <div class="ms-auto d-flex align-items-center">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                                <field name="legal_officer_id" widget="many2one_avatar_user"/>
+                            </div>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Pivot & Graph -->
+    <!-- ============================================================ -->
+    <record id="view_legal_contract_pivot" model="ir.ui.view">
+        <field name="name">legal.contract.pivot</field>
+        <field name="model">legal.contract</field>
+        <field name="arch" type="xml">
+            <pivot string="Contract Value" sample="1">
+                <field name="type_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="value" type="measure"/>
+                <field name="current_value" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_contract_graph" model="ir.ui.view">
+        <field name="name">legal.contract.graph</field>
+        <field name="model">legal.contract</field>
+        <field name="arch" type="xml">
+            <graph string="Contract Value" sample="1" type="bar">
+                <field name="type_id"/>
+                <field name="value" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Search -->
+    <!-- ============================================================ -->
+    <record id="view_legal_contract_search" model="ir.ui.view">
+        <field name="name">legal.contract.search</field>
+        <field name="model">legal.contract</field>
+        <field name="arch" type="xml">
+            <search string="Contracts">
+                <field name="name" string="Reference / Title"
+                       filter_domain="['|', ('name', 'ilike', self), ('title', 'ilike', self)]"/>
+                <field name="type_id"/>
+                <field name="counterparty_id"/>
+                <field name="internal_owner_id"/>
+                <field name="legal_officer_id"/>
+                <field name="responsible_department_id"/>
+                <filter name="mine" string="My Contracts"
+                        domain="['|', ('internal_owner_id', '=', uid), ('legal_officer_id', '=', uid)]"/>
+                <separator/>
+                <filter name="awaiting_approval" string="Awaiting Approval"
+                        domain="[('state', '=', 'internal_approval')]"/>
+                <filter name="in_review" string="In Review"
+                        domain="[('state', 'in', ['legal_review', 'negotiation', 'counterparty_review'])]"/>
+                <filter name="active" string="In Force" domain="[('state', '=', 'active')]"/>
+                <filter name="open" string="Open" domain="[('is_closed', '=', False)]"/>
+                <separator/>
+                <filter name="expiring" string="Expiring Soon"
+                        domain="[('expiry_state', 'in', ['due_soon', 'expiring']), ('state', '=', 'active')]"/>
+                <filter name="expired" string="Expired" domain="[('expiry_state', '=', 'expired')]"/>
+                <filter name="auto_renew" string="Auto-renewing" domain="[('auto_renew', '=', True)]"/>
+                <filter name="confidential" string="Confidential" domain="[('confidential', '=', True)]"/>
+                <separator/>
+                <filter name="expiry" string="Expiry Date" date="expiry_date"/>
+                <group>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'type_id'}"/>
+                    <filter name="group_counterparty" string="Counterparty" context="{'group_by': 'counterparty_id'}"/>
+                    <filter name="group_owner" string="Internal Owner" context="{'group_by': 'internal_owner_id'}"/>
+                    <filter name="group_officer" string="Legal Officer" context="{'group_by': 'legal_officer_id'}"/>
+                    <filter name="group_department" string="Department" context="{'group_by': 'responsible_department_id'}"/>
+                    <filter name="group_risk" string="Risk" context="{'group_by': 'risk'}"/>
+                    <filter name="group_validity" string="Validity" context="{'group_by': 'expiry_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Actions -->
+    <!-- ============================================================ -->
+    <record id="action_legal_contract" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+        <field name="res_model">legal.contract</field>
+        <field name="view_mode">kanban,list,form,pivot,graph</field>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Register a contract</p>
+            <p>
+                Every contract walks a gated lifecycle - reviewed, negotiated, approved,
+                signed, in force - and its renewal is chased on the same board as every
+                other dated artefact the company holds.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_contract_expiring" model="ir.actions.act_window">
+        <field name="name">Expiring Contracts</field>
+        <field name="res_model">legal.contract</field>
+        <field name="view_mode">list,kanban,form,calendar</field>
+        <field name="domain">[('state', '=', 'active')]</field>
+        <field name="context">{'search_default_expiring': 1, 'search_default_group_type': 1}</field>
+    </record>
+
+    <record id="action_legal_contract_awaiting_approval" model="ir.actions.act_window">
+        <field name="name">Awaiting Approval</field>
+        <field name="res_model">legal.contract</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'search_default_awaiting_approval': 1}</field>
+    </record>
+
+    <record id="view_legal_contract_calendar" model="ir.ui.view">
+        <field name="name">legal.contract.calendar</field>
+        <field name="model">legal.contract</field>
+        <field name="arch" type="xml">
+            <calendar string="Contract Expiry" date_start="expiry_date" color="type_id"
+                      mode="month" quick_create="false">
+                <field name="title"/>
+                <field name="counterparty_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+</odoo>

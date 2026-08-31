@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The intake front door, hung near the top of the Legal application so it is
+        the first thing the clerk who logs the post reaches. Everything else in
+        the suite is work the department already decided to do; this is where the
+        work arrives.
+    -->
+
+    <menuitem id="menu_legal_request_root"
+              name="Legal Requests"
+              parent="legal_core.menu_legal_root"
+              sequence="15"/>
+
+    <menuitem id="menu_legal_request_all"
+              name="Requests"
+              parent="menu_legal_request_root"
+              action="action_legal_request"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_request_my"
+              name="My Requests"
+              parent="menu_legal_request_root"
+              action="action_legal_request_my"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_request_unassigned"
+              name="Unassigned"
+              parent="menu_legal_request_root"
+              action="action_legal_request_unassigned"
+              sequence="30"
+              groups="legal_core.group_legal_officer"/>
+
+    <menuitem id="menu_legal_request_awaiting"
+              name="Awaiting Approval"
+              parent="menu_legal_request_root"
+              action="action_legal_request_awaiting"
+              sequence="40"
+              groups="legal_core.group_legal_approver"/>
+
+    <menuitem id="menu_legal_request_overdue"
+              name="Overdue"
+              parent="menu_legal_request_root"
+              action="action_legal_request_overdue"
+              sequence="50"/>
+
+    <!-- Configuration -->
+
+    <menuitem id="menu_legal_config_request"
+              name="Requests"
+              parent="legal_core.menu_legal_config"
+              sequence="35"/>
+
+    <menuitem id="menu_legal_config_request_category"
+              name="Request Categories"
+              parent="menu_legal_config_request"
+              action="action_legal_request_category"
+              sequence="10"/>
+
+</odoo>

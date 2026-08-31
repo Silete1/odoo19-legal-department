@@ -1,0 +1,21 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_legal_court_clerk,legal.court clerk,model_legal_court,legal_core.group_legal_clerk,1,0,0,0
+access_legal_court_manager,legal.court manager,model_legal_court,legal_core.group_legal_manager,1,1,1,1
+access_legal_court_auditor,legal.court auditor,model_legal_court,legal_core.group_legal_auditor,1,0,0,0
+access_legal_appeal_rule_clerk,legal.appeal.rule clerk,model_legal_appeal_rule,legal_core.group_legal_clerk,1,0,0,0
+access_legal_appeal_rule_manager,legal.appeal.rule manager,model_legal_appeal_rule,legal_core.group_legal_manager,1,1,1,1
+access_legal_appeal_rule_auditor,legal.appeal.rule auditor,model_legal_appeal_rule,legal_core.group_legal_auditor,1,0,0,0
+access_legal_lawsuit_clerk,legal.lawsuit clerk,model_legal_lawsuit,legal_core.group_legal_clerk,1,1,1,0
+access_legal_lawsuit_manager,legal.lawsuit manager,model_legal_lawsuit,legal_core.group_legal_manager,1,1,1,1
+access_legal_lawsuit_auditor,legal.lawsuit auditor,model_legal_lawsuit,legal_core.group_legal_auditor,1,0,0,0
+access_legal_lawsuit_party_clerk,legal.lawsuit.party clerk,model_legal_lawsuit_party,legal_core.group_legal_clerk,1,1,1,1
+access_legal_lawsuit_party_manager,legal.lawsuit.party manager,model_legal_lawsuit_party,legal_core.group_legal_manager,1,1,1,1
+access_legal_lawsuit_party_auditor,legal.lawsuit.party auditor,model_legal_lawsuit_party,legal_core.group_legal_auditor,1,0,0,0
+access_legal_hearing_clerk,legal.hearing clerk,model_legal_hearing,legal_core.group_legal_clerk,1,1,1,0
+access_legal_hearing_manager,legal.hearing manager,model_legal_hearing,legal_core.group_legal_manager,1,1,1,1
+access_legal_hearing_auditor,legal.hearing auditor,model_legal_hearing,legal_core.group_legal_auditor,1,0,0,0
+access_legal_judgment_clerk,legal.judgment clerk,model_legal_judgment,legal_core.group_legal_clerk,1,1,1,0
+access_legal_judgment_manager,legal.judgment manager,model_legal_judgment,legal_core.group_legal_manager,1,1,1,1
+access_legal_judgment_auditor,legal.judgment auditor,model_legal_judgment,legal_core.group_legal_auditor,1,0,0,0
+access_legal_lawsuit_reason_clerk,legal.lawsuit.reason clerk,model_legal_lawsuit_reason,legal_core.group_legal_clerk,1,1,1,1
+access_legal_lawsuit_reason_manager,legal.lawsuit.reason manager,model_legal_lawsuit_reason,legal_core.group_legal_manager,1,1,1,1

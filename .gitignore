@@ -23,6 +23,10 @@
 !/custom_addons/legal_iq_social_security/
 !/custom_addons/legal_iq_residency/
 !/custom_addons/legal_iq_demo/
+!/custom_addons/legal_request/
+!/custom_addons/legal_contract/
+!/custom_addons/legal_litigation/
+!/custom_addons/legal_opinion/
 
 /docs/*
 !/docs/access_schema_analysis.md

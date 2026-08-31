@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            The contract reference sequence. CON/YYYY/#### resets on the calendar
+            year and is shared across companies (company_id False), because the
+            reference is a human-quoted number and a department does not want two
+            companies both holding CON/2026/0001.
+        -->
+        <record id="seq_legal_contract" model="ir.sequence">
+            <field name="name">Legal Contract Reference</field>
+            <field name="code">legal.contract</field>
+            <field name="prefix">CON/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="use_date_range" eval="True"/>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--
+            The register kind and type the signed contract is filed under. A
+            contract has its own kind rather than being lumped with constitutive
+            papers, because the renewals board groups on it.
+        -->
+        <record id="doc_kind_contract" model="legal.document.kind">
+            <field name="name">Contracts</field>
+            <field name="code">CONTRACT</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="doctype_signed_contract" model="legal.document.type">
+            <field name="name">عقد موقّع</field>
+            <field name="name_en">Signed Contract</field>
+            <field name="code">SIGNED-CONTRACT</field>
+            <field name="kind_id" ref="doc_kind_contract"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">30</field>
+            <field name="company_register" eval="True"/>
+        </record>
+
+    </data>
+
+    <!-- Scheduled jobs. Not noupdate, so an upgrade may tune the cadence. -->
+    <record id="cron_legal_contract_expire" model="ir.cron">
+        <field name="name">Legal: expire contracts past term</field>
+        <field name="model_id" ref="model_legal_contract"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_expire()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_legal_contract_obligation_generate" model="ir.cron">
+        <field name="name">Legal: generate contract obligation occurrences</field>
+        <field name="model_id" ref="model_legal_contract_obligation"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">weeks</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_legal_contract_obligation_late" model="ir.cron">
+        <field name="name">Legal: mark contract obligations late</field>
+        <field name="model_id" ref="model_legal_contract_obligation_instance"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_mark_late()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

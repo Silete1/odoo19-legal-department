@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_legal_request_category_user,legal.request.category clerk,model_legal_request_category,legal_core.group_legal_clerk,1,0,0,0
+access_legal_request_category_manager,legal.request.category manager,model_legal_request_category,legal_core.group_legal_manager,1,1,1,1
+access_legal_request_category_auditor,legal.request.category auditor,model_legal_request_category,legal_core.group_legal_auditor,1,0,0,0
+access_legal_request_user,legal.request clerk,model_legal_request,legal_core.group_legal_clerk,1,1,1,0
+access_legal_request_manager,legal.request manager,model_legal_request,legal_core.group_legal_manager,1,1,1,1
+access_legal_request_auditor,legal.request auditor,model_legal_request,legal_core.group_legal_auditor,1,0,0,0
+access_legal_request_cancel_user,legal.request.cancel clerk,model_legal_request_cancel,legal_core.group_legal_clerk,1,1,1,1
+access_legal_request_cancel_manager,legal.request.cancel manager,model_legal_request_cancel,legal_core.group_legal_manager,1,1,1,1
+access_legal_request_return_user,legal.request.return clerk,model_legal_request_return,legal_core.group_legal_clerk,1,1,1,1
+access_legal_request_return_manager,legal.request.return manager,model_legal_request_return,legal_core.group_legal_manager,1,1,1,1
+access_legal_request_approve_user,legal.request.approve clerk,model_legal_request_approve,legal_core.group_legal_clerk,1,1,1,1
+access_legal_request_approve_manager,legal.request.approve manager,model_legal_request_approve,legal_core.group_legal_manager,1,1,1,1

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_court_list" model="ir.ui.view">
+        <field name="name">legal.court.list</field>
+        <field name="model">legal.court</field>
+        <field name="arch" type="xml">
+            <list string="Courts">
+                <field name="name"/>
+                <field name="code" optional="show"/>
+                <field name="degree"/>
+                <field name="governorate_id"/>
+                <field name="parent_court_id" optional="show"/>
+                <field name="gov_body_id" optional="hide"/>
+                <field name="lawsuit_count" string="Cases" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_court_form" model="ir.ui.view">
+        <field name="name">legal.court.form</field>
+        <field name="model">legal.court</field>
+        <field name="arch" type="xml">
+            <form string="Court">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_lawsuits" type="object"
+                                class="oe_stat_button" icon="fa-gavel">
+                            <field name="lawsuit_count" widget="statinfo" string="Cases"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="محكمة بداءة الرصافة"/></h1>
+                    </div>
+                    <group>
+                        <group string="What Kind Of Court">
+                            <field name="degree"/>
+                            <field name="governorate_id"/>
+                            <field name="parent_court_id"/>
+                            <field name="code"/>
+                        </group>
+                        <group string="In The Register">
+                            <field name="gov_body_id"/>
+                            <field name="address"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group string="Courts Below" invisible="not child_court_ids">
+                        <field name="child_court_ids" nolabel="1" colspan="2" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="degree"/>
+                                <field name="governorate_id"/>
+                            </list>
+                        </field>
+                    </group>
+                    <field name="note" placeholder="Which hall, which counter, the clerk's name."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_court_search" model="ir.ui.view">
+        <field name="name">legal.court.search</field>
+        <field name="model">legal.court</field>
+        <field name="arch" type="xml">
+            <search string="Courts">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="governorate_id"/>
+                <field name="degree"/>
+                <filter name="first_instance" string="First Instance" domain="[('degree', '=', 'first_instance')]"/>
+                <filter name="appeal" string="Appeal" domain="[('degree', '=', 'appeal')]"/>
+                <filter name="cassation" string="Cassation" domain="[('degree', '=', 'cassation')]"/>
+                <separator/>
+                <filter name="labor" string="Labour" domain="[('degree', '=', 'labor')]"/>
+                <filter name="administrative" string="Administrative" domain="[('degree', '=', 'administrative')]"/>
+                <group>
+                    <filter name="group_degree" string="Degree" context="{'group_by': 'degree'}"/>
+                    <filter name="group_governorate" string="Governorate" context="{'group_by': 'governorate_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_court" model="ir.actions.act_window">
+        <field name="name">Courts</field>
+        <field name="res_model">legal.court</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Record the courts the department litigates in</p>
+            <p>
+                A court's degree decides which challenge its judgments invite and how long there
+                is to bring it, and pointing a court at its body in the register gives it a
+                working calendar and named contacts for free.
+            </p>
+        </field>
+    </record>
+
+</odoo>

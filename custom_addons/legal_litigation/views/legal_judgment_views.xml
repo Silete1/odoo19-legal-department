@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_judgment_list" model="ir.ui.view">
+        <field name="name">legal.judgment.list</field>
+        <field name="model">legal.judgment</field>
+        <field name="arch" type="xml">
+            <list string="Judgments"
+                  decoration-danger="appeal_state == 'closed'"
+                  decoration-warning="appeal_state == 'closing_soon'"
+                  decoration-success="appeal_state == 'filed'">
+                <field name="lawsuit_id"/>
+                <field name="judgment_date"/>
+                <field name="court_id" optional="show"/>
+                <field name="ruling_type" optional="hide"/>
+                <field name="in_our_favour" widget="badge"
+                       decoration-success="in_our_favour == 'favour'"
+                       decoration-danger="in_our_favour == 'against'"
+                       decoration-warning="in_our_favour == 'partial'"/>
+                <field name="amount_awarded" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="tabligh_date" optional="show"/>
+                <field name="remedy" optional="show"/>
+                <field name="appeal_deadline"/>
+                <field name="days_left" optional="show"/>
+                <field name="non_extendable" column_invisible="1"/>
+                <field name="appeal_state" widget="badge"
+                       decoration-info="appeal_state == 'open'"
+                       decoration-warning="appeal_state == 'closing_soon'"
+                       decoration-danger="appeal_state == 'closed'"
+                       decoration-success="appeal_state == 'filed'"/>
+                <field name="lawyer_id" widget="many2one_avatar_user" optional="hide"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_judgment_form" model="ir.ui.view">
+        <field name="name">legal.judgment.form</field>
+        <field name="model">legal.judgment</field>
+        <field name="arch" type="xml">
+            <form string="Judgment">
+                <header>
+                    <button name="action_mark_appealed" type="object"
+                            string="Mark Challenged" class="btn-primary"
+                            invisible="appeal_filed or not appeal_deadline"/>
+                    <field name="appeal_state" widget="statusbar"
+                           statusbar_visible="open,closing_soon,closed,filed"
+                           options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Window Lapsed" bg_color="text-bg-danger"
+                            invisible="not is_overdue"/>
+                    <widget name="web_ribbon" title="Challenged" bg_color="text-bg-success"
+                            invisible="not appeal_filed"/>
+                    <div class="oe_title">
+                        <h1><field name="lawsuit_id" options="{'no_create': True}"/></h1>
+                    </div>
+                    <group>
+                        <group string="The Ruling">
+                            <field name="judgment_date"/>
+                            <field name="court_id"/>
+                            <field name="ruling_type"/>
+                            <field name="in_our_favour"/>
+                            <field name="amount_awarded"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                        </group>
+                        <group string="The Appeal Window">
+                            <field name="tabligh_date"/>
+                            <field name="remedy"/>
+                            <field name="appeal_rule_id"/>
+                            <field name="appeal_days"/>
+                            <field name="non_extendable"/>
+                            <field name="appeal_deadline" readonly="1"/>
+                            <field name="days_left" readonly="1"/>
+                            <field name="appeal_filed"/>
+                            <field name="appeal_lawsuit_id"
+                                   invisible="not appeal_filed"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="not appeal_deadline or appeal_filed or appeal_state == 'closed'">
+                        The window to challenge this ruling closes on
+                        <field name="appeal_deadline" readonly="1" nolabel="1" class="oe_inline"/>
+                        and is non-extendable. A to-do has been placed on the advocate's list.
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not is_overdue">
+                        The window to challenge this ruling has lapsed. If it was adverse and
+                        unchallenged, the right of appeal is gone.
+                    </div>
+                    <group string="Summary">
+                        <field name="summary" nolabel="1"
+                               placeholder="What the court ruled, in our own words."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_judgment_search" model="ir.ui.view">
+        <field name="name">legal.judgment.search</field>
+        <field name="model">legal.judgment</field>
+        <field name="arch" type="xml">
+            <search string="Judgments">
+                <field name="lawsuit_id"/>
+                <field name="court_id"/>
+                <filter name="window_open" string="Window Open" domain="[('appeal_state', 'in', ['open', 'closing_soon'])]"/>
+                <filter name="closing_soon" string="Closing Soon" domain="[('appeal_state', '=', 'closing_soon')]"/>
+                <filter name="lapsed" string="Lapsed" domain="[('appeal_state', '=', 'closed')]"/>
+                <filter name="against_us" string="Against Us" domain="[('in_our_favour', '=', 'against')]"/>
+                <filter name="mine" string="My Judgments" domain="[('lawyer_id', '=', uid)]"/>
+                <group>
+                    <filter name="group_court" string="Court" context="{'group_by': 'court_id'}"/>
+                    <filter name="group_state" string="Appeal Window" context="{'group_by': 'appeal_state'}"/>
+                    <filter name="group_outcome" string="Outcome" context="{'group_by': 'in_our_favour'}"/>
+                    <filter name="group_remedy" string="Remedy" context="{'group_by': 'remedy'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_judgment" model="ir.actions.act_window">
+        <field name="name">Judgments</field>
+        <field name="res_model">legal.judgment</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Every ruling, and the clock it starts</p>
+            <p>
+                Record the notification date and the engine works out the non-extendable window
+                to challenge the ruling, counts it down, and puts it on the advocate's list
+                before it lapses.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_judgment_closing" model="ir.actions.act_window">
+        <field name="name">Appeal Windows Closing</field>
+        <field name="res_model">legal.judgment</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('appeal_state', 'in', ['open', 'closing_soon'])]</field>
+        <field name="context">{'search_default_closing_soon': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nothing is about to lapse</p>
+            <p>Rulings whose non-extendable challenge window is still open.</p>
+        </field>
+    </record>
+
+</odoo>

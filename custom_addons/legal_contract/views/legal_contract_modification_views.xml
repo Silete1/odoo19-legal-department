@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_contract_modification_list" model="ir.ui.view">
+        <field name="name">legal.contract.modification.list</field>
+        <field name="model">legal.contract.modification</field>
+        <field name="arch" type="xml">
+            <list string="Amendments"
+                  decoration-muted="state == 'draft'"
+                  decoration-bf="state == 'applied'">
+                <field name="number"/>
+                <field name="contract_id"/>
+                <field name="date"/>
+                <field name="description"/>
+                <field name="value_change" sum="Net Value Change"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="new_expiry_date" optional="show"/>
+                <field name="state" widget="badge"/>
+                <button name="action_apply" type="object" string="Apply"
+                        icon="fa-check" class="btn-link"
+                        invisible="state == 'applied'"
+                        groups="legal_core.group_legal_approver"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_contract_modification_form" model="ir.ui.view">
+        <field name="name">legal.contract.modification.form</field>
+        <field name="model">legal.contract.modification</field>
+        <field name="arch" type="xml">
+            <form string="Amendment">
+                <header>
+                    <button name="action_apply" type="object" string="Apply Amendment"
+                            class="btn-primary" invisible="state == 'applied'"
+                            groups="legal_core.group_legal_approver"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="number"/>
+                        <h1><field name="number" placeholder="Addendum 1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="contract_id" readonly="context.get('default_contract_id')"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="value_change"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="new_expiry_date"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="What this amendment changes."/>
+                    <div class="alert alert-info" role="alert">
+                        An amendment never edits the contract in place. The original value and
+                        term stay exactly as signed; applying this amendment adds its value
+                        change to the current value and, where a new expiry is named, extends
+                        the term.
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_contract_modification" model="ir.actions.act_window">
+        <field name="name">Amendments</field>
+        <field name="res_model">legal.contract.modification</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

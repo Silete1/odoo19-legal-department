@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Multi-company first. Configuration (courts, appeal rules) is shared
+            when it carries no company; everything transactional is scoped the
+            ordinary way.
+        -->
+
+        <record id="rule_legal_court_company" model="ir.rule">
+            <field name="name">Court: own company or shared</field>
+            <field name="model_id" ref="model_legal_court"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_appeal_rule_company" model="ir.rule">
+            <field name="name">Appeal rule: own company or shared</field>
+            <field name="model_id" ref="model_legal_appeal_rule"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_lawsuit_company" model="ir.rule">
+            <field name="name">Lawsuit: own company</field>
+            <field name="model_id" ref="model_legal_lawsuit"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_lawsuit_party_company" model="ir.rule">
+            <field name="name">Lawsuit party: own company</field>
+            <field name="model_id" ref="model_legal_lawsuit_party"/>
+            <field name="domain_force">[('lawsuit_id.company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_hearing_company" model="ir.rule">
+            <field name="name">Hearing: own company</field>
+            <field name="model_id" ref="model_legal_hearing"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_judgment_company" model="ir.rule">
+            <field name="name">Judgment: own company</field>
+            <field name="model_id" ref="model_legal_judgment"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!--
+            Confidentiality, mirroring the file register. Litigation is
+            privileged by default, so a confidential case is visible to the legal
+            manager, to the officers of the court it is heard at, to its advocate,
+            and to nobody else. The scoping traverses ``court_body_id.officer_ids``
+            - a real many2many on legal.gov.body - so per-court visibility never
+            needs a security group per court.
+
+            Written on the three working groups so the manager and the auditor
+            keep an unrestricted view through their own permissive rule below.
+        -->
+
+        <record id="rule_legal_lawsuit_confidential" model="ir.rule">
+            <field name="name">Lawsuit: confidential ones are restricted</field>
+            <field name="model_id" ref="model_legal_lawsuit"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', ('confidential', '=', False), ('court_body_id.officer_ids', 'in', [user.id]), ('lawyer_id', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_legal_lawsuit_manager" model="ir.rule">
+            <field name="name">Lawsuit: the legal manager sees everything</field>
+            <field name="model_id" ref="model_legal_lawsuit"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_legal_hearing_confidential" model="ir.rule">
+            <field name="name">Hearing: follows its case</field>
+            <field name="model_id" ref="model_legal_hearing"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', ('lawsuit_id.confidential', '=', False), ('lawsuit_id.court_body_id.officer_ids', 'in', [user.id]), ('lawsuit_id.lawyer_id', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_legal_hearing_manager" model="ir.rule">
+            <field name="name">Hearing: the legal manager sees everything</field>
+            <field name="model_id" ref="model_legal_hearing"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_legal_judgment_confidential" model="ir.rule">
+            <field name="name">Judgment: follows its case</field>
+            <field name="model_id" ref="model_legal_judgment"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', ('lawsuit_id.confidential', '=', False), ('lawsuit_id.court_body_id.officer_ids', 'in', [user.id]), ('lawsuit_id.lawyer_id', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_legal_judgment_manager" model="ir.rule">
+            <field name="name">Judgment: the legal manager sees everything</field>
+            <field name="model_id" ref="model_legal_judgment"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

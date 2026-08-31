@@ -1,0 +1,967 @@
+# Arabic translation for the legal_litigation module.
+# This file is the single Arabic source shipped with the module.
+msgid ""
+msgstr ""
+"Project-Id-Version: legal_litigation 19.0.1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+#. module: legal_litigation
+# ==========================================================================
+# Model / menu / action names
+# ==========================================================================
+msgid "Litigation"
+msgstr "الدعاوى والقضايا"
+
+#. module: legal_litigation
+msgid "Lawsuits"
+msgstr "الدعاوى"
+
+#. module: legal_litigation
+msgid "My Lawsuits"
+msgstr "دعاواي"
+
+#. module: legal_litigation
+msgid "Courts"
+msgstr "المحاكم"
+
+#. module: legal_litigation
+msgid "Court"
+msgstr "المحكمة"
+
+#. module: legal_litigation
+msgid "Hearings"
+msgstr "الجلسات"
+
+#. module: legal_litigation
+msgid "Hearing"
+msgstr "الجلسة"
+
+#. module: legal_litigation
+msgid "Court Hearing"
+msgstr "جلسة المرافعة"
+
+#. module: legal_litigation
+msgid "Judgments"
+msgstr "الأحكام"
+
+#. module: legal_litigation
+msgid "Judgment"
+msgstr "الحكم"
+
+#. module: legal_litigation
+msgid "Lawsuit"
+msgstr "الدعوى"
+
+#. module: legal_litigation
+msgid "Lawsuit Party"
+msgstr "طرف في الدعوى"
+
+#. module: legal_litigation
+msgid "Lawsuit Reason"
+msgstr "سبب الإجراء"
+
+#. module: legal_litigation
+msgid "Appeal Window Rule"
+msgstr "قاعدة مدة الطعن"
+
+#. module: legal_litigation
+msgid "Appeal Window Rules"
+msgstr "قواعد مدد الطعن"
+
+#. module: legal_litigation
+msgid "Appeal Windows Closing"
+msgstr "مدد طعن على وشك الانتهاء"
+
+#. module: legal_litigation
+msgid "Power Of Attorney"
+msgstr "الوكالة"
+
+#. module: legal_litigation
+# ==========================================================================
+# Field labels
+# ==========================================================================
+msgid "Reference"
+msgstr "الإشارة"
+
+#. module: legal_litigation
+msgid "Advocate"
+msgstr "المحامي"
+
+#. module: legal_litigation
+msgid "Against"
+msgstr "ضد"
+
+#. module: legal_litigation
+msgid "Amount Awarded"
+msgstr "المبلغ المحكوم به"
+
+#. module: legal_litigation
+msgid "Appeal Case"
+msgstr "دعوى الطعن"
+
+#. module: legal_litigation
+msgid "Appeal Deadline"
+msgstr "الموعد النهائي للطعن"
+
+#. module: legal_litigation
+msgid "Appeal Rule"
+msgstr "قاعدة الطعن"
+
+#. module: legal_litigation
+msgid "Appeal Window"
+msgstr "مدة الطعن"
+
+#. module: legal_litigation
+msgid "Appeal Window Open"
+msgstr "مدة الطعن مفتوحة"
+
+#. module: legal_litigation
+msgid "Claim Amount"
+msgstr "مبلغ المطالبة"
+
+#. module: legal_litigation
+msgid "Closed"
+msgstr "مغلقة"
+
+#. module: legal_litigation
+msgid "Closed On"
+msgstr "تاريخ الإغلاق"
+
+#. module: legal_litigation
+msgid "Closing Notice (days)"
+msgstr "تنبيه قرب الانتهاء (أيام)"
+
+#. module: legal_litigation
+msgid "Closing Reason"
+msgstr "سبب الإغلاق"
+
+#. module: legal_litigation
+msgid "Colour"
+msgstr "اللون"
+
+#. module: legal_litigation
+msgid "Company"
+msgstr "الشركة"
+
+#. module: legal_litigation
+msgid "Court Body"
+msgstr "جهة المحكمة"
+
+#. module: legal_litigation
+msgid "Court Case No."
+msgstr "رقم الدعوى لدى المحكمة"
+
+#. module: legal_litigation
+msgid "Court Case Year"
+msgstr "سنة الدعوى لدى المحكمة"
+
+#. module: legal_litigation
+msgid "Court Degree"
+msgstr "درجة المحكمة"
+
+#. module: legal_litigation
+msgid "Court Of Appeal Above"
+msgstr "محكمة الاستئناف الأعلى"
+
+#. module: legal_litigation
+msgid "Courts Below"
+msgstr "المحاكم الأدنى"
+
+#. module: legal_litigation
+msgid "Days Allowed"
+msgstr "الأيام المسموح بها"
+
+#. module: legal_litigation
+msgid "Days Left"
+msgstr "الأيام المتبقية"
+
+#. module: legal_litigation
+msgid "Days To Challenge"
+msgstr "أيام الطعن"
+
+#. module: legal_litigation
+msgid "Deadline Activity"
+msgstr "نشاط الموعد النهائي"
+
+#. module: legal_litigation
+msgid "External Counsel"
+msgstr "محامٍ خارجي"
+
+#. module: legal_litigation
+msgid "Filed On"
+msgstr "تاريخ الإقامة"
+
+#. module: legal_litigation
+msgid "For"
+msgstr "لصالح"
+
+#. module: legal_litigation
+msgid "Government Body"
+msgstr "الجهة الحكومية"
+
+#. module: legal_litigation
+msgid "Governorate"
+msgstr "المحافظة"
+
+#. module: legal_litigation
+msgid "Held"
+msgstr "منعقدة"
+
+#. module: legal_litigation
+msgid "Judgment Date"
+msgstr "تاريخ الحكم"
+
+#. module: legal_litigation
+msgid "Jurisdiction"
+msgstr "الاختصاص"
+
+#. module: legal_litigation
+msgid "Latest Development"
+msgstr "آخر المستجدات"
+
+#. module: legal_litigation
+msgid "Letters"
+msgstr "المكاتبات"
+
+#. module: legal_litigation
+msgid "Minutes / Notes"
+msgstr "المحضر / الملاحظات"
+
+#. module: legal_litigation
+msgid "Next Deadline"
+msgstr "الموعد النهائي القادم"
+
+#. module: legal_litigation
+msgid "Next Hearing"
+msgstr "الجلسة القادمة"
+
+#. module: legal_litigation
+msgid "Next Hearing Set For"
+msgstr "الجلسة القادمة محددة في"
+
+#. module: legal_litigation
+msgid "Next Sitting"
+msgstr "الجلسة التالية"
+
+#. module: legal_litigation
+msgid "Next Step"
+msgstr "الخطوة التالية"
+
+#. module: legal_litigation
+msgid "Non-extendable"
+msgstr "غير قابلة للتمديد"
+
+#. module: legal_litigation
+msgid "Notification Date (التبليغ)"
+msgstr "تاريخ التبليغ"
+
+#. module: legal_litigation
+msgid "Opponents"
+msgstr "الخصوم"
+
+#. module: legal_litigation
+msgid "Outcome"
+msgstr "النتيجة"
+
+#. module: legal_litigation
+msgid "Parties"
+msgstr "الأطراف"
+
+#. module: legal_litigation
+msgid "Party"
+msgstr "الطرف"
+
+#. module: legal_litigation
+msgid "Reason"
+msgstr "السبب"
+
+#. module: legal_litigation
+msgid "Remedy"
+msgstr "طريق الطعن"
+
+#. module: legal_litigation
+msgid "Required Preparation"
+msgstr "التحضير المطلوب"
+
+#. module: legal_litigation
+msgid "Result"
+msgstr "النتيجة"
+
+#. module: legal_litigation
+msgid "Sitting Date"
+msgstr "تاريخ الانعقاد"
+
+#. module: legal_litigation
+msgid "Sub-courts"
+msgstr "المحاكم الفرعية"
+
+#. module: legal_litigation
+msgid "Challenge Lodged"
+msgstr "قُدّم الطعن"
+
+#. module: legal_litigation
+msgid "Window Lapsed"
+msgstr "انقضت المدة"
+
+#. module: legal_litigation
+msgid "Cases"
+msgstr "الدعاوى"
+
+#. module: legal_litigation
+msgid "Case"
+msgstr "الدعوى"
+
+#. module: legal_litigation
+msgid "Latest"
+msgstr "الأحدث"
+
+#. module: legal_litigation
+msgid "Our Capacity"
+msgstr "صفتنا"
+
+#. module: legal_litigation
+msgid "Purpose"
+msgstr "الغرض"
+
+#. module: legal_litigation
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: legal_litigation
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: legal_litigation
+msgid "Summary"
+msgstr "الملخص"
+
+#. module: legal_litigation
+msgid "Degree"
+msgstr "الدرجة"
+
+#. module: legal_litigation
+msgid "Legal Entity"
+msgstr "الكيان القانوني"
+
+#. module: legal_litigation
+# ==========================================================================
+# Selection values
+# ==========================================================================
+msgid "First Instance (بداءة)"
+msgstr "بداءة"
+
+#. module: legal_litigation
+msgid "Appeal (استئناف)"
+msgstr "استئناف"
+
+#. module: legal_litigation
+msgid "Cassation (تمييز)"
+msgstr "تمييز"
+
+#. module: legal_litigation
+msgid "Labour (عمل)"
+msgstr "عمل"
+
+#. module: legal_litigation
+msgid "Misdemeanour / Felony (جنح وجنايات)"
+msgstr "جنح وجنايات"
+
+#. module: legal_litigation
+msgid "Administrative Judiciary (قضاء إداري)"
+msgstr "قضاء إداري"
+
+#. module: legal_litigation
+msgid "Personal Status (أحوال شخصية)"
+msgstr "أحوال شخصية"
+
+#. module: legal_litigation
+msgid "Plaintiff (مدعي)"
+msgstr "مدعي"
+
+#. module: legal_litigation
+msgid "Defendant (مدعى عليه)"
+msgstr "مدعى عليه"
+
+#. module: legal_litigation
+msgid "Third Party (شخص ثالث)"
+msgstr "شخص ثالث"
+
+#. module: legal_litigation
+msgid "Appellant (طاعن / مستأنِف)"
+msgstr "طاعن / مستأنِف"
+
+#. module: legal_litigation
+msgid "Appellee (مطعون ضده / مستأنَف عليه)"
+msgstr "مطعون ضده / مستأنَف عليه"
+
+#. module: legal_litigation
+msgid "Assessment (تقييم)"
+msgstr "تقييم"
+
+#. module: legal_litigation
+msgid "Preparation (إعداد)"
+msgstr "إعداد"
+
+#. module: legal_litigation
+msgid "Filed (مقيدة)"
+msgstr "مقيدة"
+
+#. module: legal_litigation
+msgid "In Progress (قيد النظر)"
+msgstr "قيد النظر"
+
+#. module: legal_litigation
+msgid "Judgment (صدور الحكم)"
+msgstr "صدور الحكم"
+
+#. module: legal_litigation
+msgid "Under Appeal (طعن)"
+msgstr "طعن"
+
+#. module: legal_litigation
+msgid "Enforcement (تنفيذ)"
+msgstr "تنفيذ"
+
+#. module: legal_litigation
+msgid "Closed (مغلقة)"
+msgstr "مغلقة"
+
+#. module: legal_litigation
+msgid "Low (منخفض)"
+msgstr "منخفض"
+
+#. module: legal_litigation
+msgid "Medium (متوسط)"
+msgstr "متوسط"
+
+#. module: legal_litigation
+msgid "High (عالٍ)"
+msgstr "عالٍ"
+
+#. module: legal_litigation
+msgid "Opponent (خصم)"
+msgstr "خصم"
+
+#. module: legal_litigation
+msgid "On Our Side (طرف معنا)"
+msgstr "طرف معنا"
+
+#. module: legal_litigation
+msgid "Guarantor (كفيل / ضامن)"
+msgstr "كفيل / ضامن"
+
+#. module: legal_litigation
+msgid "Other"
+msgstr "أخرى"
+
+#. module: legal_litigation
+msgid "Pleading (مرافعة)"
+msgstr "مرافعة"
+
+#. module: legal_litigation
+msgid "Hearing Witnesses (استماع شهود)"
+msgstr "استماع شهود"
+
+#. module: legal_litigation
+msgid "Expert Report (خبرة)"
+msgstr "خبرة"
+
+#. module: legal_litigation
+msgid "Pronouncement Of Judgment (نطق بالحكم)"
+msgstr "نطق بالحكم"
+
+#. module: legal_litigation
+msgid "Postponed (تأجيل)"
+msgstr "تأجيل"
+
+#. module: legal_litigation
+msgid "We Attended (حضرنا)"
+msgstr "حضرنا"
+
+#. module: legal_litigation
+msgid "Opponent Absent (غياب الخصم)"
+msgstr "غياب الخصم"
+
+#. module: legal_litigation
+msgid "We Were Absent (تغيبنا)"
+msgstr "تغيبنا"
+
+#. module: legal_litigation
+msgid "Both Absent (غياب الطرفين)"
+msgstr "غياب الطرفين"
+
+#. module: legal_litigation
+msgid "Judgment (حكم)"
+msgstr "حكم"
+
+#. module: legal_litigation
+msgid "Decision (قرار)"
+msgstr "قرار"
+
+#. module: legal_litigation
+msgid "In Our Favour (لصالحنا)"
+msgstr "لصالحنا"
+
+#. module: legal_litigation
+msgid "Partly (جزئياً)"
+msgstr "جزئياً"
+
+#. module: legal_litigation
+msgid "Against Us (ضدنا)"
+msgstr "ضدنا"
+
+#. module: legal_litigation
+msgid "Not Decisive (غير محدد)"
+msgstr "غير محدد"
+
+#. module: legal_litigation
+msgid "Objection (اعتراض على حكم غيابي)"
+msgstr "اعتراض على حكم غيابي"
+
+#. module: legal_litigation
+msgid "Labour Remedy (طعن أمام محاكم العمل)"
+msgstr "طعن أمام محاكم العمل"
+
+#. module: legal_litigation
+msgid "No Window"
+msgstr "لا توجد مدة"
+
+#. module: legal_litigation
+msgid "Open"
+msgstr "مفتوحة"
+
+#. module: legal_litigation
+msgid "Closing Soon"
+msgstr "على وشك الانتهاء"
+
+#. module: legal_litigation
+msgid "Lapsed"
+msgstr "منقضية"
+
+#. module: legal_litigation
+msgid "Challenged"
+msgstr "مطعون فيها"
+
+#. module: legal_litigation
+msgid "Verified"
+msgstr "مُتحقَّق منها"
+
+#. module: legal_litigation
+msgid "Needs Re-check"
+msgstr "بحاجة لإعادة تحقّق"
+
+#. module: legal_litigation
+msgid "Not Researched"
+msgstr "لم تُبحث"
+
+#. module: legal_litigation
+msgid "Close Case"
+msgstr "إغلاق الدعوى"
+
+#. module: legal_litigation
+msgid "Lodge Challenge"
+msgstr "تقديم الطعن"
+
+#. module: legal_litigation
+# ==========================================================================
+# Buttons / form section titles
+# ==========================================================================
+msgid "Start Preparation"
+msgstr "بدء الإعداد"
+
+#. module: legal_litigation
+msgid "File At Court"
+msgstr "الإقامة لدى المحكمة"
+
+#. module: legal_litigation
+msgid "Now Being Heard"
+msgstr "قيد النظر الآن"
+
+#. module: legal_litigation
+msgid "Record Judgment"
+msgstr "تسجيل الحكم"
+
+#. module: legal_litigation
+msgid "Challenge (طعن)"
+msgstr "طعن"
+
+#. module: legal_litigation
+msgid "Move To Enforcement"
+msgstr "الإحالة إلى التنفيذ"
+
+#. module: legal_litigation
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: legal_litigation
+msgid "Re-open"
+msgstr "إعادة فتح"
+
+#. module: legal_litigation
+msgid "Open Next Sitting"
+msgstr "فتح الجلسة التالية"
+
+#. module: legal_litigation
+msgid "Mark Challenged"
+msgstr "تأشير الطعن"
+
+#. module: legal_litigation
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: legal_litigation
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: legal_litigation
+msgid "The Case"
+msgstr "الدعوى"
+
+#. module: legal_litigation
+msgid "Who Is Running It"
+msgstr "من يتولاها"
+
+#. module: legal_litigation
+msgid "What Is Next"
+msgstr "ما هو التالي"
+
+#. module: legal_litigation
+msgid "The Sitting"
+msgstr "الجلسة"
+
+#. module: legal_litigation
+msgid "The Ruling"
+msgstr "الحكم"
+
+#. module: legal_litigation
+msgid "The Appeal Window"
+msgstr "مدة الطعن"
+
+#. module: legal_litigation
+msgid "The Period"
+msgstr "المدة"
+
+#. module: legal_litigation
+msgid "When It Applies"
+msgstr "متى تنطبق"
+
+#. module: legal_litigation
+msgid "What Kind Of Court"
+msgstr "نوع المحكمة"
+
+#. module: legal_litigation
+msgid "In The Register"
+msgstr "في السجل"
+
+#. module: legal_litigation
+msgid "Minutes"
+msgstr "المحضر"
+
+#. module: legal_litigation
+msgid "Result & Next Step"
+msgstr "النتيجة والخطوة التالية"
+
+#. module: legal_litigation
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: legal_litigation
+# ==========================================================================
+# Search filters
+# ==========================================================================
+msgid "Upcoming"
+msgstr "قادمة"
+
+#. module: legal_litigation
+msgid "Upcoming Hearings"
+msgstr "الجلسات القادمة"
+
+#. module: legal_litigation
+msgid "My Hearings"
+msgstr "جلساتي"
+
+#. module: legal_litigation
+msgid "My Judgments"
+msgstr "أحكامي"
+
+#. module: legal_litigation
+msgid "Appeal Window Closing"
+msgstr "مدة طعن على وشك الانتهاء"
+
+#. module: legal_litigation
+msgid "Window Open"
+msgstr "المدة مفتوحة"
+
+#. module: legal_litigation
+msgid "Overdue"
+msgstr "متأخرة"
+
+#. module: legal_litigation
+msgid "Live"
+msgstr "قائمة"
+
+#. module: legal_litigation
+msgid "We Are Plaintiff"
+msgstr "نحن المدعي"
+
+#. module: legal_litigation
+msgid "We Are Defendant"
+msgstr "نحن المدعى عليه"
+
+#. module: legal_litigation
+msgid "High Risk"
+msgstr "مخاطرة عالية"
+
+#. module: legal_litigation
+msgid "Against Us"
+msgstr "ضدنا"
+
+#. module: legal_litigation
+msgid "First Instance"
+msgstr "بداءة"
+
+#. module: legal_litigation
+msgid "Appeal"
+msgstr "استئناف"
+
+#. module: legal_litigation
+msgid "Cassation"
+msgstr "تمييز"
+
+#. module: legal_litigation
+msgid "Labour"
+msgstr "عمل"
+
+#. module: legal_litigation
+msgid "Administrative"
+msgstr "قضاء إداري"
+
+#. module: legal_litigation
+msgid "Next Hearings"
+msgstr "الجلسات القادمة"
+
+#. module: legal_litigation
+# ==========================================================================
+# Messages and errors
+# ==========================================================================
+msgid "New"
+msgstr "جديدة"
+
+#. module: legal_litigation
+msgid "A court cannot sit in appeal over itself."
+msgstr "لا يمكن أن تكون المحكمة استئنافاً على نفسها."
+
+#. module: legal_litigation
+msgid "“%s” is past assessment."
+msgstr "«%s» تجاوزت مرحلة التقييم."
+
+#. module: legal_litigation
+msgid "Moved into preparation."
+msgstr "نُقلت إلى مرحلة الإعداد."
+
+#. module: legal_litigation
+msgid "“%s” has already been filed."
+msgstr "«%s» سبق أن أُقيمت."
+
+#. module: legal_litigation
+msgid "No court has been chosen. A case is filed at a court."
+msgstr "لم تُختَر محكمة. تُقام الدعوى لدى محكمة."
+
+#. module: legal_litigation
+msgid "Now being heard."
+msgstr "قيد النظر الآن."
+
+#. module: legal_litigation
+msgid "“%s” is not a filed case awaiting a hearing."
+msgstr "«%s» ليست دعوى مقيدة بانتظار جلسة."
+
+#. module: legal_litigation
+msgid "Judgment issued."
+msgstr "صدر الحكم."
+
+#. module: legal_litigation
+msgid "Moved to enforcement (تنفيذ)."
+msgstr "أُحيلت إلى التنفيذ."
+
+#. module: legal_litigation
+msgid "“%s” is already closed."
+msgstr "«%s» مغلقة بالفعل."
+
+#. module: legal_litigation
+msgid "“%s” is not closed."
+msgstr "«%s» ليست مغلقة."
+
+#. module: legal_litigation
+msgid "Re-opened."
+msgstr "أُعيد فتحها."
+
+#. module: legal_litigation
+msgid "A reason is required."
+msgstr "السبب مطلوب."
+
+#. module: legal_litigation
+msgid "A claim amount cannot be negative."
+msgstr "لا يمكن أن يكون مبلغ المطالبة سالباً."
+
+#. module: legal_litigation
+msgid ""
+"Only a legal approver or manager may close or re-open a case. The advocate "
+"who runs a file is not the one who declares it lost or settled."
+msgstr ""
+"لا يجوز إغلاق الدعوى أو إعادة فتحها إلا لمصدِّق قانوني أو مدير. فالمحامي "
+"الذي يتولى الملف ليس هو من يعلن خسارته أو تسويته."
+
+#. module: legal_litigation
+msgid "Set the date the court fixed before opening the next sitting."
+msgstr "حدّد التاريخ الذي عيّنته المحكمة قبل فتح الجلسة التالية."
+
+#. module: legal_litigation
+msgid "Days left can only be compared with a whole number."
+msgstr "لا يمكن مقارنة الأيام المتبقية إلا بعدد صحيح."
+
+#. module: legal_litigation
+msgid "Unsupported comparison on days left."
+msgstr "مقارنة غير مدعومة على الأيام المتبقية."
+
+#. module: legal_litigation
+msgid "Challenge lodged; appeal window closed."
+msgstr "قُدّم الطعن؛ أُغلقت مدة الطعن."
+
+#. module: legal_litigation
+# ==========================================================================
+# Action / view help
+# ==========================================================================
+msgid "Open the department's first case"
+msgstr "افتح أول دعوى للدائرة"
+
+#. module: legal_litigation
+msgid "The court diary"
+msgstr "مفكرة الجلسات"
+
+#. module: legal_litigation
+msgid "Every ruling, and the clock it starts"
+msgstr "كل حكم، والمدة التي يبدؤها"
+
+#. module: legal_litigation
+msgid "Nothing is about to lapse"
+msgstr "لا شيء على وشك الانقضاء"
+
+#. module: legal_litigation
+msgid "Record the courts the department litigates in"
+msgstr "سجّل المحاكم التي تتقاضى الدائرة أمامها"
+
+#. module: legal_litigation
+msgid "State the statutory periods once, as data"
+msgstr "حدّد المدد القانونية مرة واحدة، كبيانات"
+
+#. module: legal_litigation
+# ==========================================================================
+# Late additions - remaining runtime messages
+# ==========================================================================
+msgid "Letter registered: %s"
+msgstr "قُيّدت المكاتبة: %s"
+
+#. module: legal_litigation
+msgid "Hearing on %(date)s - %(case)s"
+msgstr "جلسة بتاريخ %(date)s - %(case)s"
+
+#. module: legal_litigation
+msgid "Next sitting of the case."
+msgstr "الجلسة التالية للدعوى."
+
+#. module: legal_litigation
+msgid "unscheduled"
+msgstr "غير محددة"
+
+#. module: legal_litigation
+msgid "Judgment %(ref)s %(date)s"
+msgstr "حكم %(ref)s %(date)s"
+
+#. module: legal_litigation
+msgid "Non-extendable appeal deadline - %s"
+msgstr "موعد طعن غير قابل للتمديد - %s"
+
+#. module: legal_litigation
+msgid ""
+"The window to challenge this ruling closes on %(date)s and does not extend."
+msgstr "تنتهي مدة الطعن في هذا الحكم بتاريخ %(date)s وهي غير قابلة للتمديد."
+
+#. module: legal_litigation
+msgid "A judgment is recorded on a case that is being heard, not on “%s”."
+msgstr "يُسجَّل الحكم على دعوى قيد النظر، لا على «%s»."
+
+#. module: legal_litigation
+msgid "Closed: %s"
+msgstr "أُغلقت: %s"
+
+#. module: legal_litigation
+msgid "Enforcement follows a judgment; “%s” has not reached one."
+msgstr "التنفيذ يعقب الحكم؛ و«%s» لم تبلغ حكماً بعد."
+
+#. module: legal_litigation
+msgid "Filed at %(court)s as case %(number)s."
+msgstr "أُقيمت لدى %(court)s بالعدد %(number)s."
+
+#. module: legal_litigation
+msgid "Judgment challenged (طعن): %s"
+msgstr "طُعن في الحكم: %s"
+
+#. module: legal_litigation
+msgid "Lodge Appeal / Challenge"
+msgstr "تقديم استئناف / طعن"
+
+#. module: legal_litigation
+msgid ""
+"No وكالة بالمرافعة is on file for %s, and the court will not hear an "
+"advocate who is not named on one."
+msgstr ""
+"لا توجد وكالة بالمرافعة مقيدة باسم %s، والمحكمة لا تقبل مرافعة محامٍ غير "
+"مذكور في وكالة."
+
+#. module: legal_litigation
+msgid ""
+"The court's own case number has not been recorded. The case cannot be "
+"tracked at the counter without it."
+msgstr ""
+"لم يُسجَّل رقم الدعوى لدى المحكمة، ولا يمكن متابعتها في الديوان من دونه."
+
+#. module: legal_litigation
+msgid "The وكالة “%s” is not a valid litigation deed for this court."
+msgstr "الوكالة «%s» ليست وكالة مرافعة نافذة أمام هذه المحكمة."
+
+#. module: legal_litigation
+msgid "the advocate"
+msgstr "المحامي"
+
+#. module: legal_litigation
+msgid ""
+"“%(case)s” cannot be filed yet:\n"
+"\n"
+"%(reasons)s"
+msgstr ""
+"لا يمكن إقامة «%(case)s» بعد:\n"
+"\n"
+"%(reasons)s"
+
+#. module: legal_litigation
+msgid "“%s” is not at a point where a judgment can be challenged."
+msgstr "«%s» ليست في مرحلة يمكن فيها الطعن في الحكم."
+
+#. module: legal_litigation
+msgid "“%s” is recorded as filed but carries no court case number."
+msgstr "«%s» مقيدة على أنها مقامة لكنها بلا رقم دعوى لدى المحكمة."
+
+#. module: legal_litigation
+msgid ""
+"“%s” is recorded as filed but has no court. A filed case is filed somewhere."
+msgstr ""
+"«%s» مقيدة على أنها مقامة لكن بلا محكمة، والدعوى المقامة تقام لدى محكمة."
+
+#. module: legal_litigation
+msgid "Preparation"
+msgstr "التحضير"

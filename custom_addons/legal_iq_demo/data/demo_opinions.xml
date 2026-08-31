@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <!--
+        A fictional but faithful advisory desk for شركة الرافدين (the demo entity
+        from legal_iq_demo). Every name and company here is invented; nothing
+        alleges real wrongdoing. The opinions cover the whole lifecycle - a draft,
+        one under review (and overdue), one awaiting approval, one issued and
+        frozen with its register number, and one closed - so that whichever role
+        logs in finds real work in front of it.
+
+        The Arabic below is DATA, not source: an opinion written in English would
+        not be the product an Iraqi legal department recognises.
+    -->
+    <data noupdate="1">
+
+        <!-- ===================================================== DRAFTING -->
+        <record id="opinion_drafting" model="legal.opinion">
+            <field name="subject">مدى جواز مصادرة التأمينات النهائية لتأخر المقاول عن التسليم</field>
+            <field name="requesting_department">قسم العقود والمشتريات</field>
+            <field name="requester_id" ref="legal_iq_demo.user_manager"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="due_date">2026-09-30</field>
+            <field name="state">drafting</field>
+            <field name="question">&lt;p&gt;تأخر المقاول عن تسليم الأعمال ثمانية وأربعين يوماً بعد انتهاء المدة التعاقدية.
+                هل يجوز للشركة مصادرة كامل التأمينات النهائية البالغة (75,000,000) دينار، أم يقتصر
+                حقها على فرض غرامة التأخير المنصوص عليها في العقد؟&lt;/p&gt;</field>
+            <field name="factual_background">&lt;p&gt;العقد رقم (ع/2025/114) لتنفيذ أعمال إكساء، مدته 120 يوماً، تتضمن الفقرة (17)
+                غرامة تأخير مقدارها واحد بالألف عن كل يوم بحد أقصى 10% من قيمة العقد. لم يوجَّه إنذار
+                رسمي بالتأخير إلا في اليوم الحادي والثلاثين.&lt;/p&gt;</field>
+            <field name="legal_basis">قانون تنفيذ العقود الحكومية رقم (12) لسنة 2014 وتعليماته؛ شروط المقاولة الموحدة؛ القواعد العامة في القانون المدني العراقي رقم (40) لسنة 1951 بشأن الشرط الجزائي.</field>
+            <field name="analysis">&lt;p&gt;مسودة أولية: الأصل أن غرامة التأخير هي التعويض المتفق عليه عن التأخير وحده،
+                وأن مصادرة التأمينات إجراء مستقل مرتبط بالإخلال الجوهري لا بمجرد التأخير...&lt;/p&gt;</field>
+        </record>
+
+        <!-- =============================== UNDER REVIEW (and OVERDUE) -->
+        <record id="opinion_review" model="legal.opinion">
+            <field name="subject">مشروعية إنهاء خدمات موظف بعقد لغياب متكرر دون إنذار خطي مسبق</field>
+            <field name="requesting_department">قسم الموارد البشرية</field>
+            <field name="requester_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="reviewer_id" ref="legal_iq_demo.user_approver"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="due_date">2026-03-01</field>
+            <field name="state">review</field>
+            <field name="question">&lt;p&gt;هل يعدّ إنهاء عقد العامل بسبب تكرار الغياب - دون توجيه إنذارين خطيين -
+                إنهاءً مشروعاً، أم فصلاً تعسفياً يستوجب التعويض؟&lt;/p&gt;</field>
+            <field name="factual_background">&lt;p&gt;عامل بعقد محدد المدة، تغيّب أحد عشر يوماً متفرقة خلال ثلاثة أشهر. وُجِّه له
+                تنبيه شفهي واحد. لا يوجد في ملفه أي إنذار خطي.&lt;/p&gt;</field>
+            <field name="legal_basis">قانون العمل العراقي رقم (37) لسنة 2015، المواد المتعلقة بإنهاء العقد والفصل التعسفي؛ لائحة الانضباط الداخلية للشركة.</field>
+            <field name="analysis">&lt;p&gt;يشترط قانون العمل تدرّج الجزاء وتوثيق المخالفة كتابةً قبل الإنهاء. غياب
+                الإنذار الخطي يضعف مركز الشركة ويرجّح وصف الإنهاء بالتعسفي.&lt;/p&gt;</field>
+            <field name="conclusion">&lt;p&gt;الرأي المبدئي: لا يُنصح بالإنهاء المباشر قبل استكمال الإنذارات الخطية،
+                وإلا تعرّضت الشركة لتعويض الفصل التعسفي.&lt;/p&gt;</field>
+        </record>
+
+        <!-- ============================== AWAITING APPROVAL (urgent) -->
+        <record id="opinion_approval" model="legal.opinion">
+            <field name="subject">التزام الشركة باستقطاع ضريبة على دفعات مقاول باطن أجنبي</field>
+            <field name="requesting_department">القسم المالي</field>
+            <field name="requester_id" ref="legal_iq_demo.user_manager"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="reviewer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="approver_id" ref="legal_iq_demo.user_approver"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="due_date">2026-09-15</field>
+            <field name="state">approval</field>
+            <field name="question">&lt;p&gt;هل تلتزم الشركة باستقطاع الضريبة عند المنبع من الدفعات المسددة إلى مقاول
+                باطن أجنبي مقابل خدمات فنية نُفّذت داخل العراق؟ وما نسبة الاستقطاع؟&lt;/p&gt;</field>
+            <field name="factual_background">&lt;p&gt;تعاقدت الشركة مع كيان أجنبي لتقديم خدمات إشراف فني لمدة ستة أشهر بمبلغ
+                إجمالي (210,000,000) دينار، تُسدَّد على ثلاث دفعات.&lt;/p&gt;</field>
+            <field name="legal_basis">قانون ضريبة الدخل رقم (113) لسنة 1982 المعدل؛ تعليمات الهيئة العامة للضرائب بشأن الاستقطاع المباشر من غير المقيمين.</field>
+            <field name="analysis">&lt;p&gt;الخدمات نُفّذت داخل العراق فتخضع للضريبة العراقية، ويقع عبء الاستقطاع على
+                الجهة الدافعة بوصفها مكلفاً بالحجز عند المنبع. تخلّفها يجعلها مسؤولة عن المبلغ والغرامة.&lt;/p&gt;</field>
+            <field name="conclusion">&lt;p&gt;يجب على الشركة استقطاع الضريبة عند المنبع وفق النسبة التي تحددها الهيئة،
+                وتوريدها خلال المدة القانونية، والاحتفاظ بسند التوريد لإبراء ذمتها.&lt;/p&gt;</field>
+        </record>
+
+        <!-- ===================================================== ISSUED -->
+        <!-- Step 1: the opinion, still awaiting approval so it is a clean create. -->
+        <record id="opinion_issued" model="legal.opinion">
+            <field name="subject">نفاذ الشرط الجزائي في عقد توريد عند إخلال المورّد بالمواصفات</field>
+            <field name="requesting_department">قسم العقود والمشتريات</field>
+            <field name="requester_id" ref="legal_iq_demo.user_manager"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="reviewer_id" ref="legal_iq_demo.user_manager"/>
+            <field name="approver_id" ref="legal_iq_demo.user_approver"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="due_date">2025-11-05</field>
+            <field name="state">approval</field>
+            <field name="question">&lt;p&gt;هل يحق للشركة إعمال الشرط الجزائي المقدّر في العقد عند إخلال المورّد
+                بمواصفات البضاعة، ودون حاجة إلى إثبات ضرر فعلي؟&lt;/p&gt;</field>
+            <field name="factual_background">&lt;p&gt;عقد توريد مواد مختبرية، تضمّن شرطاً جزائياً مقداره (25,000,000) دينار عن
+                كل مخالفة جوهرية للمواصفات. ورد جزء من التوريد مخالفاً للمواصفة المتفق عليها.&lt;/p&gt;</field>
+            <field name="legal_basis">القانون المدني العراقي رقم (40) لسنة 1951، المواد الخاصة بالشرط الجزائي وسلطة المحكمة في تعديله؛ الشروط العامة للعقد.</field>
+            <field name="analysis">&lt;p&gt;الشرط الجزائي تقدير اتفاقي مسبق للتعويض يُعفي الدائن من إثبات مقدار الضرر،
+                غير أن للمحكمة تخفيضه إذا كان مبالغاً فيه أو نُفّذ الالتزام جزئياً. ثبوت المخالفة الجوهرية
+                يكفي لاستحقاق الشرط من حيث المبدأ.&lt;/p&gt;</field>
+            <field name="conclusion">&lt;p&gt;يحق للشركة إعمال الشرط الجزائي عند ثبوت المخالفة الجوهرية دون إثبات الضرر،
+                مع مراعاة أن للمورّد الطعن أمام القضاء طلباً للتخفيض. يوصى بتوثيق المخالفة بمحضر فني
+                رسمي قبل المطالبة.&lt;/p&gt;</field>
+        </record>
+
+        <!-- Step 2: the outgoing register line, booked and numbered. -->
+        <record id="opinion_issued_letter" model="legal.correspondence">
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="subject">الرأي القانوني: نفاذ الشرط الجزائي في عقد توريد</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="opinion_id" ref="opinion_issued"/>
+            <field name="our_date">2025-11-10</field>
+            <field name="state">registered</field>
+        </record>
+
+        <!-- Step 3: issue and freeze the opinion, pointing it at its register line. -->
+        <record id="opinion_issued" model="legal.opinion">
+            <field name="state">issued</field>
+            <field name="issued_date">2025-11-10</field>
+            <field name="register_correspondence_id" ref="opinion_issued_letter"/>
+            <field name="snapshot_html">&lt;h3&gt;التحليل القانوني&lt;/h3&gt;
+                &lt;p&gt;الشرط الجزائي تقدير اتفاقي مسبق للتعويض يُعفي الدائن من إثبات مقدار الضرر،
+                غير أن للمحكمة تخفيضه إذا كان مبالغاً فيه أو نُفّذ الالتزام جزئياً. ثبوت المخالفة الجوهرية
+                يكفي لاستحقاق الشرط من حيث المبدأ.&lt;/p&gt;
+                &lt;h3&gt;الرأي / الخلاصة&lt;/h3&gt;
+                &lt;p&gt;يحق للشركة إعمال الشرط الجزائي عند ثبوت المخالفة الجوهرية دون إثبات الضرر،
+                مع مراعاة أن للمورّد الطعن أمام القضاء طلباً للتخفيض. يوصى بتوثيق المخالفة بمحضر فني
+                رسمي قبل المطالبة.&lt;/p&gt;</field>
+        </record>
+
+        <!-- ===================================================== CLOSED -->
+        <!-- Step 1: create awaiting approval. -->
+        <record id="opinion_closed" model="legal.opinion">
+            <field name="subject">أحقية الشركة في التمسك بشرط التحكيم في عقد خدمات لوجستية</field>
+            <field name="requesting_department">الدائرة القانونية</field>
+            <field name="requester_id" ref="legal_iq_demo.user_manager"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="reviewer_id" ref="legal_iq_demo.user_manager"/>
+            <field name="approver_id" ref="legal_iq_demo.user_approver"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="due_date">2025-05-25</field>
+            <field name="state">approval</field>
+            <field name="question">&lt;p&gt;عند نشوء نزاع مع مزوّد خدمات لوجستية، هل تتمسك الشركة بشرط التحكيم الوارد
+                في العقد أم تلجأ إلى القضاء المختص؟&lt;/p&gt;</field>
+            <field name="factual_background">&lt;p&gt;عقد خدمات لوجستية يتضمن شرط تحكيم يحيل النزاعات إلى هيئة تحكيم في بغداد.
+                نشأ خلاف حول قيمة الخدمات المنفّذة.&lt;/p&gt;</field>
+            <field name="legal_basis">قانون المرافعات المدنية العراقي رقم (83) لسنة 1969، الباب الخاص بالتحكيم؛ نص شرط التحكيم في العقد.</field>
+            <field name="analysis">&lt;p&gt;شرط التحكيم اتفاق ملزم يسلب المحاكم العادية اختصاصها ما دام صحيحاً وشاملاً
+                للنزاع محل الخلاف، ويجوز الدفع بعدم قبول الدعوى أمام القضاء عند مخالفته.&lt;/p&gt;</field>
+            <field name="conclusion">&lt;p&gt;يُنصح بالتمسك بشرط التحكيم وتقديم الطلب وفق آليته، مع الاحتفاظ بحق الدفع
+                بعدم اختصاص القضاء إن بادر الطرف الآخر برفع دعوى.&lt;/p&gt;</field>
+        </record>
+
+        <!-- Step 2: its register line. -->
+        <record id="opinion_closed_letter" model="legal.correspondence">
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="subject">الرأي القانوني: التمسك بشرط التحكيم في عقد خدمات لوجستية</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="opinion_id" ref="opinion_closed"/>
+            <field name="our_date">2025-06-01</field>
+            <field name="state">registered</field>
+        </record>
+
+        <!-- Step 3: issue, freeze, then close. -->
+        <record id="opinion_closed" model="legal.opinion">
+            <field name="state">closed</field>
+            <field name="issued_date">2025-06-01</field>
+            <field name="register_correspondence_id" ref="opinion_closed_letter"/>
+            <field name="snapshot_html">&lt;h3&gt;التحليل القانوني&lt;/h3&gt;
+                &lt;p&gt;شرط التحكيم اتفاق ملزم يسلب المحاكم العادية اختصاصها ما دام صحيحاً وشاملاً
+                للنزاع محل الخلاف، ويجوز الدفع بعدم قبول الدعوى أمام القضاء عند مخالفته.&lt;/p&gt;
+                &lt;h3&gt;الرأي / الخلاصة&lt;/h3&gt;
+                &lt;p&gt;يُنصح بالتمسك بشرط التحكيم وتقديم الطلب وفق آليته، مع الاحتفاظ بحق الدفع
+                بعدم اختصاص القضاء إن بادر الطرف الآخر برفع دعوى.&lt;/p&gt;</field>
+        </record>
+
+    </data>
+</odoo>

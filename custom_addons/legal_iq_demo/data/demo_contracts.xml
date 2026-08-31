@@ -1,0 +1,264 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            A compact, entirely fictional showcase so that every role sees real
+            work at login. The companies and people are invented; any resemblance
+            to a real Iraqi business is coincidental, and nothing here alleges
+            wrongdoing by anyone. Values are in IQD at realistic magnitudes and
+            the dates sit in 2025-2026.
+        -->
+
+        <!-- Fictional counterparties -->
+        <record id="partner_almanara" model="res.partner">
+            <field name="name">شركة المنارة للخدمات الفنية المحدودة</field>
+            <field name="is_company" eval="True"/>
+            <field name="country_id" ref="base.iq"/>
+            <field name="city">Baghdad</field>
+        </record>
+
+        <record id="partner_rafidain_supplies" model="res.partner">
+            <field name="name">شركة الرافدين للتجهيزات العامة</field>
+            <field name="is_company" eval="True"/>
+            <field name="country_id" ref="base.iq"/>
+            <field name="city">Baghdad</field>
+        </record>
+
+        <record id="partner_baghdad_realty" model="res.partner">
+            <field name="name">مكتب بغداد للعقارات والاستثمار</field>
+            <field name="is_company" eval="True"/>
+            <field name="country_id" ref="base.iq"/>
+            <field name="city">Baghdad</field>
+        </record>
+
+        <record id="partner_tigris_trading" model="res.partner">
+            <field name="name">شركة دجلة للتجارة والتوكيلات</field>
+            <field name="is_company" eval="True"/>
+            <field name="country_id" ref="base.iq"/>
+            <field name="city">Basra</field>
+        </record>
+
+        <record id="partner_zagros_construction" model="res.partner">
+            <field name="name">شركة زاكروس للمقاولات الإنشائية</field>
+            <field name="is_company" eval="True"/>
+            <field name="country_id" ref="base.iq"/>
+            <field name="city">Erbil</field>
+        </record>
+
+        <record id="partner_guarantor_bank" model="res.partner">
+            <field name="name">مصرف النهرين الأهلي للاستثمار</field>
+            <field name="is_company" eval="True"/>
+            <field name="country_id" ref="base.iq"/>
+            <field name="city">Baghdad</field>
+        </record>
+
+        <!-- ========================================================== -->
+        <!-- 1. In legal review -->
+        <!-- ========================================================== -->
+        <record id="contract_review" model="legal.contract">
+            <field name="title">IT Support Services - Head Office</field>
+            <field name="type_id" ref="legal_contract.type_service"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="responsible_department_id" ref="legal_contract.dept_operations"/>
+            <field name="internal_owner_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="value">45000000</field>
+            <field name="effective_date">2026-09-01</field>
+            <field name="expiry_date">2027-08-31</field>
+            <field name="risk">low</field>
+            <field name="state">legal_review</field>
+        </record>
+        <record id="party_review_1" model="legal.contract.party">
+            <field name="contract_id" ref="contract_review"/>
+            <field name="partner_id" ref="partner_almanara"/>
+            <field name="role">counterparty</field>
+        </record>
+
+        <!-- ========================================================== -->
+        <!-- 2. Awaiting internal approval -->
+        <!-- ========================================================== -->
+        <record id="contract_approval" model="legal.contract">
+            <field name="title">Annual Office Supplies Framework</field>
+            <field name="type_id" ref="legal_contract.type_supply"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="responsible_department_id" ref="legal_contract.dept_procurement"/>
+            <field name="internal_owner_id" ref="legal_iq_demo.user_officer"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="value">120000000</field>
+            <field name="effective_date">2026-10-01</field>
+            <field name="expiry_date">2027-09-30</field>
+            <field name="risk">medium</field>
+            <field name="state">internal_approval</field>
+        </record>
+        <record id="party_approval_1" model="legal.contract.party">
+            <field name="contract_id" ref="contract_approval"/>
+            <field name="partner_id" ref="partner_rafidain_supplies"/>
+            <field name="role">counterparty</field>
+        </record>
+
+        <!-- ========================================================== -->
+        <!-- 3. Active, with obligations (one overdue, one due soon, one recurring) -->
+        <!-- ========================================================== -->
+        <record id="contract_active" model="legal.contract">
+            <field name="title">Head Office Lease - Karrada</field>
+            <field name="type_id" ref="legal_contract.type_lease"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="responsible_department_id" ref="legal_contract.dept_admin"/>
+            <field name="internal_owner_id" ref="legal_iq_demo.user_manager"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_officer"/>
+            <field name="value">60000000</field>
+            <field name="effective_date">2025-09-01</field>
+            <field name="commencement_date">2025-09-01</field>
+            <field name="signature_date">2025-08-20</field>
+            <field name="expiry_date">2027-08-31</field>
+            <field name="notice_days">60</field>
+            <field name="auto_renew" eval="True"/>
+            <field name="notice_period_days">60</field>
+            <field name="signature_status">fully_signed</field>
+            <field name="governing_law">Iraqi Civil Code</field>
+            <field name="risk">low</field>
+            <field name="state">active</field>
+        </record>
+        <record id="party_active_1" model="legal.contract.party">
+            <field name="contract_id" ref="contract_active"/>
+            <field name="partner_id" ref="partner_baghdad_realty"/>
+            <field name="role">counterparty</field>
+            <field name="signatory_name">أبو مصطفى - المالك</field>
+        </record>
+
+        <record id="obl_active_rent" model="legal.contract.obligation">
+            <field name="contract_id" ref="contract_active"/>
+            <field name="name">Monthly Rent</field>
+            <field name="clause_reference">4.1</field>
+            <field name="description">Rent payable on the first of each month.</field>
+            <field name="responsible_party">ours</field>
+            <field name="responsible_user_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="frequency">monthly</field>
+            <field name="start_date">2025-09-01</field>
+            <field name="amount">5000000</field>
+        </record>
+
+        <record id="obl_active_insurance" model="legal.contract.obligation">
+            <field name="contract_id" ref="contract_active"/>
+            <field name="name">Provide Renewed Fire Insurance Certificate</field>
+            <field name="clause_reference">9.3</field>
+            <field name="description">Tenant to deliver a renewed fire insurance certificate.</field>
+            <field name="responsible_party">ours</field>
+            <field name="responsible_user_id" ref="legal_iq_demo.user_clerk"/>
+            <field name="frequency">one_off</field>
+            <field name="due_date">2026-09-15</field>
+        </record>
+
+        <record id="obl_active_overdue" model="legal.contract.obligation">
+            <field name="contract_id" ref="contract_active"/>
+            <field name="name">Landlord Maintenance Of Lift</field>
+            <field name="clause_reference">6.2</field>
+            <field name="description">Annual servicing of the building lift by the landlord.</field>
+            <field name="responsible_party">theirs</field>
+            <field name="frequency">one_off</field>
+            <field name="due_date">2026-07-15</field>
+        </record>
+
+        <!-- A letter filed under the active contract, to populate the smart button -->
+        <record id="letter_active_1" model="legal.correspondence">
+            <field name="kind_id" ref="legal_correspondence.kind_in_letter"/>
+            <field name="direction">in</field>
+            <field name="subject">Notice of building service charge revision</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="contract_id" ref="contract_active"/>
+            <field name="their_date">2026-08-05</field>
+        </record>
+
+        <!-- ========================================================== -->
+        <!-- 4. Active but expiring within 30 days (drives the reminder) -->
+        <!-- ========================================================== -->
+        <record id="contract_expiring" model="legal.contract">
+            <field name="title">Sole Distribution Agency - Southern Region</field>
+            <field name="type_id" ref="legal_contract.type_agency"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="responsible_department_id" ref="legal_contract.dept_operations"/>
+            <field name="internal_owner_id" ref="legal_iq_demo.user_officer"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_approver"/>
+            <field name="value">30000000</field>
+            <field name="effective_date">2025-09-20</field>
+            <field name="commencement_date">2025-09-20</field>
+            <field name="signature_date">2025-09-15</field>
+            <field name="expiry_date">2026-09-20</field>
+            <field name="notice_days">30</field>
+            <field name="auto_renew" eval="True"/>
+            <field name="notice_period_days">30</field>
+            <field name="signature_status">fully_signed</field>
+            <field name="risk">medium</field>
+            <field name="state">active</field>
+        </record>
+        <record id="party_expiring_1" model="legal.contract.party">
+            <field name="contract_id" ref="contract_expiring"/>
+            <field name="partner_id" ref="partner_tigris_trading"/>
+            <field name="role">counterparty</field>
+        </record>
+        <record id="party_expiring_2" model="legal.contract.party">
+            <field name="contract_id" ref="contract_expiring"/>
+            <field name="partner_id" ref="partner_guarantor_bank"/>
+            <field name="role">guarantor</field>
+        </record>
+
+        <!-- ========================================================== -->
+        <!-- 5. Signed, with the signed document filed in the register -->
+        <!-- ========================================================== -->
+        <record id="signed_doc_construction" model="legal.document">
+            <field name="name">CON/2026/0005 - New Warehouse Construction</field>
+            <field name="document_type_id" ref="legal_contract.doctype_signed_contract"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="issue_date">2026-08-15</field>
+            <field name="expiry_date">2027-12-31</field>
+        </record>
+
+        <record id="contract_signed" model="legal.contract">
+            <field name="title">New Warehouse Construction - Abu Ghraib</field>
+            <field name="type_id" ref="legal_contract.type_construction"/>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="responsible_department_id" ref="legal_contract.dept_procurement"/>
+            <field name="internal_owner_id" ref="legal_iq_demo.user_manager"/>
+            <field name="legal_officer_id" ref="legal_iq_demo.user_approver"/>
+            <field name="value">850000000</field>
+            <field name="effective_date">2026-08-15</field>
+            <field name="signature_date">2026-08-15</field>
+            <field name="expiry_date">2027-12-31</field>
+            <field name="signature_status">fully_signed</field>
+            <field name="signed_document_id" ref="signed_doc_construction"/>
+            <field name="governing_law">Iraqi Civil Code</field>
+            <field name="risk">high</field>
+            <field name="state">signed</field>
+        </record>
+        <record id="party_signed_1" model="legal.contract.party">
+            <field name="contract_id" ref="contract_signed"/>
+            <field name="partner_id" ref="partner_zagros_construction"/>
+            <field name="role">counterparty</field>
+            <field name="signatory_name">المدير المفوض</field>
+        </record>
+        <record id="party_signed_2" model="legal.contract.party">
+            <field name="contract_id" ref="contract_signed"/>
+            <field name="partner_id" ref="partner_guarantor_bank"/>
+            <field name="role">guarantor</field>
+        </record>
+
+        <record id="mod_signed_1" model="legal.contract.modification">
+            <field name="contract_id" ref="contract_signed"/>
+            <field name="number">Addendum 1</field>
+            <field name="date">2026-08-20</field>
+            <field name="description">Scope increase: additional loading dock and perimeter wall.</field>
+            <field name="value_change">75000000</field>
+            <field name="state">applied</field>
+        </record>
+
+        <!--
+            Materialise the recurring occurrences so the Contract Deadlines board
+            shows real work at first login rather than waiting for the weekly
+            generation cron. Idempotent by the unique index, so a re-run on
+            upgrade writes nothing.
+        -->
+        <function model="legal.contract.obligation" name="_cron_generate"/>
+
+    </data>
+</odoo>

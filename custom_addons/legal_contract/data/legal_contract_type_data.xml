@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            The contract types a legal department in Iraq meets most. Names are
+            the English source; the Arabic ships in i18n/ar.po as a translation,
+            so the source stays single-language while the department reads Arabic.
+        -->
+
+        <record id="type_service" model="legal.contract.type">
+            <field name="name">Service Agreement</field>
+            <field name="code">SERVICE</field>
+            <field name="default_review_group">officer</field>
+            <field name="default_notice_days">30</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="type_supply" model="legal.contract.type">
+            <field name="name">Supply Contract</field>
+            <field name="code">SUPPLY</field>
+            <field name="default_review_group">officer</field>
+            <field name="default_notice_days">30</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="type_lease" model="legal.contract.type">
+            <field name="name">Lease Agreement</field>
+            <field name="code">LEASE</field>
+            <field name="default_review_group">officer</field>
+            <field name="default_notice_days">60</field>
+            <field name="default_auto_renew" eval="True"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="type_nda" model="legal.contract.type">
+            <field name="name">Non-Disclosure Agreement</field>
+            <field name="code">NDA</field>
+            <field name="default_review_group">officer</field>
+            <field name="default_notice_days">30</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="type_employment" model="legal.contract.type">
+            <field name="name">Employment Contract</field>
+            <field name="code">EMPLOYMENT</field>
+            <field name="default_review_group">approver</field>
+            <field name="default_notice_days">30</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="type_construction" model="legal.contract.type">
+            <field name="name">Construction Contract</field>
+            <field name="code">CONSTRUCTION</field>
+            <field name="default_review_group">approver</field>
+            <field name="default_notice_days">90</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="type_agency" model="legal.contract.type">
+            <field name="name">Agency Agreement</field>
+            <field name="code">AGENCY</field>
+            <field name="default_review_group">approver</field>
+            <field name="default_notice_days">60</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="type_mou" model="legal.contract.type">
+            <field name="name">Memorandum of Understanding</field>
+            <field name="code">MOU</field>
+            <field name="default_review_group">manager</field>
+            <field name="default_notice_days">30</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- The internal departments that own contracts. -->
+
+        <record id="dept_procurement" model="legal.contract.department">
+            <field name="name">Procurement</field>
+            <field name="code">PROC</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="dept_operations" model="legal.contract.department">
+            <field name="name">Operations</field>
+            <field name="code">OPS</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="dept_hr" model="legal.contract.department">
+            <field name="name">Human Resources</field>
+            <field name="code">HR</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="dept_finance" model="legal.contract.department">
+            <field name="name">Finance</field>
+            <field name="code">FIN</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="dept_admin" model="legal.contract.department">
+            <field name="name">Administration</field>
+            <field name="code">ADMIN</field>
+            <field name="sequence">50</field>
+        </record>
+
+    </data>
+</odoo>

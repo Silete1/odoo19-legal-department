@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         List
+         ================================================================ -->
+    <record id="view_legal_lawsuit_list" model="ir.ui.view">
+        <field name="name">legal.lawsuit.list</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="arch" type="xml">
+            <list string="Lawsuits"
+                  decoration-muted="is_closed"
+                  decoration-danger="appeal_window_open"
+                  decoration-bf="priority == '2'">
+                <field name="reference"/>
+                <field name="title"/>
+                <field name="our_capacity" widget="badge" optional="show"/>
+                <field name="opponent_names" string="Opponents" optional="show"/>
+                <field name="court_id" optional="show"/>
+                <field name="court_case_number" optional="hide"/>
+                <field name="lawyer_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="claim_amount" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="next_hearing_date" optional="show"/>
+                <field name="next_deadline" optional="show"/>
+                <field name="risk" widget="badge" optional="hide"
+                       decoration-danger="risk == 'high'"
+                       decoration-warning="risk == 'medium'"/>
+                <field name="appeal_window_open" column_invisible="1"/>
+                <field name="priority" widget="priority" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state in ['filed', 'in_progress']"
+                       decoration-warning="state in ['judgment', 'appeal']"
+                       decoration-success="state == 'enforcement'"
+                       decoration-muted="state == 'closed'"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Kanban - by stage
+         ================================================================ -->
+    <record id="view_legal_lawsuit_kanban" model="ir.ui.view">
+        <field name="name">legal.lawsuit.kanban</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false">
+                <field name="appeal_window_open"/>
+                <field name="is_closed"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record_top">
+                            <div class="o_kanban_record_headings">
+                                <strong class="o_kanban_record_title">
+                                    <field name="reference"/> — <field name="title"/>
+                                </strong>
+                            </div>
+                            <field name="priority" widget="priority"/>
+                        </div>
+                        <div class="o_kanban_record_body">
+                            <div><field name="our_capacity"/> · <field name="opponent_names"/></div>
+                            <div t-if="record.court_id.raw_value"><i class="fa fa-university"/> <field name="court_id"/></div>
+                            <div t-if="record.next_hearing_date.raw_value">
+                                <i class="fa fa-calendar"/> <field name="next_hearing_date"/>
+                            </div>
+                            <div t-if="record.claim_amount.raw_value">
+                                <field name="claim_amount"/>
+                            </div>
+                            <span t-if="record.appeal_window_open.raw_value"
+                                  class="badge text-bg-danger">Appeal window open</span>
+                        </div>
+                        <div class="o_kanban_record_bottom">
+                            <div class="oe_kanban_bottom_left">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                            </div>
+                            <div class="oe_kanban_bottom_right">
+                                <field name="lawyer_id" widget="many2one_avatar_user"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Form
+         ================================================================ -->
+    <record id="view_legal_lawsuit_form" model="ir.ui.view">
+        <field name="name">legal.lawsuit.form</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="arch" type="xml">
+            <form string="Lawsuit">
+                <header>
+                    <button name="action_prepare" type="object" string="Start Preparation"
+                            class="btn-primary" invisible="state != 'assessment'"/>
+                    <button name="action_file" type="object" string="File At Court"
+                            class="btn-primary" invisible="state not in ['assessment', 'preparation']"/>
+                    <button name="action_start" type="object" string="Now Being Heard"
+                            class="btn-primary" invisible="state != 'filed'"/>
+                    <button name="action_to_judgment" type="object" string="Record Judgment"
+                            class="btn-primary" invisible="state not in ['in_progress', 'appeal']"/>
+                    <button name="action_appeal" type="object" string="Challenge (طعن)"
+                            invisible="state not in ['judgment', 'enforcement']"/>
+                    <button name="action_enforce" type="object" string="Move To Enforcement"
+                            invisible="state not in ['judgment', 'appeal']"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state == 'closed'"
+                            groups="legal_core.group_legal_approver"/>
+                    <button name="action_reopen" type="object" string="Re-open"
+                            invisible="state != 'closed'"
+                            groups="legal_core.group_legal_approver"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_hearings" type="object"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <field name="hearing_count" widget="statinfo" string="Hearings"/>
+                        </button>
+                        <button name="action_open_judgments" type="object"
+                                class="oe_stat_button" icon="fa-gavel">
+                            <field name="judgment_count" widget="statinfo" string="Judgments"/>
+                        </button>
+                        <button name="action_open_correspondence" type="object"
+                                class="oe_stat_button" icon="fa-envelope">
+                            <field name="correspondence_count" widget="statinfo" string="Letters"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Closed" bg_color="text-bg-secondary"
+                            invisible="state != 'closed'"/>
+                    <div class="oe_title">
+                        <label for="reference"/>
+                        <h1><field name="reference" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="مطالبة شركة الوركاء بأجور متأخرة"/></h2>
+                    </div>
+                    <group>
+                        <group string="The Case">
+                            <field name="our_capacity"/>
+                            <field name="entity_id"/>
+                            <field name="court_id"/>
+                            <label for="court_case_number"/>
+                            <div class="o_row">
+                                <field name="court_case_number" placeholder="Court No."/>
+                                <span>/</span>
+                                <field name="court_case_year" placeholder="Year"/>
+                            </div>
+                            <field name="claim_amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="risk"/>
+                        </group>
+                        <group string="Who Is Running It">
+                            <field name="lawyer_id" widget="many2one_avatar_user"/>
+                            <field name="poa_id"/>
+                            <field name="external_counsel_id"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="confidential"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="What Is Next">
+                            <field name="next_hearing_date" readonly="1"/>
+                            <field name="next_deadline" readonly="1"/>
+                            <field name="appeal_window_open" readonly="1"/>
+                            <field name="date_filed" readonly="1"/>
+                        </group>
+                        <group string="Latest">
+                            <field name="latest_development"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert"
+                         invisible="state not in ['assessment', 'preparation']">
+                        Filing needs a court, the court's own case number, and a valid
+                        وكالة بالمرافعة for the advocate. The court will not hear anybody who is
+                        not named on one, so the file is stopped here rather than at the counter.
+                    </div>
+                    <notebook>
+                        <page string="Parties" name="parties">
+                            <field name="party_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="partner_id"/>
+                                    <field name="role"/>
+                                    <field name="capacity"/>
+                                    <field name="note" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Subject" name="subject">
+                            <field name="subject"
+                                   placeholder="What the case is about, in the words it will be argued in."/>
+                        </page>
+                        <page string="Hearings" name="hearings">
+                            <field name="hearing_ids" context="{'default_court_id': court_id}">
+                                <list decoration-muted="is_held" decoration-bf="not is_held">
+                                    <field name="date"/>
+                                    <field name="purpose"/>
+                                    <field name="court_id"/>
+                                    <field name="attendance"/>
+                                    <field name="result"/>
+                                    <field name="next_hearing_date"/>
+                                    <field name="is_held" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Judgments" name="judgments">
+                            <field name="judgment_ids" context="{'default_court_id': court_id}">
+                                <list decoration-danger="appeal_state == 'closed'"
+                                      decoration-warning="appeal_state == 'closing_soon'">
+                                    <field name="judgment_date"/>
+                                    <field name="ruling_type"/>
+                                    <field name="in_our_favour"/>
+                                    <field name="amount_awarded"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="tabligh_date"/>
+                                    <field name="appeal_deadline"/>
+                                    <field name="days_left"/>
+                                    <field name="appeal_state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Search
+         ================================================================ -->
+    <record id="view_legal_lawsuit_search" model="ir.ui.view">
+        <field name="name">legal.lawsuit.search</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="arch" type="xml">
+            <search string="Lawsuits">
+                <field name="reference" filter_domain="['|', '|', ('reference', 'ilike', self), ('title', 'ilike', self), ('court_case_number', 'ilike', self)]"/>
+                <field name="title"/>
+                <field name="court_id"/>
+                <field name="lawyer_id"/>
+                <field name="party_ids" string="Party" filter_domain="[('party_ids.partner_id', 'ilike', self)]"/>
+                <filter name="mine" string="My Lawsuits" domain="[('lawyer_id', '=', uid)]"/>
+                <separator/>
+                <filter name="open" string="Live" domain="[('state', 'not in', ['closed'])]"/>
+                <filter name="upcoming_hearings" string="Upcoming Hearings"
+                        domain="[('next_hearing_date', '!=', False)]"/>
+                <filter name="appeal_closing" string="Appeal Window Closing"
+                        domain="[('appeal_window_open', '=', True)]"/>
+                <filter name="overdue" string="Overdue"
+                        domain="[('judgment_ids.is_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="plaintiff" string="We Are Plaintiff" domain="[('our_capacity', '=', 'plaintiff')]"/>
+                <filter name="defendant" string="We Are Defendant" domain="[('our_capacity', '=', 'defendant')]"/>
+                <filter name="high_risk" string="High Risk" domain="[('risk', '=', 'high')]"/>
+                <group>
+                    <filter name="group_court" string="Court" context="{'group_by': 'court_id'}"/>
+                    <filter name="group_stage" string="Stage" context="{'group_by': 'state'}"/>
+                    <filter name="group_lawyer" string="Advocate" context="{'group_by': 'lawyer_id'}"/>
+                    <filter name="group_capacity" string="Our Capacity" context="{'group_by': 'our_capacity'}"/>
+                    <filter name="group_entity" string="Legal Entity" context="{'group_by': 'entity_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         Actions
+         ================================================================ -->
+    <record id="action_legal_lawsuit" model="ir.actions.act_window">
+        <field name="name">Lawsuits</field>
+        <field name="res_model">legal.lawsuit</field>
+        <field name="view_mode">kanban,list,form,calendar</field>
+        <field name="search_view_id" ref="view_legal_lawsuit_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Open the department's first case</p>
+            <p>
+                A lawsuit walks from assessment to closure on the buttons on its header, cannot
+                be filed on a وكالة that will not stand, and counts down every hearing and every
+                non-extendable appeal window it carries.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_lawsuit_my" model="ir.actions.act_window">
+        <field name="name">My Lawsuits</field>
+        <field name="res_model">legal.lawsuit</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('lawyer_id', '=', uid)]</field>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+
+    <record id="action_legal_lawsuit_calendar" model="ir.actions.act_window">
+        <field name="name">Lawsuits</field>
+        <field name="res_model">legal.lawsuit</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+
+    <!-- A calendar on the lawsuit's own next hearing, complementing the hearing calendar. -->
+    <record id="view_legal_lawsuit_calendar" model="ir.ui.view">
+        <field name="name">legal.lawsuit.calendar</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="arch" type="xml">
+            <calendar string="Next Hearings" date_start="next_hearing_date"
+                      color="court_id" mode="month">
+                <field name="reference"/>
+                <field name="title"/>
+                <field name="court_id"/>
+            </calendar>
+        </field>
+    </record>
+
+</odoo>

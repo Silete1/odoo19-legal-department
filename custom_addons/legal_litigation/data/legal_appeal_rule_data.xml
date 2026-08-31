@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        noupdate="1" throughout, as everywhere in this product: an upgrade must
+        never overwrite a period a customer's counsel has corrected. The periods
+        below are shipped with verification_status="stale" precisely because they
+        are the kind of statutory figure that must be re-read against the current
+        text before it is relied on at a court - the flag is an honest "check
+        this", not a claim that it has been checked.
+    -->
+    <data noupdate="1">
+
+        <record id="appeal_rule_objection" model="legal.appeal.rule">
+            <field name="name">Objection to an in-absentia judgment</field>
+            <field name="remedy">objection</field>
+            <field name="ruling_type">judgment</field>
+            <field name="days">10</field>
+            <field name="non_extendable" eval="True"/>
+            <field name="legal_basis">مدة الاعتراض على الحكم الغيابي - قانون المرافعات المدنية</field>
+            <field name="verification_status">stale</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="appeal_rule_appeal" model="legal.appeal.rule">
+            <field name="name">Appeal of a judgment</field>
+            <field name="remedy">appeal</field>
+            <field name="ruling_type">judgment</field>
+            <field name="days">15</field>
+            <field name="non_extendable" eval="True"/>
+            <field name="legal_basis">مدة الطعن استئنافاً - قانون المرافعات المدنية</field>
+            <field name="verification_status">stale</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="appeal_rule_cassation_judgment" model="legal.appeal.rule">
+            <field name="name">Cassation of a judgment</field>
+            <field name="remedy">cassation</field>
+            <field name="ruling_type">judgment</field>
+            <field name="days">30</field>
+            <field name="non_extendable" eval="True"/>
+            <field name="legal_basis">مدة الطعن تمييزاً على الأحكام - قانون المرافعات المدنية</field>
+            <field name="verification_status">stale</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="appeal_rule_cassation_decision" model="legal.appeal.rule">
+            <field name="name">Cassation of a decision</field>
+            <field name="remedy">cassation</field>
+            <field name="ruling_type">decision</field>
+            <field name="days">7</field>
+            <field name="non_extendable" eval="True"/>
+            <field name="legal_basis">مدة الطعن تمييزاً على القرارات - قانون المرافعات المدنية</field>
+            <field name="verification_status">stale</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="appeal_rule_labor" model="legal.appeal.rule">
+            <field name="name">Labour court remedy</field>
+            <field name="remedy">labor</field>
+            <field name="ruling_type">judgment</field>
+            <field name="court_degree">labor</field>
+            <field name="days">30</field>
+            <field name="non_extendable" eval="True"/>
+            <field name="legal_basis">مدة الطعن أمام محاكم العمل - قانون العمل</field>
+            <field name="verification_status">stale</field>
+            <field name="sequence">50</field>
+        </record>
+
+    </data>
+</odoo>

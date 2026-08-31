@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_lawsuit_reason_form" model="ir.ui.view">
+        <field name="name">legal.lawsuit.reason.form</field>
+        <field name="model">legal.lawsuit.reason</field>
+        <field name="arch" type="xml">
+            <form string="Reason">
+                <field name="lawsuit_id" invisible="1"/>
+                <field name="action_kind" invisible="1"/>
+                <div class="alert alert-warning" role="alert"
+                     invisible="action_kind != 'close'">
+                    Closing a case is a separated duty. It is recorded against the reason given
+                    here, which is what anybody asking later how the matter ended will read.
+                </div>
+                <div class="alert alert-info" role="alert"
+                     invisible="action_kind != 'appeal'">
+                    Lodging a challenge stops the appeal clock on every open judgment of this
+                    case. State the ground on which it is brought.
+                </div>
+                <group>
+                    <field name="reason" nolabel="1"
+                           placeholder="The reason, in the words the record should keep."/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

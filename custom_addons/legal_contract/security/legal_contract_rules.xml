@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Multi-company first. Configuration with no company is shared; every
+            transactional model is scoped the ordinary Odoo way. The child models
+            (parties, obligations, occurrences, amendments) carry a stored
+            company_id related from the contract, so the same clause scopes them.
+        -->
+
+        <record id="rule_legal_contract_type_company" model="ir.rule">
+            <field name="name">Contract type: own company or shared</field>
+            <field name="model_id" ref="model_legal_contract_type"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_contract_department_company" model="ir.rule">
+            <field name="name">Department: own company or shared</field>
+            <field name="model_id" ref="model_legal_contract_department"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_contract_company" model="ir.rule">
+            <field name="name">Contract: own company</field>
+            <field name="model_id" ref="model_legal_contract"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_contract_party_company" model="ir.rule">
+            <field name="name">Contract party: own company</field>
+            <field name="model_id" ref="model_legal_contract_party"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_contract_obligation_company" model="ir.rule">
+            <field name="name">Obligation: own company</field>
+            <field name="model_id" ref="model_legal_contract_obligation"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_contract_obligation_instance_company" model="ir.rule">
+            <field name="name">Obligation occurrence: own company</field>
+            <field name="model_id" ref="model_legal_contract_obligation_instance"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_contract_modification_company" model="ir.rule">
+            <field name="name">Amendment: own company</field>
+            <field name="model_id" ref="model_legal_contract_modification"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!--
+            Confidentiality. A commercially or personally sensitive contract is
+            visible to its internal owner, its legal officer and the legal
+            manager, and to nobody else. Written on the three working groups so
+            the manager and the auditor keep an unrestricted view, exactly as
+            legal_procedure does on the case file.
+        -->
+
+        <record id="rule_legal_contract_confidential" model="ir.rule">
+            <field name="name">Contract: confidential ones are restricted</field>
+            <field name="model_id" ref="model_legal_contract"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', ('confidential', '=', False), ('internal_owner_id', '=', user.id), ('legal_officer_id', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_legal_contract_manager" model="ir.rule">
+            <field name="name">Contract: the legal manager and the auditor see everything</field>
+            <field name="model_id" ref="model_legal_contract"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

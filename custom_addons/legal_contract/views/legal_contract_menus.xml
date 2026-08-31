@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The Contracts application, hung off legal_core's root so the department
+        has one Legal app rather than several that happen to be installed
+        together. Sequence 20, between Operations (10) and Registers (30).
+    -->
+    <menuitem id="menu_legal_contract_root"
+              name="Contracts"
+              parent="legal_core.menu_legal_root"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_contract"
+              name="Contracts"
+              parent="menu_legal_contract_root"
+              action="action_legal_contract"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_contract_awaiting_approval"
+              name="Awaiting Approval"
+              parent="menu_legal_contract_root"
+              action="action_legal_contract_awaiting_approval"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_contract_expiring"
+              name="Expiring Contracts"
+              parent="menu_legal_contract_root"
+              action="action_legal_contract_expiring"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_contract_obligation"
+              name="Obligations"
+              parent="menu_legal_contract_root"
+              action="action_legal_contract_obligation"
+              sequence="40"/>
+
+    <menuitem id="menu_legal_contract_obligation_instance"
+              name="Contract Deadlines"
+              parent="menu_legal_contract_root"
+              action="action_legal_contract_obligation_instance"
+              sequence="50"/>
+
+    <menuitem id="menu_legal_contract_modification"
+              name="Amendments"
+              parent="menu_legal_contract_root"
+              action="action_legal_contract_modification"
+              sequence="60"/>
+
+    <!-- Configuration, under legal_core's manager-only Configuration menu. -->
+
+    <menuitem id="menu_legal_config_contracts"
+              name="Contracts"
+              parent="legal_core.menu_legal_config"
+              sequence="40"/>
+
+    <menuitem id="menu_legal_config_contract_type"
+              name="Contract Types"
+              parent="menu_legal_config_contracts"
+              action="action_legal_contract_type"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_contract_department"
+              name="Responsible Departments"
+              parent="menu_legal_config_contracts"
+              action="action_legal_contract_department"
+              sequence="20"/>
+
+</odoo>

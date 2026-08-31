@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_legal_opinion_root"
+              name="Legal Opinions"
+              parent="legal_core.menu_legal_root"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_opinion_all"
+              name="Opinions"
+              parent="menu_legal_opinion_root"
+              action="action_legal_opinion"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_opinion_precedent"
+              name="Precedent Library"
+              parent="menu_legal_opinion_root"
+              action="action_legal_opinion_precedent"
+              sequence="20"/>
+
+</odoo>

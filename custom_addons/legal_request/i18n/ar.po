@@ -1,0 +1,915 @@
+# Arabic translation for the legal_request module.
+# This file is distributed under the same license as the legal_request module.
+msgid ""
+msgstr ""
+"Project-Id-Version: legal_request 19.0.1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+#. module: legal_request
+msgid "Legal Request Category"
+msgstr "صنف طلب قانوني"
+
+#. module: legal_request
+msgid "Legal Department Request"
+msgstr "طلب إلى الشؤون القانونية"
+
+#. module: legal_request
+msgid "Cancel A Legal Request"
+msgstr "إلغاء طلب قانوني"
+
+#. module: legal_request
+msgid "Return A Request For Rework"
+msgstr "إعادة طلب للتعديل"
+
+#. module: legal_request
+msgid "Approve A Legal Request"
+msgstr "مصادقة طلب قانوني"
+
+#. module: legal_request
+msgid "Age (days)"
+msgstr "العمر (أيام)"
+
+#. module: legal_request
+msgid "Approval Decision"
+msgstr "قرار المصادقة"
+
+#. module: legal_request
+msgid "Approved By"
+msgstr "صادق عليه"
+
+#. module: legal_request
+msgid "Approved On"
+msgstr "تاريخ المصادقة"
+
+#. module: legal_request
+msgid "Assigned Officer"
+msgstr "الموظف المكلّف"
+
+#. module: legal_request
+msgid "Became"
+msgstr "تحوّل إلى"
+
+#. module: legal_request
+msgid "Cancellation Reason"
+msgstr "سبب الإلغاء"
+
+#. module: legal_request
+msgid "Category"
+msgstr "الصنف"
+
+#. module: legal_request
+msgid "Conversion Target"
+msgstr "هدف التحويل"
+
+#. module: legal_request
+msgid "Decision Note"
+msgstr "ملاحظة القرار"
+
+#. module: legal_request
+msgid "Decision"
+msgstr "القرار"
+
+#. module: legal_request
+msgid "From Request"
+msgstr "من الطلب"
+
+#. module: legal_request
+msgid "Last Return Reason"
+msgstr "سبب الإعادة الأخير"
+
+#. module: legal_request
+msgid "Legal Entity"
+msgstr "الكيان القانوني"
+
+#. module: legal_request
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: legal_request
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: legal_request
+msgid "Reason"
+msgstr "السبب"
+
+#. module: legal_request
+msgid "Reference"
+msgstr "العدد"
+
+#. module: legal_request
+msgid "Related Party"
+msgstr "الطرف ذو العلاقة"
+
+#. module: legal_request
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: legal_request
+msgid "Request Detail"
+msgstr "تفاصيل الطلب"
+
+#. module: legal_request
+msgid "Requested By"
+msgstr "مقدّم الطلب"
+
+#. module: legal_request
+msgid "Requesting Department"
+msgstr "القسم الطالب"
+
+#. module: legal_request
+msgid "Response / Outcome"
+msgstr "الرد / النتيجة"
+
+#. module: legal_request
+msgid "Responsible Manager"
+msgstr "المدير المسؤول"
+
+#. module: legal_request
+msgid "Target Response Date"
+msgstr "تاريخ الرد المستهدف"
+
+#. module: legal_request
+msgid "Usually Becomes"
+msgstr "يتحوّل عادة إلى"
+
+#. module: legal_request
+msgid "Confidentiality"
+msgstr "السرية"
+
+#. module: legal_request
+msgid "Urgency"
+msgstr "الاستعجال"
+
+#. module: legal_request
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: legal_request
+msgid "Received"
+msgstr "مستلم"
+
+#. module: legal_request
+msgid "Under Triage"
+msgstr "قيد الفرز"
+
+#. module: legal_request
+msgid "Assigned"
+msgstr "مُسند"
+
+#. module: legal_request
+msgid "In Progress"
+msgstr "قيد المعالجة"
+
+#. module: legal_request
+msgid "Waiting On Requester"
+msgstr "بانتظار مقدّم الطلب"
+
+#. module: legal_request
+msgid "Waiting On External Body"
+msgstr "بانتظار جهة خارجية"
+
+#. module: legal_request
+msgid "Ready For Approval"
+msgstr "جاهز للمصادقة"
+
+#. module: legal_request
+msgid "Approved / Issued"
+msgstr "مصادق عليه / صادر"
+
+#. module: legal_request
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: legal_request
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: legal_request
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: legal_request
+msgid "Normal"
+msgstr "عادية"
+
+#. module: legal_request
+msgid "High"
+msgstr "عالية"
+
+#. module: legal_request
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: legal_request
+msgid "Restricted"
+msgstr "مقيّدة"
+
+#. module: legal_request
+msgid "Highly Restricted"
+msgstr "مقيّدة للغاية"
+
+#. module: legal_request
+msgid "Approved"
+msgstr "مصادق عليه"
+
+#. module: legal_request
+msgid "Approved With Conditions"
+msgstr "مصادق عليه بشروط"
+
+#. module: legal_request
+msgid "Legal Opinion"
+msgstr "رأي قانوني"
+
+#. module: legal_request
+msgid "Legal Consultation"
+msgstr "استشارة قانونية"
+
+#. module: legal_request
+msgid "Contract Review"
+msgstr "مراجعة عقد"
+
+#. module: legal_request
+msgid "Litigation File"
+msgstr "ملف دعوى"
+
+#. module: legal_request
+msgid "Claim"
+msgstr "مطالبة"
+
+#. module: legal_request
+msgid "Power Of Attorney"
+msgstr "وكالة"
+
+#. module: legal_request
+msgid "Official Letter"
+msgstr "كتاب رسمي"
+
+#. module: legal_request
+msgid "Compliance Matter"
+msgstr "مسألة امتثال"
+
+#. module: legal_request
+msgid "Property Matter"
+msgstr "مسألة ملكية"
+
+#. module: legal_request
+msgid "Other"
+msgstr "أخرى"
+
+#. module: legal_request
+msgid "Procedure File"
+msgstr "ملف معاملة"
+
+#. module: legal_request
+msgid "Registered Document"
+msgstr "مستند مُسجّل"
+
+#. module: legal_request
+msgid "Submit"
+msgstr "تقديم"
+
+#. module: legal_request
+msgid "Start Triage"
+msgstr "بدء الفرز"
+
+#. module: legal_request
+msgid "Assign"
+msgstr "إسناد"
+
+#. module: legal_request
+msgid "Start Work"
+msgstr "بدء المعالجة"
+
+#. module: legal_request
+msgid "Resume"
+msgstr "استئناف"
+
+#. module: legal_request
+msgid "Wait On Requester"
+msgstr "بانتظار مقدّم الطلب"
+
+#. module: legal_request
+msgid "Wait On External"
+msgstr "بانتظار جهة خارجية"
+
+#. module: legal_request
+msgid "Submit For Approval"
+msgstr "رفع للمصادقة"
+
+#. module: legal_request
+msgid "Approve"
+msgstr "مصادقة"
+
+#. module: legal_request
+msgid "Return For Rework"
+msgstr "إعادة للتعديل"
+
+#. module: legal_request
+msgid "Return"
+msgstr "إعادة"
+
+#. module: legal_request
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: legal_request
+msgid "Convert"
+msgstr "تحويل"
+
+#. module: legal_request
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: legal_request
+msgid "Reset To Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: legal_request
+msgid "Back"
+msgstr "رجوع"
+
+#. module: legal_request
+msgid "Legal Requests"
+msgstr "طلبات الشؤون القانونية"
+
+#. module: legal_request
+msgid "Requests"
+msgstr "الطلبات"
+
+#. module: legal_request
+msgid "My Requests"
+msgstr "طلباتي"
+
+#. module: legal_request
+msgid "Unassigned"
+msgstr "غير مُسندة"
+
+#. module: legal_request
+msgid "Awaiting Approval"
+msgstr "بانتظار المصادقة"
+
+#. module: legal_request
+msgid "Request Categories"
+msgstr "أصناف الطلبات"
+
+#. module: legal_request
+msgid "Request Category"
+msgstr "صنف الطلب"
+
+#. module: legal_request
+msgid "Legal Request"
+msgstr "طلب قانوني"
+
+#. module: legal_request
+msgid "Approve Request"
+msgstr "مصادقة الطلب"
+
+#. module: legal_request
+msgid "Cancel Request"
+msgstr "إلغاء الطلب"
+
+#. module: legal_request
+msgid "New Letter From Request"
+msgstr "كتاب جديد من الطلب"
+
+#. module: legal_request
+msgid "Letters"
+msgstr "الكتب"
+
+#. module: legal_request
+msgid "My Team"
+msgstr "فريقي"
+
+#. module: legal_request
+msgid "Open"
+msgstr "المفتوحة"
+
+#. module: legal_request
+msgid "Due This Week"
+msgstr "مستحقة هذا الأسبوع"
+
+#. module: legal_request
+msgid "High Priority"
+msgstr "أولوية عالية"
+
+#. module: legal_request
+msgid "Status"
+msgstr "الحالة"
+
+#. module: legal_request
+msgid "Department"
+msgstr "القسم"
+
+#. module: legal_request
+msgid "Officer"
+msgstr "الموظف"
+
+#. module: legal_request
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: legal_request
+msgid "Identity"
+msgstr "الهوية"
+
+#. module: legal_request
+msgid "Triage"
+msgstr "الفرز"
+
+#. module: legal_request
+msgid "The Request"
+msgstr "الطلب"
+
+#. module: legal_request
+msgid "Request"
+msgstr "الطلب"
+
+#. module: legal_request
+msgid "Detail"
+msgstr "التفاصيل"
+
+#. module: legal_request
+msgid "Response"
+msgstr "الرد"
+
+#. module: legal_request
+msgid "Approval"
+msgstr "المصادقة"
+
+#. module: legal_request
+msgid "Conversion"
+msgstr "التحويل"
+
+#. module: legal_request
+msgid "Cancellation"
+msgstr "الإلغاء"
+
+#. module: legal_request
+msgid "CONSULT"
+msgstr "CONSULT"
+
+#. module: legal_request
+msgid "Review of the fuel supply contract"
+msgstr "مراجعة عقد تجهيز الوقود"
+
+#. module: legal_request
+msgid "The conditions attached, or why the answer is signed as it stands."
+msgstr "الشروط المرفقة، أو سبب توقيع الجواب كما هو."
+
+#. module: legal_request
+msgid "The full question, in the requester's own words."
+msgstr "السؤال كاملاً بكلمات مقدّم الطلب."
+
+#. module: legal_request
+msgid "What the approver wants changed, in their words."
+msgstr "ما يريد المصادِق تغييره بكلماته."
+
+#. module: legal_request
+msgid "What the department answered."
+msgstr "ما أجابت به الدائرة."
+
+#. module: legal_request
+msgid "Why the request is being dropped."
+msgstr "سبب إسقاط الطلب."
+
+#. module: legal_request
+msgid ""
+"A cancellation needs a reason. Without it, a dropped request is "
+"indistinguishable from a mistake."
+msgstr ""
+"الإلغاء يحتاج إلى سبب. فمن دونه لا يمكن تمييز الطلب المُسقَط عن الخطأ."
+
+#. module: legal_request
+msgid "A cancelled request has nothing to convert."
+msgstr "لا يوجد في الطلب الملغى ما يُحوَّل."
+
+#. module: legal_request
+msgid ""
+"A return needs a reason. Without it the officer reworking the request is "
+"guessing at what the approver wanted."
+msgstr ""
+"الإعادة تحتاج إلى سبب. فمن دونه يبقى الموظف الذي يعيد معالجة الطلب يخمّن ما "
+"أراده المصادِق."
+
+#. module: legal_request
+msgid "Approved (%s)."
+msgstr "تمت المصادقة (%s)."
+
+#. module: legal_request
+msgid "Assigned to %s."
+msgstr "أُسند إلى %s."
+
+#. module: legal_request
+msgid "Cancelled: %s"
+msgstr "أُلغي: %s"
+
+#. module: legal_request
+msgid "Converted into %s."
+msgstr "حُوّل إلى %s."
+
+#. module: legal_request
+msgid "Letter raised from this request: %s"
+msgstr "كتاب صادر عن هذا الطلب: %s"
+
+#. module: legal_request
+msgid ""
+"Name the officer who will work “%s” before assigning it. An assignment with "
+"no owner is a request nobody is watching."
+msgstr ""
+"حدّد الموظف الذي سيعالج «%s» قبل إسناده. فالإسناد بلا مالك طلبٌ لا يتابعه "
+"أحد."
+
+#. module: legal_request
+msgid "New"
+msgstr "جديد"
+
+#. module: legal_request
+msgid "New Request"
+msgstr "طلب جديد"
+
+#. module: legal_request
+msgid ""
+"Only an approver or the legal manager may sign off a request. The officer "
+"prepares the answer; the approver stands behind it."
+msgstr ""
+"لا يصادق على الطلب إلا مصادِق أو المدير القانوني. الموظف يُعدّ الجواب، "
+"والمصادِق يقف خلفه."
+
+#. module: legal_request
+msgid "Overdue can only be searched for equality."
+msgstr "لا يمكن البحث في التأخر إلا بالمساواة."
+
+#. module: legal_request
+msgid "Request closed."
+msgstr "أُغلق الطلب."
+
+#. module: legal_request
+msgid "Request submitted to the legal department."
+msgstr "قُدّم الطلب إلى الشؤون القانونية."
+
+#. module: legal_request
+msgid "Returned for rework: %s"
+msgstr "أُعيد للتعديل: %s"
+
+#. module: legal_request
+msgid "Submitted for approval."
+msgstr "رُفع للمصادقة."
+
+#. module: legal_request
+msgid ""
+"The target response date cannot fall before the request was raised. The "
+"clock starts on the request date, not before it."
+msgstr ""
+"لا يجوز أن يسبق تاريخ الرد المستهدف تاريخ رفع الطلب. تبدأ المدة من تاريخ "
+"الطلب لا قبله."
+
+#. module: legal_request
+msgid ""
+"Triage and assignment are a legal officer's decision. A clerk registers what"
+" arrived; an officer decides who works it."
+msgstr ""
+"الفرز والإسناد من صلاحية الموظف القانوني. الكاتب يسجّل ما ورد، والموظف يقرّر"
+" من يعالجه."
+
+#. module: legal_request
+msgid "Waiting on an external body to respond."
+msgstr "بانتظار رد جهة خارجية."
+
+#. module: legal_request
+msgid "Waiting on the requester for further information."
+msgstr "بانتظار مقدّم الطلب لمزيد من المعلومات."
+
+#. module: legal_request
+msgid "“%(ref)s” is %(state)s, and cannot be %(action)s from there."
+msgstr "«%(ref)s» في حالة %(state)s، ولا يمكن %(action)s من هناك."
+
+#. module: legal_request
+msgid ""
+"“%s” has a register number and is part of the department's record. Cancel it"
+" with a reason instead of deleting it - a gap in the numbering is a question"
+" nobody can answer later."
+msgstr ""
+"«%s» يحمل عدداً في السجل وهو جزء من قيود الدائرة. ألغِه مع ذكر السبب بدلاً "
+"من حذفه — فالفجوة في الترقيم سؤال لا يستطيع أحد الإجابة عنه لاحقاً."
+
+#. module: legal_request
+msgid ""
+"“%s” has no response to approve. Write the department's answer before "
+"sending it up - an approver cannot sign a blank."
+msgstr ""
+"«%s» لا يتضمن رداً للمصادقة عليه. اكتب جواب الدائرة قبل رفعه — فالمصادِق لا "
+"يوقّع على فراغ."
+
+#. module: legal_request
+msgid "“%s” is already finished and cannot be cancelled."
+msgstr "«%s» منتهٍ أصلاً ولا يمكن إلغاؤه."
+
+#. module: legal_request
+msgid "approved"
+msgstr "المصادقة عليه"
+
+#. module: legal_request
+msgid "assigned"
+msgstr "إسناده"
+
+#. module: legal_request
+msgid "closed"
+msgstr "إغلاقه"
+
+#. module: legal_request
+msgid "put on hold"
+msgstr "تعليقه"
+
+#. module: legal_request
+msgid "reopened"
+msgstr "إعادة فتحه"
+
+#. module: legal_request
+msgid "returned"
+msgstr "إعادته"
+
+#. module: legal_request
+msgid "started"
+msgstr "بدء معالجته"
+
+#. module: legal_request
+msgid "submitted"
+msgstr "تقديمه"
+
+#. module: legal_request
+msgid "submitted for approval"
+msgstr "رفعه للمصادقة"
+
+#. module: legal_request
+msgid "triaged"
+msgstr "فرزه"
+
+#. module: legal_request
+msgid ""
+"A counterparty the request concerns - a supplier, a claimant, an employee."
+msgstr "طرف مقابل يخص الطلب — مورّد أو مدّعٍ أو موظف."
+
+#. module: legal_request
+msgid ""
+"A restricted request is hidden from clerks and officers who are not on it; "
+"only its requester, its assigned officer, its manager and the legal manager "
+"see it."
+msgstr ""
+"الطلب المقيّد محجوب عن الكتّاب والموظفين غير المعنيين به؛ لا يراه إلا مقدّمه"
+" والموظف المكلّف به ومديره والمدير القانوني."
+
+#. module: legal_request
+msgid "A short, stable handle used in imports and reports, e.g. CONSULT."
+msgstr "معرّف قصير وثابت يُستخدم في الاستيراد والتقارير، مثل CONSULT."
+
+#. module: legal_request
+msgid ""
+"How many days the request has been open. Recomputed on read, never stored, "
+"because it changes every midnight."
+msgstr ""
+"عدد الأيام التي بقي فيها الطلب مفتوحاً. يُحتسب عند القراءة ولا يُخزَّن لأنه "
+"يتغيّر كل منتصف ليل."
+
+#. module: legal_request
+msgid "Leave empty to share the category across companies."
+msgstr "اتركه فارغاً لمشاركة الصنف بين الشركات."
+
+#. module: legal_request
+msgid ""
+"One line naming what is being asked, e.g. Review of the fuel supply "
+"contract."
+msgstr "سطر واحد يسمّي المطلوب، مثل: مراجعة عقد تجهيز الوقود."
+
+#. module: legal_request
+msgid ""
+"Open, and past its target response date. Read live, so it turns true at "
+"midnight with nobody writing to the record."
+msgstr ""
+"مفتوح وتجاوز تاريخ الرد المستهدف. يُقرأ لحظياً، فيصبح صحيحاً عند منتصف الليل"
+" دون أي كتابة على السجل."
+
+#. module: legal_request
+msgid ""
+"The approver's words - the conditions attached, or why it was signed as it "
+"stands."
+msgstr "كلمات المصادِق — الشروط المرفقة، أو سبب التوقيع عليه كما هو."
+
+#. module: legal_request
+msgid ""
+"The conditions attached, or why the answer is signed as it stands. Required "
+"where the decision is conditional."
+msgstr ""
+"الشروط المرفقة، أو سبب توقيع الجواب كما هو. مطلوبة عندما يكون القرار "
+"مشروطاً."
+
+#. module: legal_request
+msgid ""
+"The day the request was raised. Age and lateness are counted from here."
+msgstr "يوم رفع الطلب. منه يُحتسب العمر والتأخر."
+
+#. module: legal_request
+msgid ""
+"The department's number for this request, REQ/YYYY/####. Allocated when the "
+"request leaves draft, so a discarded draft burns no number."
+msgstr ""
+"عدد الدائرة لهذا الطلب، REQ/YYYY/####. يُخصَّص عند خروج الطلب من المسودة، "
+"فلا تستهلك المسودة المهملة رقماً."
+
+#. module: legal_request
+msgid ""
+"The downstream record this request turned into - an official letter, a "
+"registered document, a procedure file. Set by the conversion."
+msgstr ""
+"السجل اللاحق الذي تحوّل إليه هذا الطلب — كتاب رسمي أو مستند مُسجّل أو ملف "
+"معاملة. يُضبط عند التحويل."
+
+#. module: legal_request
+msgid "The legal officer who works the request. Set at triage."
+msgstr "الموظف القانوني الذي يعالج الطلب. يُحدَّد عند الفرز."
+
+#. module: legal_request
+msgid ""
+"The legal-department request this letter was raised to answer. Empty for the"
+" ordinary post that arrived without one."
+msgstr ""
+"طلب الشؤون القانونية الذي صدر هذا الكتاب للإجابة عنه. يبقى فارغاً للبريد "
+"الاعتيادي الذي ورد بلا طلب."
+
+#. module: legal_request
+msgid "The manager accountable for the answer."
+msgstr "المدير المسؤول عن الجواب."
+
+#. module: legal_request
+msgid ""
+"The model of the downstream record, kept alongside the reference so a report"
+" can group on it without dereferencing every row."
+msgstr ""
+"نوع السجل اللاحق، يُحفظ إلى جانب المرجع كي يتمكّن تقرير من التجميع عليه دون "
+"فكّ كل سطر."
+
+#. module: legal_request
+msgid "The person who asked. Defaults to whoever is logging the request."
+msgstr "الشخص الذي طلب. الافتراضي هو من يسجّل الطلب."
+
+#. module: legal_request
+msgid ""
+"The section that raised this, e.g. Finance, Human Resources, Procurement."
+msgstr "القسم الذي رفع الطلب، مثل: المالية، الموارد البشرية، المشتريات."
+
+#. module: legal_request
+msgid ""
+"The triage desk's first guess at what a request of this category turns into."
+" It pre-selects the conversion; it does not force it."
+msgstr ""
+"تخمين مكتب الفرز الأول لما يتحوّل إليه طلب من هذا الصنف. يُرشِّح التحويل "
+"مسبقاً ولا يفرضه."
+
+#. module: legal_request
+msgid ""
+"What class of request this is. Drives the triage desk's first guess at what "
+"it will become."
+msgstr "صنف هذا الطلب. يوجّه تخمين مكتب الفرز الأول لما سيتحوّل إليه."
+
+#. module: legal_request
+msgid "What the approver decided. Recorded by the approval dialog."
+msgstr "ما قرّره المصادِق. يُسجّله مربّع حوار المصادقة."
+
+#. module: legal_request
+msgid ""
+"What the approver wants changed, in their words. This is what the rework is "
+"corrected against, so “redo it” is not an answer."
+msgstr ""
+"ما يريد المصادِق تغييره بكلماته. عليه يُصحَّح العمل المُعاد، فـ«أعِده» ليست "
+"إجابة."
+
+#. module: legal_request
+msgid ""
+"What the department answered. Filled in as the officer works and frozen at "
+"approval."
+msgstr "ما أجابت به الدائرة. يُكتب أثناء عمل الموظف ويُجمَّد عند المصادقة."
+
+#. module: legal_request
+msgid ""
+"What the department calls this class of request, e.g. Legal Consultation."
+msgstr "ما تسمّي به الدائرة هذا الصنف من الطلبات، مثل: استشارة قانونية."
+
+#. module: legal_request
+msgid ""
+"When the department has undertaken to respond. Lateness is measured against "
+"this."
+msgstr "الموعد الذي تعهّدت الدائرة بالرد فيه. يُقاس التأخر عليه."
+
+#. module: legal_request
+msgid "Which of the company's legal entities the request concerns."
+msgstr "أيّ الكيانات القانونية للشركة يخصّه الطلب."
+
+#. module: legal_request
+msgid ""
+"Why the request is being dropped. The requester will ask, and so will the "
+"auditor."
+msgstr "سبب إسقاط الطلب. سيسأل مقدّمه، وسيسأل المدقّق."
+
+#. module: legal_request
+msgid "Name the kinds of question the department fields"
+msgstr "سمِّ أنواع الأسئلة التي تتلقاها الدائرة"
+
+#. module: legal_request
+msgid ""
+"A category is a row, not a hard-coded list. A department that starts "
+"receiving a new class of request adds one here, tells the triage desk what "
+"it usually becomes, and every board understands it at once."
+msgstr ""
+"الصنف سطرٌ لا قائمة مثبّتة في الشيفرة. الدائرة التي تبدأ بتلقّي نوع جديد من "
+"الطلبات تضيفه هنا، وتخبر مكتب الفرز بما يتحوّل إليه عادة، فتفهمه كل اللوحات "
+"في الحال."
+
+#. module: legal_request
+msgid ""
+"The target kind is the triage desk's first guess at what a request of this "
+"category becomes. It pre-selects the conversion; it never forces it."
+msgstr ""
+"النوع المستهدف هو تخمين مكتب الفرز الأول لما يتحوّل إليه طلب من هذا الصنف. "
+"يُرشِّح التحويل مسبقاً ولا يفرضه أبداً."
+
+#. module: legal_request
+msgid ""
+"Convert turns the request into what it called for. The base raises an "
+"official letter on the register; an integrator wires a case, a contract or "
+"an opinion onto the same button."
+msgstr ""
+"التحويل يجعل الطلب ما دعا إليه. الأساس يُصدر كتاباً رسمياً في السجل؛ ويربط "
+"المُكامِل معاملةً أو عقداً أو رأياً بالزر نفسه."
+
+#. module: legal_request
+msgid ""
+"This is the department's front door. A department writes a question here - "
+"review this contract, is this dismissal safe, what deed do we need - and the"
+" triage desk turns it into whatever it takes to answer: a letter, an "
+"opinion, a file."
+msgstr ""
+"هذا هو باب الدائرة. يكتب قسمٌ سؤاله هنا — راجعوا هذا العقد، هل هذا الفصل "
+"آمن، أيّ وكالة نحتاج — فيحوّله مكتب الفرز إلى ما يلزم للإجابة: كتاب أو رأي "
+"أو ملف."
+
+#. module: legal_request
+msgid "Log the first request"
+msgstr "سجّل أول طلب"
+
+#. module: legal_request
+msgid "Nothing on your desk"
+msgstr "لا شيء على مكتبك"
+
+#. module: legal_request
+msgid "Requests you raised or were assigned appear here."
+msgstr "تظهر هنا الطلبات التي رفعتها أو أُسندت إليك."
+
+#. module: legal_request
+msgid "The triage queue is empty"
+msgstr "طابور الفرز فارغ"
+
+#. module: legal_request
+msgid ""
+"Requests that have arrived but nobody is yet working. Triage them onto an "
+"officer."
+msgstr "طلبات وردت ولم يعمل عليها أحد بعد. افرزها وأسندها إلى موظف."
+
+#. module: legal_request
+msgid "Nothing waiting for a signature"
+msgstr "لا شيء ينتظر التوقيع"
+
+#. module: legal_request
+msgid ""
+"Answers the officers have prepared and submitted, waiting for an approver to"
+" sign off."
+msgstr "أجوبة أعدّها الموظفون ورفعوها، تنتظر مصادِقاً يوقّعها."
+
+#. module: legal_request
+msgid "Nothing is late"
+msgstr "لا شيء متأخر"
+
+#. module: legal_request
+msgid "Open requests past the date the department undertook to respond."
+msgstr "طلبات مفتوحة تجاوزت الموعد الذي تعهّدت الدائرة بالرد فيه."
+
+#. module: legal_request
+msgid ""
+"A cancelled request keeps its number and stays in the record. The reason is "
+"what tells the requester, the manager and the auditor that this was a "
+"decision and not a mistake."
+msgstr ""
+"الطلب الملغى يحتفظ بعدده ويبقى في السجل. السبب هو ما يخبر مقدّم الطلب "
+"والمدير والمدقّق أن هذا قرار لا خطأ."
+
+#. module: legal_request
+msgid ""
+"The request goes back to the officer in progress. The reason is what the "
+"rework is corrected against, so “redo it” is not an answer."
+msgstr ""
+"يعود الطلب إلى الموظف قيد المعالجة. السبب هو ما يُصحَّح عليه العمل المُعاد، "
+"فـ«أعِده» ليست إجابة."

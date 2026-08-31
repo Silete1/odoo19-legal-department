@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Multi-company first: an opinion belongs to the company that asked for
+            it, and never leaks across companies.
+        -->
+        <record id="rule_legal_opinion_company" model="ir.rule">
+            <field name="name">Opinion: own company</field>
+            <field name="model_id" ref="model_legal_opinion"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!--
+            Confidentiality. A privileged opinion - a labour complaint, a
+            disciplinary question naming an employee - is visible to the people
+            named on it (researcher, reviewer, approver, requester) and to the
+            legal manager, and to nobody else. Written on the three working groups
+            so the manager and auditor keep an unrestricted view through the rule
+            below, which is easier to trust than one global clause OR-ed with a
+            manager exception.
+        -->
+        <record id="rule_legal_opinion_confidential" model="ir.rule">
+            <field name="name">Opinion: confidential ones are restricted</field>
+            <field name="model_id" ref="model_legal_opinion"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', '|', '|', ('confidential', '=', False), ('legal_officer_id', '=', user.id), ('reviewer_id', '=', user.id), ('approver_id', '=', user.id), ('requester_id', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_legal_opinion_manager" model="ir.rule">
+            <field name="name">Opinion: the legal manager and auditor see everything</field>
+            <field name="model_id" ref="model_legal_opinion"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

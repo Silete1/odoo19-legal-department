@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            The intake catalogue. English in the source; the Iraqi register is
+            shipped as the ar.po translation. Each category carries the triage
+            desk's first guess at what it becomes, which pre-selects the convert
+            hook without ever forcing it.
+        -->
+
+        <record id="category_contract_review" model="legal.request.category">
+            <field name="name">Contract Review</field>
+            <field name="code">CONTRACT</field>
+            <field name="sequence">10</field>
+            <field name="default_target_kind">contract</field>
+        </record>
+
+        <record id="category_legal_consultation" model="legal.request.category">
+            <field name="name">Legal Consultation</field>
+            <field name="code">CONSULT</field>
+            <field name="sequence">20</field>
+            <field name="default_target_kind">consultation</field>
+        </record>
+
+        <record id="category_legal_opinion" model="legal.request.category">
+            <field name="name">Legal Opinion</field>
+            <field name="code">OPINION</field>
+            <field name="sequence">30</field>
+            <field name="default_target_kind">opinion</field>
+        </record>
+
+        <record id="category_dispute" model="legal.request.category">
+            <field name="name">Dispute</field>
+            <field name="code">DISPUTE</field>
+            <field name="sequence">40</field>
+            <field name="default_target_kind">dispute</field>
+        </record>
+
+        <record id="category_claim" model="legal.request.category">
+            <field name="name">Claim</field>
+            <field name="code">CLAIM</field>
+            <field name="sequence">50</field>
+            <field name="default_target_kind">claim</field>
+        </record>
+
+        <record id="category_power_of_attorney" model="legal.request.category">
+            <field name="name">Power Of Attorney</field>
+            <field name="code">POA</field>
+            <field name="sequence">60</field>
+            <field name="default_target_kind">poa</field>
+        </record>
+
+        <record id="category_official_letter" model="legal.request.category">
+            <field name="name">Official Letter</field>
+            <field name="code">LETTER</field>
+            <field name="sequence">70</field>
+            <field name="default_target_kind">letter</field>
+        </record>
+
+        <record id="category_compliance" model="legal.request.category">
+            <field name="name">Compliance</field>
+            <field name="code">COMPLY</field>
+            <field name="sequence">80</field>
+            <field name="default_target_kind">compliance</field>
+        </record>
+
+        <record id="category_property" model="legal.request.category">
+            <field name="name">Property</field>
+            <field name="code">PROPERTY</field>
+            <field name="sequence">90</field>
+            <field name="default_target_kind">property</field>
+        </record>
+
+        <record id="category_other" model="legal.request.category">
+            <field name="name">Other</field>
+            <field name="code">OTHER</field>
+            <field name="sequence">100</field>
+            <field name="default_target_kind">other</field>
+        </record>
+
+    </data>
+</odoo>

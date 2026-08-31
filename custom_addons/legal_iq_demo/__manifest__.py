@@ -64,6 +64,13 @@ file numbers are invented.
         "legal_iq_chamber",
         "legal_iq_social_security",
         "legal_iq_residency",
+        # The corporate legal domains: the demo pack is the single place that
+        # seeds transactional showcase records, so every screen has real work on
+        # it the moment it is opened, and the product modules stay clean seed.
+        "legal_request",
+        "legal_contract",
+        "legal_litigation",
+        "legal_opinion",
     ],
     "data": [
         "data/demo_language.xml",
@@ -75,6 +82,10 @@ file numbers are invented.
         "data/demo_cases.xml",
         "data/demo_correspondence.xml",
         "data/demo_letter_templates.xml",
+        "data/demo_requests.xml",
+        "data/demo_contracts.xml",
+        "data/demo_lawsuits.xml",
+        "data/demo_opinions.xml",
     ],
     "installable": True,
     "application": False,
