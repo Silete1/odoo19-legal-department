@@ -163,6 +163,7 @@ class TestLegalRequest(TransactionCase):
         request = self._make_request(
             user=self.clerk,
             state="in_progress",
+            request_date=today - timedelta(days=10),
             target_response_date=today - timedelta(days=3),
         )
         self.assertTrue(request.is_overdue)
@@ -176,6 +177,7 @@ class TestLegalRequest(TransactionCase):
         late = self._make_request(
             user=self.clerk,
             state="in_progress",
+            request_date=today - timedelta(days=10),
             target_response_date=today - timedelta(days=1),
         )
         on_time = self._make_request(

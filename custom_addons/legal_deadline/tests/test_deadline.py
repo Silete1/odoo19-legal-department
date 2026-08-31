@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from odoo import fields
-from odoo.exceptions import AccessError, UserError
+from odoo.exceptions import AccessError
 from odoo.tests.common import TransactionCase, new_test_user, tagged
 
 
@@ -175,13 +175,13 @@ class TestLegalDeadline(TransactionCase):
     def test_auditor_cannot_write(self):
         row = self.env["legal.deadline"].with_user(self.auditor).search([], limit=1)
         self.assertTrue(row)
-        with self.assertRaises((AccessError, UserError)):
+        with self.assertRaises(AccessError):
             row.write({"name": "معدل"})
 
     def test_clerk_cannot_write_either(self):
         row = self.env["legal.deadline"].with_user(self.clerk).search([], limit=1)
         self.assertTrue(row)
-        with self.assertRaises((AccessError, UserError)):
+        with self.assertRaises(AccessError):
             row.write({"state": "done"})
 
     # ------------------------------------------------------------------

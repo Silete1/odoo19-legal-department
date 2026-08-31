@@ -8,6 +8,29 @@ from .common import LegalProcedureCommon
 class TestWizards(LegalProcedureCommon):
     """The two dialogs a clerk actually uses, driven the way the client drives them."""
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        Users = cls.env["res.users"].with_context(no_reset_password=True)
+        cls.clerk = Users.create(
+            {
+                "name": "wiz_clerk",
+                "login": "wiz_clerk",
+                "group_ids": [
+                    (6, 0, [cls.env.ref("legal_core.group_legal_clerk").id])
+                ],
+            }
+        )
+        cls.approver = Users.create(
+            {
+                "name": "wiz_approver",
+                "login": "wiz_approver",
+                "group_ids": [
+                    (6, 0, [cls.env.ref("legal_core.group_legal_approver").id])
+                ],
+            }
+        )
+
     def test_the_step_dialog_offers_the_configured_fields_and_keeps_the_answers(self):
         self.env["legal.procedure.field"].create(
             {
@@ -87,12 +110,31 @@ class TestWizards(LegalProcedureCommon):
         )
         case = self._make_case()
         case.action_advance()
-        wizard = self.env["legal.case.return"].create(
-            {
-                "case_id": case.id,
-                "transition_id": move.id,
-                "reason": "بشرط تقديم الميزانية خلال شهر",
-            }
+        # The move ends the procedure, so its confirmation is the approver's;
+        # the same confirmation from a clerk is refused server-side.
+        refused = (
+            self.env["legal.case.return"]
+            .with_user(self.clerk)
+            .create(
+                {
+                    "case_id": case.id,
+                    "transition_id": move.id,
+                    "reason": "محاولة كاتب",
+                }
+            )
+        )
+        with self.assertRaises(UserError):
+            refused.action_confirm()
+        wizard = (
+            self.env["legal.case.return"]
+            .with_user(self.approver)
+            .create(
+                {
+                    "case_id": case.id,
+                    "transition_id": move.id,
+                    "reason": "بشرط تقديم الميزانية خلال شهر",
+                }
+            )
         )
         wizard.action_confirm()
         self.assertEqual(case.round, 1)

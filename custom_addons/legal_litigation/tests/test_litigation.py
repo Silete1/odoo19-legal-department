@@ -41,13 +41,19 @@ class TestLitigation(LegalLitigationCommon):
     # (b) A clerk cannot perform the approver-gated close
     # ------------------------------------------------------------------
     def test_clerk_cannot_close_a_case(self):
-        lawsuit = self._make_lawsuit()
+        # A case in a post-filing state carries its court and number - the
+        # filed-has-court constraint insists on it.
+        lawsuit = self._make_lawsuit(
+            court_id=self.court.id, court_case_number="55/2026"
+        )
         lawsuit.state = "in_progress"
         with self.assertRaises(UserError):
             lawsuit.with_user(self.clerk).action_close()
 
     def test_approver_may_close_a_case(self):
-        lawsuit = self._make_lawsuit()
+        lawsuit = self._make_lawsuit(
+            court_id=self.court.id, court_case_number="56/2026"
+        )
         lawsuit.state = "judgment"
         # The wizard is what an approver confirms; it carries the reason.
         wizard = (
@@ -68,7 +74,9 @@ class TestLitigation(LegalLitigationCommon):
 
     def test_clerk_cannot_close_through_the_wizard_either(self):
         """The gate is server-side, so the wizard path is closed to a clerk too."""
-        lawsuit = self._make_lawsuit()
+        lawsuit = self._make_lawsuit(
+            court_id=self.court.id, court_case_number="57/2026"
+        )
         lawsuit.state = "in_progress"
         wizard = (
             self.env["legal.lawsuit.reason"]

@@ -171,7 +171,11 @@ class LegalContractObligation(models.Model):
 
     def _search_is_overdue(self, operator, value):
         if operator not in ("=", "!=") or not isinstance(value, bool):
-            raise ValueError(_("Overdue can only be tested for true or false."))
+            # UserError, never ValueError: the ORM normalises ``= True`` to
+            # ``in [True]`` before calling us, catches UserError, and retries
+            # one value at a time through this method. A ValueError would turn
+            # the board filter into a crash instead.
+            raise UserError(_("Overdue can only be tested for true or false."))
         today = fields.Date.context_today(self)
         wants_overdue = (operator == "=" and value) or (operator == "!=" and not value)
         if wants_overdue:
@@ -276,15 +280,23 @@ class LegalContractObligation(models.Model):
             if obligation.frequency == "one_off":
                 continue
             company = obligation.company_id or self.env.company
-            for due in obligation._planned_due_dates():
-                period_key = fields.Date.to_string(due)
-                if Instance.search_count(
+            # One prefetch of the periods that already exist, archived rows
+            # included: an occurrence somebody archived still owns its slot in
+            # the unique index, and re-creating it would raise a duplicate key
+            # instead of skipping.
+            existing = set(
+                Instance.with_context(active_test=False)
+                .search(
                     [
                         ("obligation_id", "=", obligation.id),
-                        ("period_key", "=", period_key),
                         ("company_id", "=", company.id),
                     ]
-                ):
+                )
+                .mapped("period_key")
+            )
+            for due in obligation._planned_due_dates():
+                period_key = fields.Date.to_string(due)
+                if period_key in existing:
                     continue
                 Instance.create(
                     {
@@ -295,6 +307,7 @@ class LegalContractObligation(models.Model):
                         "company_id": company.id,
                     }
                 )
+                existing.add(period_key)
                 created += 1
         return created
 

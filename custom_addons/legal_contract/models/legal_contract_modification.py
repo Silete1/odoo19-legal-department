@@ -16,7 +16,7 @@ class LegalContractModification(models.Model):
     _name = "legal.contract.modification"
     _description = "Contract Amendment"
     _inherit = ["mail.thread", "mail.activity.mixin"]
-    _order = "date desc, sequence, id desc"
+    _order = "date desc, id desc"
     _rec_names_search = ["number", "description"]
 
     contract_id = fields.Many2one(

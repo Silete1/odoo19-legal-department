@@ -970,6 +970,7 @@ class LegalCase(models.Model):
                     if case.pending_group_id and not mine and not case.is_closed
                     else []
                 ),
+                "phases": phases,
                 "blockers": [] if case.is_closed else case._blockers(),
             }
 
@@ -1202,6 +1203,10 @@ class LegalCase(models.Model):
                     else {"done_on": False, "done_by_id": False}
                 )
                 check.write(values)
+        # The written payload (ticks included) must never be read back as the
+        # field's value: the ticks were consumed above and the counts they
+        # changed live on the check lines. Drop it so the next read recomputes.
+        self.invalidate_recordset(["walk_payload"])
 
     # ==================================================================
     # The single definition of "blocked"

@@ -189,8 +189,41 @@ class TestLegalCorrespondence(TransactionCase):
         entry.action_register()
         number = entry.our_number
 
-        wizard = self.env["legal.correspondence.void.wizard"].create(
-            {"correspondence_id": entry.id, "reason": "كتاب مكرر - صدر بالرقم السابق."}
+        # Striking a numbered entry out of the book is reserved for the
+        # follow-up officer and above; the clerk who typed it asks their
+        # officer. Both halves of that rule are exercised.
+        clerk = self.env["res.users"].create(
+            {
+                "name": "كاتب القيود",
+                "login": "corr_void_clerk",
+                "group_ids": [
+                    (6, 0, [self.env.ref("legal_core.group_legal_clerk").id])
+                ],
+            }
+        )
+        officer = self.env["res.users"].create(
+            {
+                "name": "ضابط المتابعة",
+                "login": "corr_void_officer",
+                "group_ids": [
+                    (6, 0, [self.env.ref("legal_core.group_legal_officer").id])
+                ],
+            }
+        )
+        refused = (
+            self.env["legal.correspondence.void.wizard"]
+            .with_user(clerk)
+            .create({"correspondence_id": entry.id, "reason": "محاولة كاتب."})
+        )
+        with self.assertRaises(UserError):
+            refused.action_void()
+
+        wizard = (
+            self.env["legal.correspondence.void.wizard"]
+            .with_user(officer)
+            .create(
+                {"correspondence_id": entry.id, "reason": "كتاب مكرر - صدر بالرقم السابق."}
+            )
         )
         wizard.action_void()
         self.assertEqual(entry.state, "void")

@@ -50,6 +50,10 @@ class LegalRegisterBookWizard(models.TransientModel):
     def action_print(self):
         """طباعة الدفتر"""
         self.ensure_one()
+        # config=False: the book draws its own formal letterhead on
+        # web.basic_layout, so the company-logo configurator an admin's first
+        # print would interpose has nothing to configure here and must not
+        # replace the report action.
         return self.env.ref("legal_reports.action_report_register_book").report_action(
-            self.register_id, data={"year": self.year}
+            self.register_id, data={"year": self.year}, config=False
         )

@@ -11,6 +11,29 @@ from .common import LegalProcedureCommon
 class TestCaseEngine(LegalProcedureCommon):
     """The transactional layer: the walk, the gate, the round and the trail."""
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        Users = cls.env["res.users"].with_context(no_reset_password=True)
+        cls.clerk = Users.create(
+            {
+                "name": "eng_clerk",
+                "login": "eng_clerk",
+                "group_ids": [
+                    (6, 0, [cls.env.ref("legal_core.group_legal_clerk").id])
+                ],
+            }
+        )
+        cls.approver = Users.create(
+            {
+                "name": "eng_approver",
+                "login": "eng_approver",
+                "group_ids": [
+                    (6, 0, [cls.env.ref("legal_core.group_legal_approver").id])
+                ],
+            }
+        )
+
     def test_a_new_file_lands_on_the_first_step(self):
         case = self._make_case()
         self.assertEqual(case.step_id, self.step_prepare)
@@ -46,7 +69,11 @@ class TestCaseEngine(LegalProcedureCommon):
         case.action_advance()
         self.assertEqual(case.step_id, self.step_submit)
         self.assertEqual(case.kind, "at_body")
-        case.action_advance()
+        # The last move closes the file, and closure is an approver's act:
+        # the clerk is refused, the approver makes it.
+        with self.assertRaises(UserError):
+            case.with_user(self.clerk).action_advance()
+        case.with_user(self.approver).action_advance()
         self.assertEqual(case.step_id, self.step_done)
         self.assertTrue(case.is_closed)
         self.assertEqual(case.outcome, "granted")
@@ -54,7 +81,7 @@ class TestCaseEngine(LegalProcedureCommon):
     def test_a_terminal_step_files_the_document_it_produced(self):
         case = self._make_case()
         case.action_advance()
-        case.action_advance()
+        case.with_user(self.approver).action_advance()
         self.assertTrue(case.result_document_id)
         self.assertEqual(case.result_document_id.document_type_id, self.result_type)
         # In the permanent register, not on the file: an expiring registration
@@ -74,7 +101,7 @@ class TestCaseEngine(LegalProcedureCommon):
 
     def test_the_engine_itself_may_move_the_file(self):
         case = self._make_case()
-        case._engine().write({"step_id": self.step_submit.id})
+        case._engine_write({"step_id": self.step_submit.id})
         self.assertEqual(case.step_id, self.step_submit)
 
     def test_a_blocking_document_stops_the_advance(self):
@@ -413,7 +440,7 @@ class TestCaseEngine(LegalProcedureCommon):
             }
         )
         case = self._make_case()
-        case._engine().write(
+        case._engine_write(
             {"sla_due_on": fields.Datetime.now() - relativedelta(days=3)}
         )
         raised = case._raise_due_escalations()
@@ -432,7 +459,7 @@ class TestCaseEngine(LegalProcedureCommon):
             }
         )
         case = self._make_case()
-        case._engine().write(
+        case._engine_write(
             {"sla_due_on": fields.Datetime.now() - relativedelta(days=3)}
         )
         case._raise_due_escalations()
@@ -470,9 +497,13 @@ class TestCaseEngine(LegalProcedureCommon):
     def test_a_closed_file_can_be_re_opened_and_it_shows(self):
         case = self._make_case()
         case.action_advance()
-        case.action_advance()
+        case.with_user(self.approver).action_advance()
         self.assertTrue(case.is_closed)
-        case.action_reopen()
+        # Re-opening reverses a closure somebody approved: reserved for the
+        # officer rung and above, so the clerk is refused first.
+        with self.assertRaises(UserError):
+            case.with_user(self.clerk).action_reopen()
+        case.with_user(self.approver).action_reopen()
         self.assertFalse(case.is_closed)
         self.assertEqual(case.round, 2)
         self.assertTrue(case.log_ids.filtered(lambda entry: entry.action == "reopen"))
