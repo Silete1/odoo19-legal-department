@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         غلاف الإضبارة - the cover sheet stapled to the physical file.
+
+         Everything a runner at a counter is asked, on one page: what the
+         file is, where it stands, what was paid, what papers are inside
+         and what happened to it last. The clerk fills the book number by
+         hand when the cover goes into the file, which is why that block
+         is dotted lines rather than data.
+         ================================================================ -->
+
+    <template id="report_case_cover_document">
+        <t t-set="company" t-value="o.company_id"/>
+        <t t-set="draw_letterhead" t-value="True"/>
+        <t t-call="web.basic_layout">
+
+            <div class="footer legal-rep-footer" dir="rtl">
+                <div class="text-center">
+                    إضبارة <span t-out="fmt(o.name)"/> -
+                    صفحة <span class="page"/> من <span class="topage"/>
+                </div>
+            </div>
+
+            <div class="page legal-rep" dir="rtl">
+
+                <t t-call="legal_correspondence.report_letter_head"/>
+
+                <div class="legal-rep-bookline">
+                    <span><b>الرقم:</b> <span class="legal-rep-dots"/></span>
+                    &#160;&#160;&#160;
+                    <span><b>التاريخ:</b> <span class="legal-rep-dots"/></span>
+                </div>
+
+                <div class="legal-rep-title">غلاف الإضبارة</div>
+                <div class="legal-rep-ref">
+                    <t t-out="fmt(o.name)"/> - <t t-out="o.procedure_type_id.name or ''"/>
+                </div>
+
+                <div class="legal-rep-section">بيانات الإضبارة</div>
+                <table class="legal-rep-facts">
+                    <tr>
+                        <td class="legal-rep-label">الموضوع</td>
+                        <td colspan="3" t-out="o.subject or ''"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">الشخص المعني</td>
+                        <td t-out="o.entity_id.name or ''"/>
+                        <td class="legal-rep-label">الجهة</td>
+                        <td t-out="o.body_id.name or ''"/>
+                    </tr>
+                    <tr t-if="o.current_body_id and o.current_body_id != o.body_id">
+                        <td class="legal-rep-label">الجهة الحالية</td>
+                        <td colspan="3" t-out="o.current_body_id.name"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">المرحلة الحالية</td>
+                        <td>
+                            <t t-out="o.step_id.name or ''"/>
+                            <t t-if="o.kind"> (<t t-out="kind_labels.get(o.kind, '')"/>)</t>
+                        </td>
+                        <td class="legal-rep-label">الجولة</td>
+                        <td t-out="fmt(o.round)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">فتحت في</td>
+                        <td t-out="fmt_date(o.date_open)"/>
+                        <td class="legal-rep-label">الموعد القانوني</td>
+                        <td t-out="fmt_date(o.date_deadline)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">النتيجة</td>
+                        <td t-out="outcome_labels.get(o.outcome, '') if o.outcome else 'غير محسومة'"/>
+                        <td class="legal-rep-label">أغلقت في</td>
+                        <td t-out="fmt_date(o.date_closed)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">المسؤول</td>
+                        <td t-out="o.user_id.name or ''"/>
+                        <td class="legal-rep-label">الوكالة</td>
+                        <td t-out="o.poa_id.display_name if o.poa_id else 'بدون وكالة'"/>
+                    </tr>
+                </table>
+
+                <div class="legal-rep-section">الرسوم</div>
+                <div t-if="not o.fee_ids" class="legal-rep-empty">لا رسوم على هذه الإضبارة.</div>
+                <table t-if="o.fee_ids" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">ت</th>
+                            <th style="width: 30%;">البيان</th>
+                            <th style="width: 14%;">المقرر</th>
+                            <th style="width: 14%;">المدفوع</th>
+                            <th style="width: 13%;">رقم الوصل</th>
+                            <th style="width: 12%;">تاريخ الدفع</th>
+                            <th style="width: 12%;">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.fee_ids" t-as="f">
+                            <td t-out="fmt(f_index + 1)"/>
+                            <td t-out="f.name or ''"/>
+                            <td class="legal-rep-center" t-out="fmt_amount(f.amount, f.currency_id)"/>
+                            <td class="legal-rep-center" t-out="fmt_amount(f.amount_paid, f.currency_id) if f.state == 'paid' else ''"/>
+                            <td class="legal-rep-center" t-out="fmt(f.receipt_number or '')"/>
+                            <td class="legal-rep-center" t-out="fmt_date(f.paid_on)"/>
+                            <td class="legal-rep-center" t-out="fee_state_labels.get(f.state, '')"/>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2">المجموع</td>
+                            <td class="legal-rep-center"
+                                t-out="fmt_amount(sum(o.fee_ids.mapped('amount')), o.currency_id)"/>
+                            <td class="legal-rep-center"
+                                t-out="fmt_amount(sum(o.fee_ids.mapped('amount_paid')), o.currency_id)"/>
+                            <td colspan="3"/>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="legal-rep-section">كشف المستندات</div>
+                <t t-set="doc_lines" t-value="o.document_ids.filtered(lambda line: not line.superseded)"/>
+                <div t-if="not doc_lines" class="legal-rep-empty">لا مستندات مطلوبة.</div>
+                <table t-if="doc_lines" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">ت</th>
+                            <th style="width: 45%;">المستند</th>
+                            <th style="width: 12%;">مطلوب؟</th>
+                            <th style="width: 18%;">الحالة</th>
+                            <th style="width: 20%;">تاريخ التدقيق</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc_lines" t-as="d">
+                            <td t-out="fmt(d_index + 1)"/>
+                            <td>
+                                <t t-out="d.document_type_id.name or d.requirement_id.display_name or ''"/>
+                                <t t-if="d.is_blocking"> <b>(مانع)</b></t>
+                            </td>
+                            <td class="legal-rep-center" t-out="'نعم' if d.is_required else 'اختياري'"/>
+                            <td class="legal-rep-center" t-out="doc_status_labels.get(d.line_status, '')"/>
+                            <td class="legal-rep-center" t-out="fmt_date(d.verified_on)"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="legal-rep-section">آخر الإجراءات (الأحدث أولاً)</div>
+                <t t-set="trail" t-value="o.log_ids.sorted('logged_on', reverse=True)[:15]"/>
+                <div t-if="not trail" class="legal-rep-empty">لا إجراءات مدونة بعد.</div>
+                <table t-if="trail" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;">التاريخ</th>
+                            <th style="width: 16%;">الإجراء</th>
+                            <th style="width: 48%;">البيان</th>
+                            <th style="width: 20%;">بواسطة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="trail" t-as="log">
+                            <td class="legal-rep-center" t-out="fmt_datetime(log.logged_on)"/>
+                            <td class="legal-rep-center" t-out="log_action_labels.get(log.action, '')"/>
+                            <td t-out="log.description or ''"/>
+                            <td t-out="log.user_id.name or ''"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row legal-rep-sign-row">
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">منظم الإضبارة</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line" t-out="o.user_id.name or 'الاسم والتوقيع'"/>
+                    </div>
+                    <div class="col-4"/>
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">مدير القسم القانوني</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line">الاسم والتوقيع</div>
+                    </div>
+                </div>
+
+                <div class="legal-rep-printed">طبع بتاريخ <span t-out="printed_on"/>.</div>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_case_cover">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="legal_reports.report_case_cover_document"/>
+        </t>
+    </template>
+
+</odoo>

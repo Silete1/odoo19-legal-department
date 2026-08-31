@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Litigation exposure: what is claimed, in which court, standing as
+        what. claim_amount is a stored monetary, so summing it is honest;
+        the count sits beside it because ten small claims and one large one
+        are different problems with the same total.
+    -->
+
+    <record id="view_legal_reports_lawsuit_pivot" model="ir.ui.view">
+        <field name="name">legal.lawsuit.reports.pivot</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Lawsuit Analysis" sample="1">
+                <field name="court_id" type="row"/>
+                <field name="our_capacity" type="row"/>
+                <field name="state" type="col"/>
+                <field name="claim_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_lawsuit_graph" model="ir.ui.view">
+        <field name="name">legal.lawsuit.reports.graph</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Lawsuit Analysis" sample="1" type="bar">
+                <field name="court_id"/>
+                <field name="our_capacity"/>
+                <field name="claim_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_lawsuit" model="ir.actions.act_window">
+        <field name="name">Lawsuit Analysis</field>
+        <field name="res_model">legal.lawsuit</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">No lawsuits recorded yet</p>
+            <p>
+                Once cases are on the litigation register, this pivot shows the
+                exposure: claimed amounts by court, stage and our capacity.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_lawsuit_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_lawsuit"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_lawsuit_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_lawsuit_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_lawsuit"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_lawsuit_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+</odoo>

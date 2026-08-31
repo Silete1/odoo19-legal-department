@@ -11,3 +11,18 @@
     text-decoration: underline dotted;
     text-underline-offset: 3px;
 }
+
+// At 1366x768 the Configuration dropdown of a mature app outgrows the viewport
+// and its tail is unreachable - there is no scrollbar because web's Dropdown
+// gives its menu no height management at all. The menus are teleported into
+// the overlay container with exactly the classes below
+// (web/static/src/core/dropdown/dropdown.js:160-174), so an ancestor selector
+// on the menubar can never reach them; the cap has to sit on the menu itself.
+// It only ever bites on a menu taller than the viewport - which is broken
+// without it - and it deliberately excludes the two menus that manage their
+// own geometry: nested submenus (negative-margin alignment) and the mobile
+// bottom sheet (its own max-height against --sheet-max-height).
+.o-dropdown--menu.dropdown-menu:not(.o-dropdown--menu-submenu):not(.o_bottom_sheet_body) {
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}

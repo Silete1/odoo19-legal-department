@@ -61,9 +61,9 @@
                         </div>
                         <div class="o_kanban_record_body">
                             <div><field name="our_capacity"/> · <field name="opponent_names"/></div>
-                            <div t-if="record.court_id.raw_value"><i class="fa fa-university"/> <field name="court_id"/></div>
+                            <div t-if="record.court_id.raw_value"><i class="fa fa-university" title="Court"/> <field name="court_id"/></div>
                             <div t-if="record.next_hearing_date.raw_value">
-                                <i class="fa fa-calendar"/> <field name="next_hearing_date"/>
+                                <i class="fa fa-calendar" title="Next hearing"/> <field name="next_hearing_date"/>
                             </div>
                             <div t-if="record.claim_amount.raw_value">
                                 <field name="claim_amount"/>

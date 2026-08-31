@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Case analysis: where the department's files actually are and how the
+        months compare. Count is the honest measure here - the case's day
+        counters (our_days / their_days) and fee_total are computed live and
+        not stored, so a pivot cannot sum them; the priority is set high so
+        these views never hijack the pivot slot of another action on the model.
+    -->
+
+    <record id="view_legal_reports_case_pivot" model="ir.ui.view">
+        <field name="name">legal.case.reports.pivot</field>
+        <field name="model">legal.case</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Case Analysis" sample="1">
+                <field name="step_id" type="row"/>
+                <field name="body_id" type="row"/>
+                <field name="date_open" interval="month" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_case_graph" model="ir.ui.view">
+        <field name="name">legal.case.reports.graph</field>
+        <field name="model">legal.case</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Case Analysis" sample="1" type="bar">
+                <field name="body_id"/>
+                <field name="kind"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_case" model="ir.actions.act_window">
+        <field name="name">Case Analysis</field>
+        <field name="res_model">legal.case</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">No files to analyse yet</p>
+            <p>
+                Open files in Operations and this pivot answers where they sit -
+                by step, by body, by the month they were opened.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_case_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_case"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_case_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_case_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_case"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_case_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+</odoo>

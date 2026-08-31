@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Contract value by type and state. Both figures are stored: value is
+        typed, current_value is computed with store=True from the applied
+        amendments - so the pivot can honestly show the drift between what
+        was signed and what is owed now.
+    -->
+
+    <record id="view_legal_reports_contract_pivot" model="ir.ui.view">
+        <field name="name">legal.contract.reports.pivot</field>
+        <field name="model">legal.contract</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Contract Analysis" sample="1">
+                <field name="type_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="value" type="measure"/>
+                <field name="current_value" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_contract_graph" model="ir.ui.view">
+        <field name="name">legal.contract.reports.graph</field>
+        <field name="model">legal.contract</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Contract Analysis" sample="1" type="bar">
+                <field name="type_id"/>
+                <field name="current_value" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_contract" model="ir.actions.act_window">
+        <field name="name">Contract Analysis</field>
+        <field name="res_model">legal.contract</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">No contracts to analyse yet</p>
+            <p>
+                Once contracts are recorded, this pivot shows the portfolio's
+                value by type and state - as signed, and as amended.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_contract_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_contract"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_contract_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_contract_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_contract"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_contract_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+</odoo>

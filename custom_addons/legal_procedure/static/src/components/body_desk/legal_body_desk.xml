@@ -31,7 +31,9 @@
             <!-- «الطابق الثاني، شباك ٣، أحضر نسختين». Behind a disclosure
                  because it is long and it is read once, not every morning. -->
             <div class="o_legal_body_notes" t-if="state.notes &amp;&amp; body.counter_notes">
-                <t t-out="body.counter_notes"/>
+                <!-- Sanitised fields.Html, re-marked client-side: see the
+                     counterNotes getter for why this is safe. -->
+                <t t-out="counterNotes"/>
             </div>
 
             <div t-foreach="sections" t-as="section" t-key="section.key"

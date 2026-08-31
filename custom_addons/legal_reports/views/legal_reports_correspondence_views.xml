@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Register traffic: what went out and came in, to whom, month by month.
+        The register's own screens answer "where is letter 148"; this one
+        answers "how much does the Tax Commission actually write to us".
+    -->
+
+    <record id="view_legal_reports_correspondence_pivot" model="ir.ui.view">
+        <field name="name">legal.correspondence.reports.pivot</field>
+        <field name="model">legal.correspondence</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Correspondence Analysis" sample="1">
+                <field name="direction" type="row"/>
+                <field name="gov_body_id" type="row"/>
+                <field name="our_date" interval="month" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_correspondence_graph" model="ir.ui.view">
+        <field name="name">legal.correspondence.reports.graph</field>
+        <field name="model">legal.correspondence</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Correspondence Analysis" sample="1" type="bar">
+                <field name="gov_body_id"/>
+                <field name="direction"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_correspondence" model="ir.actions.act_window">
+        <field name="name">Correspondence Analysis</field>
+        <field name="res_model">legal.correspondence</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nothing in the register yet</p>
+            <p>
+                Once letters are registered, this pivot shows the traffic per
+                body and per month, outgoing against incoming.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_correspondence_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_correspondence"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_correspondence_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_correspondence_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_correspondence"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_correspondence_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+</odoo>

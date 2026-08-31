@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         تقرير موقف الدعوى - what the manager takes into the meeting.
+
+         Parties, court, where the case stands, every sitting with what
+         actually happened in it, and every judgment with its appeal
+         window - because the one date this department must never learn
+         late is the last day to appeal.
+         ================================================================ -->
+
+    <template id="report_lawsuit_status_document">
+        <t t-set="company" t-value="o.company_id"/>
+        <t t-set="draw_letterhead" t-value="True"/>
+        <t t-set="case_no" t-value="' / '.join([part for part in [o.court_case_number, o.court_case_year] if part])"/>
+        <t t-call="web.basic_layout">
+
+            <div class="footer legal-rep-footer" dir="rtl">
+                <div class="text-center">
+                    الدعوى <span t-out="fmt(o.reference)"/> -
+                    صفحة <span class="page"/> من <span class="topage"/>
+                </div>
+            </div>
+
+            <div class="page legal-rep" dir="rtl">
+
+                <t t-call="legal_correspondence.report_letter_head"/>
+
+                <div class="legal-rep-bookline">
+                    <span><b>الرقم:</b> <span class="legal-rep-dots"/></span>
+                    &#160;&#160;&#160;
+                    <span><b>التاريخ:</b> <span class="legal-rep-dots"/></span>
+                </div>
+
+                <div class="legal-rep-title">تقرير موقف الدعوى</div>
+                <div class="legal-rep-ref">
+                    <t t-out="fmt(o.reference)"/> - <t t-out="o.title or ''"/>
+                </div>
+
+                <div class="legal-rep-section">بيانات الدعوى</div>
+                <table class="legal-rep-facts">
+                    <tr>
+                        <td class="legal-rep-label">صفتنا</td>
+                        <td t-out="capacity_labels.get(o.our_capacity, '')"/>
+                        <td class="legal-rep-label">المرحلة</td>
+                        <td t-out="state_labels.get(o.state, '')"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">المحكمة</td>
+                        <td t-out="o.court_id.name or o.court_body_id.name or ''"/>
+                        <td class="legal-rep-label">رقم الدعوى / السنة</td>
+                        <td t-out="fmt(case_no)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">طرفنا</td>
+                        <td t-out="o.entity_id.name or ''"/>
+                        <td class="legal-rep-label">الخصوم</td>
+                        <td t-out="o.opponent_names or ''"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">مبلغ الدعوى</td>
+                        <td t-out="fmt_amount(o.claim_amount, o.currency_id)"/>
+                        <td class="legal-rep-label">درجة الخطورة</td>
+                        <td t-out="risk_labels.get(o.risk, '') if o.risk else ''"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">المحامي</td>
+                        <td>
+                            <t t-out="o.lawyer_id.name or ''"/>
+                            <t t-if="o.external_counsel_id"> / وكيل خارجي: <t t-out="o.external_counsel_id.name"/></t>
+                        </td>
+                        <td class="legal-rep-label">قيدت في</td>
+                        <td t-out="fmt_date(o.date_filed)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">الموعد القادم</td>
+                        <td t-out="fmt_date(o.next_deadline)"/>
+                        <td class="legal-rep-label">آخر تطور</td>
+                        <td t-out="o.latest_development or ''"/>
+                    </tr>
+                    <tr t-if="o.subject">
+                        <td class="legal-rep-label">الموضوع</td>
+                        <td colspan="3" t-out="o.subject"/>
+                    </tr>
+                </table>
+
+                <div class="legal-rep-section">أطراف الدعوى</div>
+                <div t-if="not o.party_ids" class="legal-rep-empty">لم تدون الأطراف بعد.</div>
+                <table t-if="o.party_ids" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">ت</th>
+                            <th style="width: 40%;">الاسم</th>
+                            <th style="width: 20%;">موقعه في الدعوى</th>
+                            <th style="width: 35%;">الصفة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.party_ids" t-as="p">
+                            <td t-out="fmt(p_index + 1)"/>
+                            <td t-out="p.partner_id.name or ''"/>
+                            <td class="legal-rep-center" t-out="role_labels.get(p.role, '')"/>
+                            <td t-out="p.capacity or ''"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="legal-rep-section">الجلسات</div>
+                <div t-if="not o.hearing_ids" class="legal-rep-empty">لا جلسات مدونة.</div>
+                <table t-if="o.hearing_ids" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">ت</th>
+                            <th style="width: 16%;">تاريخ الجلسة</th>
+                            <th style="width: 15%;">الغرض</th>
+                            <th style="width: 15%;">الحضور</th>
+                            <th style="width: 49%;">ما جرى فيها</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.hearing_ids.sorted('date')" t-as="h">
+                            <td t-out="fmt(h_index + 1)"/>
+                            <td class="legal-rep-center" t-out="fmt_datetime(h.date)"/>
+                            <td class="legal-rep-center" t-out="purpose_labels.get(h.purpose, '')"/>
+                            <td class="legal-rep-center" t-out="attendance_labels.get(h.attendance, '') if h.attendance else ''"/>
+                            <td t-out="h.result or ('لم تنعقد بعد' if not h.is_held else '')"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="legal-rep-section">الأحكام والقرارات ومدد الطعن</div>
+                <div t-if="not o.judgment_ids" class="legal-rep-empty">لم يصدر حكم أو قرار بعد.</div>
+                <table t-if="o.judgment_ids" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 11%;">التاريخ</th>
+                            <th style="width: 8%;">النوع</th>
+                            <th style="width: 10%;">النتيجة</th>
+                            <th style="width: 15%;">المبلغ المحكوم به</th>
+                            <th style="width: 11%;">التبليغ</th>
+                            <th style="width: 15%;">طريق الطعن</th>
+                            <th style="width: 14%;">آخر يوم للطعن</th>
+                            <th style="width: 16%;">مدة الطعن</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.judgment_ids" t-as="j">
+                            <tr>
+                                <td class="legal-rep-center" t-out="fmt_date(j.judgment_date)"/>
+                                <td class="legal-rep-center" t-out="ruling_labels.get(j.ruling_type, '')"/>
+                                <td class="legal-rep-center" t-out="favour_labels.get(j.in_our_favour, '')"/>
+                                <td class="legal-rep-center" t-out="fmt_amount(j.amount_awarded, j.currency_id) if j.amount_awarded else ''"/>
+                                <td class="legal-rep-center" t-out="fmt_date(j.tabligh_date)"/>
+                                <td class="legal-rep-center" t-out="remedy_labels.get(j.remedy, '') if j.remedy else ''"/>
+                                <td class="legal-rep-center" t-out="fmt_date(j.appeal_deadline)"/>
+                                <td class="legal-rep-center" t-out="appeal_labels.get(j.appeal_state, '')"/>
+                            </tr>
+                            <tr t-if="j.summary">
+                                <td colspan="8"><b>خلاصته:</b> <t t-out="j.summary"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <div class="row legal-rep-sign-row">
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">المحامي المسؤول</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line" t-out="o.lawyer_id.name or 'الاسم والتوقيع'"/>
+                    </div>
+                    <div class="col-4"/>
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">مدير القسم القانوني</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line">الاسم والتوقيع</div>
+                    </div>
+                </div>
+
+                <div class="legal-rep-printed">
+                    طبع بتاريخ <span t-out="printed_on"/> - موقف الدعوى كما هو مدون حتى تاريخ الطبع.
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_lawsuit_status">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="legal_reports.report_lawsuit_status_document"/>
+        </t>
+    </template>
+
+</odoo>

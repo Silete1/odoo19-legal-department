@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
     defineModels, getService, models, mountWithCleanup,
@@ -21,6 +22,9 @@ describe.current.tags("desktop");
  * quietly lost in a refactor.
  */
 let payload;
+// How many loads the mock server should fail before answering: the error
+// state below is exercised by failing exactly one.
+let failures;
 
 function basePayload() {
     return {
@@ -28,7 +32,9 @@ function basePayload() {
         numerals: "western",
         title: "The Mail Room",
         subtitle: "What arrived, what we are chasing, what must go out",
-        role: { is_manager: false, is_approver: false, landing_band: "files", label: "Clerk" },
+        role: { is_manager: false, is_approver: false, is_officer: false,
+                is_auditor: false, can_write: true,
+                landing_band: "files", label: "Clerk" },
         degraded: [],
         hero: {
             label: "Waiting for you",
@@ -151,6 +157,10 @@ class LegalDashboard extends models.Model {
     _name = "legal.dashboard";
 
     get_mail_room_data() {
+        if (failures > 0) {
+            failures--;
+            throw new Error("the register is unreachable");
+        }
         return payload;
     }
 
@@ -163,6 +173,7 @@ defineModels([LegalDashboard]);
 
 beforeEach(() => {
     payload = basePayload();
+    failures = 0;
 });
 
 async function open() {
@@ -281,4 +292,30 @@ test("a missing sibling model is stated once, not left as three blank columns", 
     await open();
     expect(".o_legal_degraded").toHaveCount(1);
     expect(".o_legal_degraded").toHaveText(/The procedure engine is not installed./);
+});
+
+test("a failed load is an error state with a retry, never an eternal spinner", async () => {
+    failures = 1;
+    await open();
+    expect(".o_legal_error").toHaveCount(1);
+    expect(".o_legal_loading").toHaveCount(0);
+    expect(".o_legal_error .o_legal_retry").toHaveCount(1);
+    // The retry reloads, and the second answer fills the page.
+    await click(".o_legal_error .o_legal_retry");
+    await animationFrame();
+    expect(".o_legal_error").toHaveCount(0);
+    expect(".o_legal_mail_room .o_legal_body").toHaveCount(1);
+    expect(".o_legal_column").toHaveCount(3);
+});
+
+test("a read-only reader is offered not one mutation control", async () => {
+    payload.role.can_write = false;
+    payload.role.is_auditor = true;
+    payload.role.label = "Auditor";
+    await open();
+    // The rows still read in full; only the verbs are gone.
+    expect("[data-column='incoming'] [data-row='11']").toHaveCount(1);
+    expect("[data-column='incoming'] .o_legal_mr_actions .btn-primary").toHaveCount(0);
+    expect("[data-column='incoming'] .o_legal_mr_actions .btn-secondary").toHaveCount(0);
+    expect("[data-column='awaiting'] .o_legal_mr_actions .btn-secondary").toHaveCount(0);
 });

@@ -101,8 +101,11 @@
                         <!-- The prerequisite chain, as one button. Where the
                              missing document is itself produced by a procedure
                              we run, the row offers to start it. -->
+                        <!-- Starting a procedure is a mutation affordance, so
+                             a read-only form does not offer it; the server
+                             withholds it from read-only payloads as well. -->
                         <button type="button" class="btn btn-link btn-sm o_legal_check_producer"
-                                t-if="row.producer"
+                                t-if="row.producer &amp;&amp; !props.readonly"
                                 t-on-click="() => this.open(row.producer)">
                             <i class="fa fa-play-circle" role="img" aria-hidden="true"/>
                             <t t-esc="row.producer_label || label.openProducer"/>

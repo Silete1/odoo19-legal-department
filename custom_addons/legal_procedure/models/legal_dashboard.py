@@ -27,6 +27,7 @@ already carries the calendar; this reads it through
 :meth:`legal.gov.body._plan_days`'s sibling, ``get_work_duration_data``.
 """
 import logging
+from datetime import timedelta
 
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
@@ -152,6 +153,55 @@ class LegalDashboard(models.AbstractModel):
                 exc_info=True,
             )
             return 0
+
+    def _optional_count(self, model, domain):
+        """A count for a satellite entry, or ``None`` when the reader may not ask.
+
+        The opposite trade-off from :meth:`_safe_count`, and deliberately so.
+        The core columns re-raise an ``AccessError`` because a screen of
+        confident zeros is worse than an honest refusal. A satellite entry -
+        hearings this week, requests to triage - is a guest on somebody else's
+        screen: if this reader may not count that model, the entry disappears
+        instead of taking the whole desk down with it.
+        """
+        if model is None:
+            return None
+        try:
+            return model.search_count(domain)
+        except (AccessError, UserError):
+            return None
+        except Exception:  # noqa: BLE001
+            _logger.warning(
+                "legal.dashboard could not count %s with %s", model._name, domain,
+                exc_info=True,
+            )
+            return None
+
+    def _safe_read_group(self, model, domain, groupby, aggregates):
+        """Aggregate as the calling user, degrading like :meth:`_safe_search`."""
+        if model is None:
+            return []
+        try:
+            return model._read_group(domain, groupby=groupby, aggregates=aggregates)
+        except (AccessError, UserError):
+            raise
+        except Exception:  # noqa: BLE001
+            _logger.warning(
+                "legal.dashboard could not aggregate %s with %s", model._name, domain,
+                exc_info=True,
+            )
+            return []
+
+    def _can_write(self):
+        """May this reader mutate anything the screens offer to mutate?
+
+        Clerk-ladder membership, which is what every mutating ACL in the suite
+        keys on. The auditor - and any reader outside the ladder - gets the
+        same payload with every mutation affordance withheld, so the read-only
+        promise is made where the payload is composed and not left to the
+        templates alone.
+        """
+        return self.env.user.has_group("legal_core.group_legal_clerk")
 
     # ==================================================================
     # Presentation primitives, all of them server-side by policy
@@ -387,26 +437,61 @@ class LegalDashboard(models.AbstractModel):
         }
 
     def _mail_room_head(self, columns):
-        """The hero and the three tiles, all derived from the columns themselves.
+        """The hero and the three tiles, counted over the WHOLE queue.
 
-        Derived rather than counted a second time, because two numbers on one
-        screen that disagree is worse than one number - and a hero count that
-        does not match the column beneath it is exactly how a clerk learns not
-        to trust the screen.
+        The hero and the per-column figures reuse the columns' own full-domain
+        ``search_count``s. Overdue and oldest are deliberately NOT derived
+        from the visible rows: those are capped at ``COLUMN_LIMIT``, and a
+        tile computed from the first eight rows of a thirty-letter backlog
+        undercounts exactly when it matters most - on a screen whose own rule
+        is that two numbers that disagree are worse than one number.
         """
         by_key = {column["key"]: column for column in columns}
         incoming = by_key.get("incoming", {})
         awaiting = by_key.get("awaiting", {})
         issue = by_key.get("issue", {})
 
-        overdue = sum(
-            1 for row in awaiting.get("rows", [])
-            if (row.get("clock") or {}).get("state") == "overdue"
-        )
+        Corr = self._model("legal.correspondence")
+        awaiting_action = awaiting.get("action") or {}
+        awaiting_domain = awaiting_action.get("domain")
+
+        # Overdue, over the whole queue. ``reply_due_on`` is the stored
+        # deadline the register computes, and a bound on it is the only form
+        # of "past the target" the full backlog can be asked about in one
+        # count - and the only one whose drill-through can be a domain.
+        overdue_domain = None
+        due_field = self._field(Corr, "reply_due_on")
+        if Corr is not None and awaiting_domain is not None and due_field:
+            overdue_domain = awaiting_domain + [
+                (due_field, "!=", False),
+                (due_field, "<", fields.Date.context_today(self)),
+            ]
+            overdue = self._safe_count(Corr, overdue_domain)
+        else:
+            # No stored deadline to ask about: the page is all there is, and
+            # the figure is honest for the rows it can see.
+            overdue = sum(
+                1 for row in awaiting.get("rows", [])
+                if (row.get("clock") or {}).get("state") == "overdue"
+            )
+
+        # The oldest chase, over the whole queue: fetch the single oldest
+        # entry and age it through its body's own calendar.
         oldest = max(
             (row.get("waiting_days", 0) for row in awaiting.get("rows", [])),
             default=0,
         )
+        if Corr is not None and awaiting_domain is not None:
+            eldest = self._safe_search(
+                Corr, awaiting_domain,
+                order=self._sort_clause(Corr, ("our_date asc", "id asc")),
+                limit=1,
+            )
+            if eldest:
+                oldest = max(oldest, self._working_days_since(
+                    self._body_of(eldest),
+                    self._value(eldest, "our_date", "date", "create_date"),
+                ))
         waiting_for_you = incoming.get("count", 0) + issue.get("count", 0)
 
         hero = {
@@ -435,10 +520,17 @@ class LegalDashboard(models.AbstractModel):
                 "label": self.env._("Overdue replies"),
                 "value": overdue,
                 "value_label": self._digits(overdue),
-                "hint": self.env._("Past the target, counted in their working days"),
+                "hint": self.env._("Their reply deadline has passed"),
                 "icon": "fa-exclamation-triangle",
                 "tone": "critical" if overdue else "neutral",
-                "action": awaiting.get("action") or False,
+                # The drill-through opens the overdue domain itself, so the
+                # list behind the tile is the number on the tile.
+                "action": (
+                    self._open_action(
+                        "legal.correspondence", self.env._("Overdue replies"),
+                        overdue_domain,
+                    ) if overdue_domain else (awaiting.get("action") or False)
+                ),
             },
             {
                 "key": "at_body",
@@ -528,7 +620,7 @@ class LegalDashboard(models.AbstractModel):
         # every file in the database. The scope is a server-composed domain for
         # the usual reason: the browser must never guess one.
         link = False
-        if self._has_model("legal.case") and self._field(Corr, "case_id"):
+        if self._can_write() and self._has_model("legal.case") and self._field(Corr, "case_id"):
             case_domain = []
             Case = self._model("legal.case")
             if body and self._field(Case, "body_id"):
@@ -557,7 +649,7 @@ class LegalDashboard(models.AbstractModel):
             "attachment_label": self.env._("Open the scan"),
             "link": link,
             "link_label": self.env._("Attach to a file"),
-            "new_case": self._new_case_action(record, body),
+            "new_case": self._new_case_action(record, body) if self._can_write() else False,
             "new_case_label": self.env._("Open a new file"),
             "open": self._open_record("legal.correspondence", record.id),
         }
@@ -667,9 +759,9 @@ class LegalDashboard(models.AbstractModel):
             "age_band": self._age_band(days),
             "age_percent": self._age_percent(days),
             "clock": clock,
-            "remind": self._remind_action(record, body),
+            "remind": self._remind_action(record, body) if self._can_write() else False,
             "remind_label": self.env._("Send a reminder"),
-            "call": self._call_note_action(record, body),
+            "call": self._call_note_action(record, body) if self._can_write() else False,
             "call_label": self.env._("Log a telephone call"),
             "open": self._open_record("legal.correspondence", record.id),
         }
@@ -928,7 +1020,7 @@ class LegalDashboard(models.AbstractModel):
         role = self._role_brief()
         files, total, domain = self._desk_files(Case, role)
         hero, tiles = self._desk_head(Case, files, total, domain)
-        return {
+        payload = {
             "rtl": self._rtl(),
             "numerals": self._numerals(),
             "title": self.env._("My Desk"),
@@ -954,6 +1046,18 @@ class LegalDashboard(models.AbstractModel):
             "bodies": self.get_body_desk_data().get("bodies", []),
             "degraded": degraded,
         }
+        # The role bands, in the SAME call and the same transaction. A second
+        # RPC would let the browser draw two halves of one desk computed
+        # seconds apart, which is the mistake the one-call design exists to
+        # make impossible.
+        payload["attention"] = self._attention_strip()
+        if role["is_manager"]:
+            payload["manager"] = self._manager_band(Case)
+        if role["is_approver"]:
+            payload["approvals"] = self._approver_band(Case)
+        if role["is_auditor"]:
+            payload["audit"] = self._auditor_band(Case)
+        return payload
 
     def _desk_files(self, Case, role):
         """The reader's own queue, urgent first and then oldest first.
@@ -1075,11 +1179,60 @@ class LegalDashboard(models.AbstractModel):
         return False
 
     def _desk_head(self, Case, files, total, domain):
-        """The hero and the three tiles a legal department is actually judged on."""
+        """The hero and the three tiles, counted over the WHOLE queue.
+
+        Never over ``files``: those are the first ``COLUMN_LIMIT`` rows of the
+        worklist, and a tile that counts the visible page undercounts exactly
+        when the backlog is worst. Every figure below is a ``search_count``
+        over the same domain the worklist opens, and every drill-through IS
+        that domain - never a list of the ids that happened to fit the page.
+        """
         urgent = sum(1 for row in files if row["urgent"])
+        if Case is not None and self._field(Case, "priority"):
+            urgent = self._safe_count(Case, domain + [("priority", "in", ["1", "2"])])
+
+        # The longest wait, over the whole queue: the row with the earliest
+        # step-entry timestamp, aged through its body's own calendar.
         oldest = max((row["at_step_days"] for row in files), default=0)
-        stalled_ids = [row["id"] for row in files if row["age_band"] == "stuck"]
-        with_body = [row for row in files if row["clock"]["kind"] == "at_body"]
+        entered_field = (
+            self._field(Case, "stage_entered_on", "step_entered_on")
+            if Case is not None else None
+        )
+        if entered_field:
+            eldest = self._safe_search(
+                Case, domain + [(entered_field, "!=", False)],
+                order=f"{entered_field} asc, id asc", limit=1,
+            )
+            if eldest:
+                oldest = max(oldest, self._working_days_since(
+                    self._body_of(eldest), eldest[entered_field],
+                ))
+
+        # Stalled: sitting at one step for a fortnight. Expressed as a bound
+        # on the stored timestamp so the whole queue is counted and the tile
+        # opens the very domain it counted. The bound is calendar days where
+        # the row bands use working days - every row the band marks stuck has
+        # necessarily sat at least this long, so the tile can only be the more
+        # inclusive of the two, never the smaller.
+        if entered_field:
+            cutoff = fields.Datetime.now() - timedelta(days=AGE_STUCK_DAYS)
+            stalled_domain = domain + [
+                (entered_field, "<=", fields.Datetime.to_string(cutoff)),
+            ]
+            stalled = self._safe_count(Case, stalled_domain)
+        else:
+            stalled_domain = None
+            stalled = sum(1 for row in files if row["age_band"] == "stuck")
+
+        # With the body: the stored `kind` column, over the whole queue.
+        if Case is not None and self._selection_has(Case, "kind", "at_body"):
+            with_body_domain = domain + [("kind", "=", "at_body")]
+            with_body_count = self._safe_count(Case, with_body_domain)
+        else:
+            with_body_domain = None
+            with_body_count = sum(
+                1 for row in files if row["clock"]["kind"] == "at_body"
+            )
         expiring, expiring_domain = self._expiring(Case)
 
         hero = {
@@ -1100,29 +1253,30 @@ class LegalDashboard(models.AbstractModel):
             {
                 "key": "stalled",
                 "label": self.env._("Stalled over a fortnight"),
-                "value": len(stalled_ids),
-                "value_label": self._digits(len(stalled_ids)),
+                "value": stalled,
+                "value_label": self._digits(stalled),
                 "hint": self.env._("On your desk and not moving"),
                 "icon": "fa-hourglass-half",
-                "tone": "critical" if stalled_ids else "neutral",
+                "tone": "critical" if stalled else "neutral",
                 "action": self._open_action(
-                    "legal.case", self.env._("Stalled files"), [("id", "in", stalled_ids)],
-                ) if stalled_ids else False,
+                    "legal.case", self.env._("Stalled files"), stalled_domain,
+                ) if stalled and stalled_domain is not None else False,
             },
             {
                 "key": "with_body",
                 "label": self.env._("With the body"),
-                "value": len(with_body),
-                "value_label": self._digits(len(with_body)),
+                "value": with_body_count,
+                "value_label": self._digits(with_body_count),
                 "hint": self.env._("Our clock is paused; theirs is running"),
                 "icon": "fa-institution",
                 "tone": "attention" if any(
-                    row["clock"]["state"] == "overdue" for row in with_body
+                    row["clock"]["kind"] == "at_body"
+                    and row["clock"]["state"] == "overdue"
+                    for row in files
                 ) else "neutral",
                 "action": self._open_action(
-                    "legal.case", self.env._("With the body"),
-                    [("id", "in", [row["id"] for row in with_body])],
-                ) if with_body else False,
+                    "legal.case", self.env._("With the body"), with_body_domain,
+                ) if with_body_count and with_body_domain is not None else False,
             },
             {
                 "key": "expiring",
@@ -1311,6 +1465,371 @@ class LegalDashboard(models.AbstractModel):
         }
 
     # ==================================================================
+    # The role bands of My Desk
+    # ==================================================================
+    def _attention_strip(self):
+        """The compact strip everyone gets: what has a date on it, this week.
+
+        Every entry is optional twice over: the model is probed (the sibling
+        modules install separately), and the count is
+        :meth:`_optional_count` (a reader who may not read a register simply
+        does not get its entry). An empty list hides the strip - attention
+        that is not needed is not drawn.
+        """
+        items = []
+        now = fields.Datetime.now()
+        today = fields.Date.context_today(self)
+
+        Hearing = self._model("legal.hearing")
+        if Hearing is not None and "date" in Hearing._fields:
+            label = self.env._("Hearings within 7 days")
+            domain = [
+                ("date", ">=", fields.Datetime.to_string(now)),
+                ("date", "<=", fields.Datetime.to_string(now + timedelta(days=7))),
+            ]
+            count = self._optional_count(Hearing, domain)
+            if count is not None:
+                items.append({
+                    "key": "hearings",
+                    "label": label,
+                    "count": count,
+                    "count_label": self._digits(count),
+                    "icon": "fa-gavel",
+                    "tone": "attention" if count else "neutral",
+                    "action": self._open_action("legal.hearing", label, domain) if count else False,
+                })
+
+        Deadline = self._model("legal.deadline")
+        deadline_field = self._field(Deadline, "date_deadline", "date", "due_on")
+        if Deadline is not None and deadline_field:
+            label = self.env._("Deadlines today")
+            domain = [(deadline_field, "=", today)]
+            count = self._optional_count(Deadline, domain)
+            if count is not None:
+                items.append({
+                    "key": "deadlines",
+                    "label": label,
+                    "count": count,
+                    "count_label": self._digits(count),
+                    "icon": "fa-calendar-check-o",
+                    "tone": "critical" if count else "neutral",
+                    "action": self._open_action("legal.deadline", label, domain) if count else False,
+                })
+
+        Request = self._model("legal.request")
+        request_state = self._field(Request, "state")
+        if Request is not None and request_state:
+            states = [
+                value for value in ("received", "triage")
+                if self._selection_has(Request, request_state, value)
+            ]
+            if states:
+                label = self.env._("Requests awaiting triage")
+                domain = [(request_state, "in", states)]
+                count = self._optional_count(Request, domain)
+                if count is not None:
+                    items.append({
+                        "key": "triage",
+                        "label": label,
+                        "count": count,
+                        "count_label": self._digits(count),
+                        "icon": "fa-inbox",
+                        "tone": "attention" if count else "neutral",
+                        "action": self._open_action("legal.request", label, domain) if count else False,
+                    })
+
+        return {"title": self.env._("Needs attention"), "items": items}
+
+    def _manager_band(self, Case):
+        """The manager's figures: whose desk is loaded, and what nobody owns.
+
+        Aggregates only - the manager's own files are already in the first
+        band - and every one of them computed as the calling user, so the
+        record rules that shape the manager's view shape these numbers
+        identically.
+        """
+        band = {
+            "title": self.env._("The department"),
+            "tiles": [],
+            "officers": {
+                "title": self.env._("Open files per officer"),
+                "rows": [],
+                "empty": self.env._("No open files are assigned to anybody."),
+            },
+        }
+        if Case is None:
+            return band
+        open_domain = []
+        closed = self._field(Case, "is_closed", "closed")
+        if closed:
+            open_domain.append((closed, "=", False))
+
+        user_field = self._field(Case, "user_id", "responsible_id")
+        if user_field:
+            rows = []
+            for user, count in self._safe_read_group(
+                Case, open_domain + [(user_field, "!=", False)],
+                [user_field], ["__count"],
+            ):
+                rows.append({
+                    "id": user.id,
+                    "label": user.display_name,
+                    "count": count,
+                    "count_label": self._digits(count),
+                    "action": self._open_action(
+                        "legal.case",
+                        self.env._("%s — open files", user.display_name),
+                        open_domain + [(user_field, "=", user.id)],
+                    ),
+                })
+            rows.sort(key=lambda row: -row["count"])
+            band["officers"]["rows"] = rows
+
+            unassigned_domain = open_domain + [(user_field, "=", False)]
+            unassigned = self._safe_count(Case, unassigned_domain)
+            band["tiles"].append({
+                "key": "unassigned",
+                "label": self.env._("Unassigned files"),
+                "value": unassigned,
+                "value_label": self._digits(unassigned),
+                "hint": self.env._("Open, and nobody is named on them"),
+                "icon": "fa-user-o",
+                "tone": "attention" if unassigned else "neutral",
+                "action": self._open_action(
+                    "legal.case", self.env._("Unassigned files"), unassigned_domain,
+                ) if unassigned else False,
+            })
+
+        if self._field(Case, "sla_state"):
+            breach_domain = open_domain + [("sla_state", "in", ["overdue", "escalated"])]
+            breaches = self._safe_count(Case, breach_domain)
+            band["tiles"].append({
+                "key": "sla_breach",
+                "label": self.env._("Service-level breaches"),
+                "value": breaches,
+                "value_label": self._digits(breaches),
+                "hint": self.env._("Past their target, or already escalated"),
+                "icon": "fa-exclamation-triangle",
+                "tone": "critical" if breaches else "neutral",
+                "action": self._open_action(
+                    "legal.case", self.env._("Service-level breaches"), breach_domain,
+                ) if breaches else False,
+            })
+
+        expiring, expiring_domain = self._expiring(Case)
+        band["tiles"].append({
+            "key": "expiring",
+            "label": self.env._("Expiring documents"),
+            "value": expiring,
+            "value_label": self._digits(expiring),
+            "hint": self.env._("Company documents to renew"),
+            "icon": "fa-calendar-times-o",
+            "tone": "attention" if expiring else "neutral",
+            "action": self._open_action(
+                "legal.document", self.env._("Expiring documents"), expiring_domain,
+            ) if expiring else False,
+        })
+        return band
+
+    def _signature_queue_domain(self, Case):
+        """Files whose current step offers this reader a closing move.
+
+        The same authority rules as
+        :meth:`legal.case._compute_available_transitions` and the server-side
+        ``_check_transition_authority``: a gated move needs one of its named
+        groups, and an ungated move into a terminal step needs the approver.
+        Per-case condition domains are deliberately not evaluated - a
+        condition can only remove a file from the queue, and evaluating one
+        per row would turn one count into a walk of the whole caseload.
+        """
+        Transition = self._model("legal.procedure.transition")
+        step_field = self._field(Case, "step_id")
+        to_step = self._field(Transition, "to_step_id")
+        if Transition is None or not step_field or not to_step:
+            return None
+        transitions = self._safe_search(
+            Transition, [(f"{to_step}.kind", "=", "terminal")],
+        )
+        if transitions is None:
+            return None
+        user = self.env.user
+        groups = user.all_group_ids if "all_group_ids" in user._fields else user.group_ids
+        is_approver = user.has_group("legal_core.group_legal_approver")
+        allowed = transitions.filtered(
+            lambda transition: (transition.group_ids & groups)
+            if transition.group_ids else is_approver
+        )
+        domain = [(step_field, "in", allowed.mapped("from_step_id").ids)]
+        closed = self._field(Case, "is_closed", "closed")
+        if closed:
+            domain.append((closed, "=", False))
+        return domain
+
+    def _approver_band(self, Case):
+        """The signature holder's band: what only this reader can finish."""
+        band = {"title": self.env._("Approvals"), "queue": False, "tiles": []}
+
+        if Case is not None:
+            domain = self._signature_queue_domain(Case)
+            if domain is not None:
+                order = self._sort_clause(
+                    Case, ("priority desc", "stage_entered_on asc", "id asc"),
+                )
+                records = self._safe_search(Case, domain, order=order, limit=COLUMN_LIMIT)
+                band["queue"] = {
+                    "title": self.env._("Awaiting your signature"),
+                    "hint": self.env._(
+                        "The next move on these files closes them, and it is yours to make."
+                    ),
+                    "empty": self.env._("Nothing is waiting for your signature."),
+                    "empty_hint": self.env._(
+                        "A file appears here when it stands at a step whose "
+                        "closing move you may make."
+                    ),
+                    "files": [self._desk_row(record, Case) for record in records],
+                    "total": self._safe_count(Case, domain),
+                    "action": self._open_action(
+                        "legal.case", self.env._("Awaiting your signature"), domain,
+                    ),
+                }
+
+        for key, model_name, state_value, label, icon in (
+            ("requests", "legal.request", "ready_for_approval",
+             self.env._("Requests ready for approval"), "fa-inbox"),
+            ("contracts", "legal.contract", "internal_approval",
+             self.env._("Contracts in internal approval"), "fa-file-text-o"),
+            ("opinions", "legal.opinion", "approval",
+             self.env._("Opinions awaiting approval"), "fa-balance-scale"),
+        ):
+            model = self._model(model_name)
+            state_field = self._field(model, "state")
+            if model is None or not state_field:
+                continue
+            if not self._selection_has(model, state_field, state_value):
+                continue
+            domain = [(state_field, "=", state_value)]
+            count = self._optional_count(model, domain)
+            if count is None:
+                continue
+            band["tiles"].append({
+                "key": key,
+                "label": label,
+                "value": count,
+                "value_label": self._digits(count),
+                "hint": self.env._("Waiting on an approver"),
+                "icon": icon,
+                "tone": "attention" if count else "neutral",
+                "action": self._open_action(model_name, label, domain) if count else False,
+            })
+        return band
+
+    def _auditor_band(self, Case):
+        """The auditor's read-only landing: the registers, counted, no verbs.
+
+        Tiles open plain list views - reading is the auditor's whole job -
+        but nothing in this band mutates, opens a wizard or quick-creates.
+        The payload composes zero mutation affordances on purpose, and the
+        templates hide theirs off ``role.can_write`` as well, so the promise
+        holds twice.
+        """
+        band = {
+            "title": self.env._("The registers, read only"),
+            "tiles": [],
+            "log": {
+                "title": self.env._("Recent trail entries"),
+                "rows": [],
+                "empty": self.env._("The trail holds no entries yet."),
+            },
+        }
+
+        def tile(key, model_name, label, domain, icon, tone="neutral"):
+            model = self._model(model_name)
+            count = self._optional_count(model, domain) if model is not None else None
+            if count is None:
+                return
+            band["tiles"].append({
+                "key": key,
+                "label": label,
+                "value": count,
+                "value_label": self._digits(count),
+                "hint": "",
+                "icon": icon,
+                "tone": tone if count else "neutral",
+                "action": self._open_action(model_name, label, domain) if count else False,
+            })
+
+        closed = self._field(Case, "is_closed", "closed") if Case is not None else None
+        if closed:
+            tile("open_cases", "legal.case", self.env._("Open files"),
+                 [(closed, "=", False)], "fa-folder-open-o")
+            tile("closed_cases", "legal.case", self.env._("Closed files"),
+                 [(closed, "=", True)], "fa-folder-o")
+        if Case is not None and self._field(Case, "sla_state"):
+            tile(
+                "overdue_cases", "legal.case", self.env._("Overdue files"),
+                ([(closed, "=", False)] if closed else [])
+                + [("sla_state", "in", ["overdue", "escalated"])],
+                "fa-exclamation-triangle", tone="critical",
+            )
+
+        Corr = self._model("legal.correspondence")
+        if Corr is not None:
+            corr_domain = []
+            note_field = self._field(Corr, "is_contact_note")
+            if note_field:
+                corr_domain.append((note_field, "=", False))
+            tile("register", "legal.correspondence", self.env._("Register entries"),
+                 corr_domain, "fa-envelope-o")
+            due_field = self._field(Corr, "reply_due_on")
+            reply_state = self._field(Corr, "reply_state")
+            if due_field:
+                overdue_domain = corr_domain + [
+                    (due_field, "!=", False),
+                    (due_field, "<", fields.Date.context_today(self)),
+                ]
+                if reply_state and self._selection_has(Corr, reply_state, "answered"):
+                    overdue_domain.append((reply_state, "!=", "answered"))
+                tile("overdue_replies", "legal.correspondence",
+                     self.env._("Overdue replies"), overdue_domain,
+                     "fa-clock-o", tone="critical")
+
+        tile("documents", "legal.document", self.env._("Company documents"),
+             [], "fa-archive")
+        tile("poas", "legal.poa", self.env._("Powers of attorney"),
+             [], "fa-id-card-o")
+
+        Log = self._model("legal.action.log")
+        if Log is not None:
+            entries = self._safe_search(
+                Log, [], order=self._sort_clause(Log, ("id desc",)), limit=10,
+            )
+            action_field = self._field(Log, "action")
+            labels = {}
+            if action_field:
+                try:
+                    labels = dict(
+                        Log._fields[action_field]._description_selection(self.env)
+                    )
+                except Exception:  # noqa: BLE001
+                    labels = {}
+            rows = []
+            for entry in (entries or []):
+                rows.append({
+                    "id": entry.id,
+                    "when": self._date_label(
+                        self._value(entry, "logged_on", "create_date")
+                    ),
+                    "kind": labels.get(self._value(entry, "action"), "") or "",
+                    "description": self._value(entry, "description") or "",
+                    "user": (
+                        entry.user_id.display_name
+                        if "user_id" in entry._fields and entry.user_id else ""
+                    ),
+                })
+            band["log"]["rows"] = rows
+        return band
+
+    # ==================================================================
     # Small shared pieces
     # ==================================================================
     def _column(self, key, title, hint, empty, empty_hint, rows, count, action):
@@ -1403,18 +1922,37 @@ class LegalDashboard(models.AbstractModel):
         different answer. ``landing_band`` is the whole of the difference
         between an approver's desk and a clerk's: the same action, a different
         payload.
+
+        ``can_write`` is the read-only switch: it is false for the auditor -
+        and for any reader outside the clerk ladder - and every mutation
+        affordance in every payload is withheld when it is false, with the
+        templates hiding theirs off the same flag. The auditor is a role of
+        its own, not a rung: membership of the auditor group counts only when
+        the reader holds no working group at all, because a manager who is
+        also on the audit list is still a manager.
         """
         user = self.env.user
         is_manager = user.has_group("legal_core.group_legal_manager")
         is_approver = is_manager or user.has_group("legal_core.group_legal_approver")
         is_officer = is_approver or user.has_group("legal_core.group_legal_officer")
+        is_clerk = is_officer or user.has_group("legal_core.group_legal_clerk")
+        is_auditor = (not is_clerk) and user.has_group("legal_core.group_legal_auditor")
+        if is_auditor:
+            landing_band = "audit"
+        elif is_approver and not is_manager:
+            landing_band = "approvals"
+        else:
+            landing_band = "files"
         return {
             "is_manager": is_manager,
             "is_approver": is_approver,
             "is_officer": is_officer,
-            "landing_band": "approvals" if (is_approver and not is_manager) else "files",
+            "is_auditor": is_auditor,
+            "can_write": is_clerk,
+            "landing_band": landing_band,
             "label": (
-                self.env._("Legal Manager") if is_manager
+                self.env._("Auditor") if is_auditor
+                else self.env._("Legal Manager") if is_manager
                 else self.env._("Approver") if is_approver
                 else self.env._("Follow-up Officer") if is_officer
                 else self.env._("Clerk")

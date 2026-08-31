@@ -4,9 +4,25 @@
     <t t-name="legal_procedure.LegalMailRoom">
         <Layout className="'o_legal_screen o_legal_mail_room'" display="{ controlPanel: {} }">
 
-            <div class="o_legal_loading" t-if="!data">
+            <div class="o_legal_loading" t-if="!data &amp;&amp; !state.error">
                 <span class="o_legal_spinner" role="status" aria-hidden="true"/>
                 <span t-esc="label.loading"/>
+            </div>
+
+            <!-- A failed load is a state, not an eternal spinner. The
+                 permission variant offers no retry: the server refusing a
+                 read is an answer, and it will answer the same again. -->
+            <div class="o_legal_error" t-if="!data &amp;&amp; state.error" role="alert">
+                <i t-attf-class="fa {{ state.error.permission ? 'fa-lock' : 'fa-exclamation-circle' }}"
+                   role="img" aria-hidden="true"/>
+                <div>
+                    <p class="o_legal_error_title" t-esc="state.error.title"/>
+                    <p class="o_legal_error_hint" t-esc="state.error.hint"/>
+                    <button type="button" class="btn btn-primary btn-sm o_legal_retry"
+                            t-if="!state.error.permission"
+                            t-on-click="() => this.load()"
+                            t-esc="label.retry"/>
+                </div>
             </div>
 
             <!-- Odoo mirrors the interface by piping the compiled CSS through
@@ -102,13 +118,17 @@
                                     <button type="button" class="o_legal_mr_subject"
                                             t-on-click="() => this.doAction(row.open)"
                                             t-esc="row.subject"/>
+                                    <!-- The two mutation moves are doubly
+                                         gated: the server withholds them from
+                                         a read-only payload, and the template
+                                         checks role.can_write as well. -->
                                     <div class="o_legal_mr_actions">
                                         <button type="button" class="btn btn-secondary btn-sm"
-                                                t-if="row.link"
+                                                t-if="data.role.can_write &amp;&amp; row.link"
                                                 t-on-click="() => this.attach(row)"
                                                 t-esc="row.link_label"/>
                                         <button type="button" class="btn btn-primary btn-sm"
-                                                t-if="row.new_case"
+                                                t-if="data.role.can_write &amp;&amp; row.new_case"
                                                 t-on-click="() => this.doAction(row.new_case)"
                                                 t-esc="row.new_case_label"/>
                                         <button type="button" class="btn btn-link btn-sm"
@@ -140,7 +160,7 @@
                                     </div>
                                     <div class="o_legal_mr_actions">
                                         <button type="button" class="btn btn-secondary btn-sm"
-                                                t-if="row.remind"
+                                                t-if="data.role.can_write &amp;&amp; row.remind"
                                                 t-on-click="() => this.doAction(row.remind)"
                                                 t-esc="row.remind_label"/>
                                         <!-- Quieter than the reminder, and one
@@ -148,7 +168,7 @@
                                              after Eid" is the commonest event
                                              in this domain. -->
                                         <button type="button" class="btn btn-link btn-sm"
-                                                t-if="row.call"
+                                                t-if="data.role.can_write &amp;&amp; row.call"
                                                 t-on-click="() => this.doAction(row.call)">
                                             <i class="fa fa-phone" role="img" aria-hidden="true"/>
                                             <t t-esc="row.call_label"/>

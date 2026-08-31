@@ -57,24 +57,65 @@ export class LegalMailRoom extends Component {
         theirRef: _t("Their reference"),
         pickCase: _t("Which file does this belong to?"),
         degraded: _t("Some of this screen is not available yet:"),
+        retry: _t("Try again"),
+        errorTitle: _t("The mail room could not be loaded."),
+        errorHint: _t("The server could not be reached, or it reported an error. Nothing you did caused this."),
+        noPermissionTitle: _t("You do not have permission to see this screen."),
+        noPermissionHint: _t("Ask the legal manager for a role in the Legal Department."),
+        reloadFailed: _t("The mail room could not be refreshed, so it is showing what it already had."),
+        linkFailed: _t("The entry could not be attached to the file."),
     };
 
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
         this.dialog = useService("dialog");
-        this.state = useState({ data: null, busy: false });
+        this.notification = useService("notification");
+        this.state = useState({ data: null, busy: false, error: null });
 
         onWillStart(() => this.load());
     }
 
+    /**
+     * A caught load. The old version was try/finally with no catch, which
+     * turned any failed RPC - including the AccessError the server correctly
+     * re-raises for a reader who may not see the register - into an eternal
+     * spinner plus an unhandled rejection. Now: a failure with no data yet
+     * is a visible error state with a retry; a failure while data is already
+     * on screen keeps the screen and says so in a notification.
+     */
     async load() {
         this.state.busy = true;
+        this.state.error = null;
         try {
             this.state.data = await this.orm.call("legal.dashboard", "get_mail_room_data", []);
+        } catch (error) {
+            if (this.state.data) {
+                this.notification.add(this.label.reloadFailed, { type: "warning" });
+            } else {
+                this.state.error = this.describeError(error);
+            }
         } finally {
             this.state.busy = false;
         }
+    }
+
+    /**
+     * No-permission is not failure. The server refusing a read is the ORM
+     * answering correctly, so the permission variant states that and offers
+     * no retry - the answer would only be the same again.
+     */
+    describeError(error) {
+        const name =
+            (error && error.exceptionName) ||
+            (error && error.data && error.data.name) ||
+            "";
+        const permission = name === "odoo.exceptions.AccessError";
+        return {
+            permission,
+            title: permission ? this.label.noPermissionTitle : this.label.errorTitle,
+            hint: permission ? this.label.noPermissionHint : this.label.errorHint,
+        };
     }
 
     get label() {
@@ -122,10 +163,17 @@ export class LegalMailRoom extends Component {
                 if (!resIds || !resIds.length) {
                     return;
                 }
-                await this.orm.call("legal.dashboard", "link_correspondence", [], {
-                    correspondence_id: row.id,
-                    case_id: resIds[0],
-                });
+                // A failure inside a dialog callback dies silently unless it
+                // is caught and said out loud.
+                try {
+                    await this.orm.call("legal.dashboard", "link_correspondence", [], {
+                        correspondence_id: row.id,
+                        case_id: resIds[0],
+                    });
+                } catch {
+                    this.notification.add(this.label.linkFailed, { type: "danger" });
+                    return;
+                }
                 await this.load();
             },
         });

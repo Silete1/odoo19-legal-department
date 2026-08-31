@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_register_book_wizard_form" model="ir.ui.view">
+        <field name="name">legal.register.book.wizard.form</field>
+        <field name="model">legal.register.book.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print Register Book">
+                <group>
+                    <field name="register_id"/>
+                    <field name="year"/>
+                </group>
+                <div class="alert alert-info" role="status">
+                    The book prints exactly as the paper register reads: every
+                    numbered entry of the year in order, voided rows struck
+                    through with their reason. Telephone notes never touched
+                    the book, so they do not print.
+                </div>
+                <footer>
+                    <button name="action_print" type="object" string="Print Book"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_register_book_wizard" model="ir.actions.act_window">
+        <field name="name">Print Register Book</field>
+        <field name="res_model">legal.register.book.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer'))]"/>
+    </record>
+
+</odoo>

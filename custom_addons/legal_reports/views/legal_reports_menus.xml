@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        One Reports menu for the whole suite, between the domain menus
+        (Requests 15 ... Deadlines 35) and the reference Registers (40 sits
+        the registers, 90 the configuration): sequence 50, so reporting reads
+        as what it is - downstream of the work.
+
+        Visibility follows the reading ladder: officer and above analyse,
+        the auditor reads everything, and the fee figures are manager and
+        auditor only. The groups are carried on both the menu and its action,
+        because a menu without groups is visible even when its action is not
+        openable.
+    -->
+
+    <menuitem id="menu_legal_reports_root"
+              name="Reports"
+              parent="legal_core.menu_legal_root"
+              sequence="50"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <!-- Cases -->
+
+    <menuitem id="menu_legal_reports_cases"
+              name="Cases"
+              parent="menu_legal_reports_root"
+              sequence="10"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_case_analysis"
+              name="Case Analysis"
+              parent="menu_legal_reports_cases"
+              action="action_legal_reports_case"
+              sequence="10"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <!-- Correspondence -->
+
+    <menuitem id="menu_legal_reports_correspondence"
+              name="Correspondence"
+              parent="menu_legal_reports_root"
+              sequence="20"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_correspondence_analysis"
+              name="Correspondence Analysis"
+              parent="menu_legal_reports_correspondence"
+              action="action_legal_reports_correspondence"
+              sequence="10"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_register_book"
+              name="Print Register Book"
+              parent="menu_legal_reports_correspondence"
+              action="action_legal_register_book_wizard"
+              sequence="20"
+              groups="legal_core.group_legal_officer"/>
+
+    <!-- Litigation -->
+
+    <menuitem id="menu_legal_reports_litigation"
+              name="Litigation"
+              parent="menu_legal_reports_root"
+              sequence="30"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_lawsuit_analysis"
+              name="Lawsuit Analysis"
+              parent="menu_legal_reports_litigation"
+              action="action_legal_reports_lawsuit"
+              sequence="10"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <!-- Contracts -->
+
+    <menuitem id="menu_legal_reports_contracts"
+              name="Contracts"
+              parent="menu_legal_reports_root"
+              sequence="40"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_contract_analysis"
+              name="Contract Analysis"
+              parent="menu_legal_reports_contracts"
+              action="action_legal_reports_contract"
+              sequence="10"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <!-- Requests & Opinions -->
+
+    <menuitem id="menu_legal_reports_requests_opinions"
+              name="Requests &amp; Opinions"
+              parent="menu_legal_reports_root"
+              sequence="50"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_request_analysis"
+              name="Request Analysis"
+              parent="menu_legal_reports_requests_opinions"
+              action="action_legal_reports_request"
+              sequence="10"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_opinion_analysis"
+              name="Opinion Analysis"
+              parent="menu_legal_reports_requests_opinions"
+              action="action_legal_reports_opinion"
+              sequence="20"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <!-- Compliance & Fees -->
+
+    <menuitem id="menu_legal_reports_compliance_fees"
+              name="Compliance &amp; Fees"
+              parent="menu_legal_reports_root"
+              sequence="60"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_compliance_analysis"
+              name="Compliance Analysis"
+              parent="menu_legal_reports_compliance_fees"
+              action="action_legal_reports_obligation"
+              sequence="10"
+              groups="legal_core.group_legal_officer,legal_core.group_legal_auditor"/>
+
+    <menuitem id="menu_legal_reports_fee_analysis"
+              name="Fee Analysis"
+              parent="menu_legal_reports_compliance_fees"
+              action="action_legal_reports_fee"
+              sequence="20"
+              groups="legal_core.group_legal_manager,legal_core.group_legal_auditor"/>
+
+</odoo>

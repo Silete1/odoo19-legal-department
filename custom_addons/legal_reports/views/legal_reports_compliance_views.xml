@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The compliance picture and the money.
+
+        The obligation pivot is the one a board asks for: which bodies'
+        deadlines are filed, in progress, or late. The fee pivot slices what
+        was actually paid by body and procedure - the two grouping columns
+        are stored related fields this module adds to legal.fee precisely so
+        this view can exist - and keeps the quoted/paid variance beside them,
+        because a run of files where the counter charged more than the
+        schedule is how a department finds a circular it has not read.
+    -->
+
+    <record id="view_legal_reports_obligation_pivot" model="ir.ui.view">
+        <field name="name">legal.obligation.instance.reports.pivot</field>
+        <field name="model">legal.obligation.instance</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Compliance Analysis" sample="1">
+                <field name="body_id" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_obligation_graph" model="ir.ui.view">
+        <field name="name">legal.obligation.instance.reports.graph</field>
+        <field name="model">legal.obligation.instance</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Compliance Analysis" sample="1" type="bar">
+                <field name="due_on" interval="month"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_obligation" model="ir.actions.act_window">
+        <field name="name">Compliance Analysis</field>
+        <field name="res_model">legal.obligation.instance</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">No obligation periods yet</p>
+            <p>
+                Once recurring obligations generate their periods, this pivot
+                shows the compliance picture: filed, in progress and late, per
+                body and per month.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_obligation_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_obligation"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_obligation_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_obligation_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_obligation"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_obligation_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="view_legal_reports_fee_pivot" model="ir.ui.view">
+        <field name="name">legal.fee.reports.pivot</field>
+        <field name="model">legal.fee</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Fee Analysis" sample="1">
+                <field name="body_id" type="row"/>
+                <field name="procedure_type_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="amount" type="measure"/>
+                <field name="amount_paid" type="measure"/>
+                <field name="variance" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_fee_graph" model="ir.ui.view">
+        <field name="name">legal.fee.reports.graph</field>
+        <field name="model">legal.fee</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Fee Analysis" sample="1" type="bar">
+                <field name="body_id"/>
+                <field name="amount_paid" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Manager and auditor only: what the department pays whom is the kind
+         of figure that walks out of a building, so the officer ladder stops
+         below it here even though officers see their own cases' fee lines. -->
+    <record id="action_legal_reports_fee" model="ir.actions.act_window">
+        <field name="name">Fee Analysis</field>
+        <field name="res_model">legal.fee</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">No fees recorded yet</p>
+            <p>
+                Once fees are paid on files, this pivot answers the annual
+                question: what did we pay each body, per procedure, and where
+                did the counter and the schedule disagree.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_fee_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_fee"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_fee_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_fee_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_fee"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_fee_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+</odoo>

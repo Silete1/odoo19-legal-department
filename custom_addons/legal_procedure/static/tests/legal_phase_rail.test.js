@@ -169,3 +169,13 @@ test("a file waiting on the reader says so instead of naming a group", async () 
     expect(".o_legal_rail_pending").toHaveCount(0);
     LegalCase._records[0].progress_payload.mine = false;
 });
+
+test("the clerk instruction renders as markup, not as escaped tags", async () => {
+    await mount(1);
+    // The payload string is sanitised fields.Html; the component wraps it in
+    // markup(), so the <p> becomes an element rather than literal text.
+    expect(".o_legal_rail_instruction p").toHaveCount(1);
+    expect(".o_legal_rail_instruction").toHaveText(
+        "Second floor, window 3. Ask for the assessment order."
+    );
+});

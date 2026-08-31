@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The department's intake, in aggregate. The request's age is a live
+        computed field and not stored, so ageing is read the honest way: the
+        month column of request_date against the state - a wall of old months
+        still "in progress" IS the ageing report. The opinion has no request
+        date of its own, so its month is create_date, which is when the
+        question actually arrived.
+    -->
+
+    <record id="view_legal_reports_request_pivot" model="ir.ui.view">
+        <field name="name">legal.request.reports.pivot</field>
+        <field name="model">legal.request</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Request Analysis" sample="1">
+                <field name="category_id" type="row"/>
+                <field name="state" type="row"/>
+                <field name="request_date" interval="month" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_request_graph" model="ir.ui.view">
+        <field name="name">legal.request.reports.graph</field>
+        <field name="model">legal.request</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Request Analysis" sample="1" type="bar">
+                <field name="request_date" interval="month"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_request" model="ir.actions.act_window">
+        <field name="name">Request Analysis</field>
+        <field name="res_model">legal.request</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">No requests to analyse yet</p>
+            <p>
+                Once departments start sending requests, this pivot shows the
+                intake by category and month - and old months still open are
+                the backlog, visible at a glance.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_request_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_request"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_request_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_request_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_request"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_request_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="view_legal_reports_opinion_pivot" model="ir.ui.view">
+        <field name="name">legal.opinion.reports.pivot</field>
+        <field name="model">legal.opinion</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Opinion Analysis" sample="1">
+                <field name="requesting_department" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_legal_reports_opinion_graph" model="ir.ui.view">
+        <field name="name">legal.opinion.reports.graph</field>
+        <field name="model">legal.opinion</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <graph string="Opinion Analysis" sample="1" type="bar">
+                <field name="create_date" interval="month"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_opinion" model="ir.actions.act_window">
+        <field name="name">Opinion Analysis</field>
+        <field name="res_model">legal.opinion</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="group_ids" eval="[(4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_auditor'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">No opinions to analyse yet</p>
+            <p>
+                Once opinions are drafted, this pivot shows who asks the legal
+                department for advice and where their questions stand.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_reports_opinion_pivot" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_opinion"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_legal_reports_opinion_pivot"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="action_legal_reports_opinion_graph" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_legal_reports_opinion"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_legal_reports_opinion_graph"/>
+        <field name="sequence">20</field>
+    </record>
+
+</odoo>

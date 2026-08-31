@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, markup, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { _t } from "@web/core/l10n/translation";
@@ -69,6 +69,17 @@ export class LegalBodyDesk extends Component {
 
     get sections() {
         return this.body.sections || [];
+    }
+
+    /**
+     * The counter notes are `legal.gov.body.note`, a translated
+     * `fields.Html`: the ORM sanitises it on every write, which is the one
+     * and only reason it may be injected here. A string off JSON-RPC is not
+     * an OWL Markup, so without this wrapper `t-out` escapes it and the
+     * clerk reads literal `<p>` tags instead of the note.
+     */
+    get counterNotes() {
+        return this.body.counter_notes ? markup(this.body.counter_notes) : "";
     }
 
     /** Rows a section is holding back behind its "open all" link. */

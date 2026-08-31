@@ -29,8 +29,9 @@
                     <!-- Whole-row target and a real button: the runner is doing
                          this one-handed, standing up, on a telephone. -->
                     <button type="button" class="o_legal_counter_target"
+                            t-att-disabled="isReadonly ? 'disabled' : undefined"
                             t-on-click="() => this.toggle(counter)"
-                            t-att-aria-pressed="isObtained(counter)"
+                            t-att-aria-pressed="isObtained(counter) ? 'true' : 'false'"
                             t-attf-aria-label="{{ counter.label }} — {{ isObtained(counter) ? label.obtained : label.pending }}">
                         <span class="o_legal_counter_marker o_legal_num" dir="ltr"
                               aria-hidden="true">
@@ -80,7 +81,9 @@
                 </li>
             </ol>
 
-            <footer class="o_legal_card_foot" t-if="counters.length">
+            <!-- No save footer on a read-only mount: a batching widget that
+                 cannot save must not accumulate ticks it will lose. -->
+            <footer class="o_legal_card_foot" t-if="counters.length &amp;&amp; !isReadonly">
                 <button type="button" class="btn btn-primary btn-sm"
                         t-att-disabled="!unsavedCount"
                         t-on-click="() => this.save()">

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The four printed artifacts. Each is bound to its model so it appears
+        in the record's own Print menu, and each names its Arabic file the way
+        the official letter does - the PDF lands in a ministry inbox with the
+        reference already in the filename.
+    -->
+
+    <record id="action_report_register_book" model="ir.actions.report">
+        <field name="name">Register Book</field>
+        <field name="model">legal.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">legal_reports.report_register_book</field>
+        <field name="report_file">legal_reports.report_register_book</field>
+        <field name="binding_model_id" ref="legal_correspondence.model_legal_register"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_legal_register_book"/>
+        <field name="print_report_name">'دفتر %s' % (object.name or object.code)</field>
+    </record>
+
+    <record id="action_report_case_cover" model="ir.actions.report">
+        <field name="name">Case File Cover Sheet</field>
+        <field name="model">legal.case</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">legal_reports.report_case_cover</field>
+        <field name="report_file">legal_reports.report_case_cover</field>
+        <field name="binding_model_id" ref="legal_procedure.model_legal_case"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="legal_correspondence.paperformat_legal_letter_drawn"/>
+        <field name="print_report_name">'إضبارة %s' % (object.name)</field>
+    </record>
+
+    <record id="action_report_lawsuit_status" model="ir.actions.report">
+        <field name="name">Lawsuit Status Report</field>
+        <field name="model">legal.lawsuit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">legal_reports.report_lawsuit_status</field>
+        <field name="report_file">legal_reports.report_lawsuit_status</field>
+        <field name="binding_model_id" ref="legal_litigation.model_legal_lawsuit"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="legal_correspondence.paperformat_legal_letter_drawn"/>
+        <field name="print_report_name">'موقف الدعوى %s' % (object.reference)</field>
+    </record>
+
+    <record id="action_report_contract_summary" model="ir.actions.report">
+        <field name="name">Contract Summary</field>
+        <field name="model">legal.contract</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">legal_reports.report_contract_summary</field>
+        <field name="report_file">legal_reports.report_contract_summary</field>
+        <field name="binding_model_id" ref="legal_contract.model_legal_contract"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="legal_correspondence.paperformat_legal_letter_drawn"/>
+        <field name="print_report_name">'خلاصة العقد %s' % (object.name)</field>
+    </record>
+
+</odoo>

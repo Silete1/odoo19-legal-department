@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            The register book is a ledger, not a letter: six columns of
+            numbers, dates and subjects that need width more than they need
+            height, so it prints landscape. The three narrative prints - the
+            cover sheet, the lawsuit status and the contract summary - reuse
+            the official letter's portrait "emblem drawn" format, because they
+            are internal artifacts printed on plain paper with the letterhead
+            drawn by the PDF.
+        -->
+
+        <record id="paperformat_legal_register_book" model="report.paperformat">
+            <field name="name">Legal Register Book (A4 Landscape)</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">12</field>
+            <field name="margin_bottom">14</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">96</field>
+        </record>
+
+    </data>
+</odoo>

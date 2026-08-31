@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         خلاصة العقد - one page that answers the meeting's questions.
+
+         Who signed, what it is worth now (the original value plus the
+         applied amendments, shown as a trail rather than a bare figure),
+         the dates that bite, and the obligations with their states -
+         because "are we in breach of anything" is the question a legal
+         manager is actually asked about a contract.
+         ================================================================ -->
+
+    <template id="report_contract_summary_document">
+        <t t-set="company" t-value="o.company_id"/>
+        <t t-set="draw_letterhead" t-value="True"/>
+        <t t-call="web.basic_layout">
+
+            <div class="footer legal-rep-footer" dir="rtl">
+                <div class="text-center">
+                    العقد <span t-out="fmt(o.name)"/> -
+                    صفحة <span class="page"/> من <span class="topage"/>
+                </div>
+            </div>
+
+            <div class="page legal-rep" dir="rtl">
+
+                <t t-call="legal_correspondence.report_letter_head"/>
+
+                <div class="legal-rep-bookline">
+                    <span><b>الرقم:</b> <span class="legal-rep-dots"/></span>
+                    &#160;&#160;&#160;
+                    <span><b>التاريخ:</b> <span class="legal-rep-dots"/></span>
+                </div>
+
+                <div class="legal-rep-title">خلاصة العقد</div>
+                <div class="legal-rep-ref">
+                    <t t-out="fmt(o.name)"/> - <t t-out="o.title or ''"/>
+                </div>
+
+                <div class="legal-rep-section">بيانات العقد</div>
+                <table class="legal-rep-facts">
+                    <tr>
+                        <td class="legal-rep-label">النوع</td>
+                        <td t-out="o.type_id.name or ''"/>
+                        <td class="legal-rep-label">الحالة</td>
+                        <td t-out="state_labels.get(o.state, '')"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">طرفنا</td>
+                        <td t-out="o.entity_id.name or company.name"/>
+                        <td class="legal-rep-label">الطرف الآخر</td>
+                        <td t-out="o.counterparty_id.name or ''"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">حالة التوقيع</td>
+                        <td t-out="signature_labels.get(o.signature_status, '')"/>
+                        <td class="legal-rep-label">القانون الواجب التطبيق</td>
+                        <td t-out="o.governing_law or 'القانون العراقي'"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">الجهة المستفيدة</td>
+                        <td t-out="o.responsible_department_id.name or ''"/>
+                        <td class="legal-rep-label">درجة الخطورة</td>
+                        <td t-out="risk_labels.get(o.risk, '')"/>
+                    </tr>
+                </table>
+
+                <div class="legal-rep-section">قيمة العقد</div>
+                <table class="legal-rep-facts">
+                    <tr>
+                        <td class="legal-rep-label">القيمة الأصلية</td>
+                        <td t-out="fmt_amount(o.value, o.currency_id)"/>
+                        <td class="legal-rep-label">أثر التعديلات النافذة</td>
+                        <td t-out="fmt_amount(amendment_delta[o.id], o.currency_id)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">القيمة الحالية</td>
+                        <td><b t-out="fmt_amount(o.current_value, o.currency_id)"/></td>
+                        <td class="legal-rep-label"/>
+                        <td/>
+                    </tr>
+                </table>
+
+                <div class="legal-rep-section">التواريخ الأساسية</div>
+                <table class="legal-rep-facts">
+                    <tr>
+                        <td class="legal-rep-label">تاريخ التوقيع</td>
+                        <td t-out="fmt_date(o.signature_date)"/>
+                        <td class="legal-rep-label">تاريخ النفاذ</td>
+                        <td t-out="fmt_date(o.effective_date)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">تاريخ المباشرة</td>
+                        <td t-out="fmt_date(o.commencement_date)"/>
+                        <td class="legal-rep-label">تاريخ الانتهاء</td>
+                        <td t-out="fmt_date(o.expiry_date)"/>
+                    </tr>
+                    <tr>
+                        <td class="legal-rep-label">مهلة الإشعار</td>
+                        <td>
+                            <t t-if="o.notice_period_days"><t t-out="fmt(o.notice_period_days)"/> يوماً</t>
+                        </td>
+                        <td class="legal-rep-label">التجديد التلقائي</td>
+                        <td t-out="'نعم' if o.auto_renew else 'لا'"/>
+                    </tr>
+                </table>
+
+                <div class="legal-rep-section">أطراف العقد</div>
+                <div t-if="not o.party_ids" class="legal-rep-empty">لم تدون الأطراف بعد.</div>
+                <table t-if="o.party_ids" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">ت</th>
+                            <th style="width: 35%;">الاسم</th>
+                            <th style="width: 18%;">صفته</th>
+                            <th style="width: 22%;">الموقّع عنه</th>
+                            <th style="width: 20%;">المرجع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.party_ids" t-as="p">
+                            <td t-out="fmt(p_index + 1)"/>
+                            <td t-out="p.partner_id.name or ''"/>
+                            <td class="legal-rep-center" t-out="role_labels.get(p.role, '')"/>
+                            <td t-out="p.signatory_name or ''"/>
+                            <td class="legal-rep-center" t-out="fmt(p.reference or '')"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="legal-rep-section">سجل التعديلات (الملاحق)</div>
+                <div t-if="not o.modification_ids" class="legal-rep-empty">لا ملاحق على هذا العقد.</div>
+                <table t-if="o.modification_ids" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">الملحق</th>
+                            <th style="width: 12%;">تاريخه</th>
+                            <th style="width: 40%;">موضوعه</th>
+                            <th style="width: 14%;">أثره على القيمة</th>
+                            <th style="width: 13%;">انتهاء جديد</th>
+                            <th style="width: 11%;">حالته</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.modification_ids.sorted('date')" t-as="m">
+                            <td class="legal-rep-center" t-out="fmt(m.number or '')"/>
+                            <td class="legal-rep-center" t-out="fmt_date(m.date)"/>
+                            <td t-out="m.description or ''"/>
+                            <td class="legal-rep-center" t-out="fmt_amount(m.value_change, m.currency_id) if m.value_change else ''"/>
+                            <td class="legal-rep-center" t-out="fmt_date(m.new_expiry_date)"/>
+                            <td class="legal-rep-center" t-out="mod_state_labels.get(m.state, '')"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="legal-rep-section">الالتزامات التعاقدية</div>
+                <div t-if="not o.obligation_ids" class="legal-rep-empty">لا التزامات مدونة.</div>
+                <table t-if="o.obligation_ids" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">ت</th>
+                            <th style="width: 28%;">الالتزام</th>
+                            <th style="width: 9%;">البند</th>
+                            <th style="width: 13%;">على من</th>
+                            <th style="width: 12%;">الاستحقاق</th>
+                            <th style="width: 11%;">التكرار</th>
+                            <th style="width: 12%;">المبلغ</th>
+                            <th style="width: 10%;">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.obligation_ids" t-as="ob">
+                            <td t-out="fmt(ob_index + 1)"/>
+                            <td t-out="ob.name or ''"/>
+                            <td class="legal-rep-center" t-out="fmt(ob.clause_reference or '')"/>
+                            <td class="legal-rep-center" t-out="owed_labels.get(ob.responsible_party, '')"/>
+                            <td class="legal-rep-center" t-out="fmt_date(ob.due_date)"/>
+                            <td class="legal-rep-center" t-out="freq_labels.get(ob.frequency, '')"/>
+                            <td class="legal-rep-center" t-out="fmt_amount(ob.amount, ob.currency_id) if ob.amount else ''"/>
+                            <td class="legal-rep-center" t-out="status_labels.get(ob.status, '')"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row legal-rep-sign-row">
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">الموظف القانوني المسؤول</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line" t-out="o.legal_officer_id.name or 'الاسم والتوقيع'"/>
+                    </div>
+                    <div class="col-4"/>
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">مدير القسم القانوني</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line">الاسم والتوقيع</div>
+                    </div>
+                </div>
+
+                <div class="legal-rep-printed">
+                    طبع بتاريخ <span t-out="printed_on"/> - الخلاصة عرض للقيد الإلكتروني،
+                    والعبرة عند الاختلاف بنص العقد الموقع.
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_contract_summary">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="legal_reports.report_contract_summary_document"/>
+        </t>
+    </template>
+
+</odoo>

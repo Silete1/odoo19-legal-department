@@ -1,0 +1,191 @@
+// The printed management artifacts - the register book, the case cover
+// sheet, the lawsuit status report and the contract summary.
+//
+// Arabic-first, exactly as legal_letter.scss: the page is right-to-left
+// whatever the session language, so every direction and alignment
+// declaration carries /*rtl:ignore*/ - without it rtlcss mirrors a page
+// that is already mirrored.
+
+.legal-rep {
+    /*rtl:ignore*/
+    direction: rtl;
+    /*rtl:ignore*/
+    text-align: right;
+    font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+    font-size: 12px;
+    color: #17202a;
+}
+
+// ----------------------------------------------------------------------
+// The formal top block: the hand-filled book number and date on the
+// right, where an Iraqi reader looks for them first.
+// ----------------------------------------------------------------------
+.legal-rep-bookline {
+    margin: 10px 0 4px;
+    font-size: 12px;
+    line-height: 2;
+
+    .legal-rep-dots {
+        display: inline-block;
+        min-width: 130px;
+        border-bottom: 1px dotted #85929e;
+    }
+}
+
+.legal-rep-title {
+    font-size: 17px;
+    font-weight: 700;
+    /*rtl:ignore*/
+    text-align: center;
+    margin: 10px 0 2px;
+    text-decoration: underline;
+}
+
+.legal-rep-subtitle {
+    font-size: 13px;
+    /*rtl:ignore*/
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.legal-rep-ref {
+    font-size: 14px;
+    font-weight: 700;
+    /*rtl:ignore*/
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.legal-rep-section {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 14px 0 4px;
+    border-bottom: 1px solid #1b2631;
+    padding-bottom: 2px;
+}
+
+// ----------------------------------------------------------------------
+// The facts grid: label/value pairs, two to a row.
+// ----------------------------------------------------------------------
+.legal-rep-facts {
+    width: 100%;
+    margin: 6px 0;
+    font-size: 12px;
+
+    td {
+        padding: 3px 6px;
+        vertical-align: top;
+        border-bottom: 1px dotted #d5d8dc;
+    }
+
+    .legal-rep-label {
+        font-weight: 700;
+        color: #34495e;
+        white-space: nowrap;
+        width: 16%;
+    }
+}
+
+// ----------------------------------------------------------------------
+// The ruled tables: fees, documents, hearings, judgments, obligations,
+// and the book itself.
+// ----------------------------------------------------------------------
+.legal-rep-table {
+    width: 100%;
+    font-size: 11px;
+    margin: 6px 0 12px;
+    border-collapse: collapse;
+
+    th,
+    td {
+        border: 1px solid #aeb6bf;
+        padding: 4px 6px;
+        /*rtl:ignore*/
+        text-align: right;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #eaeded;
+        font-weight: 700;
+        /*rtl:ignore*/
+        text-align: center;
+    }
+
+    td.legal-rep-center,
+    td:first-child {
+        /*rtl:ignore*/
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    tfoot td {
+        font-weight: 700;
+        background-color: #f4f6f6;
+    }
+}
+
+// A voided register row: struck through and greyed, exactly as the clerk
+// draws the line across the paper page. The row stays; that is the point.
+.legal-rep-void td {
+    text-decoration: line-through;
+    color: #7f8c8d;
+}
+
+.legal-rep-void td.legal-rep-void-state {
+    text-decoration: none;
+    color: #b03a2e;
+    font-weight: 700;
+}
+
+.legal-rep-empty {
+    border: 1px dashed #aeb6bf;
+    color: #566573;
+    padding: 12px;
+    margin: 8px 0;
+    /*rtl:ignore*/
+    text-align: center;
+}
+
+// ----------------------------------------------------------------------
+// The closing block: who prepared, who approved, when it was printed.
+// ----------------------------------------------------------------------
+.legal-rep-sign-row {
+    margin-top: 26px;
+    font-size: 12px;
+
+    .legal-rep-sign {
+        /*rtl:ignore*/
+        text-align: center;
+
+        .legal-rep-sign-role {
+            font-weight: 700;
+        }
+
+        .legal-rep-sign-space {
+            height: 40px;
+        }
+
+        .legal-rep-sign-line {
+            border-top: 1px solid #85929e;
+            padding-top: 3px;
+            color: #566573;
+            font-size: 11px;
+        }
+    }
+}
+
+.legal-rep-printed {
+    margin-top: 12px;
+    font-size: 10px;
+    color: #566573;
+}
+
+.legal-rep-footer {
+    /*rtl:ignore*/
+    direction: rtl;
+    font-size: 10px;
+    color: #566573;
+    border-top: 1px solid #d5d8dc;
+    padding-top: 4px;
+}

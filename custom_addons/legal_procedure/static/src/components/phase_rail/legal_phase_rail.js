@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, markup, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { _t } from "@web/core/l10n/translation";
@@ -84,6 +84,18 @@ export class LegalPhaseRail extends Component {
 
     get blockers() {
         return this.payload.blockers || [];
+    }
+
+    /**
+     * `clerk_instruction_html` is `legal.procedure.step.clerk_instruction`,
+     * a `fields.Html` the ORM sanitises on every write - the one and only
+     * reason it may be injected. A string off JSON-RPC is not an OWL Markup,
+     * so without this wrapper `t-out` would escape the instruction into
+     * literal tags on the very line that exists to save a telephone call.
+     */
+    get instructionHtml() {
+        const html = this.payload.clerk_instruction_html;
+        return html ? markup(html) : "";
     }
 
     /** The phase whose steps the prose beneath the rail is describing. */

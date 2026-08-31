@@ -6,7 +6,11 @@ from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.legal_core.models.legal_engine import engine_guard, in_engine
 
-from .legal_constants import SLA_STATE_SELECTION, WORKFLOW_OWNED_FIELDS
+from .legal_constants import (
+    SATISFYING_LINE_STATUS,
+    SLA_STATE_SELECTION,
+    WORKFLOW_OWNED_FIELDS,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -406,6 +410,37 @@ class LegalCase(models.Model):
     )
 
     # ------------------------------------------------------------------
+    # The OWL payload fields - the file as its widgets draw it
+    # ------------------------------------------------------------------
+    # Three Json computes, one per widget: the phase rail, the task-list
+    # checklist and the runner's counter walk. Composed here rather than in
+    # the browser for the same reason the dashboard payloads are: every label
+    # arrives translated, every figure is computed where the tests are, and
+    # the A4 sheet a runner prints must say the same words as the screen.
+    # Deliberately NOT stored: each embeds the reader's language and whose
+    # turn it is, which are facts about the reader and not about the file.
+    progress_payload = fields.Json(
+        compute="_compute_progress_payload",
+        help="What the phase rail draws: the coarse phases, the fine step, "
+        "whose turn it is and what is blocking. Composed server-side so the "
+        "rail renders three phases or six without a line of JavaScript "
+        "changing.",
+    )
+    checklist_payload = fields.Json(
+        compute="_compute_checklist_payload",
+        help="The required documents as the task-list widget draws them, "
+        "grouped by the step that demands each line.",
+    )
+    walk_payload = fields.Json(
+        compute="_compute_walk_payload",
+        inverse="_inverse_walk_payload",
+        help="The ordered counter walk of the current step. The inverse "
+        "consumes the widget's batched ticks through the ordinary ORM, as "
+        "the reader, so the ACL on the check lines decides - never the "
+        "widget.",
+    )
+
+    # ------------------------------------------------------------------
     # Finding it again
     # ------------------------------------------------------------------
     reference_index = fields.Char(
@@ -791,6 +826,382 @@ class LegalCase(models.Model):
                     first=blockers[0],
                     others=len(blockers) - 1,
                 )
+
+    # ==================================================================
+    # The OWL payloads
+    # ==================================================================
+    def _payload_rtl(self):
+        """Which way round the reader's language runs, for the widgets.
+
+        Odoo mirrors the interface by piping the compiled CSS through rtlcss
+        and never sets ``direction`` on the document, so a component that
+        lays itself out has to be told. The flag travels in every payload.
+        """
+        try:
+            return self.env["res.lang"]._lang_get(self.env.lang).direction == "rtl"
+        except Exception:  # noqa: BLE001
+            return False
+
+    def _payload_date(self, value):
+        """A date string the widgets can pin ``dir="ltr"``, or ``False``."""
+        if not value:
+            return False
+        try:
+            return fields.Date.to_string(fields.Datetime.to_datetime(value).date())
+        except Exception:  # noqa: BLE001
+            return str(value)[:10]
+
+    @api.depends(
+        "step_id",
+        "procedure_type_id",
+        "is_closed",
+        "user_id",
+        "pending_group_id",
+        "log_ids.logged_on",
+        "document_ids.line_status",
+        "check_ids.done",
+        "fee_ids.state",
+    )
+    @api.depends_context("uid", "lang")
+    def _compute_progress_payload(self):
+        """The rail: four to six phases, the fine step in prose, the blockers.
+
+        Only phases that actually hold steps are drawn. A procedure whose
+        consultant has not grouped its steps into phases yet gets an honest
+        bar, counter and prose with no segments - never one segment per step,
+        which is the anti-pattern the rail exists to end.
+        """
+        rtl = self._payload_rtl()
+        user = self.env.user
+        user_groups = (
+            user.all_group_ids if "all_group_ids" in user._fields else user.group_ids
+        )
+        for case in self:
+            if not case.step_id or not case.procedure_type_id:
+                # A record still being typed: render an empty rail rather
+                # than tripping over fields that are not there yet.
+                case.progress_payload = {
+                    "rtl": rtl, "percent": 0, "counter_label": "",
+                    "current_phase": "", "current_step": "", "current_label": "",
+                    "clerk_instruction_html": "", "mine": False, "closed": False,
+                    "pending_groups": [], "phases": [], "blockers": [],
+                }
+                continue
+
+            steps = list(
+                case.procedure_type_id.step_ids.sorted(lambda s: (s.sequence, s.id))
+            )
+            total = len(steps)
+            index = steps.index(case.step_id) if case.step_id in steps else 0
+            if case.is_closed or total <= 1:
+                percent = 100 if case.is_closed else 0
+            else:
+                percent = int(round(100.0 * index / (total - 1)))
+
+            # Who dealt with each step and when, off the immutable trail: the
+            # latest arrival into the step. Feeds the actor/date columns of
+            # the rail's table fallback.
+            arrival = {}
+            for entry in case.log_ids.filtered("closes_step").sorted("logged_on"):
+                if entry.to_step_id:
+                    arrival[entry.to_step_id.id] = entry
+
+            ordered_phases = []
+            for step in steps:
+                if step.phase_id and step.phase_id not in ordered_phases:
+                    ordered_phases.append(step.phase_id)
+            phases = []
+            for number, phase in enumerate(ordered_phases, start=1):
+                phase_steps = [step for step in steps if step.phase_id == phase]
+                if case.is_closed:
+                    status = "done"
+                elif case.step_id in phase_steps:
+                    status = "current"
+                elif phase_steps and all(
+                    (step.sequence, step.id) < (case.step_id.sequence, case.step_id.id)
+                    for step in phase_steps
+                ):
+                    status = "done"
+                else:
+                    status = "todo"
+                entry = None
+                for step in phase_steps:
+                    candidate = arrival.get(step.id)
+                    if candidate and (entry is None or candidate.logged_on > entry.logged_on):
+                        entry = candidate
+                phases.append({
+                    "key": phase.code or f"phase-{phase.id}",
+                    "number": number,
+                    "label": phase.name,
+                    "status": status,
+                    "step_labels": [step.name for step in phase_steps],
+                    "actor": entry.user_id.display_name if entry and entry.user_id else False,
+                    "date": self._payload_date(entry.logged_on) if entry else False,
+                })
+
+            mine = bool(
+                not case.is_closed
+                and (
+                    (case.user_id and case.user_id.id == user.id)
+                    or (case.pending_group_id and case.pending_group_id in user_groups)
+                )
+            )
+            case.progress_payload = {
+                "rtl": rtl,
+                "percent": max(0, min(100, percent)),
+                # One atomic string, pinned ltr by the component: the bidi
+                # algorithm reorders a bare "3 / 5" inside an Arabic
+                # paragraph.
+                "counter_label": f"{index + 1} / {total}" if total else "",
+                "current_phase": (
+                    (case.step_id.phase_id.code or f"phase-{case.step_id.phase_id.id}")
+                    if case.step_id.phase_id else ""
+                ),
+                "current_step": case.step_id.code or f"step-{case.step_id.id}",
+                "current_label": case.step_id.display_name or "",
+                # `clerk_instruction` is a fields.Html: the ORM sanitises it
+                # on every write, which is the one and only reason the client
+                # may inject it with markup().
+                "clerk_instruction_html": str(case.step_instruction or ""),
+                "mine": mine,
+                "closed": case.is_closed,
+                "pending_groups": (
+                    [case.pending_group_id.name]
+                    if case.pending_group_id and not mine and not case.is_closed
+                    else []
+                ),
+                "blockers": [] if case.is_closed else case._blockers(),
+            }
+
+    @api.depends(
+        "document_ids.line_status",
+        "document_ids.superseded",
+        "document_ids.company_document_id",
+        "step_id",
+    )
+    @api.depends_context("uid", "lang")
+    def _compute_checklist_payload(self):
+        """The task list, grouped by the step that demands each line.
+
+        The done/total pair here is THE meter:
+        :meth:`legal.dashboard._checklist_counts` reads this payload first,
+        so the counter on the desk and the counter on the form are one number
+        computed once.
+        """
+        rtl = self._payload_rtl()
+        Line = self.env["legal.case.document"]
+        try:
+            status_labels = dict(
+                Line._fields["line_status"]._description_selection(self.env)
+            )
+        except Exception:  # noqa: BLE001
+            status_labels = {}
+        # The widget's closed icon vocabulary differs from the model's in two
+        # names; the WORD the reader sees is always the model's own label.
+        status_codes = {"missing": "not_submitted", "provided": "submitted"}
+        can_write = self.env.user.has_group("legal_core.group_legal_clerk")
+
+        # The prerequisite chain: which procedure of ours produces each
+        # wanted type, resolved once for the whole batch.
+        producers = {}
+        wanted_types = self.document_ids.mapped("document_type_id")
+        if wanted_types and can_write:
+            for procedure in self.env["legal.procedure.type"].search(
+                [("result_document_type_id", "in", wanted_types.ids)]
+            ):
+                producers.setdefault(procedure.result_document_type_id.id, procedure)
+
+        for case in self:
+            lines = case.document_ids.filtered(lambda line: not line.superseded)
+            required = lines.filtered("is_required")
+            done = len(required.filtered(
+                lambda line: line.line_status in SATISFYING_LINE_STATUS
+            ))
+            total = len(required)
+
+            by_step = {}
+            for line in lines.sorted(lambda line: (line.sequence, line.id)):
+                by_step.setdefault(line.step_id, []).append(line)
+
+            sections = []
+            for step in sorted(
+                by_step,
+                key=lambda step: (step.sequence, step.id) if step else (-1, 0),
+            ):
+                step_lines = by_step[step]
+                outstanding = any(
+                    line.is_required and line.line_status not in SATISFYING_LINE_STATUS
+                    for line in step_lines
+                )
+                rows = []
+                for line in step_lines:
+                    satisfied = line.line_status in SATISFYING_LINE_STATUS
+                    producer = producers.get(line.document_type_id.id)
+                    offer_producer = bool(
+                        producer and not satisfied and not case.is_closed
+                    )
+                    rows.append({
+                        "id": line.id,
+                        "label": line.display_name,
+                        "status": status_codes.get(line.line_status, line.line_status),
+                        "status_label": status_labels.get(line.line_status, ""),
+                        "required": line.is_required,
+                        "hint": line.blocking_reason or line.note or "",
+                        "authenticity_label": (
+                            line.minimum_grade_id.display_name
+                            if line.minimum_grade_id else ""
+                        ),
+                        "expiry_label": (
+                            _(
+                                "Valid until %s",
+                                fields.Date.to_string(line.company_document_id.expiry_date),
+                            )
+                            if line.company_document_id
+                            and "expiry_date" in line.company_document_id._fields
+                            and line.company_document_id.expiry_date
+                            else ""
+                        ),
+                        "freshness_label": "",
+                        "from_entity_register": bool(line.company_document_id),
+                        "open": (
+                            {
+                                "type": "ir.actions.act_window",
+                                "res_model": "legal.document",
+                                "res_id": line.company_document_id.id,
+                                "views": [[False, "form"]],
+                                "target": "current",
+                            }
+                            if line.company_document_id else False
+                        ),
+                        # The one button that turns "the Registrar wants a tax
+                        # clearance" into the procedure that issues one.
+                        # Withheld from a reader who could not create the file
+                        # it opens.
+                        "producer": (
+                            {
+                                "type": "ir.actions.act_window",
+                                "name": producer.display_name,
+                                "res_model": "legal.case",
+                                "views": [[False, "form"]],
+                                "target": "current",
+                                "context": {
+                                    "default_procedure_type_id": producer.id,
+                                    "default_entity_id": case.entity_id.id,
+                                    "default_parent_case_id": case.id,
+                                },
+                            }
+                            if offer_producer else False
+                        ),
+                        "producer_label": (
+                            _("Start: %s", producer.display_name)
+                            if offer_producer else ""
+                        ),
+                    })
+                sections.append({
+                    "key": (step.code or f"step-{step.id}") if step else "general",
+                    "label": step.name if step else _("From the start"),
+                    "open_by_default": bool(
+                        outstanding or (step and step == case.step_id)
+                    ),
+                    "meter_label": "",
+                    "rows": rows,
+                })
+
+            case.checklist_payload = {
+                "rtl": rtl,
+                "done": done,
+                "total": total,
+                "meter_label": f"{done} / {total}",
+                "percent": int(round(100.0 * done / total)) if total else 100,
+                "sections": sections,
+                # The blockers already speak from the alert above the sheet
+                # and from the rail; a third copy here would be noise.
+                "blockers": [],
+            }
+
+    @api.depends(
+        "check_ids.done",
+        "check_ids.superseded",
+        "check_ids.reference",
+        "step_id",
+        "round",
+    )
+    @api.depends_context("uid", "lang")
+    def _compute_walk_payload(self):
+        """The runner's ordered list of windows for the CURRENT step.
+
+        Current step, current round, nothing superseded: the walk answers
+        "which window am I at", and yesterday's round is history the trail
+        already keeps.
+        """
+        rtl = self._payload_rtl()
+        for case in self:
+            checks = case.check_ids.filtered(
+                lambda check: check.step_id == case.step_id
+                and check.round == case.round
+                and not check.superseded
+            ).sorted(lambda check: (check.sequence, check.id))
+            counters = []
+            for position, check in enumerate(checks, start=1):
+                counters.append({
+                    "id": check.id,
+                    "label": check.name,
+                    "location": check.counter or "",
+                    "instruction": check.note or "",
+                    "bring": "",
+                    "produces_stamp": check.produces_stamp or "",
+                    "fee_label": "",
+                    "receipt_number": check.reference or "",
+                    "stamp_obtained": check.done,
+                    "obtained_on": self._payload_date(check.done_on),
+                    "sequence_label": str(position),
+                })
+            done = sum(1 for counter in counters if counter["stamp_obtained"])
+            case.walk_payload = {
+                "rtl": rtl,
+                "step_key": (
+                    (case.step_id.code or f"step-{case.step_id.id}")
+                    if case.step_id else ""
+                ),
+                # No step_label: the component's own translated title serves,
+                # and the step is already named in the statusbar above.
+                "step_label": False,
+                "done": done,
+                "total": len(counters),
+                "meter_label": f"{done} / {len(counters)}",
+                "counters": counters,
+            }
+
+    def _inverse_walk_payload(self):
+        """Consume the widget's batched ticks - as the reader, never around them.
+
+        The counter-walk widget accumulates an afternoon of ticks and saves
+        once; what arrives here is the payload it was given plus a ``ticks``
+        list. Each tick is written to its check line through the ordinary
+        ORM, so the line's ACL - clerk and up may write, the auditor may not -
+        decides, exactly as it would from the list view. Mirrors
+        :meth:`legal.case.step.check.action_mark_done` on the fields it sets.
+        """
+        now = fields.Datetime.now()
+        for case in self:
+            payload = case.walk_payload or {}
+            ticks = payload.get("ticks") if isinstance(payload, dict) else None
+            for tick in ticks or []:
+                try:
+                    check_id = int(tick.get("id", 0))
+                except (TypeError, ValueError, AttributeError):
+                    continue
+                check = case.check_ids.filtered(lambda c: c.id == check_id)
+                if not check:
+                    continue
+                obtained = bool(tick.get("stamp_obtained"))
+                values = {"done": obtained}
+                values.update(
+                    {"done_on": now, "done_by_id": self.env.uid}
+                    if obtained
+                    else {"done_on": False, "done_by_id": False}
+                )
+                check.write(values)
 
     # ==================================================================
     # The single definition of "blocked"

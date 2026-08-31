@@ -72,7 +72,7 @@
                         domain="[('kind', '=', 'correspondence_reply')]"/>
                 <filter name="appeal_windows" string="Appeal Windows"
                         domain="[('kind', '=', 'appeal_window')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_kind" string="Kind"
                             context="{'group_by': 'kind'}"/>
                     <filter name="group_user" string="Responsible"

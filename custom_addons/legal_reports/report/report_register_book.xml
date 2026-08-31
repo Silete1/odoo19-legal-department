@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         دفتر السجل - the bound book of a year, printed.
+
+         The page is the paper register made faithful: every numbered
+         entry of the year in order, and a voided entry struck through
+         with its reason beside it - never removed, because a book with
+         a missing row is a book somebody has been editing. Telephone
+         notes consume no number and never touched the book, so they do
+         not print.
+         ================================================================ -->
+
+    <template id="report_register_book_document">
+        <t t-set="company" t-value="o.company_id"/>
+        <t t-set="draw_letterhead" t-value="True"/>
+        <t t-set="lines" t-value="entries[o.id]"/>
+        <t t-set="line_stats" t-value="stats[o.id]"/>
+        <t t-call="web.basic_layout">
+
+            <div class="footer legal-rep-footer" dir="rtl">
+                <div class="text-center">
+                    <span t-out="o.name"/> - <span t-out="fmt(year)"/> -
+                    صفحة <span class="page"/> من <span class="topage"/>
+                </div>
+            </div>
+
+            <div class="page legal-rep" dir="rtl">
+
+                <t t-call="legal_correspondence.report_letter_head"/>
+
+                <div class="legal-rep-title">
+                    دفتر <t t-out="direction_labels.get(o.direction, '')"/> - <t t-out="o.name"/>
+                </div>
+                <div class="legal-rep-subtitle">
+                    لسنة <span t-out="fmt(year)"/>
+                    <t t-if="o.secrecy == 'secret'">
+                        - <b t-out="secrecy_labels.get(o.secrecy)"/>
+                    </t>
+                </div>
+
+                <table class="legal-rep-facts">
+                    <tr>
+                        <td class="legal-rep-label">رمز السجل</td>
+                        <td t-out="fmt(o.code or '')"/>
+                        <td class="legal-rep-label">الجهة</td>
+                        <td t-out="o.body_id.name or 'عام - جميع الجهات'"/>
+                        <td class="legal-rep-label">مدة الحفظ</td>
+                        <td><t t-out="fmt(o.retention_years)"/> سنوات</td>
+                    </tr>
+                </table>
+
+                <div t-if="not lines" class="legal-rep-empty">
+                    لا توجد قيود في هذا الدفتر لسنة <t t-out="fmt(year)"/>.
+                </div>
+
+                <table t-if="lines" class="legal-rep-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 4%;">ت</th>
+                            <th style="width: 10%;">العدد</th>
+                            <th style="width: 9%;">التاريخ</th>
+                            <th style="width: 20%;">الجهة</th>
+                            <th style="width: 33%;" t-if="o.direction == 'in'">الموضوع</th>
+                            <th style="width: 45%;" t-else="">الموضوع</th>
+                            <th style="width: 12%;" t-if="o.direction == 'in'">كتابهم (العدد / التاريخ)</th>
+                            <th style="width: 12%;">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="lines" t-as="e"
+                            t-att-class="'legal-rep-void' if e.state == 'void' else None">
+                            <td t-out="fmt(e_index + 1)"/>
+                            <td class="legal-rep-center" t-out="fmt(e.our_number or '')"/>
+                            <td class="legal-rep-center" t-out="fmt_date(e.our_date)"/>
+                            <td>
+                                <t t-out="e.gov_body_id.name or ''"/>
+                                <div t-if="e.body_section" t-out="e.body_section"/>
+                            </td>
+                            <td t-out="e.subject or ''"/>
+                            <td t-if="o.direction == 'in'" class="legal-rep-center">
+                                <t t-out="fmt(e.their_number or '')"/>
+                                <div t-if="e.their_date" t-out="fmt_date(e.their_date)"/>
+                            </td>
+                            <td t-if="e.state == 'void'" class="legal-rep-void-state">
+                                <t t-out="entry_state_labels.get(e.state)"/>
+                                <t t-if="e.void_reason"> - <t t-out="e.void_reason"/></t>
+                            </td>
+                            <td t-else="" class="legal-rep-center"
+                                t-out="entry_state_labels.get(e.state, '')"/>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">مجموع القيود: <t t-out="fmt(line_stats['total'])"/></td>
+                            <td t-att-colspan="4 if o.direction == 'in' else 3">
+                                منها الملغاة: <t t-out="fmt(line_stats['void'])"/>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="row legal-rep-sign-row">
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">مسؤول السجل</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line">الاسم والتوقيع</div>
+                    </div>
+                    <div class="col-4"/>
+                    <div class="col-4 legal-rep-sign">
+                        <div class="legal-rep-sign-role">مدير القسم القانوني</div>
+                        <div class="legal-rep-sign-space"/>
+                        <div class="legal-rep-sign-line">الاسم والتوقيع</div>
+                    </div>
+                </div>
+
+                <div class="legal-rep-printed">
+                    طبع بتاريخ <span t-out="printed_on"/> - الدفتر المطبوع صورة عن القيد
+                    الإلكتروني، والعبرة عند الاختلاف بالسجل نفسه.
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_register_book">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="legal_reports.report_register_book_document"/>
+        </t>
+    </template>
+
+</odoo>

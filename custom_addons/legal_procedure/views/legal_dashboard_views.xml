@@ -36,18 +36,28 @@
         rather than the book.
     -->
 
+    <!--
+        The auditor is deliberately on both menus. The screens are read-mostly,
+        every number in them is composed through the ORM as the reader - so the
+        record rules and the auditor's read-only ACLs apply untouched - and the
+        payload itself goes read-only for the role (role.can_write is false and
+        every mutation affordance is withheld server-side). A read-only reviewer
+        who cannot reach the landing screens is not read-only; they are locked
+        out.
+    -->
+
     <menuitem id="menu_legal_mail_room"
               name="Mail Room"
               parent="legal_core.menu_legal_root"
               action="action_legal_mail_room"
-              groups="legal_core.group_legal_clerk"
+              groups="legal_core.group_legal_clerk,legal_core.group_legal_auditor"
               sequence="1"/>
 
     <menuitem id="menu_legal_desk"
               name="My Desk"
               parent="legal_core.menu_legal_root"
               action="action_legal_desk"
-              groups="legal_core.group_legal_clerk"
+              groups="legal_core.group_legal_clerk,legal_core.group_legal_auditor"
               sequence="2"/>
 
 </odoo>

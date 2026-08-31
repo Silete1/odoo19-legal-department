@@ -60,6 +60,15 @@
                         <h1><field name="name" readonly="1"/></h1>
                         <h3><field name="subject" placeholder="Application for a limited company incorporation licence"/></h3>
                     </div>
+                    <!--
+                        The phase rail: the thirteen steps as four to six
+                        coarse phases, the fine step in prose beneath, the
+                        blockers under that. A pure renderer of the
+                        server-composed payload, so it draws whatever the
+                        procedure configures without a line of JS changing.
+                    -->
+                    <field name="progress_payload" widget="legal_phase_rail"
+                           nolabel="1" readonly="1"/>
                     <div class="alert alert-warning" role="alert" invisible="ready_to_advance or is_closed">
                         <field name="blocker_summary" nolabel="1" readonly="1"/>
                     </div>
@@ -120,7 +129,27 @@
                                     </field>
                                 </group>
                             </group>
-                            <separator string="Counter Walk"/>
+                            <!--
+                                The required documents in task-list anatomy:
+                                whole-row targets, the counter's expectation
+                                as the hint, and the register badge where the
+                                company file already satisfies a line. A
+                                renderer of `checklist_payload`; the editable
+                                detail stays on the Checklist page.
+                            -->
+                            <field name="checklist_payload" widget="legal_checklist"
+                                   nolabel="1" readonly="1"/>
+                        </page>
+                        <page string="Counter Walk" name="walk">
+                            <!--
+                                The runner's ordered window list for the
+                                current step. Ticks batch in the widget and
+                                save once; the inverse writes the check lines
+                                as the reader, so the lines' own ACL decides.
+                            -->
+                            <field name="walk_payload" widget="legal_counter_walk"
+                                   nolabel="1"/>
+                            <separator string="All Rounds And Refusals"/>
                             <field name="check_ids" context="{'default_step_id': step_id}">
                                 <list editable="bottom" decoration-muted="superseded">
                                     <field name="sequence" widget="handle"/>
@@ -471,7 +500,7 @@
     </record>
 
     <record id="action_legal_case_my_desk" model="ir.actions.act_window">
-        <field name="name">My Desk</field>
+        <field name="name">My Files</field>
         <field name="res_model">legal.case</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="domain">[('is_closed', '=', False)]</field>

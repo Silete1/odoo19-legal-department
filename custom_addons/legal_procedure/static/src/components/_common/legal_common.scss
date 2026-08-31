@@ -287,3 +287,140 @@ $o-legal-radius: 8px;
     color: $text-muted;
     font-size: 0.85rem;
 }
+
+// ------------------------------------------------------------------- errors
+// A failed load is a state of the screen, not an eternal spinner. Same
+// anatomy as the empty state - icon, sentence, hint - plus the one button
+// that can help; the no-permission variant drops the button, because the
+// server refusing a read is an answer and it will answer the same again.
+.o_legal_error {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 1.5rem auto;
+    padding: 2.5rem 1rem;
+    max-inline-size: 34rem;
+    color: $text-muted;
+
+    .fa {
+        color: $danger;
+        font-size: 1.4rem;
+        flex: 0 0 auto;
+    }
+}
+
+.o_legal_error_title {
+    margin: 0;
+    font-weight: 600;
+    color: $body-color;
+}
+
+.o_legal_error_hint {
+    margin: 0.2rem 0 0.75rem;
+    font-size: 0.85rem;
+}
+
+// -------------------------------------------------------- attention strip
+// One compact chip per dated source - hearings, deadlines, triage. Chips,
+// not tiles: this row is a glance on the way to the desk, never the desk.
+.o_legal_attention {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block-end: 1rem;
+}
+
+.o_legal_attention_title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $text-muted;
+}
+
+.o_legal_attention_item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid $border-color;
+    border-radius: 999px;
+    background-color: $o-view-background-color;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.82rem;
+    color: $body-color;
+
+    &:disabled {
+        color: $text-muted;
+    }
+
+    // The tone repeats what the count already says; it never travels alone.
+    &.o_legal_tone_attention { border-color: $warning; }
+    &.o_legal_tone_critical { border-color: $danger; }
+}
+
+.o_legal_attention_count {
+    font-weight: 700;
+}
+
+// ------------------------------------------------- the auditor's trail list
+.o_legal_audit_log {
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.6rem;
+        padding-block: 0.35rem;
+        border-block-start: 1px solid $border-color;
+        font-size: 0.85rem;
+
+        &:first-child { border-block-start: 0; }
+    }
+}
+
+.o_legal_audit_when {
+    color: $text-muted;
+    font-size: 0.78rem;
+}
+
+.o_legal_audit_user {
+    color: $text-muted;
+    font-size: 0.8rem;
+    margin-inline-start: auto;
+}
+
+// ------------------------------------------------ the manager's officer list
+.o_legal_officer_load {
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li + li {
+        border-block-start: 1px solid $border-color;
+    }
+
+    // The whole row is the way in, like every other row in the module.
+    button {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem;
+        inline-size: 100%;
+        padding: 0.4rem 0.2rem;
+        border: 0;
+        background: transparent;
+        color: $body-color;
+        text-align: start;
+
+        &:hover {
+            background-color: $o-gray-200;
+        }
+    }
+}

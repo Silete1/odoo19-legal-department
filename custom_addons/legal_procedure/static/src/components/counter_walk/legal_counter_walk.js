@@ -78,6 +78,16 @@ export class LegalCounterWalk extends Component {
         return this.payload.counters || [];
     }
 
+    /**
+     * This is the one widget in the module that writes, so it is the one
+     * that must honour a read-only mount: an auditor's form, a closed file,
+     * or a payload mount with no record to save into. Ticking and saving
+     * both go dead; reading stays whole.
+     */
+    get isReadonly() {
+        return Boolean(this.props.readonly) || !this.props.record || !this.props.name;
+    }
+
     /** Ticked, counting what the reader has just ticked and not yet saved. */
     isObtained(counter) {
         const pending = this.state.pending[counter.id];
@@ -104,6 +114,9 @@ export class LegalCounterWalk extends Component {
     }
 
     toggle(counter) {
+        if (this.isReadonly) {
+            return;
+        }
         const now = !this.isObtained(counter);
         if (now === Boolean(counter.stamp_obtained)) {
             delete this.state.pending[counter.id];
@@ -128,7 +141,7 @@ export class LegalCounterWalk extends Component {
      */
     async save() {
         const record = this.props.record;
-        if (!record || !this.props.name || !this.unsavedCount) {
+        if (this.isReadonly || !record || !this.unsavedCount) {
             return;
         }
         const ticks = Object.entries(this.state.pending).map(([id, obtained]) => ({

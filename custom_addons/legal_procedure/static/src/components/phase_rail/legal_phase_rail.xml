@@ -90,8 +90,10 @@
                  the step configuration. It is the one piece of text on this
                  screen that saves a telephone call, so it sits above the
                  blockers and not in a tooltip. -->
-            <div class="o_legal_rail_instruction" t-if="payload.clerk_instruction_html">
-                <t t-out="payload.clerk_instruction_html"/>
+            <div class="o_legal_rail_instruction" t-if="instructionHtml">
+                <!-- Sanitised fields.Html, re-marked client-side: see the
+                     instructionHtml getter for why this is safe. -->
+                <t t-out="instructionHtml"/>
             </div>
 
             <div class="o_legal_rail_blockers alert alert-warning" role="alert"
