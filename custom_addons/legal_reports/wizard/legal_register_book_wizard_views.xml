@@ -5,7 +5,7 @@
         <field name="name">legal.register.book.wizard.form</field>
         <field name="model">legal.register.book.wizard</field>
         <field name="arch" type="xml">
-            <form string="Print Register Book">
+            <form string="Print Register Book" class="o_legal_view">
                 <group>
                     <field name="register_id"/>
                     <field name="year"/>

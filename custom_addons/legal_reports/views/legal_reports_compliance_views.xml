@@ -18,7 +18,7 @@
         <field name="model">legal.obligation.instance</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <pivot string="Compliance Analysis" sample="1">
+            <pivot string="Compliance Analysis" sample="1" class="o_legal_view">
                 <field name="body_id" type="row"/>
                 <field name="state" type="col"/>
             </pivot>
@@ -30,7 +30,7 @@
         <field name="model">legal.obligation.instance</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <graph string="Compliance Analysis" sample="1" type="bar">
+            <graph string="Compliance Analysis" sample="1" type="bar" class="o_legal_view">
                 <field name="due_on" interval="month"/>
                 <field name="state"/>
             </graph>
@@ -71,7 +71,7 @@
         <field name="model">legal.fee</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <pivot string="Fee Analysis" sample="1">
+            <pivot string="Fee Analysis" sample="1" class="o_legal_view">
                 <field name="body_id" type="row"/>
                 <field name="procedure_type_id" type="row"/>
                 <field name="state" type="col"/>
@@ -87,7 +87,7 @@
         <field name="model">legal.fee</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <graph string="Fee Analysis" sample="1" type="bar">
+            <graph string="Fee Analysis" sample="1" type="bar" class="o_legal_view">
                 <field name="body_id"/>
                 <field name="amount_paid" type="measure"/>
             </graph>

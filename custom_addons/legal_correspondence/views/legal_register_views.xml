@@ -5,7 +5,7 @@
         <field name="name">legal.register.list</field>
         <field name="model">legal.register</field>
         <field name="arch" type="xml">
-            <list string="Registers">
+            <list string="Registers" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -25,7 +25,7 @@
         <field name="name">legal.register.form</field>
         <field name="model">legal.register</field>
         <field name="arch" type="xml">
-            <form string="Register">
+            <form string="Register" class="o_legal_view">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_entries" type="object" class="oe_stat_button" icon="fa-envelope">

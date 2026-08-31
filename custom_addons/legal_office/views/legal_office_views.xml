@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        مكتبي is not a new screen. It is the screen that was already there,
+        rendering something better.
+
+        `legal_procedure.action_legal_desk` keeps its identity - its record,
+        its name, its menu, and its `legal-desk` path, so every bookmark and
+        every link anybody has already sent still opens the first screen. The
+        one thing that changes is its `tag`: it now mounts the redesigned
+        workspace instead of the old seven-band desk.
+
+        Adding a second action and a second menu entry would have left two
+        things called مكتبي on the same menu, which is a worse problem than
+        the layout it was meant to fix.
+    -->
+
+    <record id="legal_procedure.action_legal_desk" model="ir.actions.client">
+        <field name="tag">legal_office</field>
+    </record>
+
+    <!--
+        What the old desk was uniquely good at - what each government counter
+        wants, when it is open, which floor - is genuinely useful and is not
+        thrown away. It becomes its own screen, named for what it actually is,
+        one click from the work rather than on top of it.
+    -->
+    <record id="action_legal_gov_desks" model="ir.actions.client">
+        <field name="name">Government Desks</field>
+        <field name="tag">legal_desk</field>
+        <field name="path">gov-desks</field>
+    </record>
+
+    <record id="action_legal_analytics" model="ir.actions.client">
+        <field name="name">Legal Analytics</field>
+        <field name="tag">legal_analytics</field>
+        <field name="path">legal-analytics</field>
+    </record>
+
+</odoo>

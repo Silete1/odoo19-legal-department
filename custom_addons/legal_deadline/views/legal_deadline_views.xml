@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <list string="Deadlines" default_order="date_due asc"
                   create="false" edit="false" delete="false"
-                  decoration-danger="state == 'overdue'">
+                  decoration-danger="state == 'overdue'" class="o_legal_view">
                 <field name="name"/>
                 <field name="kind" widget="badge"/>
                 <field name="date_due"/>

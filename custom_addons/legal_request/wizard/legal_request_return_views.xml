@@ -5,7 +5,7 @@
         <field name="name">legal.request.return.form</field>
         <field name="model">legal.request.return</field>
         <field name="arch" type="xml">
-            <form string="Return For Rework">
+            <form string="Return For Rework" class="o_legal_view">
                 <group>
                     <field name="request_id" readonly="1"/>
                     <field name="reason" required="1"

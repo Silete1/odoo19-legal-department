@@ -5,7 +5,7 @@
         <field name="name">legal.gov.body.list</field>
         <field name="model">legal.gov.body</field>
         <field name="arch" type="xml">
-            <list string="Government Bodies">
+            <list string="Government Bodies" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="short_name" optional="show"/>
@@ -30,7 +30,7 @@
         <field name="name">legal.gov.body.form</field>
         <field name="model">legal.gov.body</field>
         <field name="arch" type="xml">
-            <form string="Government Body">
+            <form string="Government Body" class="o_legal_view">
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
@@ -122,7 +122,7 @@
         <field name="name">legal.gov.body.kanban</field>
         <field name="model">legal.gov.body</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" default_group_by="body_type_id">
+            <kanban class="o_kanban_mobile o_legal_view" default_group_by="body_type_id">
                 <field name="colour"/>
                 <templates>
                     <t t-name="card">
@@ -189,7 +189,7 @@
         <field name="name">legal.gov.body.type.list</field>
         <field name="model">legal.gov.body.type</field>
         <field name="arch" type="xml">
-            <list string="Body Types" editable="bottom">
+            <list string="Body Types" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>

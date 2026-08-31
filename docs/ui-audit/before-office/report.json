@@ -1,0 +1,668 @@
+{
+ "clerk": {
+  "console": [],
+  "metrics": {
+   "desk": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": "files",
+    "sections": [
+     {
+      "title": "مكتبكالموظف",
+      "top": 171,
+      "h": 21,
+      "w": 1400
+     },
+     {
+      "title": "مكاتب الجهات",
+      "top": 756,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "عبء المعاملاتعرض أرقام الدائرة",
+      "top": 1686,
+      "h": 28,
+      "w": 1400
+     }
+    ],
+    "cards": 8,
+    "tiles": 3,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [
+     "0الجلسات خلال 7 أيام",
+     "1طلبات بانتظار الفرز"
+    ],
+    "hero": {
+     "top": 202,
+     "h": 155,
+     "w": 384
+    },
+    "firstQueue": {
+     "top": 202,
+     "h": 201,
+     "w": 1000
+    },
+    "rtlLeak": 0
+   },
+   "cases": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "deadlines": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "contracts": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "requests": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   }
+  }
+ },
+ "officer": {
+  "console": [],
+  "metrics": {
+   "desk": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": "files",
+    "sections": [
+     {
+      "title": "مكتبكمسؤول المتابعة",
+      "top": 171,
+      "h": 21,
+      "w": 1400
+     },
+     {
+      "title": "مكاتب الجهات",
+      "top": 756,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "عبء المعاملاتعرض أرقام الدائرة",
+      "top": 2129,
+      "h": 28,
+      "w": 1400
+     }
+    ],
+    "cards": 10,
+    "tiles": 3,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [
+     "0الجلسات خلال 7 أيام",
+     "1طلبات بانتظار الفرز"
+    ],
+    "hero": {
+     "top": 202,
+     "h": 155,
+     "w": 384
+    },
+    "firstQueue": {
+     "top": 202,
+     "h": 422,
+     "w": 1000
+    },
+    "rtlLeak": 0
+   },
+   "cases": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "deadlines": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "contracts": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "requests": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   }
+  }
+ },
+ "approver": {
+  "console": [],
+  "metrics": {
+   "desk": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": "approvals",
+    "sections": [
+     {
+      "title": "مكتبكالمصادِق",
+      "top": 171,
+      "h": 21,
+      "w": 1400
+     },
+     {
+      "title": "المصادقات",
+      "top": 732,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "مكاتب الجهات",
+      "top": 1143,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "عبء المعاملاتعرض أرقام الدائرة",
+      "top": 2214,
+      "h": 28,
+      "w": 1400
+     }
+    ],
+    "cards": 11,
+    "tiles": 6,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [
+     "0الجلسات خلال 7 أيام",
+     "1طلبات بانتظار الفرز"
+    ],
+    "hero": {
+     "top": 202,
+     "h": 131,
+     "w": 384
+    },
+    "firstQueue": {
+     "top": 202,
+     "h": 178,
+     "w": 1000
+    },
+    "rtlLeak": 0
+   },
+   "cases": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "deadlines": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "contracts": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "requests": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   }
+  }
+ },
+ "manager": {
+  "console": [],
+  "metrics": {
+   "desk": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": "files",
+    "sections": [
+     {
+      "title": "مكتبكمدير الشؤون القانونية",
+      "top": 171,
+      "h": 21,
+      "w": 1400
+     },
+     {
+      "title": "المصادقات",
+      "top": 732,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "مكاتب الجهات",
+      "top": 1143,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "الدائرة",
+      "top": 2434,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "عبء المعاملات",
+      "top": 2844,
+      "h": 17,
+      "w": 1400
+     }
+    ],
+    "cards": 20,
+    "tiles": 9,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [
+     "0الجلسات خلال 7 أيام",
+     "1طلبات بانتظار الفرز"
+    ],
+    "hero": {
+     "top": 202,
+     "h": 131,
+     "w": 384
+    },
+    "firstQueue": {
+     "top": 202,
+     "h": 178,
+     "w": 1000
+    },
+    "rtlLeak": 0
+   },
+   "cases": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "deadlines": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "contracts": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "requests": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   }
+  }
+ },
+ "auditor": {
+  "console": [],
+  "metrics": {
+   "desk": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": "audit",
+    "sections": [
+     {
+      "title": "مكتبكالمدقق",
+      "top": 171,
+      "h": 21,
+      "w": 1400
+     },
+     {
+      "title": "السجلات، اطلاع فقط",
+      "top": 732,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "مكاتب الجهات",
+      "top": 1894,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "عبء المعاملاتعرض أرقام الدائرة",
+      "top": 2965,
+      "h": 28,
+      "w": 1400
+     }
+    ],
+    "cards": 11,
+    "tiles": 10,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [
+     "0الجلسات خلال 7 أيام",
+     "1طلبات بانتظار الفرز"
+    ],
+    "hero": {
+     "top": 202,
+     "h": 131,
+     "w": 384
+    },
+    "firstQueue": {
+     "top": 202,
+     "h": 178,
+     "w": 1000
+    },
+    "rtlLeak": 0
+   },
+   "cases": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "deadlines": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "contracts": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "requests": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   }
+  }
+ },
+ "admin": {
+  "console": [],
+  "metrics": {
+   "desk": {
+    "scrollHeight": 900,
+    "dir": "rtl",
+    "band": "files",
+    "sections": [
+     {
+      "title": "مكتبكمدير الشؤون القانونية",
+      "top": 171,
+      "h": 21,
+      "w": 1400
+     },
+     {
+      "title": "المصادقات",
+      "top": 732,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "مكاتب الجهات",
+      "top": 1143,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "الدائرة",
+      "top": 2214,
+      "h": 17,
+      "w": 1400
+     },
+     {
+      "title": "عبء المعاملات",
+      "top": 2624,
+      "h": 17,
+      "w": 1400
+     }
+    ],
+    "cards": 20,
+    "tiles": 9,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [
+     "0الجلسات خلال 7 أيام",
+     "1طلبات بانتظار الفرز"
+    ],
+    "hero": {
+     "top": 202,
+     "h": 131,
+     "w": 384
+    },
+    "firstQueue": {
+     "top": 202,
+     "h": 178,
+     "w": 1000
+    },
+    "rtlLeak": 0
+   },
+   "cases": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "deadlines": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "contracts": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   },
+   "requests": {
+    "scrollHeight": 900,
+    "dir": null,
+    "band": null,
+    "sections": [],
+    "cards": 0,
+    "tiles": 0,
+    "queueRows": 0,
+    "agendaRows": 0,
+    "attention": [],
+    "hero": null,
+    "firstQueue": null,
+    "rtlLeak": 0
+   }
+  }
+ }
+}

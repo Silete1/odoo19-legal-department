@@ -29,6 +29,7 @@
 !/custom_addons/legal_opinion/
 !/custom_addons/legal_deadline/
 !/custom_addons/legal_reports/
+!/custom_addons/legal_office/
 
 /docs/*
 !/docs/access_schema_analysis.md
@@ -48,6 +49,8 @@
 !/scripts/dma_odoo_start.cmd
 !/scripts/dma_odoo_stop.cmd
 !/scripts/dma_install_into_odoo_service.ps1
+!/scripts/legal_ui_capture.py
+!/scripts/legal_stamp_view_class.py
 
 __pycache__/
 *.py[cod]

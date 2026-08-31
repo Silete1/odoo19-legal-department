@@ -9,7 +9,7 @@
                   decoration-muted="state == 'void'"
                   decoration-info="state == 'draft'"
                   decoration-danger="reply_state == 'late'"
-                  decoration-bf="reply_state == 'late'">
+                  decoration-bf="reply_state == 'late'" class="o_legal_view">
                 <field name="our_number" string="Our Number"/>
                 <field name="our_date" string="Date"/>
                 <field name="direction" optional="show"/>
@@ -46,7 +46,7 @@
         <field name="name">legal.correspondence.form</field>
         <field name="model">legal.correspondence</field>
         <field name="arch" type="xml">
-            <form string="Correspondence">
+            <form string="Correspondence" class="o_legal_view">
                 <header>
                     <button name="action_register" type="object" string="Register"
                             class="btn-primary" invisible="state != 'draft'"/>
@@ -293,7 +293,7 @@
         <field name="name">legal.correspondence.kanban</field>
         <field name="model">legal.correspondence</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="gov_body_id" quick_create="false">
+            <kanban default_group_by="gov_body_id" quick_create="false" class="o_legal_view">
                 <templates>
                     <t t-name="card">
                         <div class="d-flex justify-content-between">

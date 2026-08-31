@@ -5,7 +5,7 @@
         <field name="name">legal.jurisdiction.list</field>
         <field name="model">legal.jurisdiction</field>
         <field name="arch" type="xml">
-            <list string="Jurisdictions" editable="bottom">
+            <list string="Jurisdictions" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -19,7 +19,7 @@
         <field name="name">legal.jurisdiction.form</field>
         <field name="model">legal.jurisdiction</field>
         <field name="arch" type="xml">
-            <form string="Jurisdiction">
+            <form string="Jurisdiction" class="o_legal_view">
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>

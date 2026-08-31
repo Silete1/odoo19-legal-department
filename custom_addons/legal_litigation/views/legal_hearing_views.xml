@@ -6,7 +6,7 @@
         <field name="model">legal.hearing</field>
         <field name="arch" type="xml">
             <list string="Hearings" decoration-muted="is_held"
-                  decoration-bf="not is_held">
+                  decoration-bf="not is_held" class="o_legal_view">
                 <field name="date"/>
                 <field name="lawsuit_id"/>
                 <field name="court_id" optional="show"/>
@@ -24,7 +24,7 @@
         <field name="name">legal.hearing.form</field>
         <field name="model">legal.hearing</field>
         <field name="arch" type="xml">
-            <form string="Hearing">
+            <form string="Hearing" class="o_legal_view">
                 <header>
                     <button name="action_schedule_next" type="object"
                             string="Open Next Sitting" class="btn-primary"

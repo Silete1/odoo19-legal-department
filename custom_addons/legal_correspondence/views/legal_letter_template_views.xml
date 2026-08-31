@@ -5,7 +5,7 @@
         <field name="name">legal.letter.template.list</field>
         <field name="model">legal.letter.template</field>
         <field name="arch" type="xml">
-            <list string="Letter Templates">
+            <list string="Letter Templates" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -23,7 +23,7 @@
         <field name="name">legal.letter.template.form</field>
         <field name="model">legal.letter.template</field>
         <field name="arch" type="xml">
-            <form string="Letter Template">
+            <form string="Letter Template" class="o_legal_view">
                 <header>
                     <button name="action_preview_placeholders" type="object" string="Show Placeholders"
                             class="btn-secondary"/>

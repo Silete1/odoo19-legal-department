@@ -1,0 +1,677 @@
+// =====================================================================
+//  مكتبي - My Office.
+//
+//  Everything below is an application of legal_ds.scss and introduces no
+//  token of its own. If a value here is not from the scale, that is a bug.
+//
+//  The screen is a single grid with three rows - rail, work, context - and
+//  the work row is a two-column grid whose proportions (minmax + fr) are
+//  the whole layout argument: the queue must stay readable at 1366px and
+//  must not sprawl at 1920px, and the agenda must never be so narrow that
+//  its one-line events wrap.
+// =====================================================================
+
+.o_legal_office_screen {
+    // `.o_content` is the element Odoo caps; unless it is the scroller the
+    // page below the fold is unreachable, because `.o_action_manager` above
+    // it is `overflow: hidden`.
+    max-block-size: 100%;
+    overflow-y: auto;
+    background-color: $ds-ground;
+
+    [dir="rtl"] & { line-height: $ds-leading-ar; letter-spacing: 0; }
+}
+
+.o_legal_office {
+    display: grid;
+    gap: $ds-space-4;
+    padding: $ds-space-4;
+    // Wide enough for two comfortable columns, capped so that at 1920 the
+    // queue does not become a 1400px line the eye cannot track back along.
+    max-inline-size: 112rem;
+    margin-inline: auto;
+    color: $body-color;
+    font-size: $ds-font-body;
+
+    [dir="rtl"] & { font-size: $ds-font-body-ar; }
+
+    @include media-breakpoint-up(xxl) { padding: $ds-space-5 $ds-space-6; }
+}
+
+// ---------------------------------------------------------------- states
+.o_legal_office_state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $ds-space-3;
+    min-block-size: 55vh;
+    color: $o-gray-600;
+
+    &--error {
+        align-items: flex-start;
+        justify-content: center;
+        padding-block-start: 15vh;
+
+        > .fa { font-size: 1.5rem; color: $o-gray-500; }
+    }
+
+    &__title { font-size: $ds-font-lead; font-weight: $ds-weight-strong; margin: 0; }
+    &__hint {
+        font-size: $ds-font-meta;
+        color: $o-gray-600;
+        margin: $ds-space-1 0 $ds-space-3;
+        max-inline-size: 34rem;
+    }
+}
+
+.o_legal_spin {
+    inline-size: 1rem;
+    block-size: 1rem;
+    border: 2px solid $border-color;
+    border-block-start-color: $o-brand-primary;
+    border-radius: 50%;
+    animation: o_legal_spin 0.7s linear infinite;
+}
+
+@keyframes o_legal_spin { to { transform: rotate(360deg); } }
+
+.o_legal_note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: $ds-space-2;
+    margin: 0;
+    padding: $ds-space-2 $ds-space-3;
+    font-size: $ds-font-meta;
+    color: $ds-tone-warning;
+    background-color: mix($warning, $o-view-background-color, 8%);
+    border: 1px solid mix($warning, $o-view-background-color, 35%);
+    border-radius: $ds-radius-control;
+}
+
+// ------------------------------------------------------- control panel bits
+.o_legal_whoami {
+    display: inline-flex;
+    align-items: center;
+    gap: $ds-space-2;
+    font-size: $ds-font-meta;
+    color: $o-gray-600;
+    margin-inline-start: $ds-space-3;
+
+    &__sep { color: $o-gray-400; }
+    &__date { @include ds-numeral; }
+}
+
+.o_legal_create {
+    display: inline-flex;
+    align-items: center;
+    gap: $ds-space-1;
+    font-weight: $ds-weight-medium;
+}
+
+.o_legal_create_menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: $ds-space-2;
+    font-size: $ds-font-body;
+}
+
+.o_legal_refresh {
+    color: $o-gray-500;
+    padding-inline: $ds-space-2;
+
+    &:hover { color: $body-color; }
+    @include ds-focusable;
+}
+
+// ================================================================== the rail
+// A status bar, not a row of cards: one hairline-separated line, 40px tall,
+// with the count set larger than its label but nowhere near hero size. The
+// segment is the click target, so the whole thing - icon, count and label -
+// highlights together.
+.o_legal_signals {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    @include ds-panel;
+    overflow: hidden;
+}
+
+.o_legal_signal {
+    display: flex;
+    align-items: center;
+    gap: $ds-space-2;
+    flex: 1 1 auto;
+    min-inline-size: 10rem;
+    padding: $ds-space-2 $ds-space-4;
+    background: none;
+    border: 0;
+    border-inline-end: $ds-hairline;
+    text-align: start;
+    color: $body-color;
+    transition: background-color 0.12s ease;
+
+    &:last-child { border-inline-end: 0; }
+    &:not(:disabled):hover { background-color: $ds-hover; cursor: pointer; }
+    @include ds-focusable;
+
+    &__icon { color: $o-gray-500; font-size: $ds-font-body; }
+
+    &__count {
+        @include ds-numeral;
+        font-size: 1.0625rem;      // 17px - readable at a glance, not a hero
+        font-weight: $ds-weight-strong;
+        line-height: 1;
+        min-inline-size: 1.5rem;
+    }
+
+    &__label {
+        font-size: $ds-font-meta;
+        color: $o-gray-700;
+        @include ds-truncate;
+
+        [dir="rtl"] & { font-size: $ds-font-meta-ar; }
+    }
+
+    // Zero is information and stays legible; it simply stops being a colour.
+    &--empty {
+        .o_legal_signal__count { color: $o-gray-500; font-weight: $ds-weight-medium; }
+        .o_legal_signal__icon { color: $o-gray-400; }
+    }
+}
+
+// The tone lands on the count and the icon of a live segment, never on its
+// background: five tinted panels in a row is exactly the wallpaper this
+// design exists to avoid.
+@each $name, $colour in $ds-tones {
+    .o_legal_signal.o_legal_tone--#{$name}:not(.o_legal_signal--empty) {
+        .o_legal_signal__count, .o_legal_signal__icon { color: $colour; }
+    }
+}
+
+// ================================================================ the layout
+.o_legal_office__main {
+    display: grid;
+    gap: $ds-space-4;
+    // One column below 1200px - at 1366 the two columns still fit, but on a
+    // narrower laptop the agenda would squeeze the queue's "why" column out
+    // of existence, and that column is the reason the screen works.
+    grid-template-columns: minmax(0, 1fr);
+
+    @include media-breakpoint-up(lg) {
+        grid-template-columns: minmax(0, 2.15fr) minmax(19rem, 1fr);
+        align-items: start;
+    }
+}
+
+// ================================================================== panels
+.o_legal_panel {
+    @include ds-panel;
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+
+    &__head {
+        padding: $ds-space-3 $ds-space-4;
+        border-block-end: $ds-rule;
+        background-color: $ds-sunken;
+        border-start-start-radius: $ds-radius-panel;
+        border-start-end-radius: $ds-radius-panel;
+    }
+
+    &__title {
+        display: flex;
+        align-items: baseline;
+        gap: $ds-space-2;
+
+        h2 {
+            margin: 0;
+            font-size: $ds-font-lead;
+            font-weight: $ds-weight-strong;
+            color: $body-color;
+        }
+    }
+
+    &__hint {
+        margin: $ds-space-1 0 0;
+        font-size: $ds-font-meta;
+        color: $o-gray-600;
+
+        [dir="rtl"] & { font-size: $ds-font-meta-ar; }
+    }
+
+    &__foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $ds-space-2;
+        padding: $ds-space-2 $ds-space-4;
+        border-block-start: $ds-hairline;
+
+        .btn-link { padding: 0; font-size: $ds-font-meta; }
+    }
+}
+
+// A count beside a title: a pill, because it is the one shape in the system
+// reserved for counts and therefore reads as one without a label.
+.o_legal_pill {
+    @include ds-numeral;
+    display: inline-block;
+    min-inline-size: 1.25rem;
+    padding: 0.0625rem $ds-space-2;
+    border-radius: 999px;
+    background-color: $ds-sunken;
+    border: $ds-hairline;
+    font-size: $ds-font-micro;
+    font-weight: $ds-weight-medium;
+    color: $o-gray-700;
+    text-align: center;
+    line-height: 1.35;
+}
+
+// ================================================================ the queue
+.o_legal_scopes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $ds-space-2;
+    padding: $ds-space-2 $ds-space-4;
+    border-block-end: $ds-hairline;
+}
+
+.o_legal_scope {
+    display: inline-flex;
+    align-items: center;
+    gap: $ds-space-1;
+    block-size: $ds-control-h;
+    padding-inline: $ds-space-2;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: $ds-radius-control;
+    font-size: $ds-font-meta;
+    color: $o-gray-700;
+
+    .fa { color: $o-gray-500; font-size: $ds-font-micro; }
+
+    &:hover { background-color: $ds-hover; cursor: pointer; }
+    @include ds-focusable;
+
+    &--on {
+        background-color: $ds-selected;
+        border-color: mix($o-brand-primary, $o-view-background-color, 30%);
+        color: $body-color;
+        font-weight: $ds-weight-medium;
+
+        .fa { color: $o-brand-primary; }
+    }
+}
+
+.o_legal_queue__scroll {
+    overflow-x: auto;
+    // Roughly twelve rows before the panel starts scrolling on its own. A
+    // queue longer than that is a list view, and the footer says so.
+    max-block-size: 34rem;
+    overflow-y: auto;
+}
+
+.o_legal_queue__table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    thead th {
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 1;
+        background-color: $ds-panel;
+        border-block-end: $ds-rule;
+        padding: $ds-space-2 $ds-space-3;
+        text-align: start;
+        white-space: nowrap;
+        @include ds-section-label;
+    }
+
+    tbody td {
+        padding: $ds-space-2 $ds-space-3;
+        border-block-end: $ds-hairline;
+        vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-block-end: 0; }
+}
+
+// Column widths are fixed so that every row is the same shape and the eye
+// can run straight down one column. The subject takes what is left.
+// The arithmetic matters here, because `table-layout: fixed` gives the subject
+// whatever the other five leave it. Beside the agenda at 1440 the queue is
+// ~930px: 32 + 144 + 128 + 104 fixed and 24% for the reason leaves the subject
+// ~300px, which fits a real Arabic matter title. The first draft spent 500px
+// on fixed columns and 30% on the reason and left the subject 150px, which
+// truncated every row after four words.
+.o_legal_col_kind { inline-size: 2rem; text-align: center; color: $o-gray-500; }
+.o_legal_col_ref { inline-size: 9rem; }
+.o_legal_col_state { inline-size: 8rem; }
+.o_legal_col_why { inline-size: 24%; }
+.o_legal_col_due { inline-size: 6.5rem; white-space: nowrap; }
+
+@include media-breakpoint-down(xl) {
+    // At 1366 something has to give, and it is never the subject: the reader
+    // identifies the row by its title, and the reason has a tooltip.
+    .o_legal_col_ref { inline-size: 8rem; }
+    .o_legal_col_state { inline-size: 7rem; }
+    .o_legal_col_why { inline-size: 22%; }
+    .o_legal_col_due { inline-size: 6rem; }
+}
+
+.o_legal_queue__row {
+    block-size: $ds-row-queue;
+    cursor: pointer;
+    // The state spine: the one border in the system that carries colour as
+    // information. Three pixels on the inline start, so it mirrors with the
+    // page and never needs an rtl override.
+    border-inline-start: $ds-spine-width solid transparent;
+    transition: background-color 0.1s ease;
+
+    &:hover { background-color: $ds-hover; }
+    &:focus-visible { outline: 2px solid $o-brand-primary; outline-offset: -2px; }
+
+    &--urgent .o_legal_subject { font-weight: $ds-weight-strong; }
+}
+
+@each $name, $colour in $ds-tones {
+    .o_legal_spine--#{$name} { border-inline-start-color: $colour; }
+}
+.o_legal_spine--neutral { border-inline-start-color: $o-gray-300; }
+
+.o_legal_ref {
+    @include ds-numeral;
+    font-size: $ds-font-meta;
+    color: $o-gray-700;
+    @include ds-truncate;
+    display: block;
+}
+
+// The largest type on the screen, and deliberately so: it is the thing the
+// reader came to read.
+.o_legal_subject {
+    display: block;
+    font-size: $ds-font-body;
+    font-weight: $ds-weight-medium;
+    color: $body-color;
+    @include ds-truncate;
+
+    [dir="rtl"] & { font-size: $ds-font-body-ar; }
+}
+
+.o_legal_owner {
+    display: block;
+    font-size: $ds-font-micro;
+    color: $o-gray-500;
+    @include ds-truncate;
+
+    [dir="rtl"] & { font-size: $ds-font-micro-ar; }
+}
+
+.o_legal_why {
+    display: block;
+    font-size: $ds-font-meta;
+    color: $o-gray-600;
+    @include ds-truncate;
+
+    [dir="rtl"] & { font-size: $ds-font-meta-ar; }
+}
+
+.o_legal_due {
+    @include ds-numeral;
+    font-size: $ds-font-meta;
+    font-weight: $ds-weight-medium;
+    color: $o-gray-600;
+}
+
+@each $name, $colour in $ds-tones {
+    .o_legal_why.o_legal_tone--#{$name},
+    .o_legal_due.o_legal_tone--#{$name} { color: $colour; }
+}
+.o_legal_why.o_legal_tone--neutral, .o_legal_due.o_legal_tone--neutral { color: $o-gray-600; }
+
+// --------------------------------------------------------------- badges
+// One badge treatment for the whole suite: a tinted 1px outline, never a
+// filled block. A filled badge competes with the subject beside it and, at
+// six per screen, turns the queue into a colour chart.
+.o_legal_badge {
+    display: inline-block;
+    max-inline-size: 100%;
+    padding: 0.0625rem $ds-space-2;
+    border: 1px solid $border-color;
+    border-radius: $ds-radius-control;
+    background-color: $ds-panel;
+    font-size: $ds-font-micro;
+    font-weight: $ds-weight-medium;
+    color: $o-gray-700;
+    line-height: 1.5;
+    @include ds-truncate;
+
+    [dir="rtl"] & { font-size: $ds-font-micro-ar; }
+
+    &--quiet { border-style: dashed; color: $o-gray-600; }
+}
+
+@each $name, $colour in $ds-tones {
+    .o_legal_badge--#{$name} {
+        color: $colour;
+        border-color: mix($colour, $o-view-background-color, 38%);
+        background-color: mix($colour, $o-view-background-color, 6%);
+    }
+}
+.o_legal_badge--neutral {
+    color: $o-gray-700;
+    border-color: $border-color;
+    background-color: $ds-sunken;
+}
+
+// =============================================================== the agenda
+.o_legal_agenda__scroll {
+    max-block-size: 34rem;
+    overflow-y: auto;
+    padding-block-end: $ds-space-2;
+}
+
+.o_legal_agenda__day {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $ds-space-2;
+    margin: 0;
+    padding: $ds-space-2 $ds-space-4 $ds-space-1;
+    background-color: $ds-panel;
+    border-block-end: $ds-hairline;
+    @include ds-section-label;
+}
+
+@each $name, $colour in $ds-tones {
+    .o_legal_agenda__day.o_legal_tone--#{$name} { color: $colour; }
+}
+
+.o_legal_agenda__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.o_legal_agenda__row {
+    display: flex;
+    align-items: center;
+    gap: $ds-space-2;
+    inline-size: 100%;
+    min-block-size: $ds-row-agenda;
+    padding: $ds-space-1 $ds-space-4;
+    background: none;
+    border: 0;
+    text-align: start;
+    color: $body-color;
+
+    &:not(:disabled):hover { background-color: $ds-hover; cursor: pointer; }
+    @include ds-focusable;
+
+    .o_legal_agenda__icon { color: $o-gray-500; inline-size: 1rem; text-align: center; }
+
+    .o_legal_agenda__date {
+        @include ds-numeral;
+        font-size: $ds-font-micro;
+        color: $o-gray-500;
+        min-inline-size: 5rem;
+    }
+
+    .o_legal_agenda__name {
+        flex: 1 1 auto;
+        font-size: $ds-font-meta;
+        @include ds-truncate;
+
+        [dir="rtl"] & { font-size: $ds-font-meta-ar; }
+    }
+
+    .o_legal_agenda__urgent { color: $ds-tone-critical; }
+}
+
+// ============================================================ the secondary
+.o_legal_tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $ds-space-1;
+    padding: $ds-space-2 $ds-space-3 0;
+    border-block-end: $ds-rule;
+    background-color: $ds-sunken;
+    border-start-start-radius: $ds-radius-panel;
+    border-start-end-radius: $ds-radius-panel;
+}
+
+.o_legal_tab {
+    display: inline-flex;
+    align-items: center;
+    gap: $ds-space-2;
+    padding: $ds-space-2 $ds-space-3;
+    background: none;
+    border: 0;
+    // The selected tab is marked by a 2px rule that meets the panel edge,
+    // which is how a tab has said "selected" since before the web.
+    border-block-end: 2px solid transparent;
+    margin-block-end: -1px;
+    font-size: $ds-font-meta;
+    color: $o-gray-600;
+
+    &:hover { color: $body-color; cursor: pointer; }
+    @include ds-focusable;
+
+    &--on {
+        color: $body-color;
+        font-weight: $ds-weight-medium;
+        border-block-end-color: $o-brand-primary;
+        background-color: $ds-panel;
+    }
+}
+
+.o_legal_secondary__body { padding: $ds-space-2 0; }
+
+.o_legal_minilist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    // Three columns at wide widths: eight one-line rows stacked would leave
+    // two thirds of the panel empty, and this region is explicitly the least
+    // important on the screen.
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+
+    @include media-breakpoint-up(md) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @include media-breakpoint-up(xl) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.o_legal_minirow {
+    display: flex;
+    align-items: center;
+    gap: $ds-space-2;
+    inline-size: 100%;
+    min-block-size: $ds-row-compact;
+    padding: $ds-space-1 $ds-space-4;
+    background: none;
+    border: 0;
+    text-align: start;
+    color: $body-color;
+
+    &:not(:disabled):hover { background-color: $ds-hover; cursor: pointer; }
+    @include ds-focusable;
+
+    &__primary {
+        flex: 1 1 auto;
+        font-size: $ds-font-meta;
+        @include ds-truncate;
+
+        [dir="rtl"] & { font-size: $ds-font-meta-ar; }
+    }
+
+    &__secondary {
+        flex: 0 1 auto;
+        max-inline-size: 40%;
+        font-size: $ds-font-micro;
+        color: $o-gray-500;
+        @include ds-truncate;
+    }
+
+    &__meta {
+        @include ds-numeral;
+        font-size: $ds-font-micro;
+        color: $o-gray-600;
+        min-inline-size: 2rem;
+        text-align: end;
+    }
+}
+
+// The one bar in the design, and only where a row is a share of a whole.
+.o_legal_bar {
+    flex: 0 0 4.5rem;
+    block-size: 0.25rem;
+    background-color: $ds-sunken;
+    border-radius: 999px;
+    overflow: hidden;
+
+    &__fill {
+        display: block;
+        block-size: 100%;
+        background-color: mix($o-brand-primary, $o-gray-400, 55%);
+    }
+}
+
+// ============================================================ empty states
+.o_legal_blank {
+    display: flex;
+    align-items: flex-start;
+    gap: $ds-space-3;
+    padding: $ds-space-4;
+    color: $o-gray-600;
+
+    > .fa { color: mix($success, $o-gray-500, 55%); font-size: 1.125rem; margin-block-start: 0.1rem; }
+
+    &--slim { padding: $ds-space-3 $ds-space-4; align-items: center; }
+
+    &__title {
+        margin: 0;
+        font-size: $ds-font-body;
+        font-weight: $ds-weight-medium;
+        color: $body-color;
+    }
+
+    &__hint {
+        margin: $ds-space-1 0 0;
+        font-size: $ds-font-meta;
+        color: $o-gray-600;
+        max-inline-size: 38rem;
+
+        [dir="rtl"] & { font-size: $ds-font-meta-ar; }
+    }
+}
+
+// Numerals that must line up and must not be reordered by the bidi run.
+// Always paired with dir="ltr" in the markup - the CSS alone cannot do it.
+.o_legal_num { @include ds-numeral; }

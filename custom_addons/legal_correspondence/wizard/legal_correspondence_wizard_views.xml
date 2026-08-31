@@ -8,7 +8,7 @@
         <field name="name">legal.correspondence.register.wizard.form</field>
         <field name="model">legal.correspondence.register.wizard</field>
         <field name="arch" type="xml">
-            <form string="Register Incoming Letter">
+            <form string="Register Incoming Letter" class="o_legal_view">
                 <group>
                     <group string="The Letter">
                         <field name="gov_body_id"/>
@@ -54,7 +54,7 @@
         <field name="name">legal.correspondence.void.wizard.form</field>
         <field name="model">legal.correspondence.void.wizard</field>
         <field name="arch" type="xml">
-            <form string="Void Entry">
+            <form string="Void Entry" class="o_legal_view">
                 <group>
                     <field name="correspondence_id" invisible="1"/>
                     <field name="our_number"/>
@@ -83,7 +83,7 @@
         <field name="name">legal.contact.note.wizard.form</field>
         <field name="model">legal.contact.note.wizard</field>
         <field name="arch" type="xml">
-            <form string="Record Contact Note">
+            <form string="Record Contact Note" class="o_legal_view">
                 <group>
                     <group>
                         <field name="correspondence_id"/>

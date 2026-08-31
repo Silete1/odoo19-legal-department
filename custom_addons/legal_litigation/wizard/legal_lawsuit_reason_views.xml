@@ -5,7 +5,7 @@
         <field name="name">legal.lawsuit.reason.form</field>
         <field name="model">legal.lawsuit.reason</field>
         <field name="arch" type="xml">
-            <form string="Reason">
+            <form string="Reason" class="o_legal_view">
                 <field name="lawsuit_id" invisible="1"/>
                 <field name="action_kind" invisible="1"/>
                 <div class="alert alert-warning" role="alert"

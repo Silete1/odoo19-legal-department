@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        No new menu entry for مكتبي. The existing one - defined in
+        legal_procedure, first in the application, already translated - is the
+        one the reader knows, and it now opens the redesigned workspace
+        because its action's tag changed. Its name and its sequence are
+        deliberately left exactly as they were.
+
+        Only the government-body screen is new on the menu, because the
+        content it carries used to live inside مكتبي and had to go somewhere
+        once مكتبي stopped being three viewports tall.
+    -->
+
+    <menuitem id="menu_legal_gov_desks"
+              name="Government Desks"
+              parent="legal_core.menu_legal_root"
+              action="action_legal_gov_desks"
+              groups="legal_core.group_legal_clerk,legal_core.group_legal_auditor"
+              sequence="3"/>
+
+    <!--
+        Analytics leads the Reports menu: it is the screen that answers the
+        management question, and the pivot/graph actions below it are where
+        somebody goes to interrogate one register in depth.
+    -->
+    <menuitem id="menu_legal_analytics"
+              name="Analytics"
+              parent="legal_reports.menu_legal_reports_root"
+              action="action_legal_analytics"
+              sequence="5"/>
+
+</odoo>

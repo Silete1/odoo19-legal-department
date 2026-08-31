@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <list string="Amendments"
                   decoration-muted="state == 'draft'"
-                  decoration-bf="state == 'applied'">
+                  decoration-bf="state == 'applied'" class="o_legal_view">
                 <field name="number"/>
                 <field name="contract_id"/>
                 <field name="date"/>
@@ -28,7 +28,7 @@
         <field name="name">legal.contract.modification.form</field>
         <field name="model">legal.contract.modification</field>
         <field name="arch" type="xml">
-            <form string="Amendment">
+            <form string="Amendment" class="o_legal_view">
                 <header>
                     <button name="action_apply" type="object" string="Apply Amendment"
                             class="btn-primary" invisible="state == 'applied'"

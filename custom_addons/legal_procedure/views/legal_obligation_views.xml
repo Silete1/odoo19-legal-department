@@ -5,7 +5,7 @@
         <field name="name">legal.obligation.schedule.form</field>
         <field name="model">legal.obligation.schedule</field>
         <field name="arch" type="xml">
-            <form string="Obligation">
+            <form string="Obligation" class="o_legal_view">
                 <header>
                     <button name="action_generate" type="object" string="Generate Periods"
                             class="btn-primary"/>
@@ -85,7 +85,7 @@
         <field name="name">legal.obligation.schedule.list</field>
         <field name="model">legal.obligation.schedule</field>
         <field name="arch" type="xml">
-            <list string="Obligations">
+            <list string="Obligations" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code" optional="hide"/>
@@ -122,7 +122,7 @@
             <list string="Periods" create="false"
                   decoration-danger="state == 'late'"
                   decoration-success="state == 'filed'"
-                  decoration-muted="state == 'waived'">
+                  decoration-muted="state == 'waived'" class="o_legal_view">
                 <field name="schedule_id"/>
                 <field name="period_key"/>
                 <field name="entity_id"/>
@@ -144,7 +144,7 @@
         <field name="name">legal.obligation.instance.form</field>
         <field name="model">legal.obligation.instance</field>
         <field name="arch" type="xml">
-            <form string="Period">
+            <form string="Period" class="o_legal_view">
                 <header>
                     <button name="action_open_case" type="object" string="Open The File"
                             class="btn-primary" invisible="state in ['filed', 'waived']"/>

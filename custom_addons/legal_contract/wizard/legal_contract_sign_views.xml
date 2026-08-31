@@ -5,7 +5,7 @@
         <field name="name">legal.contract.sign.form</field>
         <field name="model">legal.contract.sign</field>
         <field name="arch" type="xml">
-            <form string="File Signed Contract">
+            <form string="File Signed Contract" class="o_legal_view">
                 <group>
                     <field name="contract_id" invisible="1"/>
                     <field name="document_type_id"/>

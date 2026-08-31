@@ -14,7 +14,7 @@
         <field name="name">legal.procedure.type.form</field>
         <field name="model">legal.procedure.type</field>
         <field name="arch" type="xml">
-            <form string="Procedure">
+            <form string="Procedure" class="o_legal_view">
                 <header>
                     <button name="action_validate" type="object" string="Check The Graph"
                             class="btn-primary"
@@ -250,7 +250,7 @@
         <field name="name">legal.procedure.type.list</field>
         <field name="model">legal.procedure.type</field>
         <field name="arch" type="xml">
-            <list string="Procedures" decoration-muted="not is_current">
+            <list string="Procedures" decoration-muted="not is_current" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code" optional="show"/>
@@ -274,7 +274,7 @@
         <field name="name">legal.procedure.type.kanban</field>
         <field name="model">legal.procedure.type</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="body_id">
+            <kanban default_group_by="body_id" class="o_legal_view">
                 <field name="colour"/>
                 <templates>
                     <t t-name="card">

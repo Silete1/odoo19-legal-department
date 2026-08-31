@@ -8,7 +8,7 @@
             <list string="Judgments"
                   decoration-danger="appeal_state == 'closed'"
                   decoration-warning="appeal_state == 'closing_soon'"
-                  decoration-success="appeal_state == 'filed'">
+                  decoration-success="appeal_state == 'filed'" class="o_legal_view">
                 <field name="lawsuit_id"/>
                 <field name="judgment_date"/>
                 <field name="court_id" optional="show"/>
@@ -39,7 +39,7 @@
         <field name="name">legal.judgment.form</field>
         <field name="model">legal.judgment</field>
         <field name="arch" type="xml">
-            <form string="Judgment">
+            <form string="Judgment" class="o_legal_view">
                 <header>
                     <button name="action_mark_appealed" type="object"
                             string="Mark Challenged" class="btn-primary"

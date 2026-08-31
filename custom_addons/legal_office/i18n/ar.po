@@ -1,0 +1,1617 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* legal_office
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-31 13:08+0000\n"
+"PO-Revision-Date: 2026-08-31 13:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "%(a)s-%(b)s days"
+msgstr "%(a)s-%(b)s يوم"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "%(i)s in / %(o)s out"
+msgstr "وارد %(i)s / صادر %(o)s"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "%(n)s day(s) late"
+msgstr "متأخر %(n)s يوم"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "%(n)s decided"
+msgstr "%(n)s محسوم"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "%(n)s more"
+msgstr "%(n)s إضافية"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "%(n)s obligation(s) overdue."
+msgstr "%(n)s التزام متأخر."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "%(n)s still open"
+msgstr "%(n)s ما زال مفتوحًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "12 months"
+msgstr "12 شهرًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "24 months"
+msgstr "24 شهرًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "3 months"
+msgstr "3 أشهر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "6 months"
+msgstr "6 أشهر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "A decision is required from you."
+msgstr "مطلوب منك قرار."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid ""
+"A file appears here when it stands at a step whose closing move is yours."
+msgstr "تظهر المعاملة هنا حين تقف عند خطوة حركتها الختامية بيدك."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "A letter appears here the moment it is drafted or arrives unplaced."
+msgstr "يظهر الكتاب هنا لحظة تسويده أو وصوله دون ربط."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid ""
+"A matter appears here when it reaches a step you own or a date you hold."
+msgstr "تظهر المعاملة هنا حين تبلغ خطوة أنت مسؤول عنها أو موعدًا تحمله."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "A required document is missing."
+msgstr "ينقص مستند مطلوب."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "A statutory period has closed unfiled."
+msgstr "انقضت مدة قانونية دون تقديم."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Actions this week"
+msgstr "الإجراءات هذا الأسبوع"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Ageing of live requests"
+msgstr "أعمار الطلبات الجارية"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "All"
+msgstr "الكل"
+
+#. module: legal_office
+#: model:ir.ui.menu,name:legal_office.menu_legal_analytics
+msgid "Analytics"
+msgstr "التقارير والتحليلات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Answers still in time"
+msgstr "أجوبة ما زالت ضمن المدة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Are we getting faster or slower at deciding requests?"
+msgstr "هل نصبح أسرع أم أبطأ في حسم الطلبات؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Arrived and not yet routed."
+msgstr "وصل ولم يُوجَّه بعد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Arriving and to register"
+msgstr "الوارد والتسجيل"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Ask the legal manager for a role in the Legal Department."
+msgstr "اطلب من مدير الشؤون القانونية إسناد دور لك في الدائرة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Average days from request to decision"
+msgstr "معدل الأيام من الطلب إلى القرار"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Awaiting my decision"
+msgstr "بانتظار قراري"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Awaiting registration"
+msgstr "بانتظار التسجيل"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Awaiting your signature"
+msgstr "بانتظار توقيعك"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid ""
+"Calendar days between the request date and the recorded decision. A month "
+"with no decisions reads zero."
+msgstr ""
+"أيام تقويمية بين تاريخ الطلب والقرار المسجَّل. الشهر الخالي من القرارات "
+"يُقرأ صفرًا."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Came back to you"
+msgstr "عاد إليك"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Coming up"
+msgstr "الأجندة القادمة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Company papers whose validity ends soon."
+msgstr "مستمسكات الشركة التي تنتهي صلاحيتها قريبًا."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Contract"
+msgstr "عقد"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Contract expirations, next twelve months"
+msgstr "انتهاءات العقود، الأشهر الاثنا عشر القادمة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Contracts"
+msgstr "العقود"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Contracts by lifecycle stage"
+msgstr "العقود حسب مرحلة دورة الحياة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Contracts ending"
+msgstr "عقود تنتهي"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Contracts ending in 60 days"
+msgstr "عقود تنتهي خلال 60 يومًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Contracts to sign off"
+msgstr "عقود بانتظار مصادقتك"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Correspondence"
+msgstr "المراسلات"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Could not refresh, so the screen is showing what it already had."
+msgstr "تعذّر التحديث، والشاشة تعرض ما كان لديها."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Counts contracts still in force with a recorded end date."
+msgstr "يحتسب العقود النافذة التي لها تاريخ انتهاء مسجَّل."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid ""
+"Counts open government files only; litigation and contracts are counted in "
+"their own panels."
+msgstr ""
+"يحتسب المعاملات الحكومية المفتوحة فقط؛ الدعاوى والعقود تُحتسب في لوحاتها "
+"الخاصة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Days"
+msgstr "أيام"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Deadline board"
+msgstr "لوحة المواعيد"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Deadlines by register"
+msgstr "المواعيد حسب السجل"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Demand by department"
+msgstr "الطلب حسب القسم"
+
+#. module: legal_office
+#: model:ir.model.fields,field_description:legal_office.field_legal_analytics__display_name
+#: model:ir.model.fields,field_description:legal_office.field_legal_office__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Document"
+msgstr "مستند"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Drafted but not yet given a register number."
+msgstr "مسوّدة ولم يُعطَ لها رقم في السجل بعد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Drafted; needs a register number."
+msgstr "مسوّدة؛ تحتاج رقمًا في السجل."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Due"
+msgstr "الاستحقاق"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Due today"
+msgstr "يستحق اليوم"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Each column is the week beginning on the date shown."
+msgstr "كل عمود هو الأسبوع الذي يبدأ في التاريخ المعروض."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Ends within sixty days; decide on renewal."
+msgstr "ينتهي خلال ستين يومًا؛ احسم أمر التجديد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Every clock in Legal Affairs whose date has passed."
+msgstr "كل موعد في الشؤون القانونية وقد فات تاريخه."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Every clock of yours whose date has passed."
+msgstr "كل موعد يخصّك وقد فات تاريخه."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Every recorded move, immutable."
+msgstr "كل حركة مسجَّلة، غير قابلة للتعديل."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Every register you own, in the order the clock bites."
+msgstr "كل سجل تملكه، بترتيب أسبقية المواعيد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "File"
+msgstr "معاملة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Files of %(who)s"
+msgstr "معاملات %(who)s"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Files that cannot move until a paper is produced."
+msgstr "معاملات لا تتحرك حتى يُقدَّم مستند."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Files whose closing move is yours to make."
+msgstr "معاملات حركتها الختامية بيدك."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Friday"
+msgstr "الجمعة"
+
+#. module: legal_office
+#: model:ir.actions.client,name:legal_office.action_legal_gov_desks
+#: model:ir.ui.menu,name:legal_office.menu_legal_gov_desks
+msgid "Government Desks"
+msgstr "مكاتب الجهات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Government file"
+msgstr "معاملة حكومية"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Government files"
+msgstr "المعاملات الحكومية"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Hearings"
+msgstr "الجلسات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Hearings by week"
+msgstr "الجلسات حسب الأسبوع"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "High risk, and still live."
+msgstr "عالي المخاطر وما زال ساريًا."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "High-risk exposure."
+msgstr "تعرّض عالي المخاطر."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "High-risk litigation"
+msgstr "دعاوى عالية المخاطر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "How heavy are the next eight weeks in court?"
+msgstr "ما ثقل الأسابيع الثمانية القادمة في المحاكم؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "How long has work been sitting with us unfinished?"
+msgstr "منذ متى والعمل قابع لدينا دون إنجاز؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "How many open files are already outside their service level?"
+msgstr "كم معاملة مفتوحة خرجت أصلًا عن مستوى خدمتها؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "How much advisory work is in flight, and where?"
+msgstr "كم من العمل الاستشاري جارٍ، وأين؟"
+
+#. module: legal_office
+#: model:ir.model.fields,field_description:legal_office.field_legal_analytics__id
+#: model:ir.model.fields,field_description:legal_office.field_legal_office__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Incoming"
+msgstr "وارد"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Is the register getting busier, and in which direction?"
+msgstr "هل يزداد السجل ازدحامًا، وفي أي اتجاه؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Is the work spread evenly, and who is carrying too much?"
+msgstr "هل العمل موزَّع بالتساوي، ومن يحمل أكثر من طاقته؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Last %(n)s months"
+msgstr "آخر %(n)s أشهر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Later"
+msgstr "لاحقًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Latest recorded moves"
+msgstr "آخر الحركات المسجَّلة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Lawsuit"
+msgstr "دعوى"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Lawsuits by stage"
+msgstr "الدعاوى حسب المرحلة"
+
+#. module: legal_office
+#. odoo-javascript
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+#: model:ir.actions.client,name:legal_office.action_legal_analytics
+msgid "Legal Analytics"
+msgstr "التقارير والتحليلات"
+
+#. module: legal_office
+#: model:ir.model,name:legal_office.model_legal_analytics
+msgid "Legal Analytics Workspace"
+msgstr "مساحة التقارير والتحليلات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Legal opinion"
+msgstr "رأي قانوني"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Legal request"
+msgstr "طلب قانوني"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Letter"
+msgstr "كتاب"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Lifecycle"
+msgstr "دورة الحياة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Litigation"
+msgstr "الدعاوى"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Live requests"
+msgstr "الطلبات الجارية"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Live requests by requesting department"
+msgstr "الطلبات الجارية حسب القسم الطالب"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Live requests by type"
+msgstr "الطلبات الجارية حسب النوع"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Load per officer"
+msgstr "الحِمل حسب المسؤول"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Missing documents"
+msgstr "مستندات ناقصة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Monday"
+msgstr "الإثنين"
+
+#. module: legal_office
+#. odoo-javascript
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "My Desk"
+msgstr "مكتبي"
+
+#. module: legal_office
+#: model:ir.model,name:legal_office.model_legal_office
+msgid "My Office Workspace"
+msgstr "مساحة عمل مكتبي"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Needs a decision from me"
+msgstr "ما يحتاج قرارًا مني"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Needs action from me"
+msgstr "ما يحتاج إجراءً مني"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Needs attention"
+msgstr "بحاجة إلى انتباه"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "New"
+msgstr "جديد"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Next hearing: %(when)s"
+msgstr "الجلسة القادمة: %(when)s"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "No dates fall in the next three weeks."
+msgstr "لا مواعيد خلال الأسابيع الثلاثة القادمة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "No lawyer is named on it."
+msgstr "لا يوجد محامٍ مسمّى عليها."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "No live work to inspect."
+msgstr "لا يوجد عمل جارٍ للمراجعة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "No officer is named on it."
+msgstr "لا يوجد مسؤول مسمّى عليها."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "No officer named"
+msgstr "بلا مسؤول"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "No open file is assigned to anybody."
+msgstr "لا توجد معاملة مفتوحة مسندة إلى أحد."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/agenda.js:0
+msgid "No owner"
+msgstr "بلا مسؤول"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nobody is assigned to it."
+msgstr "لم يُسند إلى أحد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nobody owns it"
+msgstr "بلا مسؤول"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Not on a file"
+msgstr "غير مربوط بمعاملة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Not set"
+msgstr "غير محدد"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Not stated"
+msgstr "غير مذكور"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nothing has been returned to you."
+msgstr "لم يُعَد إليك شيء."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nothing here."
+msgstr "لا شيء هنا."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nothing is deleted; a cancellation is a state."
+msgstr "لا يُحذف شيء؛ الإلغاء حالة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nothing is waiting on your signature."
+msgstr "لا شيء بانتظار توقيعك."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nothing is waiting to be registered."
+msgstr "لا شيء بانتظار التسجيل."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nothing needs your intervention."
+msgstr "لا شيء يحتاج تدخّلك."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Nothing of yours is lodged with a body."
+msgstr "لا شيء من عملك مودَع لدى جهة."
+
+#. module: legal_office
+#. odoo-javascript
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "Nothing recorded in this period."
+msgstr "لا شيء مسجَّل في هذه المدة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Obligation"
+msgstr "التزام"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Obligations"
+msgstr "الالتزامات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "One section could not be computed."
+msgstr "تعذّر احتساب أحد الأقسام."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Open"
+msgstr "مفتوح"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Open files"
+msgstr "المعاملات المفتوحة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Open files by phase"
+msgstr "المعاملات المفتوحة حسب الطور"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Open files by service level"
+msgstr "المعاملات المفتوحة حسب مستوى الخدمة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Open files per officer"
+msgstr "المعاملات المفتوحة لكل مسؤول"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Open files with no named officer."
+msgstr "معاملات مفتوحة بلا مسؤول مسمّى."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Open matters and recent moves appear here as they happen."
+msgstr "تظهر هنا المعاملات المفتوحة والحركات الأخيرة فور وقوعها."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/agenda.js:0
+msgid "Open the deadline board"
+msgstr "افتح لوحة المواعيد"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Open the full list"
+msgstr "افتح القائمة كاملة"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "Open the records behind this figure"
+msgstr "افتح السجلات وراء هذا الرقم"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Opening your office…"
+msgstr "جارٍ فتح مكتبك…"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Opinion"
+msgstr "رأي"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Opinions"
+msgstr "الآراء"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Opinions by stage"
+msgstr "الآراء حسب المرحلة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Opinions to review"
+msgstr "آراء للمراجعة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Our clock is stopped; theirs is running."
+msgstr "ساعتنا متوقفة، وساعتهم تعمل."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Outgoing"
+msgstr "صادر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Overdue in the department"
+msgstr "متأخر على مستوى الدائرة"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Owner"
+msgstr "المسؤول"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Part of this screen is unavailable:"
+msgstr "جزء من هذه الشاشة غير متاح:"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Past its due date."
+msgstr "تجاوز تاريخ استحقاقه."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Past its response date."
+msgstr "تجاوز موعد الرد."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "Period"
+msgstr "المدة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid ""
+"Read off the union board, so a deadline discharged at its source leaves this"
+" chart in the same transaction."
+msgstr ""
+"تُقرأ من اللوحة الموحّدة، فالموعد الذي يُبرَّأ في مصدره يغادر هذا الرسم في "
+"المعاملة نفسها."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Read-only"
+msgstr "اطّلاع فقط"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Read-only. Open any row to inspect its trail."
+msgstr "اطّلاع فقط. افتح أي سطر لمراجعة أثره."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "Reading the registers…"
+msgstr "جارٍ قراءة السجلات…"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Ready for its next step."
+msgstr "جاهزة لخطوتها التالية."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Recently in force"
+msgstr "نافذ حديثًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Recently opened files"
+msgstr "معاملات فُتحت حديثًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Recently registered"
+msgstr "سُجِّل حديثًا"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Reference"
+msgstr "الرقم المرجعي"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Refresh"
+msgstr "تحديث"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Registered but not attached to any matter."
+msgstr "مسجَّلة ولم تُربط بأي معاملة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Registered correspondence per month"
+msgstr "المراسلات المسجَّلة شهريًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Registered incoming letters with no matter attached."
+msgstr "كتب واردة مسجَّلة ولم تُربط بأي معاملة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Registered today and recently"
+msgstr "المسجَّل اليوم وحديثًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Renewals within 30 days"
+msgstr "تجديدات خلال 30 يومًا"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Reply overdue"
+msgstr "الرد متأخر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Request"
+msgstr "طلب"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Requests"
+msgstr "الطلبات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Requests that have arrived and nobody owns."
+msgstr "طلبات وصلت ولا أحد مسؤول عنها."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Requests to decide"
+msgstr "طلبات للبتّ فيها"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Returned for correction: %(why)s"
+msgstr "أُعيد للتصحيح: %(why)s"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Returned to you"
+msgstr "أُعيدت إليك"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Saturday"
+msgstr "السبت"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Sent back for correction"
+msgstr "أُعيد للتصحيح"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Service level, open files"
+msgstr "مستوى الخدمة، المعاملات المفتوحة"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Showing the first rows; the rest are in the list view."
+msgstr "تُعرض السطور الأولى فقط، والبقية في عرض القائمة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Somebody is waiting on your word for each of these."
+msgstr "لكل واحد من هذه شخص ينتظر كلمتك."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Stands at"
+msgstr "الحالة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Statutory filing period."
+msgstr "مدة تقديم قانونية."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Sunday"
+msgstr "الأحد"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The %(source)s part of your queue is unavailable."
+msgstr "الجزء الخاص بـ %(source)s من قائمتك غير متاح."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The action trail"
+msgstr "أثر الإجراءات"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The agenda could not be read."
+msgstr "تعذّرت قراءة الأجندة."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "The analytics could not be built."
+msgstr "تعذّر بناء التقارير."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The appeal window is open."
+msgstr "مدة الطعن مفتوحة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The attention indicators could not be computed."
+msgstr "تعذّر احتساب مؤشرات الانتباه."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The closing move is yours."
+msgstr "الحركة الختامية بيدك."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The deadline board is not installed."
+msgstr "لوحة المواعيد غير منصَّبة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The department's live work"
+msgstr "العمل الجاري في الدائرة"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "The figures"
+msgstr "الأرقام"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "The horizon"
+msgstr "ما هو قادم"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The next three weeks across every register."
+msgstr "الأسابيع الثلاثة القادمة عبر كل السجلات."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The register"
+msgstr "السجل"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The secondary panel is unavailable."
+msgstr "اللوحة الثانوية غير متاحة."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "The server could not be reached, or it reported an error."
+msgstr "تعذّر الوصول إلى الخادم، أو أنه أبلغ عن خطأ."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid ""
+"The server could not be reached, or it reported an error. Nothing you did "
+"caused this."
+msgstr "تعذّر الوصول إلى الخادم، أو أنه أبلغ عن خطأ. لا دخل لك بما حدث."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "The service level has been breached."
+msgstr "تم تجاوز مستوى الخدمة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "This week"
+msgstr "هذا الأسبوع"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Thursday"
+msgstr "الخميس"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Timeliness"
+msgstr "الالتزام بالمواعيد"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Today"
+msgstr "اليوم"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Tomorrow"
+msgstr "غدًا"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+msgid "Total"
+msgstr "المجموع"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Try again"
+msgstr "أعد المحاولة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Tuesday"
+msgstr "الثلاثاء"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Unassigned"
+msgstr "غير مسند"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Unassigned requests"
+msgstr "طلبات غير مسندة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Uncategorised"
+msgstr "غير مصنَّف"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Unowned, overdue and high-risk work is routed here automatically."
+msgstr "يُوجَّه إلى هنا تلقائيًا العمل بلا مالك والمتأخر وعالي المخاطر."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Unowned, overdue or risky work that only you can move."
+msgstr "عمل بلا مالك أو متأخر أو عالي المخاطر، لا يحرّكه غيرك."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Urgent"
+msgstr "عاجل"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Validity ends; start the renewal."
+msgstr "تنتهي الصلاحية؛ ابدأ التجديد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Voided register entries"
+msgstr "قيود ملغاة في السجل"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Waiting on internal sign-off."
+msgstr "بانتظار المصادقة الداخلية."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Waiting on your review."
+msgstr "بانتظار مراجعتك."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "We are waiting on %(body)s."
+msgstr "بانتظار %(body)s."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "We wrote, the answer date has passed, chase it."
+msgstr "كتبنا، وفات موعد الجواب، فتابعه."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Wednesday"
+msgstr "الأربعاء"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "What are we going to have to renew, and when?"
+msgstr "ما الذي سيتوجب علينا تجديده، ومتى؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "What came through the door and has not been placed yet."
+msgstr "ما دخل من الباب ولم يوضع في مكانه بعد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "What is happening across Legal Affairs."
+msgstr "ما يجري في الشؤون القانونية."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "What kind of work is the department actually doing?"
+msgstr "ما نوع العمل الذي تؤديه الدائرة فعليًا؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "What stage is our litigation at?"
+msgstr "في أي مرحلة دعاوانا؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "What the next months already hold."
+msgstr "ما تحمله الأشهر القادمة من الآن."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Where are the contracts stuck on their way to signature?"
+msgstr "أين تتعثّر العقود في طريقها إلى التوقيع؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Where do government files accumulate?"
+msgstr "أين تتراكم المعاملات الحكومية؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Where each register's work is standing."
+msgstr "أين يقف عمل كل سجل."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Where the clocks are being missed."
+msgstr "أين تُفوَّت المواعيد."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Which clocks are we missing, and which are merely running?"
+msgstr "أي المواعيد نفوّتها، وأيها ما زال يجري فحسب؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Which departments generate the legal work?"
+msgstr "أي الأقسام تولّد العمل القانوني؟"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Who is carrying what, and where it comes from."
+msgstr "من يحمل ماذا، ومن أين يأتي العمل."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/work_queue.js:0
+msgid "Why"
+msgstr "السبب"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "With an external body"
+msgstr "لدى جهة خارجية"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "With the body"
+msgstr "لدى الجهة"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Within seven days"
+msgstr "خلال سبعة أيام"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "Workload"
+msgstr "الحِمل"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "You decided recently"
+msgstr "ما حسمته حديثًا"
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/analytics/legal_analytics.js:0
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "You do not have permission to open this screen."
+msgstr "لا تملك صلاحية فتح هذه الشاشة."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "Your desk is clear."
+msgstr "مكتبك خالٍ."
+
+#. module: legal_office
+#. odoo-javascript
+#: code:addons/legal_office/static/src/office/legal_office.js:0
+msgid "Your office could not be loaded."
+msgstr "تعذّر فتح مكتبك."
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "case"
+msgstr "case"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "closed"
+msgstr "closed"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "contract"
+msgstr "contract"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "correspondence"
+msgstr "correspondence"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "in %(n)s days"
+msgstr "خلال %(n)s أيام"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "is_closed"
+msgstr "is_closed"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "later"
+msgstr "later"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "lawsuit"
+msgstr "lawsuit"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "opinion"
+msgstr "opinion"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+msgid "over %(a)s days"
+msgstr "أكثر من %(a)s يوم"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "requesting_department"
+msgstr "requesting_department"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_analytics.py:0
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "state"
+msgstr "state"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "the other side"
+msgstr "الطرف الآخر"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "today"
+msgstr "today"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "tomorrow"
+msgstr "tomorrow"
+
+#. module: legal_office
+#. odoo-python
+#: code:addons/legal_office/models/legal_office.py:0
+msgid "week"
+msgstr "week"

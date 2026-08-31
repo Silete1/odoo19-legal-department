@@ -5,7 +5,7 @@
         <field name="name">legal.poa.form</field>
         <field name="model">legal.poa</field>
         <field name="arch" type="xml">
-            <form string="Power Of Attorney">
+            <form string="Power Of Attorney" class="o_legal_view">
                 <header>
                     <button name="action_activate" type="object" string="Put In Force"
                             class="btn-primary" invisible="state != 'draft'"/>
@@ -92,7 +92,7 @@
         <field name="arch" type="xml">
             <list string="Powers Of Attorney"
                   decoration-danger="state == 'revoked' or expiry_state == 'expired'"
-                  decoration-warning="expiry_state in ['due_soon', 'expiring']">
+                  decoration-warning="expiry_state in ['due_soon', 'expiring']" class="o_legal_view">
                 <field name="name"/>
                 <field name="number"/>
                 <field name="agent_partner_id"/>
@@ -151,7 +151,7 @@
         <field name="name">legal.poa.revoke.form</field>
         <field name="model">legal.poa.revoke</field>
         <field name="arch" type="xml">
-            <form string="Revoke">
+            <form string="Revoke" class="o_legal_view">
                 <group>
                     <field name="poa_id" readonly="1"/>
                     <field name="revoked_on"/>

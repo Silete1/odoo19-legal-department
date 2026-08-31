@@ -8,7 +8,7 @@
         <field name="name">legal.contract.obligation.form</field>
         <field name="model">legal.contract.obligation</field>
         <field name="arch" type="xml">
-            <form string="Obligation">
+            <form string="Obligation" class="o_legal_view">
                 <header>
                     <button name="action_generate" type="object" string="Generate Occurrences"
                             class="btn-primary"
@@ -78,7 +78,7 @@
             <list string="Obligations"
                   decoration-danger="is_overdue"
                   decoration-success="status == 'done'"
-                  decoration-muted="status == 'waived'">
+                  decoration-muted="status == 'waived'" class="o_legal_view">
                 <field name="name"/>
                 <field name="contract_id"/>
                 <field name="clause_reference" optional="hide"/>
@@ -142,7 +142,7 @@
             <list string="Occurrences" create="false"
                   decoration-danger="state == 'late'"
                   decoration-success="state == 'done'"
-                  decoration-muted="state == 'waived'">
+                  decoration-muted="state == 'waived'" class="o_legal_view">
                 <field name="obligation_id"/>
                 <field name="contract_id"/>
                 <field name="period_key" optional="hide"/>
@@ -163,7 +163,7 @@
         <field name="name">legal.contract.obligation.instance.form</field>
         <field name="model">legal.contract.obligation.instance</field>
         <field name="arch" type="xml">
-            <form string="Occurrence">
+            <form string="Occurrence" class="o_legal_view">
                 <header>
                     <button name="action_mark_done" type="object" string="Mark Done"
                             class="btn-primary" invisible="state in ['done', 'waived']"/>

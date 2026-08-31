@@ -5,7 +5,7 @@
         <field name="name">legal.fee.rule.list</field>
         <field name="model">legal.fee.rule</field>
         <field name="arch" type="xml">
-            <list string="Fee Rules" editable="bottom">
+            <list string="Fee Rules" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="procedure_type_id"/>
                 <field name="name"/>
@@ -60,7 +60,7 @@
         <field name="name">legal.fee.list</field>
         <field name="model">legal.fee</field>
         <field name="arch" type="xml">
-            <list string="Fees" decoration-warning="state == 'due'">
+            <list string="Fees" decoration-warning="state == 'due'" class="o_legal_view">
                 <field name="case_id"/>
                 <field name="name"/>
                 <field name="step_id" optional="hide"/>

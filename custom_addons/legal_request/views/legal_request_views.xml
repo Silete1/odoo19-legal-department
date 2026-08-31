@@ -6,7 +6,7 @@
         <field name="name">legal.request.form</field>
         <field name="model">legal.request</field>
         <field name="arch" type="xml">
-            <form string="Legal Request">
+            <form string="Legal Request" class="o_legal_view">
                 <header>
                     <button name="action_submit" type="object" string="Submit"
                             class="btn-primary" invisible="state != 'draft'"/>
@@ -145,7 +145,7 @@
                   decoration-danger="is_overdue"
                   decoration-warning="urgency == 'urgent' and not is_overdue"
                   decoration-info="state == 'ready_for_approval' and not is_overdue"
-                  decoration-muted="state in ('closed', 'cancelled')">
+                  decoration-muted="state in ('closed', 'cancelled')" class="o_legal_view">
                 <field name="reference"/>
                 <field name="subject"/>
                 <field name="category_id"/>
@@ -175,7 +175,7 @@
         <field name="name">legal.request.kanban</field>
         <field name="model">legal.request</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" quick_create="false" group_create="false">
+            <kanban default_group_by="state" quick_create="false" group_create="false" class="o_legal_view">
                 <field name="state"/>
                 <field name="is_overdue"/>
                 <field name="urgency"/>

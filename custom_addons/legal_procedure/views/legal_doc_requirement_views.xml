@@ -5,7 +5,7 @@
         <field name="name">legal.doc.requirement.list</field>
         <field name="model">legal.doc.requirement</field>
         <field name="arch" type="xml">
-            <list string="Required Documents" editable="bottom">
+            <list string="Required Documents" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="procedure_type_id"/>
                 <field name="document_type_id"/>
@@ -24,7 +24,7 @@
         <field name="name">legal.doc.requirement.form</field>
         <field name="model">legal.doc.requirement</field>
         <field name="arch" type="xml">
-            <form string="Required Document">
+            <form string="Required Document" class="o_legal_view">
                 <sheet>
                     <group>
                         <group string="What, And Where">
@@ -108,7 +108,7 @@
         <field name="arch" type="xml">
             <list string="Checklist" decoration-muted="superseded"
                   decoration-danger="line_status in ['rejected', 'expired', 'missing']"
-                  decoration-success="line_status == 'accepted'">
+                  decoration-success="line_status == 'accepted'" class="o_legal_view">
                 <field name="case_id"/>
                 <field name="document_type_id"/>
                 <field name="subject_id" optional="show"/>

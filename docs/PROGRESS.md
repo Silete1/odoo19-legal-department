@@ -122,11 +122,45 @@ corporate Legal Affairs suite. A fresh session resumes from here.
 - [x] Merge audit-redesign → main — DONE; the branch is fully contained in main
       NOTE: server err log tracebacks are all from unrelated dma_* databases
       (multi-DB server); legal_dept clean
-- [ ] P2 operational UX (dashboard, queues, lists, search, forms)
+- [x] **P2 — مكتبي redesigned in place + analytics split out (module `legal_office`)**
+      - The EXISTING `legal_procedure.action_legal_desk` was re-pointed at the
+        new `legal_office` tag. Same record, same name, same menu entry, same
+        `/odoo/legal-desk` URL. **No second menu entry** — an earlier pass added
+        one and it was removed; there must only ever be one مكتبي.
+      - What مكتبي used to also carry (one panel per government body) moved to
+        its own screen: `legal_office.action_legal_gov_desks`, tag `legal_desk`,
+        `/odoo/gov-desks`, menu **مكاتب الجهات** at sequence 3.
+      - New: attention rail (3–5 role-specific filtered queues, one line);
+        unified work queue crossing 8 registers with a *why* column; agenda off
+        the `legal.deadline` union view; tabbed secondary strip; compact
+        `+ جديد` in the control panel. No hero numeral anywhere.
+      - Analytics: `legal.analytics` → **التقارير والتحليلات**, 14 panels in 4
+        sections, every panel states its management question and drills through.
+        Chart.js lazily via `loadBundle("web.chartjs_lib")` — zero new deps.
+      - Design system `legal_ds.scss` + `legal_native.scss`, scoped by
+        `o_legal_view` stamped on 123 view roots by
+        `scripts/legal_stamp_view_class.py` (idempotent, has `--check`).
+      - `eh_board` evaluated: **licence is OPL-1 (proprietary)**. Nothing copied,
+        no dependency taken; native analytics built instead. See
+        `docs/ui-audit/MY_OFFICE_REDESIGN.md` §4.
+      - Bugs fixed on the way: `legal.case.document.blocking_reason` was
+        `store=True` so the Arabic queue rendered frozen English (now split into
+        `_compute_blocking_reason`, unstored, `depends_context=('lang',)`);
+        `.o_legal_rail` collided with `legal_phase_rail.scss`; client actions
+        opened by URL breadcrumbed as *غير مسمى*; queue columns left the subject
+        150px; dates were being run through the Arabic-Indic converter.
+      - Arabic: `legal_office/i18n/ar.po` 262 entries, 0 untranslated;
+        `legal_procedure` catalogue regenerated (1,070 entries, 0 regressions).
+- [ ] P2 remainder: search views, form-level polish beyond the shared vocabulary
 - [ ] P3 corporate legal coverage (records, licensing, POA, optional domains)
 - [ ] P4 polish (spacing, icons, empty states, reports, responsive)
 - [ ] i18n: translation machinery working for ar_001, zero leakage
 - [ ] Demo data: complete Iraqi scenario per §43 (IQD amounts)
 - [ ] Tests: backend + frontend green; browser UAT per role (§51)
-- [ ] AFTER screenshots + visual regression pass (§52)
+- [x] AFTER screenshots for the redesign: `docs/ui-audit/before-office/` (120
+      renders) and `docs/ui-audit/after-office/`, 6 roles × 3 viewports, via
+      `scripts/legal_ui_capture.py` (note: Odoo's bus never goes idle, so the
+      harness uses explicit selector waits, and `/web/login?db=` is required on
+      this multi-database server)
+- [ ] AFTER visual regression pass for the remaining screens (§52)
 - [ ] Final report → docs/ui-audit/FINAL_REPORT.md

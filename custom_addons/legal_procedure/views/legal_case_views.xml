@@ -15,7 +15,7 @@
         <field name="name">legal.case.form</field>
         <field name="model">legal.case</field>
         <field name="arch" type="xml">
-            <form string="File">
+            <form string="File" class="o_legal_view">
                 <header>
                     <button name="action_advance" type="object" string="Advance"
                             class="btn-primary"
@@ -336,7 +336,7 @@
         <field name="arch" type="xml">
             <list string="Files" decoration-danger="sla_state in ['overdue', 'escalated']"
                   decoration-warning="sla_state == 'warning'"
-                  decoration-muted="is_closed">
+                  decoration-muted="is_closed" class="o_legal_view">
                 <field name="name"/>
                 <field name="subject" optional="show"/>
                 <field name="procedure_type_id"/>
@@ -369,7 +369,7 @@
         <field name="name">legal.case.kanban</field>
         <field name="model">legal.case</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="step_id" quick_create="false" group_create="false">
+            <kanban default_group_by="step_id" quick_create="false" group_create="false" class="o_legal_view">
                 <field name="colour"/>
                 <field name="step_id"/>
                 <field name="ready_to_advance"/>

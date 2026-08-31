@@ -5,7 +5,7 @@
         <field name="name">legal.request.category.list</field>
         <field name="model">legal.request.category</field>
         <field name="arch" type="xml">
-            <list string="Request Categories">
+            <list string="Request Categories" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -20,7 +20,7 @@
         <field name="name">legal.request.category.form</field>
         <field name="model">legal.request.category</field>
         <field name="arch" type="xml">
-            <form string="Request Category">
+            <form string="Request Category" class="o_legal_view">
                 <sheet>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
                             invisible="active"/>

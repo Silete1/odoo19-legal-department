@@ -4,15 +4,12 @@
     <t t-name="legal_procedure.LegalDesk">
         <Layout className="'o_legal_screen o_legal_desk'" display="{ controlPanel: {} }">
 
-            <div class="o_legal_loading" t-if="!data &amp;&amp; !state.error">
+            <div class="o_legal_loading" t-if="!data and !state.error">
                 <span class="o_legal_spinner" role="status" aria-hidden="true"/>
                 <span t-esc="label.loading"/>
             </div>
 
-            <!-- A failed load is a state, not an eternal spinner. The
-                 permission variant offers no retry: the server refusing a
-                 read is an answer, and it will answer the same again. -->
-            <div class="o_legal_error" t-if="!data &amp;&amp; state.error" role="alert">
+            <div class="o_legal_error" t-if="!data and state.error" role="alert">
                 <i t-attf-class="fa {{ state.error.permission ? 'fa-lock' : 'fa-exclamation-circle' }}"
                    role="img" aria-hidden="true"/>
                 <div>
@@ -25,140 +22,7 @@
                 </div>
             </div>
 
-            <div class="o_legal_body" t-if="data" t-att-dir="data.rtl ? 'rtl' : 'ltr'"
-                 t-att-data-band="data.role.landing_band">
-
-                <div class="o_legal_degraded" t-if="data.degraded.length" role="status">
-                    <strong t-esc="label.degraded"/>
-                    <span t-foreach="data.degraded" t-as="note" t-key="note_index" t-esc="note"/>
-                </div>
-
-                <!-- The attention strip: everything with a date on it this
-                     week, one chip per installed source, fed by the same
-                     payload. A chip with nothing behind it stays legible and
-                     goes inert - an empty list is never drawn at all. -->
-                <div class="o_legal_attention" role="list"
-                     t-if="data.attention &amp;&amp; data.attention.items.length">
-                    <span class="o_legal_attention_title" t-esc="data.attention.title"/>
-                    <button type="button" role="listitem"
-                            t-foreach="data.attention.items" t-as="item" t-key="item.key"
-                            t-attf-class="o_legal_attention_item o_legal_tone_{{ item.tone }}"
-                            t-att-disabled="item.count &amp;&amp; item.action ? undefined : 'disabled'"
-                            t-on-click="() => this.doAction(item.action)">
-                        <i t-attf-class="fa {{ item.icon }}" role="img" aria-hidden="true"/>
-                        <span class="o_legal_attention_count o_legal_num" dir="ltr"
-                              t-esc="item.count_label"/>
-                        <span t-esc="item.label"/>
-                    </button>
-                </div>
-
-                <!-- ============================================ BAND A - DESK -->
-                <header class="o_legal_band_head">
-                    <h2 class="o_legal_band_title" t-esc="label.deskBand"/>
-                    <span class="o_legal_band_sub" t-esc="data.role.label"/>
-                </header>
-
-                <div class="o_legal_desk_grid">
-                    <div class="o_legal_desk_left">
-                        <section t-attf-class="o_legal_card o_legal_hero {{ data.hero.count ? 'o_legal_hero_active' : '' }}">
-                            <span class="o_legal_hero_label" t-esc="data.hero.label"/>
-                            <button type="button" class="o_legal_hero_value o_legal_num" dir="ltr"
-                                    t-if="data.hero.count &amp;&amp; data.hero.action"
-                                    t-on-click="() => this.doAction(data.hero.action)"
-                                    t-esc="data.hero.count_label"/>
-                            <span class="o_legal_hero_value o_legal_hero_zero o_legal_num"
-                                  dir="ltr" t-else="" t-esc="data.hero.count_label"/>
-                            <p class="o_legal_hero_note" t-esc="data.hero.note"/>
-                            <p class="o_legal_hero_note" t-if="data.hero.oldest_label"
-                               t-esc="data.hero.oldest_label"/>
-                        </section>
-
-                        <div class="o_legal_tiles">
-                            <LegalKpiTile t-foreach="data.tiles" t-as="tile" t-key="tile.key"
-                                          label="tile.label" value="tile.value"
-                                          valueLabel="tile.value_label" hint="tile.hint"
-                                          icon="tile.icon" tone="tile.tone"
-                                          onOpen="tileOpen(tile)"/>
-                        </div>
-                    </div>
-
-                    <LegalWorklist title="data.worklist.title" hint="data.worklist.hint"
-                                   empty="data.worklist.empty" emptyHint="data.worklist.empty_hint"
-                                   files="data.worklist.files" total="data.worklist.total"
-                                   onOpenRecord.bind="openRecord"
-                                   onOpenAll="() => this.doAction(data.worklist.action)"/>
-                </div>
-
-                <!-- ============================ THE APPROVER'S SIGNATURE QUEUE -->
-                <!-- Only in the payload when the reader holds the approver
-                     role: the files whose next move closes them, plus the
-                     sibling registers waiting on an approver's word. -->
-                <t t-if="data.approvals">
-                    <header class="o_legal_band_head">
-                        <h2 class="o_legal_band_title" t-esc="data.approvals.title"/>
-                    </header>
-                    <div class="o_legal_desk_grid o_legal_band_approvals">
-                        <div class="o_legal_desk_left" t-if="data.approvals.tiles.length">
-                            <div class="o_legal_tiles">
-                                <LegalKpiTile t-foreach="data.approvals.tiles" t-as="tile" t-key="tile.key"
-                                              label="tile.label" value="tile.value"
-                                              valueLabel="tile.value_label" hint="tile.hint"
-                                              icon="tile.icon" tone="tile.tone"
-                                              onOpen="tileOpen(tile)"/>
-                            </div>
-                        </div>
-                        <LegalWorklist t-if="data.approvals.queue"
-                                       title="data.approvals.queue.title"
-                                       hint="data.approvals.queue.hint"
-                                       empty="data.approvals.queue.empty"
-                                       emptyHint="data.approvals.queue.empty_hint"
-                                       files="data.approvals.queue.files"
-                                       total="data.approvals.queue.total"
-                                       onOpenRecord.bind="openRecord"
-                                       onOpenAll="() => this.doAction(data.approvals.queue.action)"/>
-                    </div>
-                </t>
-
-                <!-- ==================================== THE AUDITOR'S LANDING -->
-                <!-- Read only, and deliberately so: counts that open list
-                     views, the recent trail, and not one mutation affordance
-                     anywhere in the band. -->
-                <t t-if="data.audit">
-                    <header class="o_legal_band_head">
-                        <h2 class="o_legal_band_title" t-esc="data.audit.title"/>
-                    </header>
-                    <div class="o_legal_tiles o_legal_audit_tiles">
-                        <LegalKpiTile t-foreach="data.audit.tiles" t-as="tile" t-key="tile.key"
-                                      label="tile.label" value="tile.value"
-                                      valueLabel="tile.value_label" hint="tile.hint"
-                                      icon="tile.icon" tone="tile.tone"
-                                      onOpen="tileOpen(tile)"/>
-                    </div>
-                    <section class="o_legal_card o_legal_audit_log">
-                        <header class="o_legal_card_head">
-                            <h3 class="o_legal_card_title" t-esc="data.audit.log.title"/>
-                        </header>
-                        <p class="o_legal_empty_hint" t-if="!data.audit.log.rows.length"
-                           t-esc="data.audit.log.empty"/>
-                        <ul t-else="">
-                            <li t-foreach="data.audit.log.rows" t-as="entry" t-key="entry.id">
-                                <span class="o_legal_audit_when o_legal_num" dir="ltr"
-                                      t-esc="entry.when"/>
-                                <span class="o_legal_chip" t-if="entry.kind" t-esc="entry.kind"/>
-                                <span class="o_legal_audit_desc" t-esc="entry.description"/>
-                                <span class="o_legal_audit_user" t-if="entry.user" t-esc="entry.user"/>
-                            </li>
-                        </ul>
-                    </section>
-                </t>
-
-                <!-- ====================================== BAND B - THE BODIES -->
-                <!-- What each counter wants, and when it is open. The desk above
-                     says how much is on the reader; this says what to do with
-                     it, which is the question a count cannot answer. -->
-                <header class="o_legal_band_head">
-                    <h2 class="o_legal_band_title" t-esc="label.bodiesBand"/>
-                </header>
+            <div class="o_legal_body" t-if="data" t-att-dir="data.rtl ? 'rtl' : 'ltr'">
 
                 <div class="o_legal_empty o_legal_card" t-if="!data.bodies.length">
                     <i class="fa fa-institution" role="img" aria-hidden="true"/>
@@ -173,73 +37,6 @@
                                    payload="body"
                                    onOpenRecord.bind="openRecord"
                                    onOpenAction.bind="doAction"/>
-                </div>
-
-                <!-- ==================================== THE MANAGER'S FIGURES -->
-                <!-- Aggregates only: per-officer load, the unowned queue, the
-                     breaches, the renewals. The manager's own files are
-                     already in Band A - this band answers for the room. -->
-                <t t-if="data.manager">
-                    <header class="o_legal_band_head">
-                        <h2 class="o_legal_band_title" t-esc="data.manager.title"/>
-                    </header>
-                    <div class="o_legal_desk_grid o_legal_band_manager">
-                        <div class="o_legal_desk_left">
-                            <div class="o_legal_tiles">
-                                <LegalKpiTile t-foreach="data.manager.tiles" t-as="tile" t-key="tile.key"
-                                              label="tile.label" value="tile.value"
-                                              valueLabel="tile.value_label" hint="tile.hint"
-                                              icon="tile.icon" tone="tile.tone"
-                                              onOpen="tileOpen(tile)"/>
-                            </div>
-                        </div>
-                        <section class="o_legal_card o_legal_officer_load">
-                            <header class="o_legal_card_head">
-                                <h3 class="o_legal_card_title" t-esc="data.manager.officers.title"/>
-                            </header>
-                            <p class="o_legal_empty_hint" t-if="!data.manager.officers.rows.length"
-                               t-esc="data.manager.officers.empty"/>
-                            <ul t-else="">
-                                <li t-foreach="data.manager.officers.rows" t-as="officer" t-key="officer.id">
-                                    <button type="button"
-                                            t-on-click="() => this.doAction(officer.action)">
-                                        <span t-esc="officer.label"/>
-                                        <span class="o_legal_count o_legal_num" dir="ltr"
-                                              t-esc="officer.count_label"/>
-                                    </button>
-                                </li>
-                            </ul>
-                        </section>
-                    </div>
-                </t>
-
-                <!-- ======================================== BAND C - CASELOAD -->
-                <header class="o_legal_band_head">
-                    <h2 class="o_legal_band_title" t-esc="label.loadBand"/>
-                    <button type="button" class="btn btn-link btn-sm"
-                            t-if="!data.role.is_manager"
-                            t-on-click="() => this.toggleLoad()"
-                            t-att-aria-expanded="state.load"
-                            t-esc="state.load ? label.hideLoad : label.showLoad"/>
-                </header>
-
-                <div class="o_legal_bodies" t-if="showsLoad">
-                    <!-- The department's own bodies, at a glance. The heavier
-                         analytics - median and p90 per step, our delay against
-                         theirs - are the Performance screen, one click away and
-                         deliberately NOT here: a desk that opens on a
-                         percentile is a report, and the reader came for their
-                         files. -->
-                    <section class="o_legal_card" t-foreach="data.bodies" t-as="body"
-                             t-key="body.key">
-                        <h3 class="o_legal_card_title">
-                            <span class="o_legal_chip o_legal_body_chip" t-esc="body.label"/>
-                            <span class="o_legal_count o_legal_num" dir="ltr"
-                                  t-esc="body.outstanding"/>
-                        </h3>
-                        <p class="o_legal_card_hint" t-if="body.open_hours"
-                           dir="auto" t-esc="body.open_hours"/>
-                    </section>
                 </div>
             </div>
         </Layout>

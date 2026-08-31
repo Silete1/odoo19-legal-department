@@ -1,0 +1,187 @@
+// =====================================================================
+//  التقارير والتحليلات - the analytics workspace.
+//
+//  Same tokens, different rhythm. My Office is one wide working surface;
+//  this is a grid of equal panels, because comparison is the whole point
+//  and panels of different sizes imply an importance the data does not
+//  have. Nothing here introduces a token.
+// =====================================================================
+
+.o_legal_analytics {
+    &__section { display: grid; gap: $ds-space-3; }
+
+    &__head {
+        h2 {
+            margin: 0;
+            font-size: $ds-font-title;
+            font-weight: $ds-weight-strong;
+            color: $body-color;
+        }
+
+        p {
+            margin: $ds-space-1 0 0;
+            font-size: $ds-font-meta;
+            color: $o-gray-600;
+        }
+    }
+
+    &__grid {
+        display: grid;
+        gap: $ds-space-4;
+        grid-template-columns: minmax(0, 1fr);
+        // Each panel keeps its natural height. Stretching a two-row panel to
+        // match a twelve-row one beside it invents whitespace inside the
+        // shorter panel and makes the pair look like a layout accident.
+        align-items: start;
+
+        // Two panels side by side is the readable maximum for a chart with
+        // month labels on its axis; three would start abbreviating them.
+        @include media-breakpoint-up(lg) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+}
+
+// The management question, which is the reason the panel exists.
+.o_legal_question {
+    margin: 0 0 $ds-space-1;
+    font-size: $ds-font-body;
+    font-weight: $ds-weight-medium;
+    color: $body-color;
+
+    [dir="rtl"] & { font-size: $ds-font-body-ar; }
+}
+
+.o_legal_chartpanel {
+    &__canvas { padding: $ds-space-3 $ds-space-3 0; }
+    &__empty { padding: $ds-space-4; }
+
+    .o_legal_panel__title h3 {
+        margin: 0;
+        font-size: $ds-font-meta;
+        font-weight: $ds-weight-normal;
+        color: $o-gray-600;
+    }
+}
+
+// A legend is present whenever there are two series, so identity is never
+// carried by colour alone.
+.o_legal_legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $ds-space-3;
+    padding: 0 $ds-space-4 $ds-space-2;
+    font-size: $ds-font-micro;
+    color: $o-gray-600;
+
+    &__item { display: inline-flex; align-items: center; gap: $ds-space-1; }
+
+    &__swatch {
+        inline-size: 0.625rem;
+        block-size: 0.625rem;
+        border-radius: 2px;
+        display: inline-block;
+    }
+}
+
+// The figures - the panel's real content, and the accessible equivalent of
+// the canvas above it. Open by default: hiding the numbers behind a
+// disclosure is how a dashboard becomes a picture of a dashboard.
+.o_legal_figures {
+    border-block-start: $ds-hairline;
+
+    > summary {
+        padding: $ds-space-2 $ds-space-4;
+        cursor: pointer;
+        @include ds-section-label;
+        list-style: none;
+
+        &::-webkit-details-marker { display: none; }
+        &::before { content: "▸ "; }
+        @include ds-focusable;
+    }
+
+    &[open] > summary::before { content: "▾ "; }
+
+    &__table {
+        inline-size: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        th, td {
+            padding: $ds-space-1 $ds-space-2;
+            border-block-start: $ds-hairline;
+            font-weight: $ds-weight-normal;
+            font-size: $ds-font-meta;
+            vertical-align: middle;
+        }
+
+        th {
+            text-align: start;
+            padding-inline-start: $ds-space-4;
+            color: $body-color;
+            @include ds-truncate;
+            max-inline-size: 0;   // lets the fixed layout truncate the cell
+        }
+
+        tr:hover { background-color: $ds-hover; }
+    }
+
+    // The bar lives in a table cell, so it needs a real width: `flex` on a
+    // non-flex child is inert, which is why these read as empty columns.
+    &__bar {
+        inline-size: 30%;
+
+        .o_legal_bar { display: block; inline-size: 100%; }
+    }
+    &__value {
+        @include ds-numeral;
+        inline-size: 4rem;
+        text-align: end;
+        font-weight: $ds-weight-medium;
+    }
+    &__secondary {
+        inline-size: 22%;
+        color: $o-gray-500;
+        font-size: $ds-font-micro;
+        @include ds-truncate;
+    }
+    &__open {
+        inline-size: 2.5rem;
+        text-align: center;
+
+        .btn-link { padding: 0; color: $o-gray-500; }
+        .btn-link:hover { color: $o-brand-primary; }
+    }
+}
+
+// The period presets: one row, above the charts, in the control panel.
+.o_legal_period {
+    display: inline-flex;
+    gap: 0;
+    border: $ds-rule;
+    border-radius: $ds-radius-control;
+    overflow: hidden;
+
+    &__btn {
+        padding: 0.15rem $ds-space-2;
+        background: none;
+        border: 0;
+        border-inline-end: $ds-hairline;
+        font-size: $ds-font-micro;
+        color: $o-gray-700;
+
+        &:last-child { border-inline-end: 0; }
+        &:hover { background-color: $ds-hover; cursor: pointer; }
+        @include ds-focusable;
+
+        &--on {
+            background-color: $ds-selected;
+            color: $body-color;
+            font-weight: $ds-weight-medium;
+        }
+    }
+}
+
+// The chart wrapper from legal_procedure, given this screen's rhythm.
+.o_legal_analytics .o_legal_chart { inline-size: 100%; }

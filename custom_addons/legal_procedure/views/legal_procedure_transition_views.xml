@@ -5,7 +5,7 @@
         <field name="name">legal.procedure.transition.list</field>
         <field name="model">legal.procedure.transition</field>
         <field name="arch" type="xml">
-            <list string="Transitions" editable="bottom" decoration-warning="is_return">
+            <list string="Transitions" editable="bottom" decoration-warning="is_return" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="procedure_type_id"/>
                 <field name="name"/>
@@ -26,7 +26,7 @@
         <field name="name">legal.procedure.transition.form</field>
         <field name="model">legal.procedure.transition</field>
         <field name="arch" type="xml">
-            <form string="Transition">
+            <form string="Transition" class="o_legal_view">
                 <sheet>
                     <div class="oe_title">
                         <label for="name" string="The Button The Clerk Presses"/>

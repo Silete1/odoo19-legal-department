@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_office.LegalOffice">
+        <Layout className="'o_legal_office_screen'" display="{ controlPanel: {} }">
+
+            <!-- The compact header is Odoo's own control panel, filled through
+                 its slots rather than reproduced below it. A screen that draws
+                 its own title bar under the breadcrumb has two headers, and the
+                 second one is the one nobody asked for. -->
+            <t t-set-slot="control-panel-create-button">
+                <Dropdown t-if="data and data.create.length" menuClass="'o_legal_create_menu'">
+                    <button class="btn btn-primary btn-sm o_legal_create" type="button">
+                        <i class="fa fa-plus" role="img" aria-hidden="true"/>
+                        <span t-esc="label.create"/>
+                    </button>
+                    <t t-set-slot="content">
+                        <DropdownItem t-foreach="data.create" t-as="item" t-key="item.key"
+                                      onSelected="() => this.doAction(item.action)">
+                            <i t-attf-class="fa fa-fw {{ item.icon }}" role="img" aria-hidden="true"/>
+                            <span t-esc="item.label"/>
+                        </DropdownItem>
+                    </t>
+                </Dropdown>
+            </t>
+
+            <t t-set-slot="control-panel-additional-actions">
+                <span class="o_legal_whoami" t-if="data">
+                    <span class="o_legal_whoami__role" t-esc="data.header.role_label"/>
+                    <span class="o_legal_whoami__sep" aria-hidden="true">·</span>
+                    <span class="o_legal_whoami__date o_legal_num" dir="ltr"
+                          t-esc="data.header.date_label"/>
+                    <span class="o_legal_badge o_legal_badge--quiet" t-if="data.role.read_only"
+                          t-esc="label.readOnly"/>
+                </span>
+            </t>
+
+            <t t-set-slot="control-panel-status-indicator">
+                <button class="btn btn-link btn-sm o_legal_refresh" type="button"
+                        t-if="data" t-att-disabled="state.busy ? 'disabled' : undefined"
+                        t-att-title="label.refresh" t-on-click="() => this.load()">
+                    <i t-attf-class="fa fa-refresh {{ state.busy ? 'fa-spin' : '' }}"
+                       role="img" t-att-aria-label="label.refresh"/>
+                </button>
+            </t>
+
+            <!-- ================================================ loading -->
+            <div class="o_legal_office_state" t-if="!data and !state.error">
+                <span class="o_legal_spin" role="status" aria-hidden="true"/>
+                <span t-esc="label.loading"/>
+            </div>
+
+            <!-- A refusal is an answer and offers no retry; it will answer the
+                 same again, and a button that repeats a refusal teaches people
+                 that the screen is broken when it is working correctly. -->
+            <div class="o_legal_office_state o_legal_office_state--error"
+                 t-if="!data and state.error" role="alert">
+                <i t-attf-class="fa {{ state.error.permission ? 'fa-lock' : 'fa-exclamation-circle' }}"
+                   role="img" aria-hidden="true"/>
+                <div>
+                    <p class="o_legal_office_state__title" t-esc="state.error.title"/>
+                    <p class="o_legal_office_state__hint" t-esc="state.error.hint"/>
+                    <button class="btn btn-primary btn-sm" type="button"
+                            t-if="!state.error.permission"
+                            t-on-click="() => this.load()" t-esc="label.retry"/>
+                </div>
+            </div>
+
+            <!-- ================================================= the office -->
+            <div class="o_legal_office" t-if="data"
+                 t-att-dir="data.rtl ? 'rtl' : 'ltr'"
+                 t-att-data-role="data.role.key">
+
+                <p class="o_legal_note" t-if="data.degraded.length" role="status">
+                    <i class="fa fa-info-circle" role="img" aria-hidden="true"/>
+                    <strong t-esc="label.degraded"/>
+                    <span t-foreach="data.degraded" t-as="note" t-key="note_index"
+                          t-esc="note"/>
+                </p>
+
+                <!-- ============================================ the rail -->
+                <!-- One line, three to five segments, hairline-separated.
+                     Every segment opens the exact records it counted. A
+                     segment standing at zero stays visible and goes inert:
+                     "no overdue work" is information, and hiding it would
+                     make the strip's width change under the reader. -->
+                <nav class="o_legal_signals" t-if="data.signals.items.length"
+                     t-att-aria-label="data.signals.title">
+                    <button type="button"
+                            t-foreach="data.signals.items" t-as="item" t-key="item.key"
+                            t-attf-class="o_legal_signal o_legal_tone--{{ item.tone }} {{ item.count ? '' : 'o_legal_signal--empty' }}"
+                            t-att-disabled="item.action ? undefined : 'disabled'"
+                            t-att-title="item.hint"
+                            t-on-click="() => this.doAction(item.action)">
+                        <i t-attf-class="fa {{ item.icon }} o_legal_signal__icon"
+                           role="img" aria-hidden="true"/>
+                        <span class="o_legal_signal__count o_legal_num" dir="ltr"
+                              t-esc="item.count_label"/>
+                        <span class="o_legal_signal__label" t-esc="item.label"/>
+                    </button>
+                </nav>
+
+                <!-- ================================== queue beside agenda -->
+                <div class="o_legal_office__main">
+                    <LegalWorkQueue queue="data.queue" readOnly="data.role.read_only"
+                                    onOpenRow.bind="onOpenRow"/>
+                    <LegalAgenda agenda="data.agenda"
+                                 onOpenRow.bind="onOpenRow"
+                                 onOpenAction.bind="doAction"/>
+                </div>
+
+                <!-- ======================================= the secondary -->
+                <LegalSecondary t-if="data.secondary.tabs.length"
+                                secondary="data.secondary"
+                                onOpenRow.bind="onOpenRow"/>
+            </div>
+        </Layout>
+    </t>
+
+</templates>

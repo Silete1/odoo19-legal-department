@@ -1,0 +1,170 @@
+// =====================================================================
+//  The Legal Affairs design system.
+//
+//  One vocabulary for every custom screen in the suite, and the source of
+//  the harmonisation applied to the native Odoo views in legal_native.scss.
+//  Nothing below draws a picture; it defines the seven decisions every
+//  screen then obeys - the spacing scale, the type ramp, the surface
+//  ladder, the border ladder, the row heights, the tone set and the focus
+//  ring - so that a panel written next year looks like one written today.
+//
+//  Three rules govern the whole file.
+//
+//  **Colour is earned, not decorative.** Ninety per cent of the interface
+//  is the neutral ramp. There are exactly five semantic tones and each one
+//  means a state of the work: critical (a date has passed), warning (a date
+//  is close), waiting (the ball is with somebody else), calm (nothing is
+//  owed) and neutral. Brand colour appears on precisely two things - the
+//  primary create control and the focus ring - and nowhere else. There are
+//  no gradients, no glass, no tinted panels and no shadow except the one
+//  on a floating overlay, because a shadow that is not floating anything
+//  is noise with a blur radius.
+//
+//  **Depth comes from structure.** Hierarchy is produced by alignment, by
+//  hairlines, by the 3px state spine on the inline start of a row, by
+//  sticky headers and by type weight. A card with a bigger radius is not a
+//  more important card.
+//
+//  **Spacing is logical, always.** Odoo mirrors the compiled CSS through
+//  rtlcss over *physical* properties, so a physical margin written here is
+//  mirrored once by rtlcss and once again by the `dir` the payload stamps -
+//  which is how a right-to-left screen ends up with its padding on the
+//  wrong side. Every rule in the suite therefore uses margin-inline-*,
+//  padding-inline-*, border-inline-*, inset-inline-* and `text-align:
+//  start`, and physical and logical are never mixed inside one rule.
+// =====================================================================
+
+// ------------------------------------------------------------ spacing
+// A 4px base with a doubling ramp. Every gap, pad and margin in the suite
+// is one of these seven values; there are no arbitrary pixel gaps.
+$ds-space-0: 0;
+$ds-space-1: 0.25rem;   //  4px - icon to its label
+$ds-space-2: 0.5rem;    //  8px - inside a chip, between meta items
+$ds-space-3: 0.75rem;   // 12px - cell padding, between rows of a stack
+$ds-space-4: 1rem;      // 16px - panel padding, gap between panels
+$ds-space-5: 1.5rem;    // 24px - between sections
+$ds-space-6: 2rem;      // 32px - page gutter at wide widths
+
+// ------------------------------------------------------------ type ramp
+// Five sizes, and the reason each exists. Arabic never drops below 13px:
+// the diacritics disappear before the letters do.
+$ds-font-micro: 0.6875rem;  // 11px - a count inside a chip, a column head
+$ds-font-meta: 0.75rem;     // 12px - dates, references, the "why" line
+$ds-font-body: 0.8125rem;   // 13px - row text, the working size
+$ds-font-lead: 0.9375rem;   // 15px - a panel title, a queue subject
+$ds-font-title: 1.125rem;   // 18px - the screen title, once per screen
+
+// Arabic sits one step up: the same 13px Latin row is 13.5-14px in naskh
+// before it reads as comfortably, and the ascenders need the extra leading.
+$ds-font-body-ar: 0.875rem;   // 14px
+$ds-font-meta-ar: 0.8125rem;  // 13px
+$ds-font-micro-ar: 0.75rem;   // 12px
+
+$ds-weight-normal: 400;
+$ds-weight-medium: 500;
+$ds-weight-strong: 600;
+
+$ds-leading-tight: 1.3;
+$ds-leading-body: 1.45;
+$ds-leading-ar: 1.65;
+
+// ------------------------------------------------------------ surfaces
+// Three levels and no more. `ground` is the page, `panel` is the working
+// surface, `sunken` is a header strip or an inset region *inside* a panel.
+// A fourth level would have to be invented before it could be used.
+$ds-ground: mix($o-gray-200, $o-view-background-color, 42%);
+$ds-panel: $o-view-background-color;
+$ds-sunken: mix($o-gray-100, $o-view-background-color, 70%);
+$ds-hover: mix($o-gray-200, $o-view-background-color, 30%);
+$ds-selected: mix($o-brand-primary, $o-view-background-color, 7%);
+
+// ------------------------------------------------------------- borders
+// Hairline separates rows; rule separates regions; the spine is the 3px
+// state marker on the inline start of a work row and is the only border
+// in the system that carries colour as information.
+$ds-hairline: 1px solid mix($border-color, $o-view-background-color, 62%);
+$ds-rule: 1px solid $border-color;
+$ds-spine-width: 3px;
+
+$ds-radius-control: 4px;   // chips, buttons, inputs
+$ds-radius-panel: 6px;     // panels
+// Pills are reserved for counts. Nothing else in the suite is fully round.
+
+// --------------------------------------------------------- row heights
+$ds-row-queue: 2.75rem;   // 44px - a work row, two lines of content
+$ds-row-agenda: 2rem;     // 32px - an agenda entry, one line
+$ds-row-compact: 1.75rem; // 28px - a secondary list entry
+$ds-control-h: 1.75rem;   // 28px - chips and small buttons
+
+// --------------------------------------------------------------- tones
+// The five states of work, and the only place colour carries meaning.
+// `waiting` is deliberately a desaturated slate rather than a blue: the
+// ball being with the Tax Commission is not an alert, and a screen that
+// paints it like one teaches people to ignore alerts.
+$ds-tone-critical: $danger;
+$ds-tone-warning: #b45309;               // amber-700; readable on white, unlike $warning
+$ds-tone-waiting: mix($o-gray-600, #1e3a5f, 55%);
+$ds-tone-calm: mix($success, $o-gray-700, 70%);
+$ds-tone-neutral: $o-gray-600;
+
+$ds-tones: (
+    "critical": $ds-tone-critical,
+    "warning": $ds-tone-warning,
+    "waiting": $ds-tone-waiting,
+    "calm": $ds-tone-calm,
+    "neutral": $ds-tone-neutral,
+);
+
+// ---------------------------------------------------------- focus ring
+// One ring, everywhere, and it is never removed without a replacement.
+@mixin ds-focus-ring {
+    outline: 2px solid $o-brand-primary;
+    outline-offset: 1px;
+    border-radius: $ds-radius-control;
+}
+
+@mixin ds-focusable {
+    &:focus-visible { @include ds-focus-ring; }
+}
+
+// --------------------------------------------------------------- mixins
+
+// Numerals that must not be re-ordered by the bidi algorithm and must line
+// up in a column: references, dates, counts. Always paired with dir="ltr"
+// in the markup - the CSS alone cannot fix the bidi run.
+@mixin ds-numeral {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    letter-spacing: 0;
+}
+
+// A one-line label that truncates rather than wrapping. Used on subjects.
+@mixin ds-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-inline-size: 0;
+}
+
+@mixin ds-panel {
+    background-color: $ds-panel;
+    border: $ds-rule;
+    border-radius: $ds-radius-panel;
+}
+
+// The section label above a region: small, quiet, and never uppercase in
+// Arabic - uppercasing is a Latin device that at best does nothing to a
+// naskh and at worst breaks the joins.
+@mixin ds-section-label {
+    font-size: $ds-font-micro;
+    font-weight: $ds-weight-strong;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $o-gray-600;
+
+    [dir="rtl"] & {
+        font-size: $ds-font-micro-ar;
+        text-transform: none;
+        letter-spacing: 0;
+    }
+}

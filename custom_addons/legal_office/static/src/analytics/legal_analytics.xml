@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_office.LegalAnalytics">
+        <Layout className="'o_legal_office_screen'" display="{ controlPanel: {} }">
+
+            <t t-set-slot="control-panel-additional-actions">
+                <span class="o_legal_whoami" t-if="data">
+                    <span t-esc="data.subtitle"/>
+                </span>
+            </t>
+
+            <t t-set-slot="control-panel-status-indicator">
+                <!-- One row of period presets, above the charts and nowhere
+                     else. A filter that lives beside a chart filters that
+                     chart; this one re-scopes the whole screen and belongs
+                     with the screen's own furniture. -->
+                <div class="o_legal_period" t-if="data" role="group"
+                     t-att-aria-label="label.period">
+                    <button type="button"
+                            t-foreach="data.period_choices" t-as="choice" t-key="choice.months"
+                            t-attf-class="o_legal_period__btn {{ choice.months === state.months ? 'o_legal_period__btn--on' : '' }}"
+                            t-att-aria-pressed="choice.months === state.months ? 'true' : 'false'"
+                            t-att-disabled="state.busy ? 'disabled' : undefined"
+                            t-on-click="() => this.load(choice.months)"
+                            t-esc="choice.label"/>
+                </div>
+            </t>
+
+            <div class="o_legal_office_state" t-if="!data and !state.error">
+                <span class="o_legal_spin" role="status" aria-hidden="true"/>
+                <span t-esc="label.loading"/>
+            </div>
+
+            <div class="o_legal_office_state o_legal_office_state--error"
+                 t-if="!data and state.error" role="alert">
+                <i t-attf-class="fa {{ state.error.permission ? 'fa-lock' : 'fa-exclamation-circle' }}"
+                   role="img" aria-hidden="true"/>
+                <div>
+                    <p class="o_legal_office_state__title" t-esc="state.error.title"/>
+                    <p class="o_legal_office_state__hint" t-esc="state.error.hint"/>
+                    <button class="btn btn-primary btn-sm" type="button"
+                            t-if="!state.error.permission"
+                            t-on-click="() => this.load()" t-esc="label.retry"/>
+                </div>
+            </div>
+
+            <div class="o_legal_office o_legal_analytics" t-if="data"
+                 t-att-dir="data.rtl ? 'rtl' : 'ltr'">
+
+                <p class="o_legal_note" t-if="data.degraded.length" role="status">
+                    <i class="fa fa-info-circle" role="img" aria-hidden="true"/>
+                    <strong t-esc="label.degraded"/>
+                    <span t-foreach="data.degraded" t-as="note" t-key="note_index"
+                          t-esc="note"/>
+                </p>
+
+                <section class="o_legal_analytics__section"
+                         t-foreach="data.sections" t-as="section" t-key="section.key">
+
+                    <header class="o_legal_analytics__head">
+                        <h2 t-esc="section.title"/>
+                        <p t-esc="section.hint"/>
+                    </header>
+
+                    <div class="o_legal_analytics__grid">
+                        <section class="o_legal_panel o_legal_chartpanel"
+                                 t-foreach="section.panels" t-as="panel" t-key="panel.key">
+
+                            <header class="o_legal_panel__head">
+                                <!-- The question first, in words. It is what
+                                     the reader is looking for; the title below
+                                     it only says which register was read. -->
+                                <p class="o_legal_question" t-esc="panel.question"/>
+                                <div class="o_legal_panel__title">
+                                    <h3 t-esc="panel.title"/>
+                                    <span class="o_legal_pill o_legal_num" dir="ltr"
+                                          t-esc="panel.total_label"/>
+                                </div>
+                            </header>
+
+                            <p class="o_legal_blank__hint o_legal_chartpanel__empty"
+                               t-if="!panel.rows.length" t-esc="panel.empty"/>
+
+                            <t t-else="">
+                                <div class="o_legal_chartpanel__canvas">
+                                    <LegalChart type="chartType(panel)"
+                                                data="chartData(panel)"
+                                                options="chartOptions(panel)"
+                                                rtl="data.rtl"
+                                                height="chartHeight(panel)"
+                                                ariaLabel="panel.title"/>
+                                </div>
+
+                                <div class="o_legal_legend" t-if="panel.legend.length"
+                                     aria-hidden="true">
+                                    <span t-foreach="panel.legend" t-as="entry"
+                                          t-key="entry.label" class="o_legal_legend__item">
+                                        <span class="o_legal_legend__swatch"
+                                              t-attf-style="background-color: {{ colourOf(entry.colour) }}"/>
+                                        <span t-esc="entry.label"/>
+                                    </span>
+                                </div>
+
+                                <!-- The panel's real content: the figures, and
+                                     the drill-through onto the records that
+                                     produced each one. -->
+                                <details class="o_legal_figures" open="open">
+                                    <summary t-esc="label.figures"/>
+                                    <table class="o_legal_figures__table">
+                                        <tbody>
+                                            <tr t-foreach="panel.rows" t-as="row"
+                                                t-key="row.label + '_' + row_index">
+                                                <th scope="row" t-att-title="row.label"
+                                                    t-esc="row.label"/>
+                                                <td class="o_legal_figures__bar">
+                                                    <span class="o_legal_bar" aria-hidden="true">
+                                                        <span class="o_legal_bar__fill"
+                                                              t-attf-style="inline-size: {{ percentOf(panel, row) }}%; background-color: {{ colourOf(panel.series[0].colour) }}"/>
+                                                    </span>
+                                                </td>
+                                                <td class="o_legal_figures__value o_legal_num"
+                                                    dir="ltr" t-esc="row.value_label"/>
+                                                <td class="o_legal_figures__secondary"
+                                                    t-esc="row.secondary"/>
+                                                <td class="o_legal_figures__open">
+                                                    <button type="button" class="btn btn-link btn-sm"
+                                                            t-if="row.action"
+                                                            t-att-title="label.openRecords"
+                                                            t-att-aria-label="label.openRecords"
+                                                            t-on-click="() => this.doAction(row.action)">
+                                                        <i class="fa fa-arrow-circle-o-right"
+                                                           role="img" aria-hidden="true"/>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </details>
+                            </t>
+
+                            <footer class="o_legal_panel__foot" t-if="panel.note">
+                                <span class="o_legal_panel__hint" t-esc="panel.note"/>
+                            </footer>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </Layout>
+    </t>
+
+</templates>

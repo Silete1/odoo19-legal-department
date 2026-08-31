@@ -5,7 +5,7 @@
         <field name="name">legal.request.approve.form</field>
         <field name="model">legal.request.approve</field>
         <field name="arch" type="xml">
-            <form string="Approve Request">
+            <form string="Approve Request" class="o_legal_view">
                 <group>
                     <field name="request_id" readonly="1"/>
                     <field name="decision"/>

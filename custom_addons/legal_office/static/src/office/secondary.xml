@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_office.LegalSecondary">
+        <section class="o_legal_panel o_legal_secondary">
+
+            <div class="o_legal_tabs" role="tablist">
+                <button type="button" role="tab"
+                        t-foreach="tabs" t-as="tab" t-key="tab.key"
+                        t-attf-class="o_legal_tab {{ tab.key === state.active ? 'o_legal_tab--on' : '' }}"
+                        t-att-aria-selected="tab.key === state.active ? 'true' : 'false'"
+                        t-on-click="() => this.select(tab.key)">
+                    <span t-esc="tab.label"/>
+                    <span class="o_legal_pill o_legal_num" dir="ltr" t-esc="tab.count_label"/>
+                </button>
+            </div>
+
+            <div class="o_legal_secondary__body" role="tabpanel" t-if="current">
+                <p class="o_legal_blank__hint" t-if="!current.rows.length" t-esc="current.empty"/>
+                <ul class="o_legal_minilist" t-else="">
+                    <li t-foreach="current.rows" t-as="row" t-key="row.id">
+                        <button type="button" class="o_legal_minirow"
+                                t-att-disabled="row.open ? undefined : 'disabled'"
+                                t-on-click="() => this.open(row)">
+                            <span class="o_legal_minirow__primary" t-att-title="row.primary"
+                                  t-esc="row.primary"/>
+                            <span class="o_legal_minirow__secondary" t-if="row.secondary"
+                                  t-esc="row.secondary"/>
+                            <!-- A bar only where the row is a share of a whole -
+                                 load per officer, demand per department. Never
+                                 as decoration on a list that is just a list. -->
+                            <span class="o_legal_bar" t-if="row.percent !== undefined"
+                                  aria-hidden="true">
+                                <span class="o_legal_bar__fill"
+                                      t-attf-style="inline-size: {{ row.percent }}%"/>
+                            </span>
+                            <span class="o_legal_minirow__meta o_legal_num" dir="ltr"
+                                  t-if="row.meta" t-esc="row.meta"/>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <footer class="o_legal_panel__foot" t-if="current and current.action">
+                <button type="button" class="btn btn-link btn-sm"
+                        t-on-click="() => this.props.onOpenRow({ open: current.action })"
+                        t-esc="current.label"/>
+            </footer>
+        </section>
+    </t>
+
+</templates>

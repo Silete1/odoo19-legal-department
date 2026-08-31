@@ -15,7 +15,7 @@
         <field name="model">legal.request</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <pivot string="Request Analysis" sample="1">
+            <pivot string="Request Analysis" sample="1" class="o_legal_view">
                 <field name="category_id" type="row"/>
                 <field name="state" type="row"/>
                 <field name="request_date" interval="month" type="col"/>
@@ -28,7 +28,7 @@
         <field name="model">legal.request</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <graph string="Request Analysis" sample="1" type="bar">
+            <graph string="Request Analysis" sample="1" type="bar" class="o_legal_view">
                 <field name="request_date" interval="month"/>
                 <field name="state"/>
             </graph>
@@ -69,7 +69,7 @@
         <field name="model">legal.opinion</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <pivot string="Opinion Analysis" sample="1">
+            <pivot string="Opinion Analysis" sample="1" class="o_legal_view">
                 <field name="requesting_department" type="row"/>
                 <field name="state" type="col"/>
             </pivot>
@@ -81,7 +81,7 @@
         <field name="model">legal.opinion</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <graph string="Opinion Analysis" sample="1" type="bar">
+            <graph string="Opinion Analysis" sample="1" type="bar" class="o_legal_view">
                 <field name="create_date" interval="month"/>
                 <field name="state"/>
             </graph>

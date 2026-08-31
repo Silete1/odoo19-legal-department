@@ -5,7 +5,7 @@
         <field name="name">legal.court.list</field>
         <field name="model">legal.court</field>
         <field name="arch" type="xml">
-            <list string="Courts">
+            <list string="Courts" class="o_legal_view">
                 <field name="name"/>
                 <field name="code" optional="show"/>
                 <field name="degree"/>
@@ -22,7 +22,7 @@
         <field name="name">legal.court.form</field>
         <field name="model">legal.court</field>
         <field name="arch" type="xml">
-            <form string="Court">
+            <form string="Court" class="o_legal_view">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_lawsuits" type="object"

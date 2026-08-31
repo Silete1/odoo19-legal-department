@@ -12,7 +12,7 @@
         <field name="model">legal.correspondence</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <pivot string="Correspondence Analysis" sample="1">
+            <pivot string="Correspondence Analysis" sample="1" class="o_legal_view">
                 <field name="direction" type="row"/>
                 <field name="gov_body_id" type="row"/>
                 <field name="our_date" interval="month" type="col"/>
@@ -25,7 +25,7 @@
         <field name="model">legal.correspondence</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <graph string="Correspondence Analysis" sample="1" type="bar">
+            <graph string="Correspondence Analysis" sample="1" type="bar" class="o_legal_view">
                 <field name="gov_body_id"/>
                 <field name="direction"/>
             </graph>

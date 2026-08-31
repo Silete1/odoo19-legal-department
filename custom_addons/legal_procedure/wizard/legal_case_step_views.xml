@@ -12,7 +12,7 @@
         <field name="name">legal.case.step.wizard.form</field>
         <field name="model">legal.case.step.wizard</field>
         <field name="arch" type="xml">
-            <form string="Record This Step">
+            <form string="Record This Step" class="o_legal_view">
                 <field name="case_id" invisible="1"/>
                 <field name="ready_to_advance" invisible="1"/>
                 <group>

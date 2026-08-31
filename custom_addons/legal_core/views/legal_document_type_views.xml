@@ -5,7 +5,7 @@
         <field name="name">legal.document.type.list</field>
         <field name="model">legal.document.type</field>
         <field name="arch" type="xml">
-            <list string="Document Types">
+            <list string="Document Types" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="kind_id"/>
@@ -25,7 +25,7 @@
         <field name="name">legal.document.type.form</field>
         <field name="model">legal.document.type</field>
         <field name="arch" type="xml">
-            <form string="Document Type">
+            <form string="Document Type" class="o_legal_view">
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
@@ -135,7 +135,7 @@
         <field name="name">legal.document.kind.list</field>
         <field name="model">legal.document.kind</field>
         <field name="arch" type="xml">
-            <list string="Document Kinds" editable="bottom">
+            <list string="Document Kinds" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>

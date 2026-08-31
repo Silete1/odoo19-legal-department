@@ -5,7 +5,7 @@
         <field name="name">legal.procedure.step.form</field>
         <field name="model">legal.procedure.step</field>
         <field name="arch" type="xml">
-            <form string="Step">
+            <form string="Step" class="o_legal_view">
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
@@ -106,7 +106,7 @@
         <field name="name">legal.procedure.step.list</field>
         <field name="model">legal.procedure.step</field>
         <field name="arch" type="xml">
-            <list string="Steps">
+            <list string="Steps" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="procedure_type_id"/>
                 <field name="name"/>
@@ -150,7 +150,7 @@
         <field name="name">legal.procedure.phase.list</field>
         <field name="model">legal.procedure.phase</field>
         <field name="arch" type="xml">
-            <list string="Phases" editable="bottom">
+            <list string="Phases" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="procedure_type_id"/>
                 <field name="name"/>
@@ -172,7 +172,7 @@
         <field name="name">legal.procedure.field.list</field>
         <field name="model">legal.procedure.field</field>
         <field name="arch" type="xml">
-            <list string="Capture Fields" editable="bottom">
+            <list string="Capture Fields" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="procedure_type_id" readonly="1"/>
                 <field name="step_id"/>

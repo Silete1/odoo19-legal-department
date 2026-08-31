@@ -11,7 +11,7 @@
                   decoration-muted="not is_current"
                   decoration-danger="is_overdue"
                   decoration-bf="is_overdue"
-                  decoration-success="state == 'issued'">
+                  decoration-success="state == 'issued'" class="o_legal_view">
                 <field name="name" string="Reference"/>
                 <field name="subject"/>
                 <field name="requesting_department" optional="show"/>
@@ -40,7 +40,7 @@
         <field name="name">legal.opinion.form</field>
         <field name="model">legal.opinion</field>
         <field name="arch" type="xml">
-            <form string="Legal Opinion">
+            <form string="Legal Opinion" class="o_legal_view">
                 <header>
                     <button name="action_assign" type="object" string="Assign"
                             class="btn-primary" invisible="state != 'received'"/>

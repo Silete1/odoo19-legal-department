@@ -5,7 +5,7 @@
         <field name="name">legal.entity.list</field>
         <field name="model">legal.entity</field>
         <field name="arch" type="xml">
-            <list string="Legal Entities">
+            <list string="Legal Entities" class="o_legal_view">
                 <field name="name"/>
                 <field name="name_en" optional="show"/>
                 <field name="entity_form_id"/>
@@ -22,7 +22,7 @@
         <field name="name">legal.entity.form</field>
         <field name="model">legal.entity</field>
         <field name="arch" type="xml">
-            <form string="Legal Entity">
+            <form string="Legal Entity" class="o_legal_view">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_documents" type="object" class="oe_stat_button" icon="fa-folder-open">
@@ -118,7 +118,7 @@
         <field name="name">legal.entity.form.list</field>
         <field name="model">legal.entity.form</field>
         <field name="arch" type="xml">
-            <list string="Legal Forms" editable="bottom">
+            <list string="Legal Forms" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -141,7 +141,7 @@
         <field name="name">legal.entity.identifier.kind.list</field>
         <field name="model">legal.entity.identifier.kind</field>
         <field name="arch" type="xml">
-            <list string="Identifier Kinds" editable="bottom">
+            <list string="Identifier Kinds" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>

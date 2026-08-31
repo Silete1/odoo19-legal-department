@@ -5,7 +5,7 @@
         <field name="name">legal.case.return.form</field>
         <field name="model">legal.case.return</field>
         <field name="arch" type="xml">
-            <form string="Return For Correction">
+            <form string="Return For Correction" class="o_legal_view">
                 <group>
                     <field name="case_id" readonly="1"/>
                     <field name="procedure_type_id" invisible="1"/>

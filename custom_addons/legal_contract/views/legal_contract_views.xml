@@ -8,7 +8,7 @@
         <field name="name">legal.contract.form</field>
         <field name="model">legal.contract</field>
         <field name="arch" type="xml">
-            <form string="Contract">
+            <form string="Contract" class="o_legal_view">
                 <header>
                     <button name="action_submit_review" type="object" string="Submit For Review"
                             class="btn-primary" invisible="state != 'received'"/>
@@ -193,7 +193,7 @@
             <list string="Contracts"
                   decoration-danger="expiry_state == 'expired'"
                   decoration-warning="expiry_state in ['due_soon', 'expiring']"
-                  decoration-muted="is_closed">
+                  decoration-muted="is_closed" class="o_legal_view">
                 <field name="name"/>
                 <field name="title"/>
                 <field name="type_id"/>
@@ -221,7 +221,7 @@
         <field name="name">legal.contract.kanban</field>
         <field name="model">legal.contract</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" quick_create="false" group_create="false">
+            <kanban default_group_by="state" quick_create="false" group_create="false" class="o_legal_view">
                 <field name="state"/>
                 <field name="expiry_state"/>
                 <field name="is_closed"/>
@@ -266,7 +266,7 @@
         <field name="name">legal.contract.pivot</field>
         <field name="model">legal.contract</field>
         <field name="arch" type="xml">
-            <pivot string="Contract Value" sample="1">
+            <pivot string="Contract Value" sample="1" class="o_legal_view">
                 <field name="type_id" type="row"/>
                 <field name="state" type="col"/>
                 <field name="value" type="measure"/>
@@ -279,7 +279,7 @@
         <field name="name">legal.contract.graph</field>
         <field name="model">legal.contract</field>
         <field name="arch" type="xml">
-            <graph string="Contract Value" sample="1" type="bar">
+            <graph string="Contract Value" sample="1" type="bar" class="o_legal_view">
                 <field name="type_id"/>
                 <field name="value" type="measure"/>
             </graph>

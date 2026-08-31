@@ -11,7 +11,7 @@
             <list string="Lawsuits"
                   decoration-muted="is_closed"
                   decoration-danger="appeal_window_open"
-                  decoration-bf="priority == '2'">
+                  decoration-bf="priority == '2'" class="o_legal_view">
                 <field name="reference"/>
                 <field name="title"/>
                 <field name="our_capacity" widget="badge" optional="show"/>
@@ -45,7 +45,7 @@
         <field name="name">legal.lawsuit.kanban</field>
         <field name="model">legal.lawsuit</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" quick_create="false">
+            <kanban default_group_by="state" quick_create="false" class="o_legal_view">
                 <field name="appeal_window_open"/>
                 <field name="is_closed"/>
                 <field name="currency_id"/>
@@ -92,7 +92,7 @@
         <field name="name">legal.lawsuit.form</field>
         <field name="model">legal.lawsuit</field>
         <field name="arch" type="xml">
-            <form string="Lawsuit">
+            <form string="Lawsuit" class="o_legal_view">
                 <header>
                     <button name="action_prepare" type="object" string="Start Preparation"
                             class="btn-primary" invisible="state != 'assessment'"/>

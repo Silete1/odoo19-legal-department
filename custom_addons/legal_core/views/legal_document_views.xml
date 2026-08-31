@@ -9,7 +9,7 @@
                   decoration-danger="expiry_state == 'expired'"
                   decoration-warning="expiry_state == 'expiring'"
                   decoration-info="expiry_state == 'due_soon'"
-                  decoration-muted="state != 'active'">
+                  decoration-muted="state != 'active'" class="o_legal_view">
                 <field name="name"/>
                 <field name="document_type_id"/>
                 <field name="number"/>
@@ -36,7 +36,7 @@
         <field name="name">legal.document.form</field>
         <field name="model">legal.document</field>
         <field name="arch" type="xml">
-            <form string="Document">
+            <form string="Document" class="o_legal_view">
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="active,superseded"/>
                 </header>

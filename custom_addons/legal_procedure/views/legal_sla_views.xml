@@ -5,7 +5,7 @@
         <field name="name">legal.sla.rule.list</field>
         <field name="model">legal.sla.rule</field>
         <field name="arch" type="xml">
-            <list string="Service Levels" editable="bottom">
+            <list string="Service Levels" editable="bottom" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="procedure_type_id"/>
                 <field name="step_id"/>

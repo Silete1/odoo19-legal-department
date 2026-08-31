@@ -13,7 +13,7 @@
         <field name="arch" type="xml">
             <list string="Trail" create="false" edit="false" delete="false"
                   decoration-info="action == 'transition'"
-                  decoration-danger="action in ['return', 'escalate']">
+                  decoration-danger="action in ['return', 'escalate']" class="o_legal_view">
                 <field name="logged_on"/>
                 <field name="case_id"/>
                 <field name="action"/>
@@ -32,7 +32,7 @@
         <field name="name">legal.action.log.form</field>
         <field name="model">legal.action.log</field>
         <field name="arch" type="xml">
-            <form string="Trail Entry" create="false" edit="false" delete="false">
+            <form string="Trail Entry" create="false" edit="false" delete="false" class="o_legal_view">
                 <sheet>
                     <group>
                         <group>
@@ -86,7 +86,7 @@
         <field name="name">legal.sla.escalation.list</field>
         <field name="model">legal.sla.escalation</field>
         <field name="arch" type="xml">
-            <list string="Escalations" create="false" decoration-danger="is_open">
+            <list string="Escalations" create="false" decoration-danger="is_open" class="o_legal_view">
                 <field name="raised_on"/>
                 <field name="case_id"/>
                 <field name="step_id"/>

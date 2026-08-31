@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 10:04+0000\n"
-"PO-Revision-Date: 2026-08-31 10:04+0000\n"
+"POT-Creation-Date: 2026-08-31 13:08+0000\n"
+"PO-Revision-Date: 2026-08-31 13:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2305,6 +2305,12 @@ msgid "Goes Stale After (days)"
 msgstr "يتقادم بعد (أيام)"
 
 #. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+msgid "Government Desks"
+msgstr "مكاتب الجهات"
+
+#. module: legal_procedure
 #: model:ir.model.fields.selection,name:legal_procedure.selection__legal_procedure_step__outcome__granted
 msgid "Granted"
 msgstr "مُجازة"
@@ -2353,12 +2359,6 @@ msgstr "الجلسات خلال 7 أيام"
 #: model:ir.model.fields,field_description:legal_procedure.field_legal_procedure_field__help_text
 msgid "Help Text"
 msgstr "نص المساعدة"
-
-#. module: legal_procedure
-#. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
-msgid "Hide the department figures"
-msgstr "إخفاء أرقام الدائرة"
 
 #. module: legal_procedure
 #. odoo-javascript
@@ -2918,15 +2918,15 @@ msgstr "بالمرافعة"
 
 #. module: legal_procedure
 #. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
-msgid "Loading the mail room…"
-msgstr "جارٍ تحميل الوارد والصادر…"
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+msgid "Loading the bodies' desks…"
+msgstr "جارٍ تحميل مكاتب الجهات…"
 
 #. module: legal_procedure
 #. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
-msgid "Loading your desk…"
-msgstr "جارٍ تحميل مكتبك…"
+#: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
+msgid "Loading the mail room…"
+msgstr "جارٍ تحميل الوارد والصادر…"
 
 #. module: legal_procedure
 #. odoo-python
@@ -4772,12 +4772,6 @@ msgstr "كان يجب أن يبدأ"
 
 #. module: legal_procedure
 #. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
-msgid "Show the department figures"
-msgstr "عرض أرقام الدائرة"
-
-#. module: legal_procedure
-#. odoo-javascript
 #: code:addons/legal_procedure/static/src/components/phase_rail/legal_phase_rail.js:0
 msgid "Show the steps as a table"
 msgstr "عرض الخطوات كجدول"
@@ -4845,7 +4839,6 @@ msgstr "بعض الشبابيك تجيب بإعادة نسخة مختومة ول
 
 #. module: legal_procedure
 #. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
 #: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
 msgid "Some of this screen is not available yet:"
 msgstr "بعض هذه الشاشة غير متاح بعد:"
@@ -5319,12 +5312,16 @@ msgstr ""
 "أما ملاحظة تقول «تُفرض غرامات» فلا تعطي المدير شيئًا يزن به قراره."
 
 #. module: legal_procedure
-#. odoo-javascript
 #. odoo-python
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
 msgid "The bodies' desks"
 msgstr "مكاتب الجهات"
+
+#. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+msgid "The bodies' desks could not be loaded."
+msgstr "تعذّر تحميل مكاتب الجهات."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_case__body_id
@@ -5356,12 +5353,6 @@ msgstr "«تحويل المعاملة إلى دائرة الإقامة»، «إ�
 #: code:addons/legal_procedure/models/legal_fee_rule.py:0
 msgid "The cap on “%s” is below its floor."
 msgstr "الحد الأقصى في «%s» أدنى من حده الأدنى."
-
-#. module: legal_procedure
-#. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
-msgid "The caseload"
-msgstr "عبء المعاملات"
 
 #. module: legal_procedure
 #. odoo-python
@@ -5500,12 +5491,6 @@ msgstr "كتاب رسمي"
 #: code:addons/legal_procedure/models/legal_dashboard.py:0
 msgid "The department"
 msgstr "الدائرة"
-
-#. module: legal_procedure
-#. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
-msgid "The desk could not be refreshed, so it is showing what it already had."
-msgstr "تعذر تحديث المكتب، فهو يعرض ما كان لديه أصلًا."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_procedure_step_check__produces_stamp
@@ -5818,6 +5803,13 @@ msgid ""
 msgstr ""
 "الصورة الضوئية في سجل الشركة الدائم، ليُقيَّد الصك مرة واحدة ويعاد استعماله "
 "بدل رفعه مع كل معاملة."
+
+#. module: legal_procedure
+#. odoo-javascript
+#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
+msgid ""
+"The screen could not be refreshed, so it is showing what it already had."
+msgstr "تعذّر تحديث الشاشة، فهي تعرض ما كان لديها."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_procedure_step__desk_note_template
@@ -6764,6 +6756,11 @@ msgstr ""
 "لماذا لا تستطيع المعاملة التحرك، بالكلمات التي يحتاجها الموظف عند الشباك."
 
 #. module: legal_procedure
+#: model:ir.model.fields,help:legal_procedure.field_legal_case_document__blocking_reason
+msgid "Why this line stops the file, in the reader's own language."
+msgstr "سبب توقف المعاملة عند هذا السطر، بلغة من يقرأ."
+
+#. module: legal_procedure
 #: model_terms:ir.ui.view,arch_db:legal_procedure.view_legal_procedure_transition_form
 msgid "Why this move exists, and what the counter calls it."
 msgstr "لماذا توجد هذه الحركة، وماذا يسميها الشباك."
@@ -6870,18 +6867,6 @@ msgstr "لست على قائمة متابعة أي جهة."
 #: code:addons/legal_procedure/static/src/components/mail_room/legal_mail_room.js:0
 msgid "You do not have permission to see this screen."
 msgstr "لا تملك صلاحية الاطلاع على هذه الشاشة."
-
-#. module: legal_procedure
-#. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
-msgid "Your desk"
-msgstr "مكتبك"
-
-#. module: legal_procedure
-#. odoo-javascript
-#: code:addons/legal_procedure/static/src/components/desk/legal_desk.js:0
-msgid "Your desk could not be loaded."
-msgstr "تعذر تحميل مكتبك."
 
 #. module: legal_procedure
 #: model:ir.model.fields,help:legal_procedure.field_legal_sla_rule__escalation_days

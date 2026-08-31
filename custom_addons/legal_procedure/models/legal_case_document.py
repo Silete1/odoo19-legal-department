@@ -97,7 +97,17 @@ class LegalCaseDocument(models.Model):
         index=True,
         default="missing",
     )
-    blocking_reason = fields.Char(compute="_compute_line_status", store=True)
+    # Deliberately NOT stored, and `depends_context` names the reason: this is
+    # a translated *sentence*, and a stored one is frozen in whichever language
+    # happened to compute it first in that worker - which is how the Arabic
+    # queue ended up reading “عقد إيجار مصدق” has not been provided. The status
+    # and the blocking flag above stay stored, because those are the facts a
+    # manager filters and groups on; only the wording is composed on read.
+    blocking_reason = fields.Char(
+        compute="_compute_blocking_reason",
+        depends_context=("lang",),
+        help="Why this line stops the file, in the reader's own language.",
+    )
     verified_on = fields.Date(
         help="When somebody actually looked at it, as opposed to when it was "
         "uploaded.",
@@ -128,7 +138,9 @@ class LegalCaseDocument(models.Model):
         "res.company", related="case_id.company_id", store=True, index=True
     )
 
-    @api.depends(
+    #: Everything that can change a checklist line's verdict. Named once so
+    #: the stored status and the composed sentence can never drift apart.
+    _JUDGEMENT_DEPENDS = (
         "is_required",
         "company_document_id",
         "company_document_id.state",
@@ -136,12 +148,14 @@ class LegalCaseDocument(models.Model):
         "attachment_ids",
         "accepted",
         "rejected",
+        "rejection_reason",
         "verified_on",
         "minimum_grade_id",
         "superseded",
     )
-    def _compute_line_status(self):
-        """The one place a checklist line is judged.
+
+    def _judge(self):
+        """The one place a checklist line is judged. Returns (status, reason).
 
         Order matters and is deliberate. Rejection beats everything, because a
         counter that refused the copy has said the loudest thing anybody has said
@@ -149,69 +163,97 @@ class LegalCaseDocument(models.Model):
         accepted in March and lapsed in June is not accepted now - and the whole
         reason ``legal.document`` holds a live expiry check rather than a stored
         flag is so that this line goes red the day it should.
+
+        Split out of the compute so that the stored verdict and the translated
+        sentence can be computed by two different methods without two different
+        definitions of "blocked".
         """
+        self.ensure_one()
+        line = self
         today = fields.Date.context_today(self)
-        for line in self:
-            reason = ""
-            if not line.is_required:
-                status = "not_required"
-            elif line.rejected:
-                status = "rejected"
-                reason = line.rejection_reason or _(
-                    "The counter refused “%s”.", line.document_type_id.display_name
-                )
-            elif line.company_document_id:
-                document = line.company_document_id
-                if not document._is_acceptable_on(today, minimum_grade=line.minimum_grade_id):
-                    if document._is_expired(today):
-                        status = "expired"
-                        reason = _(
-                            "“%(document)s” expired on %(date)s.",
-                            document=document.display_name,
-                            date=document.expiry_date,
-                        )
-                    elif line.minimum_grade_id:
-                        status = "under_review"
-                        reason = _(
-                            "“%(document)s” is not at least %(grade)s.",
-                            document=document.display_name,
-                            grade=line.minimum_grade_id.display_name,
-                        )
-                    else:
-                        status = "under_review"
-                        reason = _(
-                            "“%s” is in the register but is not currently acceptable.",
-                            document.display_name,
-                        )
-                elif line.accepted:
-                    status = "accepted"
-                elif line.verified_on:
-                    status = "provided"
+        reason = ""
+        if not line.is_required:
+            status = "not_required"
+        elif line.rejected:
+            status = "rejected"
+            reason = line.rejection_reason or _(
+                "The counter refused “%s”.", line.document_type_id.display_name
+            )
+        elif line.company_document_id:
+            document = line.company_document_id
+            if not document._is_acceptable_on(today, minimum_grade=line.minimum_grade_id):
+                if document._is_expired(today):
+                    status = "expired"
                     reason = _(
-                        "“%s” has been handed over but the counter has not kept it yet.",
-                        document.display_name,
+                        "“%(document)s” expired on %(date)s.",
+                        document=document.display_name,
+                        date=document.expiry_date,
+                    )
+                elif line.minimum_grade_id:
+                    status = "under_review"
+                    reason = _(
+                        "“%(document)s” is not at least %(grade)s.",
+                        document=document.display_name,
+                        grade=line.minimum_grade_id.display_name,
                     )
                 else:
                     status = "under_review"
-                    reason = _("“%s” has not been checked yet.", document.display_name)
-            elif line.attachment_ids:
-                status = "accepted" if line.accepted else "under_review"
-                if status == "under_review":
                     reason = _(
-                        "“%s” has been uploaded but not checked.",
-                        line.document_type_id.display_name,
+                        "“%s” is in the register but is not currently acceptable.",
+                        document.display_name,
                     )
+            elif line.accepted:
+                status = "accepted"
+            elif line.verified_on:
+                status = "provided"
+                reason = _(
+                    "“%s” has been handed over but the counter has not kept it yet.",
+                    document.display_name,
+                )
             else:
-                status = "missing"
-                reason = _("“%s” has not been provided.", line.document_type_id.display_name)
+                status = "under_review"
+                reason = _("“%s” has not been checked yet.", document.display_name)
+        elif line.attachment_ids:
+            status = "accepted" if line.accepted else "under_review"
+            if status == "under_review":
+                reason = _(
+                    "“%s” has been uploaded but not checked.",
+                    line.document_type_id.display_name,
+                )
+        else:
+            status = "missing"
+            reason = _("“%s” has not been provided.", line.document_type_id.display_name)
+        return status, reason
 
+    def _is_blocking_status(self, status):
+        return bool(
+            self.is_required
+            and not self.superseded
+            and status not in SATISFYING_LINE_STATUS
+        )
+
+    @api.depends(*_JUDGEMENT_DEPENDS)
+    def _compute_line_status(self):
+        """The stored half: the facts a manager filters and groups on."""
+        for line in self:
+            status, _reason = line._judge()
             line.line_status = status
-            line.is_blocking = bool(
-                line.is_required
-                and not line.superseded
-                and status not in SATISFYING_LINE_STATUS
-            )
-            line.blocking_reason = reason if line.is_blocking else ""
+            line.is_blocking = line._is_blocking_status(status)
+
+    # A separate method from the one above, and not by preference: Odoo warns
+    # that a compute serving both a stored and a non-stored field will recompute
+    # and rewrite the stored ones every time the unstored one is read.
+    @api.depends(*_JUDGEMENT_DEPENDS)
+    def _compute_blocking_reason(self):
+        """The unstored half: the wording, in the language of whoever is reading.
+
+        Not stored, because a stored sentence is frozen in whichever language
+        happened to compute it first in that worker - which is exactly how an
+        Arabic work queue ends up reading “عقد إيجار مصدق” has not been provided.
+        """
+        for line in self:
+            status, reason = line._judge()
+            line.blocking_reason = reason if line._is_blocking_status(status) else ""
 
     @api.depends("document_type_id", "subject_id")
     def _compute_display_name(self):

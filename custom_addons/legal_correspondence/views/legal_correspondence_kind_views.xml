@@ -5,7 +5,7 @@
         <field name="name">legal.correspondence.kind.list</field>
         <field name="model">legal.correspondence.kind</field>
         <field name="arch" type="xml">
-            <list string="Correspondence Kinds">
+            <list string="Correspondence Kinds" class="o_legal_view">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -28,7 +28,7 @@
         <field name="name">legal.correspondence.kind.form</field>
         <field name="model">legal.correspondence.kind</field>
         <field name="arch" type="xml">
-            <form string="Correspondence Kind">
+            <form string="Correspondence Kind" class="o_legal_view">
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>

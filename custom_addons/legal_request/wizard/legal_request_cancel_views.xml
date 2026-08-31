@@ -5,7 +5,7 @@
         <field name="name">legal.request.cancel.form</field>
         <field name="model">legal.request.cancel</field>
         <field name="arch" type="xml">
-            <form string="Cancel Request">
+            <form string="Cancel Request" class="o_legal_view">
                 <group>
                     <field name="request_id" readonly="1"/>
                     <field name="reason" required="1"

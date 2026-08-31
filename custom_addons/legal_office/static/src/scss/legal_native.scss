@@ -1,0 +1,145 @@
+// =====================================================================
+//  The native views, brought into the same vocabulary.
+//
+//  My Office cannot be the only well-made screen in the application. A
+//  reader who clicks a queue row lands on an ordinary Odoo list, and if
+//  that list has a different row height, a different type size, heavier
+//  rules and a different badge, the workspace reads as a separate product
+//  bolted onto the side of the ERP.
+//
+//  Scope, and why it is what it is. Everything below hangs off
+//  `.o_legal_view`, a class carried on the *arch root* of the suite's own
+//  list, form, kanban and calendar views. Odoo copies a view root's `class`
+//  attribute onto the rendered controller (`computeViewClassName`), so this
+//  is the framework's own mechanism for saying "this view, not every view".
+//  A legal module has no business restyling `.o_list_view` globally: the
+//  same stylesheet is loaded on every screen of the database, and the
+//  accounting list is not ours to change.
+//
+//  Restraint is the other half of the brief. These rules adjust density,
+//  ink and rhythm. They do not move furniture, rename controls, hide
+//  columns or override behaviour - a legal officer who has used Odoo
+//  before must still recognise every control on the screen.
+// =====================================================================
+
+.o_legal_view {
+
+    // ------------------------------------------------------------ lists
+    &.o_list_view {
+        font-size: $ds-font-body;
+
+        [dir="rtl"] & { font-size: $ds-font-body-ar; }
+
+        .o_list_table {
+            // A hairline under every row rather than Odoo's heavier rule:
+            // at fifteen rows the default weight is what makes a dense list
+            // read as a grid instead of as a list.
+            > tbody > tr.o_data_row {
+                block-size: $ds-row-queue;
+
+                > td { border-block-end: $ds-hairline; }
+                &:hover { background-color: $ds-hover; }
+            }
+
+            > thead > tr > th {
+                background-color: $ds-sunken;
+                border-block-end: $ds-rule;
+                @include ds-section-label;
+            }
+
+            // Group headers are structure, so they get the surface ladder's
+            // sunken step rather than a colour of their own.
+            > tbody > tr.o_group_header {
+                background-color: $ds-sunken;
+                font-weight: $ds-weight-strong;
+            }
+        }
+
+        // References, register numbers and dates are quoted over the
+        // telephone and typed into search boxes. They line up in a column
+        // and they must not be reordered by the bidi run, so they carry
+        // tabular figures here for the same reason the queue does.
+        td[name="name"], td[name="reference"], td[name="our_number"],
+        td[name="their_number"], td[name="period_key"], td[name="court_case_number"],
+        td[name="register_number"] {
+            @include ds-numeral;
+        }
+    }
+
+    // ------------------------------------------------------- the badges
+    // One badge treatment across the suite. Odoo's default filled pill is
+    // fine alone and unreadable at six per row, which is exactly the
+    // density a legal register runs at.
+    .o_field_badge > span,
+    .o_field_badge .badge {
+        border-radius: $ds-radius-control;
+        font-size: $ds-font-micro;
+        font-weight: $ds-weight-medium;
+        padding: 0.0625rem $ds-space-2;
+
+        [dir="rtl"] & { font-size: $ds-font-micro-ar; }
+    }
+
+    // ------------------------------------------------------------ forms
+    &.o_form_view {
+        .o_form_sheet {
+            border: $ds-rule;
+            border-radius: $ds-radius-panel;
+            box-shadow: none;   // the border already separates it from the ground
+        }
+
+        // A group's caption is a section label, in the same voice as every
+        // other section label on every other screen in the suite.
+        .o_horizontal_separator {
+            @include ds-section-label;
+            font-size: $ds-font-body;
+            border-block-end: $ds-hairline;
+            padding-block-end: $ds-space-1;
+            margin-block-end: $ds-space-2;
+
+            [dir="rtl"] & { font-size: $ds-font-body-ar; }
+        }
+
+        .o_form_label {
+            font-weight: $ds-weight-medium;
+            color: $o-gray-700;
+        }
+    }
+
+    // ----------------------------------------------------------- kanban
+    &.o_kanban_view .o_kanban_record {
+        border: $ds-rule;
+        border-radius: $ds-radius-panel;
+        box-shadow: none;
+        font-size: $ds-font-body;
+
+        &:hover { box-shadow: none; background-color: $ds-hover; }
+
+        [dir="rtl"] & { font-size: $ds-font-body-ar; }
+    }
+
+    // ----------------------------------------------------- empty states
+    // Two lines and an icon, in the panel's own padding - the same shape
+    // the office's empty queue uses, so "there is nothing here" reads the
+    // same way wherever the reader meets it.
+    .o_nocontent_help {
+        color: $o-gray-600;
+        font-size: $ds-font-body;
+
+        p:first-child {
+            font-size: $ds-font-lead;
+            font-weight: $ds-weight-medium;
+            color: $body-color;
+        }
+
+        [dir="rtl"] & { font-size: $ds-font-body-ar; }
+    }
+
+    // ------------------------------------------------------- focus ring
+    // One ring, and it is the same ring as the workspace's.
+    .o_data_row:focus-within,
+    .o_kanban_record:focus-visible {
+        outline: 2px solid $o-brand-primary;
+        outline-offset: -2px;
+    }
+}

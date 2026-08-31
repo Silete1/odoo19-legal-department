@@ -5,83 +5,83 @@ import { Layout } from "@web/search/layout";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { _t } from "@web/core/l10n/translation";
 
-import { LegalKpiTile } from "../kpi_tile/legal_kpi_tile";
-import { LegalWorklist } from "../worklist/legal_worklist";
 import { LegalBodyDesk } from "../body_desk/legal_body_desk";
 
 /**
- * My Desk (طاولتي).
+ * مكاتب الجهات - Government Desks.
  *
- * ONE client action for the clerk, the approver and the legal manager - not
- * one each. The three roles differ in *which slice* of a single procedure they
- * own, not in kind: they read the same rows, need the same two ages and act on
- * the same files. And the manager holds every role at once, which three
- * separate screens could not represent at all. So the payload changes - the
- * server sets `role.landing_band` and the first band leads with the approval
- * queue instead of the file queue - and this component does not.
+ * The landing screen مكتبي used to be this component, and it used to carry
+ * seven bands: a hero count, three tiles, a file worklist, an approvals queue,
+ * an audit trail, the government bodies, a manager band and - below all of
+ * that - the same government bodies a second time. It was the first screen a
+ * clerk saw, it was three viewports tall before it reached anything they
+ * owned, and its most useful content was the part furthest down.
  *
- * Three bands, and the order is the argument:
+ * That content is what remains. `legal_office` now owns *what requires my
+ * action now*, which is what the top of this screen was trying and failing to
+ * be, so this one keeps only the question it was uniquely able to answer:
  *
- *   **A - طاولتي.** The hero count, three tiles, and the worklist. What is on
- *   this reader, right now, in the order to open it.
+ *   **What does each counter want, and when is it open?**
  *
- *   **B - مكاتب الجهات.** One panel per body the reader deals with, drawn from
- *   the same payload. It answers the question the desk above cannot: not "how
- *   much is on me" but "what does this counter want, and when is it open".
+ * One panel per government body the reader deals with - what we owe them, what
+ * is lodged with them, what we are waiting on - with the opening hours and the
+ * counter notes a runner actually needs before crossing Baghdad. It is
+ * reference material, and reference material belongs one click away from the
+ * work rather than on top of it.
  *
- *   **C - الحِمل.** Context. A clerk opening the application to a report has to
- *   scroll past it to reach their own three files, so for a non-manager it is
- *   behind a disclosure and for a manager it is open - the manager's screen is
- *   the caseload, and they still have files of their own above it.
+ * The payload is `get_body_desk_data`, not the older `get_desk_data`: the
+ * bands this screen no longer draws are queries it no longer runs.
  */
 export class LegalDesk extends Component {
     static template = "legal_procedure.LegalDesk";
-    // Bookmarkable at /odoo/legal-desk.
-    static path = "legal-desk";
-    static components = { Layout, LegalKpiTile, LegalWorklist, LegalBodyDesk };
+    // Its own URL. /odoo/legal-desk stays with مكتبي, which is where anybody
+    // following an old link expected to land.
+    static path = "gov-desks";
+    static components = { Layout, LegalBodyDesk };
     static props = { ...standardActionServiceProps };
 
-    // Only literal _t() calls reach the .pot.
     static labels = {
-        loading: _t("Loading your desk…"),
-        deskBand: _t("Your desk"),
-        bodiesBand: _t("The bodies' desks"),
-        loadBand: _t("The caseload"),
-        showLoad: _t("Show the department figures"),
-        hideLoad: _t("Hide the department figures"),
+        loading: _t("Loading the bodies' desks…"),
         noBodies: _t("You are not on any body's follow-up list."),
         noBodiesHint: _t("A manager adds you to a body's follow-up officers, and that body's desk appears here with its opening hours and its counter notes."),
-        degraded: _t("Some of this screen is not available yet:"),
         retry: _t("Try again"),
-        errorTitle: _t("Your desk could not be loaded."),
+        errorTitle: _t("The bodies' desks could not be loaded."),
         errorHint: _t("The server could not be reached, or it reported an error. Nothing you did caused this."),
         noPermissionTitle: _t("You do not have permission to see this screen."),
         noPermissionHint: _t("Ask the legal manager for a role in the Legal Department."),
-        reloadFailed: _t("The desk could not be refreshed, so it is showing what it already had."),
+        reloadFailed: _t("The screen could not be refreshed, so it is showing what it already had."),
     };
 
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
         this.notification = useService("notification");
-        this.state = useState({ data: null, busy: false, load: false, error: null });
+        this.state = useState({ data: null, busy: false, error: null });
+
+        // Reached through its own URL rather than through the menu, a client
+        // action arrives with no display name and Odoo breadcrumbs it as
+        // "Untitled" - which is what this screen showed for its whole life as
+        // the landing page.
+        if (this.env.config && this.env.config.setDisplayName) {
+            this.env.config.setDisplayName(
+                this.props.action.name || _t("Government Desks"));
+        }
 
         onWillStart(() => this.load());
     }
 
     /**
-     * A caught load. The old version was try/finally with no catch, which
-     * turned any failed RPC - including the AccessError the server correctly
-     * re-raises for a reader who may not see a body's files - into an
-     * eternal spinner plus an unhandled rejection. Now: a failure with no
-     * data yet is a visible error state with a retry; a failure while data
-     * is already on screen keeps the screen and says so in a notification.
+     * A caught load. A failure with no data yet is a visible error state with
+     * a retry; a failure while data is already on screen keeps the screen and
+     * says so. An AccessError is a correct answer rather than a defect, so its
+     * variant carries no retry - the server will answer the same again.
      */
     async load() {
         this.state.busy = true;
         this.state.error = null;
         try {
-            this.state.data = await this.orm.call("legal.dashboard", "get_desk_data", []);
+            this.state.data = await this.orm.call(
+                "legal.dashboard", "get_body_desk_data", []);
         } catch (error) {
             if (this.state.data) {
                 this.notification.add(this.label.reloadFailed, { type: "warning" });
@@ -93,12 +93,6 @@ export class LegalDesk extends Component {
         }
     }
 
-    /**
-     * No-permission is not failure. The server refusing a read is the ORM
-     * answering correctly, and the reader should be told so rather than
-     * urged to retry a request that will refuse again - which is why the
-     * permission variant carries no retry button.
-     */
     describeError(error) {
         const name =
             (error && error.exceptionName) ||
@@ -126,26 +120,8 @@ export class LegalDesk extends Component {
         }
     }
 
-    tileOpen(tile) {
-        return tile.action ? () => this.doAction(tile.action) : undefined;
-    }
-
     openRecord(row) {
         this.doAction(row.open);
-    }
-
-    /**
-     * The department-wide figures are the manager's screen and are open for
-     * them by default. Everyone else gets them on request: a clerk who has to
-     * scroll past a report to reach their own three files stops opening the
-     * application at all.
-     */
-    get showsLoad() {
-        return Boolean(this.data && this.data.role.is_manager) || this.state.load;
-    }
-
-    toggleLoad() {
-        this.state.load = !this.state.load;
     }
 }
 
