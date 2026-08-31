@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalChecklist">
+        <section class="o_legal_checklist" t-att-dir="payload.rtl ? 'rtl' : 'ltr'"
+                 t-att-data-done="payload.done" t-att-data-total="payload.total">
+
+            <header class="o_legal_checklist_head">
+                <h3 class="o_legal_card_title">
+                    <t t-esc="label.title"/>
+                    <!-- One atomic chip, composed server-side as "3 / 4" and
+                         pinned ltr: the bidi algorithm reorders a bare counter
+                         to "4 / 3" inside an Arabic paragraph. -->
+                    <span class="o_legal_count o_legal_num" dir="ltr"
+                          t-esc="payload.meter_label"/>
+                </h3>
+                <div class="o_legal_meter" aria-hidden="true">
+                    <span class="o_legal_meter_fill"
+                          t-attf-style="inline-size: {{ payload.percent || 0 }}%;"/>
+                </div>
+            </header>
+
+            <div class="o_legal_empty" t-if="!sections.length">
+                <i class="fa fa-check-circle" role="img" aria-hidden="true"/>
+                <div>
+                    <p class="o_legal_empty_title" t-esc="label.empty"/>
+                    <p class="o_legal_empty_hint" t-esc="label.emptyHint"/>
+                </div>
+            </div>
+
+            <div class="o_legal_check_section" t-foreach="sections" t-as="section"
+                 t-key="section.key" t-att-data-section="section.key">
+                <button type="button" class="o_legal_check_section_head"
+                        t-if="!props.compact"
+                        t-on-click="() => this.toggle(section)"
+                        t-att-aria-expanded="isOpen(section)">
+                    <i t-attf-class="fa fa-angle-{{ isOpen(section) ? 'down' : 'right' }}"
+                       role="img" aria-hidden="true"/>
+                    <span t-esc="section.label"/>
+                    <span class="o_legal_count o_legal_num" dir="ltr"
+                          t-if="section.meter_label" t-esc="section.meter_label"/>
+                </button>
+
+                <ul class="o_legal_check_rows" t-if="isOpen(section)">
+                    <li t-foreach="section.rows" t-as="row" t-key="row.id"
+                        t-att-class="rowClass(row)"
+                        t-att-data-status="row.status">
+                        <!-- The WHOLE row is the button. Linking only the name
+                             made GOV.UK's own users take the status tag beside
+                             it for a control. -->
+                        <button type="button" class="o_legal_check_target"
+                                t-on-click="() => this.open(row.open)"
+                                t-attf-aria-label="{{ row.label }} — {{ row.status_label }}">
+                            <span class="o_legal_check_icon">
+                                <i t-attf-class="fa {{ icon(row) }}" role="img"
+                                   aria-hidden="true"/>
+                            </span>
+
+                            <span class="o_legal_check_main">
+                                <span class="o_legal_check_name">
+                                    <t t-esc="row.label"/>
+                                    <span class="o_legal_check_required_mark"
+                                          t-if="row.required" aria-hidden="true">*</span>
+                                </span>
+                                <!-- What the counter actually wants. No full
+                                     stop and no link: it is a label, not prose. -->
+                                <span class="o_legal_check_hint" t-if="row.hint &amp;&amp; !props.compact"
+                                      t-esc="row.hint"/>
+                                <span class="o_legal_check_meta">
+                                    <span class="o_legal_chip o_legal_check_auth"
+                                          t-if="row.authenticity_label"
+                                          t-att-title="label.authenticity"
+                                          t-esc="row.authenticity_label"/>
+                                    <span class="o_legal_chip o_legal_check_expiry"
+                                          t-if="row.expiry_label" dir="auto"
+                                          t-esc="row.expiry_label"/>
+                                    <span class="o_legal_chip o_legal_check_fresh"
+                                          t-if="row.freshness_label"
+                                          t-esc="row.freshness_label"/>
+                                    <!-- Visible, green and written out: this
+                                         line is already satisfied by the
+                                         company's permanent register, and a
+                                         clerk who does not see that uploads a
+                                         second copy of the tax card. -->
+                                    <span class="o_legal_check_register"
+                                          t-if="row.from_entity_register"
+                                          t-att-title="label.fromRegisterHelp">
+                                        <i class="fa fa-archive" role="img" aria-hidden="true"/>
+                                        <t t-esc="label.fromRegister"/>
+                                    </span>
+                                </span>
+                            </span>
+
+                            <!-- Sentence case, from the closed seven-value
+                                 vocabulary, translated on the server. The icon
+                                 and the word carry the meaning; the tint only
+                                 repeats it. -->
+                            <span class="o_legal_check_status" t-esc="row.status_label"/>
+                        </button>
+
+                        <!-- The prerequisite chain, as one button. Where the
+                             missing document is itself produced by a procedure
+                             we run, the row offers to start it. -->
+                        <button type="button" class="btn btn-link btn-sm o_legal_check_producer"
+                                t-if="row.producer"
+                                t-on-click="() => this.open(row.producer)">
+                            <i class="fa fa-play-circle" role="img" aria-hidden="true"/>
+                            <t t-esc="row.producer_label || label.openProducer"/>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="o_legal_check_blockers alert alert-warning" role="alert"
+                 t-if="blockers.length">
+                <div class="o_legal_rail_blockers_title" t-esc="label.blockers"/>
+                <ul>
+                    <li t-foreach="blockers" t-as="blocker" t-key="blocker_index"
+                        t-esc="blocker"/>
+                </ul>
+            </div>
+        </section>
+    </t>
+
+</templates>

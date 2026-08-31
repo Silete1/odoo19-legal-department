@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalMailRoom">
+        <Layout className="'o_legal_screen o_legal_mail_room'" display="{ controlPanel: {} }">
+
+            <div class="o_legal_loading" t-if="!data">
+                <span class="o_legal_spinner" role="status" aria-hidden="true"/>
+                <span t-esc="label.loading"/>
+            </div>
+
+            <!-- Odoo mirrors the interface by piping the compiled CSS through
+                 rtlcss over the physical properties and never sets `direction`
+                 itself, so a component that lays itself out has to declare
+                 which way round it is - from the server flag, not from the
+                 browser's guess. -->
+            <div class="o_legal_body" t-if="data" t-att-dir="data.rtl ? 'rtl' : 'ltr'">
+
+                <!-- The module is installed in pieces. A screen whose sibling
+                     model is not there yet says so once, quietly, instead of
+                     drawing three empty columns and letting the clerk conclude
+                     the register is broken. -->
+                <div class="o_legal_degraded" t-if="data.degraded.length" role="status">
+                    <strong t-esc="label.degraded"/>
+                    <span t-foreach="data.degraded" t-as="note" t-key="note_index" t-esc="note"/>
+                </div>
+
+                <header class="o_legal_band_head">
+                    <h2 class="o_legal_band_title" t-esc="data.title"/>
+                    <span class="o_legal_band_sub" t-esc="data.subtitle"/>
+                </header>
+
+                <div class="o_legal_head_row">
+                    <!-- One hero number, and it is a button. A count with
+                         nothing behind it is a poster. -->
+                    <section t-attf-class="o_legal_card o_legal_hero {{ data.hero.count ? 'o_legal_hero_active' : '' }}">
+                        <span class="o_legal_hero_label" t-esc="data.hero.label"/>
+                        <button type="button" class="o_legal_hero_value o_legal_num" dir="ltr"
+                                t-if="data.hero.count &amp;&amp; data.hero.action"
+                                t-on-click="() => this.doAction(data.hero.action)"
+                                t-esc="data.hero.count_label"/>
+                        <span class="o_legal_hero_value o_legal_hero_zero o_legal_num" dir="ltr"
+                              t-else="" t-esc="data.hero.count_label"/>
+                        <p class="o_legal_hero_note" t-esc="data.hero.note"/>
+                        <p class="o_legal_hero_note" t-if="data.hero.oldest_label"
+                           t-esc="data.hero.oldest_label"/>
+                    </section>
+
+                    <div class="o_legal_tiles">
+                        <LegalKpiTile t-foreach="data.tiles" t-as="tile" t-key="tile.key"
+                                      label="tile.label" value="tile.value"
+                                      valueLabel="tile.value_label" hint="tile.hint"
+                                      icon="tile.icon" tone="tile.tone"
+                                      onOpen="tileOpen(tile)"/>
+                    </div>
+                </div>
+
+                <!-- ============================================ THE COLUMNS -->
+                <div class="o_legal_columns">
+                    <section class="o_legal_card o_legal_column"
+                             t-foreach="data.columns" t-as="column" t-key="column.key"
+                             t-att-data-column="column.key">
+                        <header class="o_legal_card_head">
+                            <h3 class="o_legal_card_title">
+                                <t t-esc="column.title"/>
+                                <span class="o_legal_count o_legal_num" dir="ltr"
+                                      t-esc="column.count_label"/>
+                            </h3>
+                        </header>
+                        <p class="o_legal_card_hint" t-esc="column.hint"/>
+
+                        <!-- Every column has a real empty state that says what
+                             would be here. An empty column is not an answer;
+                             "nothing is waiting to be filed" is. -->
+                        <div class="o_legal_empty" t-if="!column.rows.length">
+                            <i class="fa fa-inbox" role="img" aria-hidden="true"/>
+                            <div>
+                                <p class="o_legal_empty_title" t-esc="column.empty"/>
+                                <p class="o_legal_empty_hint" t-esc="column.empty_hint"/>
+                            </div>
+                        </div>
+
+                        <ul class="o_legal_mr_rows" t-else="">
+                            <li t-foreach="column.rows" t-as="row" t-key="row.id"
+                                t-attf-class="o_legal_mr_row o_legal_mr_{{ column.key }}"
+                                t-att-data-row="row.id">
+
+                                <!-- Column one: وارد اليوم -->
+                                <t t-if="column.key === 'incoming'">
+                                    <div class="o_legal_mr_line">
+                                        <span class="o_legal_chip o_legal_body_chip"
+                                              t-esc="row.body_label"/>
+                                        <span class="o_legal_mr_ref o_legal_num" dir="ltr"
+                                              t-if="row.their_ref"
+                                              t-att-title="label.theirRef"
+                                              t-esc="row.their_ref"/>
+                                        <span class="o_legal_mr_date o_legal_num" dir="ltr"
+                                              t-esc="row.date_label"/>
+                                        <span class="o_legal_chip o_legal_mr_draft"
+                                              t-if="row.is_draft" t-esc="row.draft_label"/>
+                                    </div>
+                                    <button type="button" class="o_legal_mr_subject"
+                                            t-on-click="() => this.doAction(row.open)"
+                                            t-esc="row.subject"/>
+                                    <div class="o_legal_mr_actions">
+                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                t-if="row.link"
+                                                t-on-click="() => this.attach(row)"
+                                                t-esc="row.link_label"/>
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                                t-if="row.new_case"
+                                                t-on-click="() => this.doAction(row.new_case)"
+                                                t-esc="row.new_case_label"/>
+                                        <button type="button" class="btn btn-link btn-sm"
+                                                t-if="row.attachment_id"
+                                                t-on-click="() => this.doAction({ type: 'ir.actions.act_url', url: '/web/content/' + row.attachment_id, target: 'new' })">
+                                            <i class="fa fa-file-text-o" role="img" aria-hidden="true"/>
+                                            <t t-esc="row.attachment_label"/>
+                                        </button>
+                                    </div>
+                                </t>
+
+                                <!-- Column two: بانتظار الرد -->
+                                <t t-if="column.key === 'awaiting'">
+                                    <div class="o_legal_mr_line">
+                                        <span class="o_legal_chip o_legal_body_chip"
+                                              t-esc="row.body_label"/>
+                                        <span class="o_legal_mr_ref o_legal_num" dir="ltr"
+                                              t-esc="row.our_number"/>
+                                        <span class="o_legal_mr_date o_legal_num" dir="ltr"
+                                              t-esc="row.date_label"/>
+                                    </div>
+                                    <button type="button" class="o_legal_mr_subject"
+                                            t-on-click="() => this.doAction(row.open)"
+                                            t-esc="row.subject"/>
+                                    <div class="o_legal_mr_line">
+                                        <LegalClockBadge payload="row.clock" compact="true"/>
+                                        <span class="o_legal_mr_due" t-if="row.due_label"
+                                              t-esc="row.due_label"/>
+                                    </div>
+                                    <div class="o_legal_mr_actions">
+                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                t-if="row.remind"
+                                                t-on-click="() => this.doAction(row.remind)"
+                                                t-esc="row.remind_label"/>
+                                        <!-- Quieter than the reminder, and one
+                                             click, because "they said come back
+                                             after Eid" is the commonest event
+                                             in this domain. -->
+                                        <button type="button" class="btn btn-link btn-sm"
+                                                t-if="row.call"
+                                                t-on-click="() => this.doAction(row.call)">
+                                            <i class="fa fa-phone" role="img" aria-hidden="true"/>
+                                            <t t-esc="row.call_label"/>
+                                        </button>
+                                    </div>
+                                </t>
+
+                                <!-- Column three: للإصدار -->
+                                <t t-if="column.key === 'issue'">
+                                    <div class="o_legal_mr_line">
+                                        <span class="o_legal_chip o_legal_body_chip"
+                                              t-esc="row.body_label"/>
+                                        <span class="o_legal_mr_ref o_legal_num" dir="ltr"
+                                              t-esc="row.name"/>
+                                        <span class="o_legal_chip" t-esc="row.step_label"/>
+                                    </div>
+                                    <button type="button" class="o_legal_mr_subject"
+                                            t-on-click="() => this.doAction(row.open)"
+                                            t-esc="row.subject"/>
+                                    <div class="o_legal_mr_line">
+                                        <span class="o_legal_meter o_legal_mr_meter"
+                                              aria-hidden="true">
+                                            <span class="o_legal_meter_fill"
+                                                  t-attf-style="inline-size: {{ row.meter_percent }}%;"/>
+                                        </span>
+                                        <!-- Composed server-side as one atomic
+                                             string and pinned ltr: bidi turns a
+                                             bare "3 / 4" into "4 / 3". -->
+                                        <span class="o_legal_mr_meter_label o_legal_num" dir="ltr"
+                                              t-esc="row.meter_label"/>
+                                        <span class="o_legal_mr_next" t-esc="row.next_action_label"/>
+                                    </div>
+                                    <div class="o_legal_mr_actions">
+                                        <!-- The twin buttons. Same label, same
+                                             place: the next action stays
+                                             visible while it is out of reach,
+                                             and the greyed twin carries the
+                                             reason it is. Both are drawn from
+                                             one server field, so they can never
+                                             disagree with each other or with
+                                             the meter above them. -->
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                                t-if="row.ready"
+                                                t-on-click="() => this.doAction(row.open)"
+                                                t-esc="row.action_label"/>
+                                        <button type="button" class="btn btn-secondary btn-sm disabled"
+                                                t-else="" disabled="disabled"
+                                                t-att-title="row.blocker_summary"
+                                                t-esc="row.action_label"/>
+                                        <span class="o_legal_mr_blocker" t-if="!row.ready"
+                                              t-esc="row.blocker_summary"/>
+                                    </div>
+                                </t>
+                            </li>
+                        </ul>
+
+                        <footer class="o_legal_card_foot" t-if="column.action">
+                            <button type="button" class="btn btn-link btn-sm o_legal_more"
+                                    t-on-click="() => this.doAction(column.action)">
+                                <t t-esc="column.open_all_label"/>
+                                <i class="fa fa-angle-right" role="img" aria-hidden="true"/>
+                            </button>
+                            <span class="o_legal_foot_note" t-if="overflow(column)"
+                                  t-esc="column.overflow_label"/>
+                        </footer>
+                    </section>
+                </div>
+            </div>
+        </Layout>
+    </t>
+
+</templates>

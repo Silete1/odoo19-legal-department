@@ -1,0 +1,205 @@
+// The phase rail.
+//
+// Four to six segments laid out as a flex row. Because it lays itself out, the
+// template stamps its own `dir` from the server flag - Odoo mirrors physical
+// CSS with rtlcss and never sets `direction` itself - and every rule below is
+// written in logical properties so that pass has nothing to flip and cannot
+// mirror the rail twice.
+//
+// Two accessibility rules are load-bearing rather than decorative and must not
+// be "simplified" away:
+//   * a pending segment stays fully legible. It is drawn quieter, never as a
+//     disabled control, and its text keeps 4.5:1 against the card - a step
+//     nobody has reached yet is not unavailable, it is simply later;
+//   * the focus ring is never removed. The segments are the only way a
+//     keyboard user reaches the step names, so losing the ring loses the rail.
+
+.o_legal_rail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-block-end: 1rem;
+
+    // ---------------------------------------------------------------- head
+    .o_legal_rail_head {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.9rem;
+    }
+
+    .o_legal_rail_state {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: $body-color;
+    }
+
+    .o_legal_rail_mine {
+        font-weight: 600;
+        color: $o-brand-primary;
+    }
+
+    .o_legal_rail_pending { color: $text-muted; }
+
+    .o_legal_rail_counter {
+        margin-inline-start: auto;
+        font-weight: 600;
+        color: $text-muted;
+    }
+
+    // ----------------------------------------------------------------- bar
+    .o_legal_rail_bar {
+        block-size: 4px;
+        border-radius: 2px;
+        background-color: $o-gray-200;
+        overflow: hidden;
+    }
+
+    .o_legal_rail_bar_fill {
+        block-size: 100%;
+        background-color: $o-brand-primary;
+        border-start-end-radius: 2px;
+        border-end-end-radius: 2px;
+        transition: inline-size 0.35s ease;
+    }
+
+    // --------------------------------------------------------------- track
+    .o_legal_rail_track {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .o_legal_phase {
+        flex: 1 1 9rem;
+        min-inline-size: 0;
+    }
+
+    .o_legal_phase_btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        inline-size: 100%;
+        padding: 0.5rem 0.6rem;
+        border: 1px solid $border-color;
+        // The state rule sits on the block-start edge, so it reads as a bar
+        // over the segment in both directions and needs no mirroring.
+        border-block-start: 3px solid $o-gray-300;
+        border-radius: 6px;
+        background-color: $o-view-background-color;
+        text-align: start;
+        font-size: 0.86rem;
+        color: $body-color;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+
+        &:hover { background-color: $o-gray-100; }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: 2px;
+        }
+    }
+
+    .o_legal_phase_marker {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background-color: $o-gray-200;
+        font-size: 0.78rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .o_legal_phase_label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    // ------------------------------------------------------------- statuses
+    .o_legal_phase_done .o_legal_phase_btn {
+        border-block-start-color: $success;
+        .o_legal_phase_marker {
+            background-color: rgba($success, 0.16);
+            color: $success;
+        }
+    }
+
+    .o_legal_phase_current .o_legal_phase_btn {
+        border-block-start-color: $o-brand-primary;
+        border-color: rgba($o-brand-primary, 0.5);
+        font-weight: 700;
+        .o_legal_phase_marker {
+            background-color: $o-brand-primary;
+            color: $o-view-background-color;
+        }
+    }
+
+    .o_legal_phase_blocked .o_legal_phase_btn {
+        border-block-start-color: $warning;
+        .o_legal_phase_marker { background-color: rgba($warning, 0.22); }
+    }
+
+    // Visible, legible, and not disabled. A later phase is later, not absent.
+    .o_legal_phase_todo .o_legal_phase_btn { color: $text-muted; }
+
+    .o_legal_phase_selected .o_legal_phase_btn {
+        border-color: $o-brand-primary;
+    }
+
+    // ---------------------------------------------------------------- prose
+    .o_legal_rail_focus {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem 0.8rem;
+        font-size: 0.88rem;
+        color: $text-muted;
+    }
+
+    .o_legal_rail_focus_phase {
+        font-weight: 600;
+        color: $body-color;
+    }
+
+    .o_legal_rail_instruction {
+        padding: 0.6rem 0.8rem;
+        border: 1px solid $border-color;
+        border-inline-start: 3px solid $o-brand-primary;
+        border-radius: 6px;
+        background-color: $o-view-background-color;
+        font-size: 0.9rem;
+
+        > :last-child { margin-block-end: 0; }
+    }
+
+    .o_legal_rail_blockers {
+        margin-block-end: 0;
+
+        ul { margin-block-end: 0; }
+    }
+
+    .o_legal_rail_blockers_title { font-weight: 600; }
+
+    // ---------------------------------------------------------------- table
+    .o_legal_rail_table {
+        font-size: 0.85rem;
+
+        > summary {
+            cursor: pointer;
+            color: $o-brand-primary;
+        }
+    }
+
+    // A wide table scrolls inside its own box; the page itself must never
+    // scroll sideways, least of all on a screen that mirrors.
+    .o_legal_table_scroll {
+        overflow-x: auto;
+        margin-block-start: 0.4rem;
+    }
+}

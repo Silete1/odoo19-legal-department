@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         الترويسة. Drawn only when the letter is going onto plain paper;
+         on pre-printed stock the band is left empty and the paper format
+         reserves 55mm for it, because a letter with two letterheads
+         printed over each other is refused at the window.
+         ================================================================ -->
+    <template id="report_letter_head">
+        <div class="legal-letterhead" t-if="draw_letterhead">
+            <div class="row">
+                <div class="col-4 text-start">
+                    <div class="legal-head-date">
+                        <div t-if="company.legal_letterhead_line4"
+                             t-out="company.legal_letterhead_line4"/>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <img t-if="company.legal_letterhead_logo"
+                         t-att-src="image_data_uri(company.legal_letterhead_logo)"
+                         class="legal-emblem" alt=""/>
+                </div>
+                <div class="col-4 text-end">
+                    <div class="legal-head-lines">
+                        <div t-if="company.legal_letterhead_line1" class="legal-head-1"
+                             t-out="company.legal_letterhead_line1"/>
+                        <div t-if="company.legal_letterhead_line2"
+                             t-out="company.legal_letterhead_line2"/>
+                        <div t-if="company.legal_letterhead_line3" class="legal-head-3"
+                             t-out="company.legal_letterhead_line3"/>
+                    </div>
+                </div>
+            </div>
+            <hr class="legal-rule"/>
+        </div>
+    </template>
+
+    <!-- ================================================================
+         The letter itself.
+         ================================================================ -->
+    <template id="report_official_letter_document">
+        <t t-set="company" t-value="o.company_id"/>
+        <t t-set="signatory" t-value="o.signatory_id or o.letter_template_id.signatory_id"/>
+        <t t-set="template" t-value="o.letter_template_id"/>
+        <t t-set="body_text" t-value="o.snapshot_html or o.body_html"/>
+        <t t-call="web.basic_layout">
+
+            <!-- wkhtmltopdf lifts any div.footer out of the body and repeats it
+                 on every sheet; page and topage are the substitution spans it
+                 fills in. An Iraqi letter that runs to two pages is expected to
+                 say so, because the counter checks. -->
+            <div class="footer legal-letter-footer" dir="rtl">
+                <div class="text-center">
+                    صفحة <span class="page"/> من <span class="topage"/>
+                </div>
+            </div>
+
+            <div class="page legal-letter" dir="rtl">
+
+                <t t-call="legal_correspondence.report_letter_head"/>
+
+                <!-- A draft has no number and is not a letter yet. Printing it
+                     as though it were is how an unregistered page ends up at a
+                     counter and gets the department a reputation. -->
+                <div t-if="o.state != 'registered'" class="legal-not-registered">
+                    <h2>مسودة - غير مقيدة في السجل</h2>
+                    <p>
+                        هذه المسودة لم تُسجَّل بعد ولم يُمنح لها رقم صادر، وحالتها الحالية:
+                        <b t-field="o.state"/>. الكتاب الرسمي لا يوجد قبل الرقم.
+                    </p>
+                </div>
+
+                <t t-if="o.state == 'registered'">
+
+                    <!-- العدد والتاريخ. On the right, where an Iraqi reader
+                         looks for them first. -->
+                    <div class="row legal-refs">
+                        <div class="col-6 text-end">
+                            <div><b>العدد:</b> <span t-out="o._localise_numerals(o.our_number or '')"/></div>
+                            <div><b>التاريخ:</b> <span t-out="o._localise_numerals(o._format_letter_date(o.our_date))"/></div>
+                            <div t-if="o.body_reference"><b>الإشارة:</b>
+                                <span t-out="o._localise_numerals(o.body_reference)"/></div>
+                        </div>
+                        <div class="col-6 text-start">
+                            <div t-if="o.their_number">
+                                <b>كتابكم المرقم:</b>
+                                <span t-out="o._localise_numerals(o.their_number)"/>
+                            </div>
+                            <div t-if="o.their_date">
+                                <b>في:</b>
+                                <span t-out="o._localise_numerals(o._format_letter_date(o.their_date))"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الجهة الموجه إليها، حرفياً كما ضبطتها الدائرة. -->
+                    <div class="legal-addressee">
+                        <div class="legal-to" t-if="o.gov_body_id.letterhead_recipient">
+                            <t t-foreach="o.gov_body_id.letterhead_recipient.split('\n')" t-as="line">
+                                <div t-out="line"/>
+                            </t>
+                        </div>
+                        <div class="legal-to" t-else="">
+                            <div t-out="o.gov_body_id.name"/>
+                            <div t-if="o.body_section" t-out="o.body_section"/>
+                        </div>
+                        <div class="legal-salutation"
+                             t-out="o.gov_body_id.salutation or 'السيد المدير العام المحترم'"/>
+                    </div>
+
+                    <div class="legal-subject">م / <span t-out="o.subject"/></div>
+
+                    <div class="legal-body">
+                        <p>تحية طيبة وبعد،</p>
+                        <div t-if="body_text" t-out="body_text"/>
+                    </div>
+
+                    <!-- جدول الموضوع. This is where the several people covered
+                         by one letter go: a visa request for eleven engineers is
+                         one letter and eleven rows, not eleven letters. -->
+                    <table t-if="o.line_ids and (not template or template.show_subject_table)"
+                           class="table table-sm legal-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%;">ت</th>
+                                <th style="width: 47%;">الموضوع / الاسم</th>
+                                <th style="width: 25%;">الرقم / الإشارة</th>
+                                <th style="width: 20%;">ملاحظات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.line_ids" t-as="line">
+                                <td t-out="o._localise_numerals(str(line_index + 1))"/>
+                                <td t-out="line.name"/>
+                                <td t-out="o._localise_numerals(line.reference or '')"/>
+                                <td t-out="line.note or ''"/>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="legal-closing">مع فائق الاحترام والتقدير.</p>
+
+                    <!-- التوقيع على اليسار: الاسم والصفة، ثم التوقيع، والختم فوقه.
+                         An unstamped page is a draft, not a letter, and the
+                         counter will say so. -->
+                    <div class="row legal-signature-row">
+                        <div class="col-5 text-center">
+                            <t t-if="template and template.show_qr and o.verification_token">
+                                <img class="legal-qr"
+                                     t-att-src="'/report/barcode/QR/%s?width=180&amp;height=180&amp;quiet=0' % (o.verification_token or o.our_number)"
+                                     alt="رمز التحقق"/>
+                                <div class="legal-qr-caption">
+                                    <div>رمز التحقق من السجل</div>
+                                    <div class="legal-token" t-out="o.verification_token"/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="col-2"/>
+                        <div class="col-5 text-center legal-signature">
+                            <div class="legal-sign-stack">
+                                <img t-if="signatory.stamp_image" class="legal-stamp"
+                                     t-att-src="image_data_uri(signatory.stamp_image)" alt="الختم"/>
+                                <img t-if="signatory.specimen_signature" class="legal-sign-image"
+                                     t-att-src="image_data_uri(signatory.specimen_signature)" alt="التوقيع"/>
+                            </div>
+                            <div class="legal-sign-name" t-out="signatory.name or ''"/>
+                            <div class="legal-sign-title" t-out="signatory.title or ''"/>
+                            <div class="legal-sign-entity" t-if="o.entity_id" t-out="o.entity_id.name"/>
+                        </div>
+                    </div>
+
+                    <!-- نسخة منه إلى - bottom left, where an Iraqi letter puts it. -->
+                    <div class="legal-cc" t-if="template and template.cc_list">
+                        <div class="legal-cc-title">نسخة منه إلى:</div>
+                        <t t-foreach="template.cc_list.split('\n')" t-as="cc">
+                            <div t-if="cc.strip()" class="legal-cc-line">- <span t-out="cc.strip()"/></div>
+                        </t>
+                    </div>
+
+                    <div class="legal-carrier" t-if="o.carried_by_id">
+                        سُلّم بيد المعتمد: <b t-out="o.carried_by_id.name"/>
+                    </div>
+
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <!--
+        Two report actions, not one, because an ir.actions.report carries exactly
+        one paper format and the two letterhead variants need different top
+        margins. The entry's Print Letter button picks the right one from the
+        template's letterhead_variant, so the clerk never has to know this.
+    -->
+    <template id="report_official_letter">
+        <t t-foreach="docs" t-as="o">
+            <t t-set="draw_letterhead" t-value="False"/>
+            <t t-call="legal_correspondence.report_official_letter_document"/>
+        </t>
+    </template>
+
+    <template id="report_official_letter_drawn">
+        <t t-foreach="docs" t-as="o">
+            <t t-set="draw_letterhead" t-value="True"/>
+            <t t-call="legal_correspondence.report_official_letter_document"/>
+        </t>
+    </template>
+
+</odoo>

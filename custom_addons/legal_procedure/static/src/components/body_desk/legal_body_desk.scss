@@ -1,0 +1,132 @@
+// One body's desk.
+//
+// A panel that repeats per body, so its density matters more than its
+// decoration: a clerk who deals with five bodies sees five of these stacked,
+// and a card with generous padding would put the fifth below two screenfolds.
+// Sections are separated by a rule rather than by whitespace for the same
+// reason.
+
+.o_legal_body_desk {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .o_legal_body_head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.35rem 1rem;
+    }
+
+    .o_legal_body_facts {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.75rem;
+        font-size: 0.85rem;
+        color: $text-muted;
+
+        .fa { margin-inline-end: 0.3rem; }
+    }
+
+    .o_legal_body_notes_toggle { padding: 0; }
+
+    .o_legal_body_notes {
+        padding: 0.6rem 0.8rem;
+        border: 1px solid $border-color;
+        border-inline-start: 3px solid $o-brand-primary;
+        border-radius: 6px;
+        font-size: 0.88rem;
+
+        > :last-child { margin-block-end: 0; }
+    }
+
+    .o_legal_body_clear_note {
+        font-size: 0.82rem;
+        font-weight: 400;
+        color: $text-muted;
+    }
+
+    // ------------------------------------------------------------- sections
+    .o_legal_body_section + .o_legal_body_section {
+        border-block-start: 1px solid $border-color;
+        padding-block-start: 0.5rem;
+    }
+
+    // A section with nothing in it still renders - "nothing to send today" is
+    // an answer - but it does not take a whole card's height to say so.
+    .o_legal_body_clear {
+        .o_legal_body_section_hint { display: none; }
+        .o_legal_body_section_foot { display: none; }
+    }
+
+    .o_legal_body_section_title {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .o_legal_body_section_hint {
+        margin: 0.1rem 0 0.3rem;
+        font-size: 0.82rem;
+        color: $text-muted;
+    }
+
+    .o_legal_body_section_empty {
+        margin: 0.15rem 0 0.35rem;
+        font-size: 0.85rem;
+        color: $text-muted;
+    }
+
+    // ----------------------------------------------------------------- rows
+    .o_legal_body_rows {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .o_legal_body_row > button {
+        display: grid;
+        grid-template-columns: 9rem minmax(0, 1fr) 11rem;
+        align-items: center;
+        gap: 0.5rem;
+        inline-size: 100%;
+        padding: 0.35rem 0.3rem;
+        border: 0;
+        background: none;
+        text-align: start;
+        font-size: 0.86rem;
+        color: $body-color;
+
+        &:hover { background-color: $o-gray-100; }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: -2px;
+        }
+
+        @media (max-width: 991px) {
+            grid-template-columns: 8rem minmax(0, 1fr);
+            .o_legal_body_row_clock { display: none; }
+        }
+    }
+
+    .o_legal_body_row_ref { font-weight: 600; }
+
+    .o_legal_body_row_subject {
+        color: $text-muted;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_legal_body_section_foot {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+    }
+}

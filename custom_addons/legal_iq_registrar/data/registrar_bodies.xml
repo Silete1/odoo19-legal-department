@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The counters a formation or amendment file actually passes through.
+
+        Only six of the twelve records below are the Ministry. The rest are the
+        bodies that block a Registrar filing anyway: the notary who authenticates
+        a simple company's contract, the Bar Association whose ID the
+        registration agent must produce at nearly every window, Al-Rasheed Bank
+        where the capital is deposited and the fees are paid, the Translators
+        Association and the Foreign Ministry's certifications directorate that a
+        foreign parent's papers must pass through, the gazette, and the daily
+        newspapers a formation decision is published in. This is why
+        legal.gov.body.body_type_id is a record and not a Selection: half of the
+        list is not a ministry at all.
+    -->
+    <data noupdate="1">
+
+        <!-- ============================================================
+             The Ministry and its Registrar
+             ============================================================ -->
+
+        <record id="body_mot" model="legal.gov.body">
+            <field name="name">وزارة التجارة</field>
+            <field name="short_name">التجارة</field>
+            <field name="code">MOT</field>
+            <field name="body_type_id" ref="legal_core.body_type_ministry"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة التجارة</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://mot.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="legal_basis_url">https://mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="body_mot_registrar" model="legal.gov.body">
+            <field name="name">دائرة تسجيل الشركات</field>
+            <field name="short_name">مسجل الشركات</field>
+            <field name="code">MOT-REG</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_mot"/>
+            <field name="letterhead_recipient">وزارة التجارة
+دائرة تسجيل الشركات</field>
+            <field name="salutation">السيد مسجل الشركات المحترم</field>
+            <field name="address">بغداد - المنصور، قرب معرض بغداد الدولي</field>
+            <field name="open_hours">٠٨:٣٠ - ١٤:١٥، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://tasjeel.mot.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="colour">4</field>
+            <field name="legal_basis">قانون الشركات رقم 21 لسنة 1997 المعدل؛ قانون وكالة التسجيل رقم 4 لسنة 1999؛ قانون الشركات العامة رقم 22 لسنة 1997؛ قانون تنظيم الوكالة التجارية رقم 51 لسنة 2000؛ نظام فروع الشركات الأجنبية رقم 2 لسنة 2017</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">20</field>
+            <field name="note" type="html">
+                <div>
+                    <p>الدائرة هي المرجع الذي تتحقق منه بقية الجهات: عند التسجيل توزع الدائرة
+                    نسخاً من الإجازة على الهيئة العامة للضرائب، ووزارة العمل والشؤون الاجتماعية،
+                    والهيئة العامة للتقاعد والضمان الاجتماعي للعمال، والكمارك، ومصرفي الرشيد
+                    والرافدين، ونقابة المحامين، وجهاز المخابرات الوطني.</p>
+                    <p>المراجعة تتم عبر شخص مخوّل (المعتمد) تُودع مستمسكاته لدى الدائرة، وطلب
+                    المراجعة يُثبَّت عليه تاريخ الواردة والرسوم المستوفاة. الدائرة تصدر نشرة
+                    يومية مرقّمة ومؤرخة تُنشر فيها قرارات التأسيس والتعديل.</p>
+                    <p>المهل القانونية: البتّ في الطلب خلال 10 أيام؛ الاجتماع التأسيسي خلال 30
+                    يوماً من موافقة المسجل؛ التسجيل في السجل التجاري لدى الغرفة خلال 30 يوماً من
+                    استلام شهادة التأسيس؛ الاعتراض على الرفض إلى الوزير خلال 30 يوماً ثم إلى
+                    المحكمة خلال 30 يوماً.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="body_mot_registrar_incorporation" model="legal.gov.body">
+            <field name="name">قسم التأسيس</field>
+            <field name="short_name">قسم التأسيس</field>
+            <field name="code">MOT-REG-INC</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_mot_registrar"/>
+            <field name="letterhead_recipient">وزارة التجارة
+دائرة تسجيل الشركات
+قسم التأسيس</field>
+            <field name="open_hours">٠٨:٣٠ - ١٤:١٥، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">المواد 13-28 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="body_mot_registrar_amendment" model="legal.gov.body">
+            <field name="name">قسم التعديل والتصديق</field>
+            <field name="short_name">قسم التعديل</field>
+            <field name="code">MOT-REG-AMD</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_mot_registrar"/>
+            <field name="letterhead_recipient">وزارة التجارة
+دائرة تسجيل الشركات
+قسم التعديل والتصديق</field>
+            <field name="open_hours">٠٨:٣٠ - ١٤:١٥، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">المادة 203 من قانون الشركات رقم 21 لسنة 1997: لا يكون أي تعديل على عقد الشركة نافذاً ما لم يصادق عليه المسجل ويُنشر</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="body_mot_registrar_foreign" model="legal.gov.body">
+            <field name="name">قسم فروع الشركات الأجنبية</field>
+            <field name="short_name">قسم الفروع الأجنبية</field>
+            <field name="code">MOT-REG-FRN</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_mot_registrar"/>
+            <field name="letterhead_recipient">وزارة التجارة
+دائرة تسجيل الشركات
+قسم فروع الشركات الأجنبية</field>
+            <field name="open_hours">٠٨:٣٠ - ١٤:١٥، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 المعدل بالنظام رقم 4 لسنة 2023 والنظام رقم 1 لسنة 2025</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">50</field>
+            <field name="note" type="html">
+                <div>
+                    <p>المادة 3: يبتّ المسجل خلال 15 يوم عمل، والسكوت يعدّ قبولاً، والرفض يجب أن
+                    يكون مسبباً، وتصدر إجازة التسجيل خلال 7 أيام عمل من النشر.</p>
+                    <p>المادة 7: يُبلَّغ المسجل بتغيير مدير الفرع أو معاونه خلال 60 يوم عمل من
+                    تصديق البعثة العراقية للوثائق في الخارج.</p>
+                    <p>المادة 8: يقدم الفرع حساباته الختامية المدققة وتقرير نشاطه سنوياً خلال
+                    الأشهر الثمانية التالية لانتهاء تلك السنة.</p>
+                    <p>المادة 11: يُلغى التسجيل ويُشطب الفرع إذا تخلّف عن الحضور لتقديم الحسابات
+                    الختامية والوثائق المطلوبة سنتين متتاليتين بلا عذر مشروع، أو بعد 4 سنوات دون
+                    نشاط بموجب المادة 6.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="body_mot_registrar_bulletin" model="legal.gov.body">
+            <field name="name">شعبة النشرة اليومية - دائرة تسجيل الشركات</field>
+            <field name="short_name">النشرة اليومية</field>
+            <field name="code">MOT-REG-BUL</field>
+            <field name="body_type_id" ref="legal_core.body_type_publisher"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_mot_registrar"/>
+            <field name="letterhead_recipient">وزارة التجارة
+دائرة تسجيل الشركات
+شعبة النشرة اليومية</field>
+            <field name="channel">hybrid</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">المادة 203 من قانون الشركات رقم 21 لسنة 1997 - النشر شرط نفاذ التعديل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">60</field>
+            <field name="note" type="html">
+                <p>نشرة مرقّمة ومؤرخة (مثال: العدد 206 في 2025/11/16) مقسّمة حسب نوع الشركة،
+                وأبوابها المرصودة: إعلان زيادة رأسمال، إعلان دعوة اجتماع الهيئة العامة،
+                إعلان تعديل عقد تأسيس، إعلان تعديل عقد، إعلان تعديل بيان.</p>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             The counters outside the Ministry that block a Registrar filing
+             ============================================================ -->
+
+        <record id="body_notary" model="legal.gov.body">
+            <field name="name">دائرة الكاتب العدل</field>
+            <field name="short_name">الكاتب العدل</field>
+            <field name="code">NOTARY</field>
+            <field name="body_type_id" ref="legal_core.body_type_notary"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة العدل
+دائرة الكاتب العدل</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">قانون الكتاب العدول رقم 33 لسنة 1998؛ وقانون تصديق التواقيع على المستندات والوثائق العراقية والأجنبية رقم 52 لسنة 1970</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">70</field>
+            <field name="note" type="html">
+                <p>عقد تأسيس الشركة البسيطة يجب تصديقه لدى الكاتب العدل. والوكالة لا تُنظَّم
+                بالبريد - الحضور الشخصي مطلوب بموجب تعليمات وزارة العدل ودائرة الشؤون
+                القنصلية منعاً للتزوير وانتحال الشخصية.</p>
+            </field>
+        </record>
+
+        <record id="body_bar_association" model="legal.gov.body">
+            <field name="name">نقابة المحامين العراقيين</field>
+            <field name="short_name">نقابة المحامين</field>
+            <field name="code">BAR</field>
+            <field name="body_type_id" ref="legal_core.body_type_syndicate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">نقابة المحامين العراقيين</field>
+            <field name="salutation">السيد نقيب المحامين المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">قانون وكالة التسجيل رقم 4 لسنة 1999؛ والمادة 5 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 (كتاب النقابة بتعيين مشاور قانوني للفرع)</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">80</field>
+            <field name="note" type="html">
+                <p>هوية نقابة المحامين مطلوبة فعلياً في أغلب شبابيك التأسيس مع الوكالة:
+                خطوات غرفة التجارة، وإيداع رأس المال، وتدقيق المستمسكات لدى المسجل، ودفع
+                الرسوم في مصرف الرشيد، واستلام إجازة التسجيل.</p>
+            </field>
+        </record>
+
+        <record id="body_rasheed_bank" model="legal.gov.body">
+            <field name="name">مصرف الرشيد</field>
+            <field name="short_name">مصرف الرشيد</field>
+            <field name="code">BANK-RASHEED</field>
+            <field name="body_type_id" ref="legal_core.body_type_bank"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">مصرف الرشيد</field>
+            <field name="salutation">السيد مدير الفرع المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٣:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">إيداع رأس المال وتسديد رسوم التسجيل - إجراءات دائرة تسجيل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">90</field>
+        </record>
+
+        <record id="body_translators_association" model="legal.gov.body">
+            <field name="name">جمعية المترجمين العراقيين</field>
+            <field name="short_name">المترجمون</field>
+            <field name="code">TRANSLATORS</field>
+            <field name="body_type_id" ref="legal_core.body_type_service_office"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">جمعية المترجمين العراقيين</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">اشتراط المسجل ترجمة وثائق الشركة الأجنبية إلى العربية وتصديقها من الجهات المختصة في بلد التأسيس</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">stale</field>
+            <field name="sequence">100</field>
+            <field name="note" type="html">
+                <p>أجور الترجمة المرصودة 15,000 - 22,000 دينار للصفحة، وتصديق الوثيقة
+                4,000 - 10,000 دينار، وتدقيق الوثائق 50,000 دينار. هذه أرقام مرصودة من دليل
+                eRegulations وليست تعرفة منشورة من الجمعية، ولذلك حالة التحقق «تحتاج إعادة تدقيق».</p>
+            </field>
+        </record>
+
+        <record id="body_mofa_authentication" model="legal.gov.body">
+            <field name="name">دائرة التصديقات - قسم الشؤون القنصلية، وزارة الخارجية</field>
+            <field name="short_name">التصديقات</field>
+            <field name="code">MOFA-AUTH</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة الخارجية
+قسم الشؤون القنصلية
+دائرة التصديقات</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="portal_url">https://mofa.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">قانون تصديق التواقيع على المستندات والوثائق العراقية والأجنبية رقم 52 لسنة 1970</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">110</field>
+            <field name="note" type="html">
+                <p>العراق ليس طرفاً في اتفاقية الأبوستيل. سلسلة التصديق: خارجية بلد الإصدار، ثم
+                السفارة العراقية هناك، ثم دائرة التصديقات في وزارة الخارجية العراقية. فإن لم تكن
+                هناك بعثة عراقية: سفارة ذلك البلد في العراق ثم دائرة التصديقات، فإن لم توجد
+                البعثتان: التصديق في بلد ثالث تتوفر فيه البعثتان.</p>
+            </field>
+        </record>
+
+        <record id="body_gazette" model="legal.gov.body">
+            <field name="name">الوقائع العراقية</field>
+            <field name="short_name">الوقائع</field>
+            <field name="code">GAZETTE</field>
+            <field name="body_type_id" ref="legal_core.body_type_publisher"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة العدل
+دائرة الوقائع العراقية</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">المادة 88 من قانون الشركات رقم 21 لسنة 1997 - نشر الدعوة لاجتماع الهيئة العامة في الجريدة الرسمية والصحف</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">120</field>
+        </record>
+
+        <record id="body_daily_press" model="legal.gov.body">
+            <field name="name">الصحف اليومية المحلية</field>
+            <field name="short_name">الصحف</field>
+            <field name="code">PRESS</field>
+            <field name="body_type_id" ref="legal_core.body_type_publisher"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">إدارة الإعلانات - الصحيفة</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_mot_registrar"/>
+            <field name="legal_basis">المادة 88 من قانون الشركات رقم 21 لسنة 1997؛ والمادة 12 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 (نشر قرار التصفية في صحيفتين محليتين مرة واحدة)</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">130</field>
+        </record>
+
+    </data>
+</odoo>

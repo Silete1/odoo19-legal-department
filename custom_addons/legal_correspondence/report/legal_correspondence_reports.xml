@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_official_letter" model="ir.actions.report">
+        <field name="name">كتاب رسمي - ورق مطبوع / Official Letter (pre-printed paper)</field>
+        <field name="model">legal.correspondence</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">legal_correspondence.report_official_letter</field>
+        <field name="report_file">legal_correspondence.report_official_letter</field>
+        <field name="binding_model_id" ref="model_legal_correspondence"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_legal_letter_preprinted"/>
+        <field name="print_report_name">'كتاب %s' % (object.our_number or object.subject)</field>
+    </record>
+
+    <record id="action_report_official_letter_drawn" model="ir.actions.report">
+        <field name="name">كتاب رسمي - مع الترويسة / Official Letter (emblem drawn)</field>
+        <field name="model">legal.correspondence</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">legal_correspondence.report_official_letter_drawn</field>
+        <field name="report_file">legal_correspondence.report_official_letter_drawn</field>
+        <field name="binding_model_id" ref="model_legal_correspondence"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_legal_letter_drawn"/>
+        <field name="print_report_name">'كتاب %s' % (object.our_number or object.subject)</field>
+    </record>
+
+</odoo>

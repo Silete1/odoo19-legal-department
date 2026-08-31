@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The register hangs under legal_core's Registers menu, so there is one
+        Legal Department application rather than three that happen to be
+        installed together.
+
+        The Mail Room is deliberately first and is the module's landing action.
+        What arrived this morning, what has not been answered and who promised
+        what is the question a legal department opens the software to ask.
+    -->
+
+    <menuitem id="menu_legal_correspondence_root"
+              name="سجل الصادر والوارد / Correspondence Register"
+              parent="legal_core.menu_legal_registers"
+              sequence="5"/>
+
+    <menuitem id="menu_legal_correspondence_mail_room"
+              name="Mail Room"
+              parent="menu_legal_correspondence_root"
+              action="action_legal_correspondence_mail_room"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_correspondence_register_wizard"
+              name="تسجيل كتاب وارد"
+              parent="menu_legal_correspondence_root"
+              action="action_legal_correspondence_register_wizard"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_correspondence_out"
+              name="صادر - Outgoing"
+              parent="menu_legal_correspondence_root"
+              action="action_legal_correspondence_out"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_correspondence_in"
+              name="وارد - Incoming"
+              parent="menu_legal_correspondence_root"
+              action="action_legal_correspondence_in"
+              sequence="40"/>
+
+    <menuitem id="menu_legal_correspondence_awaiting"
+              name="Awaiting Reply"
+              parent="menu_legal_correspondence_root"
+              action="action_legal_correspondence_awaiting"
+              sequence="50"/>
+
+    <menuitem id="menu_legal_correspondence_contact_notes"
+              name="Contact Notes"
+              parent="menu_legal_correspondence_root"
+              action="action_legal_contact_note_log"
+              sequence="60"/>
+
+    <!-- Configuration -->
+
+    <menuitem id="menu_legal_config_correspondence"
+              name="Correspondence"
+              parent="legal_core.menu_legal_config"
+              sequence="25"/>
+
+    <menuitem id="menu_legal_config_register"
+              name="Registers"
+              parent="menu_legal_config_correspondence"
+              action="action_legal_register"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_correspondence_kind"
+              name="Correspondence Kinds"
+              parent="menu_legal_config_correspondence"
+              action="action_legal_correspondence_kind"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_config_letter_template"
+              name="Letter Templates"
+              parent="menu_legal_config_correspondence"
+              action="action_legal_letter_template"
+              sequence="30"/>
+
+</odoo>

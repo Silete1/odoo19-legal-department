@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The instruction is printed ABOVE the fields deliberately. It is the
+        sentence that tells somebody standing at a counter what good looks like -
+        how many photocopies, which floor, who to ask for - and an instruction
+        printed under the form is an instruction read after the mistake.
+    -->
+
+    <record id="view_legal_case_step_wizard_form" model="ir.ui.view">
+        <field name="name">legal.case.step.wizard.form</field>
+        <field name="model">legal.case.step.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Record This Step">
+                <field name="case_id" invisible="1"/>
+                <field name="ready_to_advance" invisible="1"/>
+                <group>
+                    <field name="step_id" readonly="1"/>
+                </group>
+                <div class="text-muted mb-2" invisible="not desk_hint">
+                    <field name="desk_hint" nolabel="1" readonly="1"/>
+                </div>
+                <div class="alert alert-light border mb-3" role="status" invisible="not clerk_instruction">
+                    <field name="clerk_instruction" nolabel="1" readonly="1"/>
+                </div>
+                <div class="alert alert-warning" role="alert" invisible="ready_to_advance">
+                    <field name="blocker_summary" nolabel="1" readonly="1"/>
+                </div>
+                <field name="line_ids" nolabel="1">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="label" readonly="1"/>
+                        <field name="field_type" readonly="1" optional="hide"/>
+                        <field name="required" readonly="1" optional="hide"/>
+                        <field name="value" placeholder="..."/>
+                        <field name="help_text" readonly="1" optional="show"/>
+                        <field name="placeholder" column_invisible="True"/>
+                    </list>
+                </field>
+                <group>
+                    <field name="note" placeholder="What happened at the counter."/>
+                </group>
+                <footer>
+                    <button name="action_save_and_advance" type="object" string="Save And Advance"
+                            class="btn-primary" invisible="not ready_to_advance"/>
+                    <button name="action_save" type="object" string="Save"
+                            class="btn-secondary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

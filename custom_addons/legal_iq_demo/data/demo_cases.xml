@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Five live files at five different stages, so that no board in the product
+        is empty and no board is uniformly green.
+
+        One thing here is deliberately *not* faked. ``date_open`` is a real
+        field and carries the real age of each file; the letters in
+        ``demo_correspondence.xml`` carry their real dates too. But **days at
+        this step** is computed off ``legal.action.log``, and that model refuses
+        every write - "the action log is the file's evidence and cannot be
+        edited, not even by an administrator". So the trail says each file
+        arrived at its step on the day the demo was installed, and it says so
+        truthfully. Seeding around that would have meant editing the one table
+        in the product whose entire purpose is to be uneditable, which is a
+        strange thing for a demonstration of an audit trail to do.
+
+        On the ``legal_workflow`` context below: ``legal.case.write`` refuses any
+        write that touches ``step_id``, because a file is moved by the buttons on
+        it and never by writing to it, and it lifts that refusal only for the
+        engine itself. Seeding a file *at* a step is not moving it, and on a
+        re-initialisation the demo re-asserts exactly the values it asserted the
+        first time - nothing travels anywhere. The flag is set here, on the demo
+        data alone, and it is the only place in this suite that uses it.
+    -->
+    <data noupdate="1" context="{'legal_workflow': True}">
+
+        <!-- ==============================================================
+             1. WAITING ON US. The tax clearance expired in March and nobody has
+                started the renewal. This is the file the desk should be shouting
+                about, and it is on our own desk, not theirs.
+             ============================================================== -->
+
+        <record id="case_tax_clearance" model="legal.case">
+            <field name="procedure_type_id" ref="legal_iq_tax.proc_tax_clearance"/>
+            <field name="step_id" ref="legal_iq_tax.step_clr_prepare"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="subject">استحصال براءة ذمة ضريبية جديدة بعد انتهاء البراءة السابقة</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="date_open">2026-08-25 07:40:00</field>
+            <field name="date_deadline">2026-09-15</field>
+            <field name="priority">2</field>
+            <field name="note" type="html">
+                <p>البراءة السابقة PIN-2025-772041 انتهت في 2026/3/1. مناقصة محافظة بغداد
+                1/2026 تغلق في منتصف أيلول وتشترط براءة نافذة عند تاريخ الغلق، فالمهلة الحقيقية
+                هي تاريخ الغلق لا تاريخ اليوم.</p>
+            </field>
+        </record>
+
+        <!-- ==============================================================
+             2. FOUR MONTHS AT THE TAX COMMISSION, in its second round after a
+                return for correction. Three chase letters are registered against
+                it in demo_correspondence.xml.
+             ============================================================== -->
+
+        <record id="case_annual_return" model="legal.case">
+            <field name="procedure_type_id" ref="legal_iq_tax.proc_annual_return"/>
+            <field name="step_id" ref="legal_iq_tax.step_ret_examination"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="subject">الإقرار الضريبي عن السنة المالية 2025</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="round">2</field>
+            <field name="date_open">2026-03-02 06:30:00</field>
+            <field name="date_deadline">2026-05-31</field>
+            <field name="priority">1</field>
+            <field name="note" type="html">
+                <div>
+                    <p>قُدِّم في 2026/5/24 قبل الموعد بأسبوع. أُعيد في 2026/6/11 لاستكمال
+                    الجداول الساندة (ح) و(ط)، وأُعيد تقديمه في 2026/6/22 - وهذه هي الجولة
+                    الثانية.</p>
+                    <p>لدى قسم التدقيق والفحص منذ نهاية نيسان. ثلاثة كتب تذكير مسجلة في سجل
+                    الصادر بلا جواب تحريري، وآخر ما ورد شفهياً أن الملف لدى المقدِّر.</p>
+                </div>
+            </field>
+        </record>
+
+        <!-- ==============================================================
+             3. ABOUT TO EXPIRE. The engineer's residency lapses on 4 October and
+                the renewal is with the directorate.
+             ============================================================== -->
+
+        <record id="case_residency_renewal" model="legal.case">
+            <field name="procedure_type_id" ref="legal_iq_residency.proc_residency_permit"/>
+            <field name="step_id" ref="legal_iq_residency.step_res_review"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="subject">تجديد إقامة المهندس محمد أنور خان</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="date_open">2026-08-06 06:10:00</field>
+            <field name="date_deadline">2026-10-04</field>
+            <field name="priority">2</field>
+            <field name="subject_ids" eval="[
+                (5, 0, 0),
+                (0, 0, {
+                'sequence': 10,
+                'name_ar': 'محمد أنور خان',
+                'name_en': 'Mohammed Anwar Khan',
+                'partner_id': ref('partner_foreign_engineer'),
+                'profession': 'مهندس ميكانيك أقدم',
+                'document_type': 'passport',
+                'document_number': 'AB4471902',
+                'document_expiry': '2027-06-14',
+                'minimum_validity_months': 12,
+            })]"/>
+            <field name="note" type="html">
+                <p>الإقامة تنتهي في 2026/10/4. الجواز نافذ حتى 2027/6/14، أي أكثر من اثني عشر
+                شهراً، فلا مانع من منح إقامة سنة كاملة - وهذا بالضبط ما يفحصه سطر «مدة الصلاحية
+                المطلوبة» على الشخص.</p>
+            </field>
+        </record>
+
+        <!-- ==============================================================
+             4. THE FLAGSHIP. The entry-visa chain, sitting at the sponsoring
+                ministry - the state the React prototype called ``at_ministry``.
+             ============================================================== -->
+
+        <record id="case_entry_visa" model="legal.case">
+            <field name="procedure_type_id" ref="legal_iq_residency.proc_entry_visa"/>
+            <field name="step_id" ref="legal_iq_residency.step_visa_at_ministry"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="subject">سمات دخول لثلاثة خبراء لتشغيل وحدة المعالجة</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="date_open">2026-07-20 06:55:00</field>
+            <field name="priority">1</field>
+            <field name="subject_ids" eval="[
+                (5, 0, 0),
+                (0, 0, {
+                    'sequence': 10,
+                    'name_ar': 'أنطون دي فريس',
+                    'name_en': 'Anton de Vries',
+                    'profession': 'مهندس تشغيل أول',
+                    'document_type': 'passport',
+                    'document_number': 'NL7723118',
+                    'document_expiry': '2029-01-22',
+                    'minimum_validity_months': 6,
+                }),
+                (0, 0, {
+                    'sequence': 20,
+                    'name_ar': 'سيرجيو ماريني',
+                    'name_en': 'Sergio Marini',
+                    'profession': 'فني أجهزة سيطرة',
+                    'document_type': 'passport',
+                    'document_number': 'IT4409872',
+                    'document_expiry': '2027-11-30',
+                    'minimum_validity_months': 6,
+                }),
+                (0, 0, {
+                    'sequence': 30,
+                    'name_ar': 'كمال أوزتورك',
+                    'name_en': 'Kemal Ozturk',
+                    'profession': 'مشرف سلامة',
+                    'document_type': 'passport',
+                    'document_number': 'TR9911204',
+                    'document_expiry': '2026-12-05',
+                    'minimum_validity_months': 6,
+                    'note': 'الجواز ينتهي بعد ثلاثة أشهر - أقل مما يقبله الشباك عادةً.',
+                }),
+            ]"/>
+            <field name="note" type="html">
+                <div>
+                    <p>كتاب واحد وثلاثة أسطر على جدول «ت»، لا ثلاثة كتب. رقم الصادر الذي خرج به
+                    الكتاب مقيّد في سجل الصادر، لا في حقل على هذه المعاملة - وهذا هو الفرق بين
+                    رقم يستطيع القسم أن يجمعه في تقرير ربعي ورقم مدفون في معاملة واحدة.</p>
+                    <p><b>تنبيه:</b> جواز السيد كمال أوزتورك ينتهي في 2026/12/5، أي أقل من ستة
+                    أشهر. الشباك يردّ الطلب على هذا السطر قبل أن ينظر في غيره.</p>
+                </div>
+            </field>
+        </record>
+
+        <!-- ==============================================================
+             5. JUST COMPLETED, so that a closed file exists and the terminal
+                column is not empty.
+             ============================================================== -->
+
+        <record id="case_psso_clearance" model="legal.case">
+            <field name="procedure_type_id" ref="legal_iq_social_security.proc_psso_clearance"/>
+            <field name="step_id" ref="legal_iq_social_security.step_sclr_done"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="subject">براءة ذمة الضمان الاجتماعي لمناقصة محافظة بغداد 1/2026</field>
+            <field name="user_id" ref="user_clerk"/>
+            <field name="date_open">2026-03-09 07:05:00</field>
+            <field name="date_closed">2026-03-20 10:20:00</field>
+            <field name="note" type="html">
+                <p>أُنجزت في أحد عشر يوماً بعد تسوية اشتراكات شهرين متأخرين. نسخة إعلان
+                المناقصة كانت مرفقة من أول يوم، وهي الوثيقة التي يُردّ الطلب لأجلها عادةً.</p>
+            </field>
+        </record>
+
+        <!-- ==============================================================
+             6. AT THE REGISTRAR, so the Registrar's desk is not empty either.
+             ============================================================== -->
+
+        <record id="case_address_change" model="legal.case">
+            <field name="procedure_type_id" ref="legal_iq_registrar.proc_address_change"/>
+            <field name="step_id" ref="legal_iq_registrar.step_adr_ratify"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="subject">تبليغ المسجل بنقل مقر الشركة إلى الكرادة الشرقية - محلة 903</field>
+            <field name="user_id" ref="user_clerk"/>
+            <field name="date_open">2026-08-11 07:15:00</field>
+            <field name="date_deadline">2026-08-18</field>
+            <field name="priority">2</field>
+            <field name="note" type="html">
+                <p>عقد الإيجار الجديد وُقّع في 2026/8/11، والمادة 200 تعطي سبعة أيام للتبليغ.
+                بُلّغ المسجل في اليوم السادس، والمعاملة الآن بانتظار التأشير والنشر.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

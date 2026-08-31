@@ -1,0 +1,114 @@
+// The files on the reader's desk.
+//
+// A dense table rather than a card grid, and deliberately: a card grid fits
+// four files where a table fits twelve, and twelve is a working morning. The
+// grid narrows by dropping columns in order of how little they are missed -
+// the body chip first, then the subject - rather than by wrapping, because a
+// wrapped row stops being scannable and scanning is the only thing this panel
+// is for.
+
+.o_legal_worklist {
+    display: flex;
+    flex-direction: column;
+
+    .o_legal_rows {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex: 1 1 auto;
+    }
+
+    .o_legal_row {
+        > button {
+            display: grid;
+            grid-template-columns:
+                11rem minmax(6rem, 1.4fr) 10rem 10rem 11rem 9.5rem;
+            align-items: center;
+            gap: 0.75rem;
+            inline-size: 100%;
+            padding: 0.5rem 0.4rem;
+            border: 0;
+            border-radius: 4px;
+            background: none;
+            text-align: start;
+            font-size: 0.88rem;
+            transition: background-color 0.12s ease;
+
+            &:hover { background-color: $o-gray-100; }
+
+            &:focus-visible {
+                outline: 2px solid $o-brand-primary;
+                outline-offset: -2px;
+            }
+
+            @media (max-width: 1499px) {
+                grid-template-columns: 10rem minmax(0, 1fr) 10rem 10rem 9rem;
+                .o_legal_row_body { display: none; }
+            }
+
+            @media (max-width: 1199px) {
+                grid-template-columns: 10rem minmax(0, 1fr) 9rem;
+                .o_legal_row_step, .o_legal_row_clock { display: none; }
+            }
+
+            @media (max-width: 767px) {
+                grid-template-columns: minmax(0, 1fr) 7rem;
+                .o_legal_row_subject { display: none; }
+            }
+        }
+
+        + .o_legal_row > button {
+            border-block-start: 1px solid $border-color;
+            border-radius: 0;
+        }
+    }
+
+    .o_legal_row_ref {
+        font-weight: 700;
+        color: $body-color;
+    }
+
+    .o_legal_row_star {
+        color: $warning;
+        margin-inline-end: 0.25rem;
+    }
+
+    .o_legal_row_subject {
+        color: $body-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_legal_row_age {
+        display: grid;
+        grid-template-columns: minmax(2.5rem, 1fr) 2.2rem 2.2rem;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .o_legal_row_days {
+        font-weight: 600;
+        text-align: end;
+        color: $body-color;
+    }
+
+    // What the company experiences. Quieter than the time at this step,
+    // because the reader acts on the first and answers for this one.
+    .o_legal_row_total {
+        text-align: end;
+        font-size: 0.8rem;
+        color: $text-muted;
+    }
+
+    .o_legal_age_stuck .o_legal_row_days { color: $danger; }
+
+    // Why this row cannot move, under the row rather than inside it: the grid
+    // above is scanned, and a sentence in a scanned column stops the sweep.
+    .o_legal_row_blocker {
+        margin: 0 0 0.45rem;
+        padding-inline-start: 0.4rem;
+        font-size: 0.82rem;
+        color: $text-muted;
+    }
+}

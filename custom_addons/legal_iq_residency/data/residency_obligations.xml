@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Everything here counts backwards from a document's own expiry, because
+        that is the shape these obligations genuinely have: there is no annual
+        date on which a residency falls due, there is a residency that lapses on
+        a date that differs per person.
+
+        This is also where the prototype's "long-term alert" belongs. It modelled
+        a one-, two- or three-year follow-up as a field on the visa request with a
+        computed alert date. Held here instead, it is a schedule that any number
+        of documents can hang off, and it survives the request being closed.
+    -->
+    <data noupdate="1">
+
+        <record id="obl_residency_renewal" model="legal.obligation.schedule">
+            <field name="name">تجديد إقامة الموظف الأجنبي</field>
+            <field name="code">RES-RESIDENCY-RENEWAL</field>
+            <field name="body_id" ref="body_residency_baghdad"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_residency_permit"/>
+            <field name="offset_days">60</field>
+            <field name="lead_days">30</field>
+            <field name="penalty_note">الإقامة المنتهية تضع العامل في وضع غير قانوني وتعرّض صاحب العمل للمساءلة، وتسوية الوضع اللاحقة أبطأ وأغلى من التجديد في وقته</field>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017</field>
+            <field name="legal_basis_url">https://ur.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="obl_work_permit_renewal" model="legal.obligation.schedule">
+            <field name="name">تجديد إجازة العمل للأجنبي</field>
+            <field name="code">RES-WORK-PERMIT-RENEWAL</field>
+            <field name="body_id" ref="body_labour_department"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_work_permit"/>
+            <field name="offset_days">30</field>
+            <field name="lead_days">30</field>
+            <field name="penalty_note">لا يجوز للأجنبي مباشرة أي عمل قبل الحصول على إجازة نافذة، ولا لصاحب العمل استخدامه بدونها</field>
+            <field name="legal_basis">آلية كانون الثاني 2025: الإجازة لسنة قابلة للتجديد، ويُقدَّم طلب التجديد خلال الشهر الأخير قبل انتهائها</field>
+            <field name="legal_basis_url">https://molsa.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p><b>ثلاثون يوماً مقصودة لا مختصرة.</b> الآلية تنص على تقديم التجديد <b>خلال
+                الشهر الأخير</b> قبل الانتهاء، أي أن التقديم قبل ذلك قد يُردّ. ولذلك المهلة
+                وزمن الإنجاز متساويان هنا: النافذة نفسها هي المهلة.</p>
+            </field>
+        </record>
+
+        <record id="obl_passport_expiry" model="legal.obligation.schedule">
+            <field name="name">متابعة انتهاء جوازات الموظفين الأجانب</field>
+            <field name="code">RES-PASSPORT-EXPIRY</field>
+            <field name="body_id" ref="body_residency"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_passport"/>
+            <field name="offset_days">180</field>
+            <field name="lead_days">60</field>
+            <field name="legal_basis">جواز يوشك على الانتهاء يُقصِّر مدة الإقامة الممنوحة أو يمنعها</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>ليس التزاماً على الشركة قانوناً، لكنه أكثر ما يعطّل تجديد الإقامة عملياً:
+                الجواز يُجدَّد في سفارة بلد الشخص وتلك مدة خارجة عن سيطرة الشركة، ولذلك
+                نافذة التنبيه ستة أشهر.</p>
+            </field>
+        </record>
+
+        <record id="obl_entry_visa_window" model="legal.obligation.schedule">
+            <field name="name">استعمال سمة الدخول قبل انتهاء مدتها</field>
+            <field name="code">RES-VISA-WINDOW</field>
+            <field name="body_id" ref="body_residency"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_entry_visa"/>
+            <field name="offset_days">30</field>
+            <field name="lead_days">30</field>
+            <field name="penalty_note">السمة غير المستعملة خلال مدتها تسقط، وتُعاد المعاملة من أولها بكتاب جديد ودورة كاملة لدى الوزارة والإقامة</field>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017 - السمة الاعتيادية تخوّل الدخول مرة واحدة خلال ثلاثة أشهر من منحها</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <p>هذا هو التنبيه الذي لا يوجد له نظير في النموذج الأولي: السمة صدرت، وحالة
+                المعاملة «مكتملة»، والشخص لم يدخل. المعاملة منتهية والالتزام قائم، ولذلك هو
+                التزام معلَّق على الوثيقة لا على المعاملة.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

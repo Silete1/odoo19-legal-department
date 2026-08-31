@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Everything hangs off legal_core's root, so the department has one Legal
+        application rather than three that happen to be installed together.
+    -->
+
+    <menuitem id="menu_legal_operations"
+              name="Operations"
+              parent="legal_core.menu_legal_root"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_case"
+              name="Files"
+              parent="menu_legal_operations"
+              action="action_legal_case"
+              sequence="10"/>
+
+    <!-- Named "My Files", not "My Desk": the desk is the OWL client action at
+         the top of the app, and two identically-named items in one menu is a
+         papercut. This one is the plain filtered list behind it. -->
+    <menuitem id="menu_legal_case_my_desk"
+              name="My Files"
+              parent="menu_legal_operations"
+              action="action_legal_case_my_desk"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_case_overdue"
+              name="Overdue"
+              parent="menu_legal_operations"
+              action="action_legal_case_overdue"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_blocking_documents"
+              name="Blocking Documents"
+              parent="menu_legal_operations"
+              action="action_legal_case_document_blocking"
+              sequence="40"/>
+
+    <menuitem id="menu_legal_obligation_instance"
+              name="Compliance Calendar"
+              parent="menu_legal_operations"
+              action="action_legal_obligation_instance"
+              sequence="50"/>
+
+    <menuitem id="menu_legal_escalation"
+              name="Escalations"
+              parent="menu_legal_operations"
+              action="action_legal_sla_escalation"
+              sequence="60"
+              groups="legal_core.group_legal_officer"/>
+
+    <!-- Registers -->
+
+    <menuitem id="menu_legal_poa"
+              name="Powers Of Attorney"
+              parent="legal_core.menu_legal_registers"
+              action="action_legal_poa"
+              sequence="50"/>
+
+    <menuitem id="menu_legal_fee"
+              name="Fees Paid"
+              parent="legal_core.menu_legal_registers"
+              action="action_legal_fee"
+              sequence="60"/>
+
+    <menuitem id="menu_legal_action_log"
+              name="Action Trail"
+              parent="legal_core.menu_legal_registers"
+              action="action_legal_action_log"
+              sequence="70"
+              groups="legal_core.group_legal_auditor,legal_core.group_legal_manager"/>
+
+    <!-- Configuration -->
+
+    <menuitem id="menu_legal_config_procedures"
+              name="Procedures"
+              parent="legal_core.menu_legal_config"
+              sequence="15"/>
+
+    <menuitem id="menu_legal_config_procedure_type"
+              name="Procedures"
+              parent="menu_legal_config_procedures"
+              action="action_legal_procedure_type"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_procedure_step"
+              name="Steps"
+              parent="menu_legal_config_procedures"
+              action="action_legal_procedure_step"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_config_procedure_phase"
+              name="Phases"
+              parent="menu_legal_config_procedures"
+              action="action_legal_procedure_phase"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_config_procedure_transition"
+              name="Transitions"
+              parent="menu_legal_config_procedures"
+              action="action_legal_procedure_transition"
+              sequence="40"/>
+
+    <menuitem id="menu_legal_config_procedure_field"
+              name="Capture Fields"
+              parent="menu_legal_config_procedures"
+              action="action_legal_procedure_field"
+              sequence="50"/>
+
+    <menuitem id="menu_legal_config_doc_requirement"
+              name="Document Requirements"
+              parent="menu_legal_config_procedures"
+              action="action_legal_doc_requirement"
+              sequence="60"/>
+
+    <menuitem id="menu_legal_config_fee_rule"
+              name="Fee Schedule"
+              parent="menu_legal_config_procedures"
+              action="action_legal_fee_rule"
+              sequence="70"/>
+
+    <menuitem id="menu_legal_config_sla_rule"
+              name="Service Levels"
+              parent="menu_legal_config_procedures"
+              action="action_legal_sla_rule"
+              sequence="80"/>
+
+    <menuitem id="menu_legal_config_obligation"
+              name="Recurring Obligations"
+              parent="menu_legal_config_procedures"
+              action="action_legal_obligation_schedule"
+              sequence="90"/>
+
+</odoo>

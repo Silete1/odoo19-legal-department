@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalPhaseRail">
+        <!-- data-phase / data-step / data-blockers are stable technical hooks:
+             a tour targets the rail through them and never through translated
+             text, because the target deployment is an Arabic-only database. -->
+        <section class="o_legal_rail" t-att-dir="payload.rtl ? 'rtl' : 'ltr'"
+                 t-att-data-phase="payload.current_phase || ''"
+                 t-att-data-step="payload.current_step || ''"
+                 t-att-data-blockers="blockers.length">
+
+            <div class="o_legal_rail_head">
+                <span class="o_legal_rail_state" t-esc="payload.current_label"/>
+
+                <!-- "Is this waiting for me?" is the question the reader opens
+                     the file with, and the server already knows the answer, so
+                     they should not have to match the module's role vocabulary
+                     against their own group memberships to work it out. -->
+                <span class="o_legal_rail_mine" t-if="payload.mine">
+                    <i class="fa fa-hand-o-right" role="img" aria-hidden="true"/><t>&#160;</t>
+                    <t t-esc="label.mine"/>
+                </span>
+                <span class="o_legal_rail_pending"
+                      t-if="!payload.mine &amp;&amp; payload.pending_groups &amp;&amp; payload.pending_groups.length">
+                    <t t-esc="label.waitingOn"/><t>&#160;</t>
+                    <!-- Joined with "+" rather than a comma: it needs no bidi
+                         handling inside an Arabic paragraph. -->
+                    <t t-foreach="payload.pending_groups" t-as="group" t-key="group_index">
+                        <t t-if="!group_first">&#160;+&#160;</t><b t-esc="group"/>
+                    </t>
+                </span>
+
+                <!-- dir="ltr": a bare "3 / 5" is reordered to "5 / 3" by the
+                     bidi algorithm inside an Arabic paragraph. The server also
+                     composes it as one atomic string for the same reason. -->
+                <span class="o_legal_rail_counter o_legal_num" dir="ltr"
+                      t-esc="payload.counter_label"/>
+            </div>
+
+            <div class="o_legal_rail_bar" role="progressbar"
+                 t-att-aria-valuenow="payload.percent" aria-valuemin="0" aria-valuemax="100"
+                 t-att-aria-label="label.progress">
+                <div class="o_legal_rail_bar_fill"
+                     t-attf-style="inline-size: {{ payload.percent }}%;"/>
+            </div>
+
+            <!-- Four to six segments, never thirteen. Real <button> elements,
+                 so the rail is reachable by keyboard and announced as
+                 interactive rather than being a row of styled divs. -->
+            <ol class="o_legal_rail_track" t-att-aria-label="label.progress">
+                <li t-foreach="phases" t-as="phase" t-key="phase.key"
+                    t-att-class="phaseClass(phase)"
+                    t-att-data-phase-key="phase.key">
+                    <button type="button" class="o_legal_phase_btn"
+                            t-on-click="() => this.select(phase)"
+                            t-att-aria-current="phase.status === 'current' ? 'step' : false"
+                            t-att-aria-expanded="state.selected === phase.key">
+                        <span class="o_legal_phase_marker" aria-hidden="true">
+                            <i class="fa fa-check" t-if="phase.status === 'done'"/>
+                            <t t-else="" t-esc="phase.number"/>
+                        </span>
+                        <span class="o_legal_phase_label" t-esc="phase.label"/>
+                        <!-- The status in words as well as in tint, so the rail
+                             is readable in a photocopy and audible to a screen
+                             reader. -->
+                        <span class="visually-hidden" t-esc="statusLabel(phase)"/>
+                    </button>
+                </li>
+            </ol>
+
+            <!-- The fine step, in prose. This is where the thirteen states went:
+                 named one at a time, where a clerk actually reads, instead of
+                 crushed into thirteen unreadable segments above. -->
+            <div class="o_legal_rail_focus" t-if="focused">
+                <span class="o_legal_rail_focus_phase">
+                    <t t-esc="label.phase"/><t>&#160;</t><t t-esc="focused.label"/>
+                </span>
+                <span class="o_legal_rail_focus_steps"
+                      t-if="focused.step_labels &amp;&amp; focused.step_labels.length">
+                    <t t-foreach="focused.step_labels" t-as="step" t-key="step_index">
+                        <t t-if="!step_first">&#160;·&#160;</t><t t-esc="step"/>
+                    </t>
+                </span>
+                <span class="o_legal_rail_focus_actor" t-if="focused.actor"
+                      t-esc="focused.actor"/>
+            </div>
+
+            <!-- What the clerk is expected to do at the counter, verbatim from
+                 the step configuration. It is the one piece of text on this
+                 screen that saves a telephone call, so it sits above the
+                 blockers and not in a tooltip. -->
+            <div class="o_legal_rail_instruction" t-if="payload.clerk_instruction_html">
+                <t t-out="payload.clerk_instruction_html"/>
+            </div>
+
+            <div class="o_legal_rail_blockers alert alert-warning" role="alert"
+                 t-if="blockers.length &amp;&amp; !payload.closed">
+                <div class="o_legal_rail_blockers_title" t-esc="label.blockers"/>
+                <ul>
+                    <li t-foreach="blockers" t-as="blocker" t-key="blocker_index"
+                        t-esc="blocker"/>
+                </ul>
+            </div>
+
+            <!-- The same figures as a real table: for the screen reader, for
+                 the printer, and for the manager who wants the list rather than
+                 the sweep. A rail that hides its own detail from a keyboard
+                 user is a decoration. -->
+            <details class="o_legal_rail_table">
+                <summary t-esc="label.tableSummary"/>
+                <div class="o_legal_table_scroll">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col" t-esc="label.phase"/>
+                                <th scope="col" t-esc="label.steps"/>
+                                <th scope="col" t-esc="label.status"/>
+                                <th scope="col" t-esc="label.actor"/>
+                                <th scope="col" t-esc="label.date"/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="phases" t-as="phase" t-key="phase.key">
+                                <th scope="row" t-esc="phase.label"/>
+                                <td>
+                                    <t t-foreach="phase.step_labels || []" t-as="step"
+                                       t-key="step_index">
+                                        <t t-if="!step_first">&#160;·&#160;</t><t t-esc="step"/>
+                                    </t>
+                                </td>
+                                <td t-esc="statusLabel(phase)"/>
+                                <td t-esc="phase.actor || ''"/>
+                                <td dir="ltr" class="o_legal_num" t-esc="phase.date || ''"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        </section>
+    </t>
+
+</templates>

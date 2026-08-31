@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The Registrar's standing clocks.
+
+        Each one names the procedure that discharges it, which is the difference
+        between a reminder and a button: a period row with no procedure can only
+        say "this is due", while a period row that knows its procedure can open
+        the file. ``lead_days`` is what the board buckets on, because "you had to
+        start last Tuesday" is actionable and "due in sixty days" is decoration.
+    -->
+    <data noupdate="1">
+
+        <record id="obl_branch_annual_accounts" model="legal.obligation.schedule">
+            <field name="name">الحسابات الختامية وتقرير النشاط لفرع الشركة الأجنبية</field>
+            <field name="code">MOT-BRANCH-ACCOUNTS</field>
+            <field name="body_id" ref="body_mot_registrar_foreign"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="frequency">offset_from_fye</field>
+            <field name="offset_days">243</field>
+            <field name="lead_days">60</field>
+            <field name="penalty_note">إلغاء الإجازة وشطب الفرع بعد سنتين متتاليتين من التخلف (المادة 11)؛ وغرامة 10,000 دينار على كل فرع لا يقدم حساباته خلال 6 أشهر من نهاية السنة المالية</field>
+            <field name="legal_basis">المادة 8 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017: خلال الأشهر الثمانية التالية لانتهاء السنة</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>ثمانية أشهر مثبتة هنا بـ243 يوماً، وهو الرقم الصحيح لسنة مالية تنتهي في
+                31 كانون الأول (فيقع الموعد في 31 آب). لسنة مالية تنتهي في تاريخ آخر يختلف عدد
+                الأيام بيوم أو يومين، لأن «ثمانية أشهر» ليست عدداً ثابتاً من الأيام - صحّح الرقم
+                إن كانت سنتك المالية غير تقويمية.</p>
+            </field>
+        </record>
+
+        <record id="obl_general_assembly" model="legal.obligation.schedule">
+            <field name="name">إعداد الحسابات الختامية وعرضها على الهيئة العامة</field>
+            <field name="code">MOT-GENERAL-ASSEMBLY</field>
+            <field name="body_id" ref="body_mot_registrar"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="frequency">offset_from_fye</field>
+            <field name="offset_days">181</field>
+            <field name="lead_days">45</field>
+            <field name="penalty_note">غرامة 100 دينار عن كل يوم تأخير في تقديم البيانات المطلوبة (المادة 216)، وغرامة 1,000 دينار يومياً على المشاريع التي لا تتخذ الشكل القانوني الصحيح (المادة 213)</field>
+            <field name="legal_basis">المواد 86 و88 و127 و135 و139 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p>ستة أشهر من نهاية السنة المالية لإعداد الحسابات وعرضها. ثم مهلة الدعوة 15
+                يوماً على الأقل مع النشر، ومناقشة الحسابات خلال 60 يوماً من إتمام التدقيق.
+                نسخ الحسابات وتقارير المدقق تُرسل إلى المسجل <b>مع الدعوة</b> لا بعد الاجتماع.</p>
+            </field>
+        </record>
+
+        <record id="obl_expediter_renewal" model="legal.obligation.schedule">
+            <field name="name">تجديد وثيقة تخويل المراجع (المعتمد)</field>
+            <field name="code">MOT-EXPEDITER-RENEWAL</field>
+            <field name="body_id" ref="body_mot_registrar"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_expediter_authorisation"/>
+            <field name="offset_days">30</field>
+            <field name="lead_days">14</field>
+            <field name="legal_basis">حزمة المسجل: وثيقة تخويل الشخص المخوَّل بالمراجعة ومستمسكاته الشخصية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>تخويل منتهٍ يعني أن المعتمد يُردّ من الشباك، وهو نوع الفشل الذي لا يُكتشف
+                إلا صباح المراجعة. المهلة هنا شهر قبل الانتهاء.</p>
+            </field>
+        </record>
+
+        <record id="obl_lawyer_poa_renewal" model="legal.obligation.schedule">
+            <field name="name">تجديد وكالة المحامي</field>
+            <field name="code">MOT-LAWYER-POA-RENEWAL</field>
+            <field name="body_id" ref="body_notary"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_lawyer_power_of_attorney"/>
+            <field name="offset_days">45</field>
+            <field name="lead_days">14</field>
+            <field name="legal_basis">عقد الوكالة في القانون المدني العراقي رقم 40 لسنة 1951 المعدل - النفاذ بحسب المدة المذكورة في السند</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <p>الوكالة تنتهي أيضاً بغير مضيّ المدة: بإنجاز العمل، أو بالعزل، أو باعتزال
+                الوكيل، أو بوفاة أحد الطرفين أو فقد أهليته. هذا الالتزام يلاحق المدة وحدها،
+                فالباقي حدث يُسجَّل يدوياً.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

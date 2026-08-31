@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The tax calendar an Iraqi private company actually runs.
+
+        Three of the four shapes ``legal.obligation.schedule`` supports appear
+        here, and each one is a different kind of clock: a fixed date on the
+        civil calendar (31 May, 31 March), a day of every month (the fifteenth),
+        and a countdown from a document's own expiry (the clearance). A model
+        with only one of those shapes forces a customer to maintain the other two
+        by hand, and a hand-maintained deadline is wrong by the second year.
+    -->
+    <data noupdate="1">
+
+        <record id="obl_annual_return" model="legal.obligation.schedule">
+            <field name="name">تقديم الإقرار الضريبي السنوي</field>
+            <field name="code">GCT-ANNUAL-RETURN</field>
+            <field name="body_id" ref="body_gct_companies"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="frequency">fixed_annual_date</field>
+            <field name="due_month">5</field>
+            <field name="due_day">31</field>
+            <field name="lead_days">75</field>
+            <field name="penalty_note">10% من الضريبة بحد أقصى 500,000 دينار على من لا يقدم بالموعد أو يتسبب في تأخير إنجاز التقدير، ما لم يُثبت عذر مشروع</field>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل - الموعد الأقصى 31 أيار من السنة التالية للسنة الضريبية</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>في <b>إقليم كردستان الموعد 30 حزيران</b>. إن كان لديك كيان مسجل في الإقليم
+                فأنشئ التزاماً ثانياً باختصاص الإقليم وشهر 6 - وهذا بالضبط ما وُضع حقل
+                «الاختصاص» على الالتزام لأجله.</p>
+            </field>
+        </record>
+
+        <record id="obl_wht_annual_schedule" model="legal.obligation.schedule">
+            <field name="name">تقديم جدول استقطاعات الضريبة السنوي</field>
+            <field name="code">GCT-WHT-ANNUAL</field>
+            <field name="body_id" ref="body_gct_withholding"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_wht_annual"/>
+            <field name="frequency">fixed_annual_date</field>
+            <field name="due_month">3</field>
+            <field name="due_day">31</field>
+            <field name="lead_days">30</field>
+            <field name="legal_basis">تعليمات الاستقطاع المباشر - يُنظَّم في نهاية السنة المالية ويُقدَّم بموعد أقصاه 31 آذار</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="obl_wht_monthly" model="legal.obligation.schedule">
+            <field name="name">توريد الاستقطاع المباشر الشهري</field>
+            <field name="code">GCT-WHT-MONTHLY</field>
+            <field name="body_id" ref="body_gct_withholding"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="frequency">monthly</field>
+            <field name="due_day">15</field>
+            <field name="lead_days">7</field>
+            <field name="penalty_note">إضافة 5% بعد 21 يوماً من التأخير، تتضاعف بعد 21 يوماً أخرى، مع فائدة بسعر المصرف السائد</field>
+            <field name="legal_basis">تعليمات الاستقطاع المباشر - يُورَّد المستقطع خلال 15 يوماً من الشهر التالي لشهر الاستقطاع</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>الغرامة ليست خطية: 5% تتضاعف بعد 21 يوماً إضافية. تأخير شهرين ليس ضعف كلفة
+                تأخير شهر، وهذا ما يجعل هذا الالتزام أول ما يُنجز في أول أسبوع من الشهر.</p>
+            </field>
+        </record>
+
+        <record id="obl_clearance_renewal" model="legal.obligation.schedule">
+            <field name="name">تجديد براءة الذمة الضريبية</field>
+            <field name="code">GCT-CLEARANCE-RENEWAL</field>
+            <field name="body_id" ref="body_gct"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_tax_clearance"/>
+            <field name="offset_days">45</field>
+            <field name="lead_days">14</field>
+            <field name="legal_basis">براءة الذمة شرط في المناقصات والاستيراد، ويُشترط نفاذها عند تاريخ الغلق لا عند تاريخ التقديم</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <p>الجولة موثّقة بيوم واحد، لكن زمن التهيئة الحقيقي أطول: الملف يتعثر عند
+                الحجوزات الضريبية. المهلة هنا 45 يوماً قبل الانتهاء، و14 يوماً زمن إنجاز.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

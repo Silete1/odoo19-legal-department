@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The file - المعاملة.
+
+        Note what the statusbar does NOT do: it is not clickable. Clicking a
+        statusbar writes to step_id, which skips every guard, every log entry and
+        every approval on the way; legal.case.write refuses the write outright,
+        so a clickable bar here would only produce an error message. The moves
+        are the buttons beside it.
+    -->
+
+    <record id="view_legal_case_form" model="ir.ui.view">
+        <field name="name">legal.case.form</field>
+        <field name="model">legal.case</field>
+        <field name="arch" type="xml">
+            <form string="File">
+                <header>
+                    <button name="action_advance" type="object" string="Advance"
+                            class="btn-primary"
+                            invisible="is_closed or not ready_to_advance"/>
+                    <!--
+                        The greyed twin. A button that vanishes when it cannot be
+                        used teaches nobody why; this one is pressable and answers
+                        the question.
+                    -->
+                    <button name="action_show_blockers" type="object" string="Blocked"
+                            class="btn-secondary text-muted"
+                            invisible="is_closed or ready_to_advance"/>
+                    <button name="action_open_step_dialog" type="object" string="Record This Step"
+                            invisible="is_closed"/>
+                    <button name="action_return_for_correction" type="object"
+                            string="Return For Correction" invisible="is_closed"/>
+                    <button name="action_reopen" type="object" string="Re-open"
+                            invisible="not is_closed"
+                            groups="legal_core.group_legal_approver"/>
+                    <field name="step_id" widget="statusbar"
+                           options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_documents" type="object"
+                                class="oe_stat_button" icon="fa-check-square-o">
+                            <field name="document_count" widget="statinfo" string="Checklist"/>
+                        </button>
+                        <button name="action_open_correspondence" type="object"
+                                class="oe_stat_button" icon="fa-envelope-o">
+                            <field name="correspondence_count" widget="statinfo" string="Letters"/>
+                        </button>
+                        <button name="action_open_log" type="object"
+                                class="oe_stat_button" icon="fa-history">
+                            <span class="o_stat_text">Trail</span>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Confidential" bg_color="text-bg-danger"
+                            invisible="not confidential"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h3><field name="subject" placeholder="طلب إجازة تأسيس شركة محدودة"/></h3>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="ready_to_advance or is_closed">
+                        <field name="blocker_summary" nolabel="1" readonly="1"/>
+                    </div>
+                    <group>
+                        <group string="What And For Whom">
+                            <field name="procedure_type_id"
+                                   options="{'no_create': True}"
+                                   readonly="round &gt; 1 or is_closed"/>
+                            <field name="procedure_version" readonly="1"/>
+                            <field name="entity_id"/>
+                            <field name="body_id"/>
+                            <field name="current_body_id" readonly="1"/>
+                            <field name="jurisdiction_id" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Who And When">
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="runner_partner_id"
+                                   placeholder="من يحمل المعاملة اليوم"/>
+                            <field name="pending_group_id" readonly="1"/>
+                            <field name="poa_id"
+                                   domain="[('state', '=', 'active')]"
+                                   invisible="poa_usage == 'no'"
+                                   required="poa_usage == 'required'"/>
+                            <field name="poa_usage" invisible="1"/>
+                            <field name="date_open" readonly="1"/>
+                            <field name="date_deadline"/>
+                            <field name="sla_due_on" readonly="1"/>
+                            <field name="sla_state" readonly="1" widget="badge"
+                                   decoration-success="sla_state == 'on_track'"
+                                   decoration-warning="sla_state == 'warning'"
+                                   decoration-danger="sla_state in ['overdue', 'escalated']"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="confidential"/>
+                            <field name="round" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="This Step" name="step">
+                            <group>
+                                <group string="Instruction">
+                                    <field name="step_instruction" nolabel="1" colspan="2" readonly="1"/>
+                                </group>
+                                <group string="Available Moves">
+                                    <!--
+                                        The case travels to the button through the
+                                        field's own context, so the move is always
+                                        fired on the file it was pressed from.
+                                    -->
+                                    <field name="available_transition_ids" nolabel="1" colspan="2"
+                                           context="{'legal_case_id': id}" readonly="1">
+                                        <list create="false" delete="false">
+                                            <field name="name"/>
+                                            <button name="action_fire_on_case" type="object"
+                                                    string="Do It" class="btn-link"
+                                                    icon="fa-arrow-circle-right"/>
+                                        </list>
+                                    </field>
+                                </group>
+                            </group>
+                            <separator string="Counter Walk"/>
+                            <field name="check_ids" context="{'default_step_id': step_id}">
+                                <list editable="bottom" decoration-muted="superseded">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="counter" readonly="1"/>
+                                    <field name="produces_stamp" readonly="1" optional="show"/>
+                                    <field name="check_kind" readonly="1" optional="hide"/>
+                                    <field name="reference"/>
+                                    <field name="done" widget="boolean_toggle"/>
+                                    <field name="refused" optional="show"/>
+                                    <field name="refusal_reason" optional="hide"/>
+                                    <field name="round" optional="hide"/>
+                                    <field name="superseded" column_invisible="True"/>
+                                    <field name="step_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Checklist" name="documents">
+                            <field name="document_ids">
+                                <list editable="bottom" decoration-muted="superseded"
+                                      decoration-danger="line_status in ['rejected', 'expired']"
+                                      decoration-warning="line_status == 'missing'"
+                                      decoration-success="line_status == 'accepted'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="document_type_id" readonly="1"/>
+                                    <field name="subject_id" readonly="1" optional="show"/>
+                                    <field name="step_id" readonly="1" optional="hide"/>
+                                    <field name="company_document_id"
+                                           domain="[('document_type_id', '=', document_type_id), ('state', '=', 'active')]"/>
+                                    <field name="attachment_ids" widget="many2many_binary" optional="hide"/>
+                                    <field name="minimum_grade_id" readonly="1" optional="hide"/>
+                                    <field name="copies" optional="hide"/>
+                                    <field name="accepted" widget="boolean_toggle"/>
+                                    <field name="rejected" optional="hide"/>
+                                    <field name="rejection_reason" optional="hide"/>
+                                    <field name="line_status" widget="badge" readonly="1"
+                                           decoration-success="line_status == 'accepted'"
+                                           decoration-info="line_status in ['provided', 'under_review']"
+                                           decoration-danger="line_status in ['rejected', 'expired', 'missing']"/>
+                                    <field name="blocking_reason" readonly="1" optional="show"/>
+                                    <field name="is_blocking" column_invisible="True"/>
+                                    <field name="superseded" column_invisible="True"/>
+                                    <field name="round" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="People" name="subjects" invisible="subject_usage == 'no'">
+                            <field name="subject_usage" invisible="1"/>
+                            <p class="text-muted">
+                                The numbered ت table the letter prints. The Arabic name is what the
+                                ministry files and the Latin name is what the passport says - both are
+                                printed on the same page, so both are stored.
+                            </p>
+                            <field name="subject_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name_ar"/>
+                                    <field name="name_en"/>
+                                    <field name="nationality_id"/>
+                                    <field name="profession" optional="show"/>
+                                    <field name="document_type" optional="hide"/>
+                                    <field name="document_number"/>
+                                    <field name="document_expiry"/>
+                                    <field name="minimum_validity_months" optional="hide"/>
+                                    <field name="partner_id" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Fees" name="fees" invisible="fee_usage == 'no'">
+                            <field name="fee_usage" invisible="1"/>
+                            <field name="fee_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="step_id" optional="hide"/>
+                                    <field name="amount"/>
+                                    <field name="amount_paid"/>
+                                    <field name="variance" optional="show"/>
+                                    <field name="receipt_number"/>
+                                    <field name="paid_on"/>
+                                    <field name="is_stamp_duty" optional="hide"/>
+                                    <field name="is_optional" optional="hide"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'paid'"
+                                           decoration-warning="state == 'due'"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <button name="action_mark_paid" type="object" string="Paid"
+                                            icon="fa-money" class="btn-link"
+                                            invisible="state == 'paid'"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="fee_total"/>
+                                <field name="fee_unpaid"/>
+                            </group>
+                        </page>
+                        <page string="Letters" name="letters">
+                            <field name="correspondence_ids" readonly="1">
+                                <list>
+                                    <field name="direction"/>
+                                    <field name="our_number"/>
+                                    <field name="our_date"/>
+                                    <field name="their_number"/>
+                                    <field name="their_date"/>
+                                    <field name="subject"/>
+                                    <field name="gov_body_id"/>
+                                    <field name="reply_state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Trail" name="log">
+                            <p class="text-muted">
+                                Append only. An entry that is wrong is corrected by the entry that
+                                follows it, never by editing what was written - that is what makes
+                                this evidence rather than a draft.
+                            </p>
+                            <field name="log_ids" readonly="1">
+                                <list decoration-info="action == 'transition'"
+                                      decoration-danger="action in ['return', 'escalate']">
+                                    <field name="logged_on"/>
+                                    <field name="action"/>
+                                    <field name="description"/>
+                                    <field name="reason" optional="show"/>
+                                    <field name="step_name" string="Step" optional="show"/>
+                                    <field name="round" optional="hide"/>
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Timing &amp; Escalation" name="timing">
+                            <group>
+                                <group string="How Long, And Whose Fault">
+                                    <field name="stage_entered_on" readonly="1"/>
+                                    <field name="our_days" readonly="1"/>
+                                    <field name="their_days" readonly="1"/>
+                                    <field name="sla_paused" readonly="1"/>
+                                    <field name="is_rotting" readonly="1"/>
+                                    <field name="rotting_days" readonly="1"/>
+                                </group>
+                                <group string="Related Files">
+                                    <field name="parent_case_id"/>
+                                    <field name="result_document_id" readonly="1"/>
+                                    <field name="schedule_id" readonly="1"/>
+                                    <field name="period_key" readonly="1"/>
+                                    <field name="contract_value"/>
+                                    <field name="currency_id" groups="base.group_multi_currency"/>
+                                </group>
+                            </group>
+                            <separator string="Escalations"/>
+                            <field name="escalation_ids" readonly="1">
+                                <list decoration-danger="is_open">
+                                    <field name="raised_on"/>
+                                    <field name="level"/>
+                                    <field name="reason"/>
+                                    <field name="due_on"/>
+                                    <field name="escalated_to_group_id"/>
+                                    <field name="resolved_on"/>
+                                    <field name="is_open" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <separator string="Prerequisites"/>
+                            <field name="child_case_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="procedure_type_id"/>
+                                    <field name="step_id"/>
+                                    <field name="sla_state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_case_list" model="ir.ui.view">
+        <field name="name">legal.case.list</field>
+        <field name="model">legal.case</field>
+        <field name="arch" type="xml">
+            <list string="Files" decoration-danger="sla_state in ['overdue', 'escalated']"
+                  decoration-warning="sla_state == 'warning'"
+                  decoration-muted="is_closed">
+                <field name="name"/>
+                <field name="subject" optional="show"/>
+                <field name="procedure_type_id"/>
+                <field name="entity_id" optional="hide"/>
+                <field name="step_id"/>
+                <field name="phase_id" optional="hide"/>
+                <field name="kind" widget="badge" optional="show"
+                       decoration-info="kind == 'at_body'"/>
+                <field name="current_body_id" optional="show"/>
+                <field name="round" optional="hide"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="runner_partner_id" optional="hide"/>
+                <field name="sla_due_on" optional="show"/>
+                <field name="sla_state" widget="badge" optional="show"
+                       decoration-success="sla_state == 'on_track'"
+                       decoration-warning="sla_state == 'warning'"
+                       decoration-danger="sla_state in ['overdue', 'escalated']"/>
+                <field name="ready_to_advance" optional="hide"/>
+                <field name="blocker_summary" optional="hide"/>
+                <field name="date_deadline" optional="hide"/>
+                <field name="priority" widget="priority" optional="show"/>
+                <field name="is_closed" column_invisible="True"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_case_kanban" model="ir.ui.view">
+        <field name="name">legal.case.kanban</field>
+        <field name="model">legal.case</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="step_id" quick_create="false" group_create="false">
+                <field name="colour"/>
+                <field name="step_id"/>
+                <field name="ready_to_advance"/>
+                <field name="is_closed"/>
+                <progressbar field="sla_state"
+                             colors="{'on_track': 'success', 'warning': 'warning', 'overdue': 'danger', 'escalated': 'danger'}"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="name"/></strong>
+                            <field name="priority" widget="priority"/>
+                        </div>
+                        <div class="text-truncate"><field name="subject"/></div>
+                        <div class="text-muted small">
+                            <field name="entity_id"/>
+                        </div>
+                        <div class="mt-1 small">
+                            <span class="me-2"><i class="fa fa-building-o me-1" title="Counter"/><field name="current_body_id"/></span>
+                        </div>
+                        <div class="mt-1" invisible="ready_to_advance or is_closed">
+                            <span class="badge text-bg-warning"><field name="blocker_summary"/></span>
+                        </div>
+                        <footer class="pt-1">
+                            <field name="sla_state" widget="badge"
+                                   decoration-success="sla_state == 'on_track'"
+                                   decoration-warning="sla_state == 'warning'"
+                                   decoration-danger="sla_state in ['overdue', 'escalated']"/>
+                            <div class="ms-auto d-flex align-items-center">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                                <field name="user_id" widget="many2one_avatar_user"/>
+                            </div>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_legal_case_calendar" model="ir.ui.view">
+        <field name="name">legal.case.calendar</field>
+        <field name="model">legal.case</field>
+        <field name="arch" type="xml">
+            <calendar string="Deadlines" date_start="sla_due_on" color="current_body_id"
+                      mode="month" quick_create="false">
+                <field name="name"/>
+                <field name="current_body_id" filters="1"/>
+                <field name="user_id" filters="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_legal_case_search" model="ir.ui.view">
+        <field name="name">legal.case.search</field>
+        <field name="model">legal.case</field>
+        <field name="arch" type="xml">
+            <search string="Files">
+                <!--
+                    One search field over every number the file is known by. A
+                    clerk handed a scrap of paper does not know whether it holds
+                    our number, their number, a deed number or a receipt.
+                -->
+                <field name="name" string="Any Reference"
+                       filter_domain="['|', '|', ('name', 'ilike', self), ('reference_index', 'ilike', self), ('subject', 'ilike', self)]"/>
+                <field name="procedure_type_id"/>
+                <field name="entity_id"/>
+                <field name="body_id"/>
+                <field name="current_body_id"/>
+                <field name="step_id"/>
+                <field name="user_id"/>
+                <field name="runner_partner_id"/>
+                <filter name="my_files" string="My Files" domain="[('user_id', '=', uid)]"/>
+                <filter name="im_walking" string="I Am Walking It Today"
+                        domain="[('runner_partner_id', '=', uid)]"/>
+                <separator/>
+                <filter name="open" string="Open" domain="[('is_closed', '=', False)]"/>
+                <filter name="on_our_desk" string="On Our Desk" domain="[('kind', '=', 'internal')]"/>
+                <filter name="with_them" string="With The Body" domain="[('kind', '=', 'at_body')]"/>
+                <separator/>
+                <filter name="overdue" string="Overdue" domain="[('sla_state', 'in', ['overdue', 'escalated'])]"/>
+                <filter name="due_soon" string="Due Soon" domain="[('sla_state', '=', 'warning')]"/>
+                <filter name="blocked" string="Blocked" domain="[('ready_to_advance', '=', False)]"/>
+                <filter name="returned" string="Returned At Least Once" domain="[('round', '&gt;', 1)]"/>
+                <separator/>
+                <filter name="deadline" string="Statutory Deadline" date="date_deadline"/>
+                <group>
+                    <filter name="group_step" string="Step" context="{'group_by': 'step_id'}"/>
+                    <filter name="group_phase" string="Phase" context="{'group_by': 'phase_id'}"/>
+                    <filter name="group_procedure" string="Procedure" context="{'group_by': 'procedure_type_id'}"/>
+                    <filter name="group_body" string="Body" context="{'group_by': 'body_id'}"/>
+                    <filter name="group_counter" string="At Counter" context="{'group_by': 'current_body_id'}"/>
+                    <filter name="group_user" string="Responsible" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_entity" string="Legal Entity" context="{'group_by': 'entity_id'}"/>
+                    <filter name="group_outcome" string="Outcome" context="{'group_by': 'outcome'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_case" model="ir.actions.act_window">
+        <field name="name">Files</field>
+        <field name="res_model">legal.case</field>
+        <field name="view_mode">kanban,list,form,calendar</field>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Open a file</p>
+            <p>
+                A المعاملة walks a procedure whose steps are configuration, not code.
+                Configure the procedure once and every file after it knows which counter
+                is next, what the counter will demand and when to start chasing.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_legal_case_overdue" model="ir.actions.act_window">
+        <field name="name">Overdue</field>
+        <field name="res_model">legal.case</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('is_closed', '=', False)]</field>
+        <field name="context">{'search_default_overdue': 1, 'search_default_group_body': 1}</field>
+    </record>
+
+    <record id="action_legal_case_my_desk" model="ir.actions.act_window">
+        <field name="name">My Desk</field>
+        <field name="res_model">legal.case</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_closed', '=', False)]</field>
+        <field name="context">{'search_default_my_files': 1, 'search_default_on_our_desk': 1}</field>
+    </record>
+
+</odoo>

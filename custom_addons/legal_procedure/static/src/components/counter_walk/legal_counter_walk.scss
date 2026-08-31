@@ -1,0 +1,162 @@
+// The runner's counter walk.
+//
+// A numbered vertical list with a rule running down the markers, because the
+// order is the information: window three cannot be done before window two, and
+// a grid of cards would say nothing about that. The rule sits on
+// `inset-inline-start`, so it runs down the right-hand side in Arabic and
+// needs no rtlcss guard.
+//
+// Rows are big. This is used standing up, one-handed, on a telephone, in a
+// ministry corridor - so the tap target is the whole row and it is comfortably
+// over the 44px minimum.
+
+.o_legal_walk {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .o_legal_walk_list {
+        position: relative;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        // The thread between the windows.
+        &::before {
+            content: "";
+            position: absolute;
+            inset-block: 1.4rem;
+            inset-inline-start: 1.15rem;
+            inline-size: 2px;
+            background-color: $border-color;
+        }
+    }
+
+    .o_legal_counter_target {
+        position: relative;
+        display: grid;
+        grid-template-columns: 2.3rem minmax(0, 1fr) 7rem;
+        align-items: start;
+        gap: 0.6rem;
+        inline-size: 100%;
+        min-block-size: 3rem;
+        padding: 0.55rem 0.3rem;
+        border: 0;
+        background: none;
+        text-align: start;
+        color: $body-color;
+
+        &:hover { background-color: $o-gray-100; }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: -2px;
+        }
+
+        @media (max-width: 767px) {
+            grid-template-columns: 2.3rem minmax(0, 1fr);
+            .o_legal_counter_state { grid-column: 2; text-align: start; }
+        }
+    }
+
+    .o_legal_counter_marker {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 2.3rem;
+        block-size: 2.3rem;
+        border-radius: 50%;
+        border: 2px solid $border-color;
+        background-color: $o-view-background-color;
+        font-weight: 700;
+        // Sits above the thread rather than behind it.
+        position: relative;
+        z-index: 1;
+    }
+
+    .o_legal_counter_main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-inline-size: 0;
+    }
+
+    .o_legal_counter_name {
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    // "You are here". The one thing the runner is looking for when he takes
+    // the telephone out of his pocket.
+    .o_legal_counter_here {
+        margin-inline-start: 0.4rem;
+        padding: 0.05rem 0.4rem;
+        border-radius: 10px;
+        background-color: $o-brand-primary;
+        color: $o-view-background-color;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+
+    .o_legal_counter_where {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: $body-color;
+    }
+
+    .o_legal_counter_instruction {
+        font-size: 0.85rem;
+        color: $text-muted;
+    }
+
+    .o_legal_counter_meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.4rem;
+        margin-block-start: 0.15rem;
+    }
+
+    .o_legal_counter_stamp {
+        border: 1px solid rgba($o-brand-primary, 0.4);
+        background-color: rgba($o-brand-primary, 0.08);
+        .fa { margin-inline-end: 0.25rem; }
+    }
+
+    .o_legal_counter_state {
+        justify-self: end;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .o_legal_counter_on {
+        font-weight: 400;
+        font-size: 0.78rem;
+        color: $text-muted;
+    }
+
+    // ------------------------------------------------------------- statuses
+    .o_legal_counter_done {
+        .o_legal_counter_marker {
+            border-color: $success;
+            background-color: $success;
+            color: $o-view-background-color;
+        }
+        .o_legal_counter_state { color: $success; }
+        .o_legal_counter_name { color: $text-muted; }
+    }
+
+    .o_legal_counter_here .o_legal_counter_marker {
+        border-color: $o-brand-primary;
+    }
+
+    // A tick the runner has made and not yet saved is marked, because a batch
+    // that looks identical to a save is how an afternoon's walk gets lost.
+    .o_legal_counter_dirty .o_legal_counter_target {
+        background-color: rgba($warning, 0.08);
+    }
+}

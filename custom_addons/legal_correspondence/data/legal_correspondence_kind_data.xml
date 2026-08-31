@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            The kinds an Iraqi department actually writes in the margin of the
+            register. They are shipped as data, not as a Selection, so that a
+            customer who needs إنذار قانوني or كتاب تعقيب adds a row instead of
+            waiting for a release - and every clock and counter in the product
+            understands the new row immediately, because the meaning is carried
+            by the flags rather than by the code.
+
+            noupdate="1" throughout: a department that renames تذكير or shortens
+            its reply window has made a decision, and an upgrade that overwrites
+            it has destroyed the customer's configuration.
+        -->
+
+        <record id="kind_out_letter" model="legal.correspondence.kind">
+            <field name="name">كتاب صادر</field>
+            <field name="code">OUT_LETTER</field>
+            <field name="direction">out</field>
+            <field name="is_submission" eval="True"/>
+            <field name="expects_reply" eval="True"/>
+            <field name="default_reply_days">7</field>
+            <field name="sequence">10</field>
+            <field name="note">الكتاب الرسمي الذي يخرج من الدائرة القانونية بتوقيع المدير المفوض وبختم الشركة.</field>
+        </record>
+
+        <record id="kind_in_letter" model="legal.correspondence.kind">
+            <field name="name">كتاب وارد</field>
+            <field name="code">IN_LETTER</field>
+            <field name="direction">in</field>
+            <field name="sequence">20</field>
+            <field name="note">كل ما يرد إلى الشركة من جهة رسمية، بما في ذلك ما يصل دون طلب سابق - كالتقدير الضريبي والتبليغ القضائي.</field>
+        </record>
+
+        <record id="kind_reminder" model="legal.correspondence.kind">
+            <field name="name">تذكير</field>
+            <field name="code">REMINDER</field>
+            <field name="direction">out</field>
+            <field name="is_reminder" eval="True"/>
+            <field name="is_repeatable" eval="True"/>
+            <field name="expects_reply" eval="True"/>
+            <field name="default_reply_days">5</field>
+            <field name="sequence">30</field>
+            <field name="note">لا يُحتسب معاملة جديدة ولا يعيد ضبط المهلة. ثلاثة تذكيرات هي متابعة واحدة متعثرة، وليست ثلاث معاملات.</field>
+        </record>
+
+        <record id="kind_return" model="legal.correspondence.kind">
+            <field name="name">إعادة للاستكمال</field>
+            <field name="code">RETURN</field>
+            <field name="direction">in</field>
+            <field name="is_return" eval="True"/>
+            <field name="expects_reply" eval="True"/>
+            <field name="default_reply_days">10</field>
+            <field name="sequence">40</field>
+            <field name="note">الجهة أعادت المعاملة لنقص أو خطأ. هذه هي إشارة إعادة العمل: بدونها تبدو معاملة دارت أربع دورات وكأنها معاملة واحدة استغرقت تسعين يوماً.</field>
+        </record>
+
+        <record id="kind_acknowledgement" model="legal.correspondence.kind">
+            <field name="name">وصل استلام</field>
+            <field name="code">ACK</field>
+            <field name="direction">in</field>
+            <field name="is_acknowledgement" eval="True"/>
+            <field name="sequence">50</field>
+            <field name="note">الوصل يثبت التسلّم ولا يغلق شيئاً. من يحتسبه جواباً يقيس زمن إنجاز يومين لدى جهة لم تفتح الإضبارة بعد.</field>
+        </record>
+
+        <record id="kind_internal_memo" model="legal.correspondence.kind">
+            <field name="name">مذكرة داخلية</field>
+            <field name="code">MEMO</field>
+            <field name="direction">internal</field>
+            <field name="sequence">60</field>
+            <field name="note">بين أقسام الشركة نفسها: عرض على المدير المفوض، أو إحالة إلى الحسابات لتهيئة مبلغ.</field>
+        </record>
+
+        <record id="kind_phone_note" model="legal.correspondence.kind">
+            <field name="name">تدوين اتصال هاتفي</field>
+            <field name="code">PHONE_NOTE</field>
+            <field name="direction">internal</field>
+            <field name="is_contact_note" eval="True"/>
+            <field name="sequence">70</field>
+            <field name="note">لا يأخذ رقماً في السجل لأنه لم يمر بالسجل أصلاً. لكنه دليل، وهو ما ينقل موعد الرد ويمنع الملاحقة بعد أن أجابت الجهة.</field>
+        </record>
+
+        <record id="kind_visit_note" model="legal.correspondence.kind">
+            <field name="name">مراجعة شخصية</field>
+            <field name="code">VISIT_NOTE</field>
+            <field name="direction">internal</field>
+            <field name="is_contact_note" eval="True"/>
+            <field name="sequence">80</field>
+            <field name="note">مراجعة المعتمد للدائرة: من قابل، وماذا قيل عند الشباك، وبأي تاريخ وعدوا.</field>
+        </record>
+
+        <record id="kind_issued_document" model="legal.correspondence.kind">
+            <field name="name">وثيقة واردة تُقيّد في سجل المستمسكات</field>
+            <field name="code">IN_DOCUMENT</field>
+            <field name="direction">in</field>
+            <field name="is_issued_document" eval="True"/>
+            <field name="closes_thread" eval="True"/>
+            <field name="sequence">90</field>
+            <field name="note">الإجازة أو التأييد الذي يصل ككتاب وارد. تسجيله هنا يقيّده مرة واحدة في سجل مستمسكات الشركة، بدل أن يُطبع مرتين فيختلف السجلان.</field>
+        </record>
+
+        <record id="kind_approval" model="legal.correspondence.kind">
+            <field name="name">كتاب موافقة</field>
+            <field name="code">APPROVAL</field>
+            <field name="direction">in</field>
+            <field name="closes_thread" eval="True"/>
+            <field name="sequence">100</field>
+            <field name="note">الجواب الذي يُنهي الموضوع بالإيجاب. هذا - لا الوصل - هو ما يوقف عدّاد الانتظار.</field>
+        </record>
+
+        <record id="kind_rejection" model="legal.correspondence.kind">
+            <field name="name">كتاب رفض</field>
+            <field name="code">REJECTION</field>
+            <field name="direction">in</field>
+            <field name="closes_thread" eval="True"/>
+            <field name="sequence">110</field>
+            <field name="note">الرفض جواب أيضاً، ويغلق الخيط. الفرق بينه وبين الإعادة للاستكمال هو الفرق بين "لا" و"أكمل الناقص".</field>
+        </record>
+
+    </data>
+</odoo>

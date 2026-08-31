@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        براءة الذمة, and the reason legal.procedure.step.check exists at all.
+
+        The walk is documented as twenty-two counters inside what the department
+        calls one procedure, completed in a single day for IQD 6,000. Modelling
+        those as twenty-two *steps* would bury the shape of the file - a manager
+        reading a rail with twenty-two segments learns nothing. Modelling them as
+        free text would make "which window are we stuck at" unanswerable, which
+        is the only question worth asking on the morning of the walk.
+
+        So they are twenty-two ordered check rows under one step, each naming the
+        stamp it produces. That is what turns "the file is at the Tax Commission"
+        into "the file is at the seizures window waiting for ختم الحجوزات
+        الضريبية". The four stamps the research names explicitly - ختم قسم
+        الدخل، ختم الحجوزات الضريبية، ختم الخصم المباشر، ختم تجميع الشركات - are
+        rows 5, 7, 8 and 9.
+    -->
+    <data noupdate="1">
+
+        <record id="proc_tax_clearance" model="legal.procedure.type">
+            <field name="name">براءة الذمة الضريبية</field>
+            <field name="code">GCT-CLEARANCE</field>
+            <field name="body_id" ref="body_gct"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_tax_clearance"/>
+            <field name="sequence_code">GCT-CLR/%(range_year)s/</field>
+            <field name="expected_duration_days">3</field>
+            <field name="lead_time_days">14</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">تعليمات رقم 2 لسنة 2008 الفصل الثاني المادة 4؛ وقانون رسم الطابع لسنة 2012؛ والنظام رقم 1 لسنة 2007؛ ونظام أجور الخدمات في الهيئة العامة للضرائب</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">3</field>
+            <field name="sequence">50</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>الإجراء موثّق بـ<b>22 خطوة داخل الهيئة، في يوم واحد، بكلفة 6,000 دينار</b>
+                    (1,000 طابع + 5,000 أجور خدمات)، وينتهي برقم PIN.</p>
+                    <p>«اليوم الواحد» هو الحالة المثالية لا المتوقعة: الملف يتعثر عند الحجوزات
+                    الضريبية أكثر من أي شباك آخر. زمن التهيئة المقدّر هنا 14 يوماً قبل تاريخ
+                    الحاجة، وهو ما تحسب عليه لوحة التجديد.</p>
+                    <p>مطلوب توكيل وهوية نقابة المحامين. الجهات الحكومية المتعاقدة تُلزم المقاول
+                    بإبراز براءة ذمة الاستقطاع المباشر، والمناقصات تطلب البراءة لجميع الشركاء
+                    في حالة التحالف.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_clr_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_clr_walk" model="legal.procedure.phase">
+            <field name="name">الجولة داخل الهيئة</field>
+            <field name="code">WALK</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_clr_close" model="legal.procedure.phase">
+            <field name="name">الاستلام</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_clr_prepare" model="legal.procedure.step">
+            <field name="name">تهيئة الملف والتوكيل ومستمسكات المراجع</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="phase_id" ref="phase_clr_prepare"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">براءات ذمة قيد التهيئة</field>
+            <field name="desk_hint">التوكيل وهوية نقابة المحامين قبل الذهاب - وإلا يوم ضائع</field>
+            <field name="desk_empty">لا توجد براءات ذمة قيد التهيئة</field>
+        </record>
+
+        <record id="step_clr_walk" model="legal.procedure.step">
+            <field name="name">الجولة داخل الهيئة (22 محطة)</field>
+            <field name="code">WALK</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="phase_id" ref="phase_clr_walk"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">1</field>
+            <field name="rotting_threshold_days">14</field>
+            <field name="return_to_step_id" ref="step_clr_prepare"/>
+            <field name="desk_title">جولات جارية داخل الهيئة</field>
+            <field name="desk_hint">أشِّر المحطة التي وقف عندها الملف - «لدى الهيئة» ليست إجابة</field>
+            <field name="desk_empty">لا توجد جولات جارية</field>
+            <field name="desk_note_template">راجعنا شباك الحجوزات الضريبية وأفادوا بأن الملف</field>
+        </record>
+
+        <record id="step_clr_collect" model="legal.procedure.step">
+            <field name="name">استلام براءة الذمة ورقم PIN</field>
+            <field name="code">COLLECT</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="phase_id" ref="phase_clr_close"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">1</field>
+            <field name="desk_title">براءات جاهزة للاستلام</field>
+            <field name="desk_hint">قيّد رقم الـPIN وتاريخ النفاذ المثبت على الوثيقة</field>
+            <field name="desk_empty">لا توجد براءات جاهزة</field>
+        </record>
+
+        <record id="step_clr_done" model="legal.procedure.step">
+            <field name="name">صدرت براءة الذمة</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="phase_id" ref="phase_clr_close"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">40</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">براءات صادرة</field>
+            <field name="desk_empty">لا توجد براءات صادرة</field>
+        </record>
+
+        <record id="trans_clr_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال النواقص</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="from_step_id" ref="step_clr_walk"/>
+            <field name="to_step_id" ref="step_clr_prepare"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- The twenty-two counters, in the order they are walked. -->
+
+        <record id="check_clr_01" model="legal.procedure.step.check">
+            <field name="name">إبراز بطاقة الهوية والتوكيل</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">الاستعلامات</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="check_clr_02" model="legal.procedure.step.check">
+            <field name="name">استحصال أمر التوجيه إلى المقدِّر</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">شعبة التوجيه</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="check_clr_03" model="legal.procedure.step.check">
+            <field name="name">تثبيت رقم الملف الضريبي</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">شعبة الملفات</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="check_clr_04" model="legal.procedure.step.check">
+            <field name="name">سحب إضبارة الشركة من الأرشيف</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">الأرشيف</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="check_clr_05" model="legal.procedure.step.check">
+            <field name="name">ختم قسم الدخل</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">ختم قسم الدخل</field>
+            <field name="counter">قسم الدخل</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="check_clr_06" model="legal.procedure.step.check">
+            <field name="name">تسديد أجور الخدمة ورسم الطابع</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">pay_fee</field>
+            <field name="counter">الصندوق</field>
+            <field name="sequence">60</field>
+            <field name="note">1,000 دينار طابع + 5,000 دينار أجور خدمات = 6,000 دينار.</field>
+        </record>
+        <record id="check_clr_07" model="legal.procedure.step.check">
+            <field name="name">ختم الحجوزات الضريبية</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">ختم الحجوزات الضريبية</field>
+            <field name="counter">قسم الحجوزات الضريبية</field>
+            <field name="sequence">70</field>
+            <field name="note">أكثر محطة يتعثر عندها الملف. إن كان هناك حجز قائم فالجولة تتوقف هنا حتى يصدر أمر رفعه.</field>
+        </record>
+        <record id="check_clr_08" model="legal.procedure.step.check">
+            <field name="name">ختم الخصم المباشر</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">ختم الخصم المباشر</field>
+            <field name="counter">قسم الاستقطاع المباشر</field>
+            <field name="sequence">80</field>
+        </record>
+        <record id="check_clr_09" model="legal.procedure.step.check">
+            <field name="name">ختم تجميع الشركات</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">ختم تجميع الشركات</field>
+            <field name="counter">شعبة تجميع الشركات</field>
+            <field name="sequence">90</field>
+        </record>
+        <record id="check_clr_10" model="legal.procedure.step.check">
+            <field name="name">فحص المحاسبة الضريبية</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">inspection</field>
+            <field name="counter">المحاسبة الضريبية</field>
+            <field name="sequence">100</field>
+        </record>
+        <record id="check_clr_11" model="legal.procedure.step.check">
+            <field name="name">تدقيق المستمسكات ومطابقتها</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">شعبة التدقيق</field>
+            <field name="sequence">110</field>
+        </record>
+        <record id="check_clr_12" model="legal.procedure.step.check">
+            <field name="name">الموافقة على تسديد المترتبات</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">المقدِّر</field>
+            <field name="sequence">120</field>
+        </record>
+        <record id="check_clr_13" model="legal.procedure.step.check">
+            <field name="name">تنظيم وصل القبض</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">pay_fee</field>
+            <field name="counter">الصندوق</field>
+            <field name="sequence">130</field>
+        </record>
+        <record id="check_clr_14" model="legal.procedure.step.check">
+            <field name="name">تسديد المترتبات</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">pay_fee</field>
+            <field name="counter">الصندوق</field>
+            <field name="sequence">140</field>
+        </record>
+        <record id="check_clr_15" model="legal.procedure.step.check">
+            <field name="name">استلام الوصل الأصلي</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">collect</field>
+            <field name="counter">الصندوق</field>
+            <field name="sequence">150</field>
+        </record>
+        <record id="check_clr_16" model="legal.procedure.step.check">
+            <field name="name">توقيع المقدِّر على الوصل</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">توقيع المقدِّر</field>
+            <field name="counter">المقدِّر</field>
+            <field name="sequence">160</field>
+        </record>
+        <record id="check_clr_17" model="legal.procedure.step.check">
+            <field name="name">الموافقة برفع الحجز</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">موافقة برفع الحجز</field>
+            <field name="counter">قسم الحجوزات الضريبية</field>
+            <field name="sequence">170</field>
+        </record>
+        <record id="check_clr_18" model="legal.procedure.step.check">
+            <field name="name">تنظيم استمارة التسديد</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">شعبة الاستمارات</field>
+            <field name="sequence">180</field>
+        </record>
+        <record id="check_clr_19" model="legal.procedure.step.check">
+            <field name="name">توقيع المقدِّر على الاستمارة</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">توقيع المقدِّر على الاستمارة</field>
+            <field name="counter">المقدِّر</field>
+            <field name="sequence">190</field>
+        </record>
+        <record id="check_clr_20" model="legal.procedure.step.check">
+            <field name="name">تدقيق الاستمارة</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">verify</field>
+            <field name="counter">شعبة التدقيق</field>
+            <field name="sequence">200</field>
+        </record>
+        <record id="check_clr_21" model="legal.procedure.step.check">
+            <field name="name">ختم القسم وتوقيعه على البراءة</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">stamp</field>
+            <field name="produces_stamp">ختم القسم وتوقيع المدير</field>
+            <field name="counter">مدير القسم</field>
+            <field name="sequence">210</field>
+        </record>
+        <record id="check_clr_22" model="legal.procedure.step.check">
+            <field name="name">استلام رقم الـPIN</field>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="check_kind">collect</field>
+            <field name="counter">شباك التسليم</field>
+            <field name="sequence">220</field>
+            <field name="note">رقم الـPIN هو ناتج الإجراء النهائي، وهو ما تتحقق منه الجهة الطالبة.</field>
+        </record>
+
+        <record id="fee_clr_stamp" model="legal.fee.rule">
+            <field name="name">رسم الطابع</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="computation">fixed</field>
+            <field name="amount">1000</field>
+            <field name="is_stamp_duty" eval="True"/>
+            <field name="legal_basis">قانون رسم الطابع لسنة 2012</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="fee_clr_service" model="legal.fee.rule">
+            <field name="name">أجور الخدمات</field>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="computation">fixed</field>
+            <field name="amount">5000</field>
+            <field name="legal_basis">نظام أجور الخدمات في الهيئة العامة للضرائب</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_clr_tax_card" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_tax_card"/>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="step_id" ref="step_clr_walk"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_clr_statements" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_financial_statements"/>
+            <field name="procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="step_id" ref="step_clr_prepare"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ==============================================================
+             كتاب عدم ممانعة - the letter a tender actually demands
+             ============================================================== -->
+
+        <record id="proc_no_objection" model="legal.procedure.type">
+            <field name="name">كتاب عدم ممانعة (لأغراض المناقصات والاستيراد)</field>
+            <field name="code">GCT-NO-OBJECTION</field>
+            <field name="body_id" ref="body_gct"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_no_objection"/>
+            <field name="sequence_code">GCT-NOC/%(range_year)s/</field>
+            <field name="expected_duration_days">7</field>
+            <field name="lead_time_days">10</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">optional</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">تُمنح كتب عدم الممانعة للمكلفين ذوي العقود الحكومية؛ وإعلانات مناقصات محافظة بغداد تشترط كتاباً «نافذ الصلاحية عند تاريخ الغلق»</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">60</field>
+            <field name="instruction" type="html">
+                <p>الشرط الحاسم ليس أن يكون الكتاب نافذاً اليوم بل <b>يوم غلق المناقصة</b>.
+                افتح المعاملة على أساس تاريخ الغلق واحسب رجوعاً، لا على أساس تاريخ اليوم.</p>
+            </field>
+        </record>
+
+        <record id="phase_noc_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_noc_body" model="legal.procedure.phase">
+            <field name="name">لدى الهيئة</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_noc_close" model="legal.procedure.phase">
+            <field name="name">الاستلام</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_noc_prepare" model="legal.procedure.step">
+            <field name="name">إعداد الطلب مع إعلان المناقصة أو كتاب الدعوة</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="phase_id" ref="phase_noc_prepare"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">طلبات عدم ممانعة قيد الإعداد</field>
+            <field name="desk_hint">أرفق إعلان المناقصة - الهيئة تسأل عنه</field>
+            <field name="desk_empty">لا توجد طلبات قيد الإعداد</field>
+        </record>
+
+        <record id="step_noc_submit" model="legal.procedure.step">
+            <field name="name">تقديم الطلب إلى الهيئة</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="phase_id" ref="phase_noc_body"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">طلبات بانتظار التقديم</field>
+            <field name="desk_empty">لا توجد طلبات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_noc_review" model="legal.procedure.step">
+            <field name="name">تدقيق الموقف الضريبي وإصدار الكتاب</field>
+            <field name="code">REVIEW</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="phase_id" ref="phase_noc_body"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">5</field>
+            <field name="rotting_threshold_days">21</field>
+            <field name="return_to_step_id" ref="step_noc_prepare"/>
+            <field name="desk_title">طلبات لدى الهيئة</field>
+            <field name="desk_hint">الموقف الضريبي يجب أن يكون نظيفاً - وإلا فبراءة ذمة أولاً</field>
+            <field name="desk_empty">لا توجد طلبات لدى الهيئة</field>
+            <field name="desk_note_template">راجعنا الهيئة بشأن كتاب عدم الممانعة وأفادوا بأن</field>
+        </record>
+
+        <record id="step_noc_collect" model="legal.procedure.step">
+            <field name="name">استلام كتاب عدم الممانعة</field>
+            <field name="code">COLLECT</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="phase_id" ref="phase_noc_close"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">1</field>
+            <field name="desk_title">كتب جاهزة للاستلام</field>
+            <field name="desk_hint">قيّد تاريخ النفاذ - المناقصة تفحصه عند تاريخ الغلق</field>
+            <field name="desk_empty">لا توجد كتب جاهزة</field>
+        </record>
+
+        <record id="step_noc_done" model="legal.procedure.step">
+            <field name="name">صدر كتاب عدم الممانعة</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="phase_id" ref="phase_noc_close"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">50</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">كتب صادرة</field>
+            <field name="desk_empty">لا توجد كتب صادرة</field>
+        </record>
+
+        <record id="trans_noc_return" model="legal.procedure.transition">
+            <field name="name">إعادة - يلزم تسوية الموقف الضريبي</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="from_step_id" ref="step_noc_review"/>
+            <field name="to_step_id" ref="step_noc_prepare"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_noc_clearance" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_tax_clearance"/>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="step_id" ref="step_noc_submit"/>
+            <field name="is_required" eval="False"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+            <field name="note">ليست إلزامية في كل حالة، لكن الهيئة تطلبها متى كان الموقف غير مسوّى - ووجودها يختصر المعاملة من أسبوع إلى يوم.</field>
+        </record>
+
+        <record id="req_noc_tax_card" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_tax_card"/>
+            <field name="procedure_type_id" ref="proc_no_objection"/>
+            <field name="step_id" ref="step_noc_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="doctype_tax_clearance" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_tax_clearance"/>
+            <field name="renewal_procedure_type_id" ref="proc_tax_clearance"/>
+        </record>
+
+        <record id="doctype_no_objection" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_no_objection"/>
+            <field name="renewal_procedure_type_id" ref="proc_no_objection"/>
+        </record>
+
+    </data>
+</odoo>

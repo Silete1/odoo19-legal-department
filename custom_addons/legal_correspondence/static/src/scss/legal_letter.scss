@@ -1,0 +1,216 @@
+// The official Iraqi كتاب رسمي, as printed.
+//
+// Arabic-first: the page is right-to-left whatever the language of the officer
+// who pressed Print, because the letter goes to an Arabic counter. Every
+// direction and alignment declaration below therefore carries /*rtl:ignore*/ -
+// without it rtlcss mirrors a page that is already mirrored, and an Arabic user
+// gets a left-to-right letter, which is the one thing the counter will not read.
+
+.legal-letter {
+    /*rtl:ignore*/
+    direction: rtl;
+    /*rtl:ignore*/
+    text-align: right;
+    font-family: "Segoe UI", "Tahoma", "Arial", sans-serif;
+    font-size: 13px;
+    color: #17202a;
+}
+
+.legal-letterhead {
+    margin-bottom: 10px;
+
+    .legal-emblem {
+        max-height: 72px;
+    }
+
+    .legal-head-lines {
+        line-height: 1.6;
+
+        .legal-head-1 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .legal-head-3 {
+            font-weight: 700;
+        }
+    }
+
+    .legal-head-date {
+        font-size: 11px;
+        color: #566573;
+    }
+
+    .legal-rule {
+        border: 0;
+        border-top: 2px solid #1b2631;
+        margin: 8px 0 0;
+    }
+}
+
+.legal-not-registered {
+    border: 2px dashed #b03a2e;
+    color: #b03a2e;
+    padding: 18px;
+    margin: 24px 0;
+    /*rtl:ignore*/
+    text-align: center;
+}
+
+.legal-refs {
+    font-size: 12px;
+    margin: 16px 0 18px;
+    line-height: 1.8;
+}
+
+.legal-addressee {
+    margin-bottom: 12px;
+    line-height: 1.8;
+
+    .legal-to {
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .legal-salutation {
+        margin-top: 4px;
+    }
+}
+
+.legal-subject {
+    font-size: 15px;
+    font-weight: 700;
+    /*rtl:ignore*/
+    text-align: center;
+    margin: 16px 0 14px;
+    text-decoration: underline;
+}
+
+.legal-body {
+    line-height: 2;
+    /*rtl:ignore*/
+    text-align: justify;
+
+    p {
+        line-height: 2;
+        margin-bottom: 8px;
+    }
+}
+
+.legal-table {
+    width: 100%;
+    font-size: 12px;
+    margin: 14px 0;
+
+    th,
+    td {
+        border: 1px solid #aeb6bf;
+        padding: 5px 7px;
+        /*rtl:ignore*/
+        text-align: right;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #eaeded;
+        font-weight: 700;
+        /*rtl:ignore*/
+        text-align: center;
+    }
+
+    td:first-child {
+        /*rtl:ignore*/
+        text-align: center;
+    }
+}
+
+.legal-closing {
+    margin-top: 16px;
+}
+
+// The signature block sits on the left of an Iraqi letter, and the ختم goes
+// over the signature rather than beside it - so the stamp is absolutely
+// positioned on top of the specimen, slightly rotated the way a hand stamps.
+.legal-signature-row {
+    margin-top: 26px;
+}
+
+.legal-signature {
+    .legal-sign-stack {
+        position: relative;
+        height: 96px;
+    }
+
+    .legal-sign-image {
+        max-height: 58px;
+        margin-top: 18px;
+    }
+
+    .legal-stamp {
+        position: absolute;
+        /*rtl:ignore*/
+        left: 50%;
+        top: 0;
+        max-height: 92px;
+        opacity: 0.72;
+        transform: translateX(-50%) rotate(-8deg);
+    }
+
+    .legal-sign-name {
+        font-weight: 700;
+        border-top: 1px solid #85929e;
+        padding-top: 4px;
+    }
+
+    .legal-sign-title,
+    .legal-sign-entity {
+        font-size: 11px;
+        color: #566573;
+    }
+}
+
+.legal-qr {
+    width: 88px;
+    height: 88px;
+}
+
+.legal-qr-caption {
+    font-size: 9px;
+    color: #566573;
+
+    .legal-token {
+        font-family: "Courier New", monospace;
+        letter-spacing: 1px;
+    }
+}
+
+.legal-cc {
+    margin-top: 22px;
+    font-size: 11px;
+    /*rtl:ignore*/
+    text-align: left;
+
+    .legal-cc-title {
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    .legal-cc-line {
+        line-height: 1.6;
+    }
+}
+
+.legal-carrier {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #566573;
+}
+
+.legal-letter-footer {
+    /*rtl:ignore*/
+    direction: rtl;
+    font-size: 10px;
+    color: #566573;
+    border-top: 1px solid #d5d8dc;
+    padding-top: 4px;
+}

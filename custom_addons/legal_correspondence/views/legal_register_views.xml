@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_register_list" model="ir.ui.view">
+        <field name="name">legal.register.list</field>
+        <field name="model">legal.register</field>
+        <field name="arch" type="xml">
+            <list string="Registers">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="direction"/>
+                <field name="secrecy" widget="badge" decoration-danger="secrecy == 'secret'"/>
+                <field name="body_id" optional="show"/>
+                <field name="prefix" optional="show"/>
+                <field name="write_group_id" optional="show"/>
+                <field name="retention_years" optional="hide"/>
+                <field name="entry_count" string="Entries"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_register_form" model="ir.ui.view">
+        <field name="name">legal.register.form</field>
+        <field name="model">legal.register</field>
+        <field name="arch" type="xml">
+            <form string="Register">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_entries" type="object" class="oe_stat_button" icon="fa-envelope">
+                            <field name="entry_count" widget="statinfo" string="Entries"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="سجل الصادر العام"/></h1>
+                    </div>
+                    <group>
+                        <group string="The Book">
+                            <field name="code" placeholder="OUT"/>
+                            <field name="direction"/>
+                            <field name="secrecy"/>
+                            <field name="body_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Numbering And Custody">
+                            <field name="prefix" placeholder="ق"/>
+                            <field name="sequence_id" readonly="1"/>
+                            <field name="write_group_id"/>
+                            <field name="retention_years"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        The prefix is used only while the book is empty. After that the next number
+                        is deduced from the last one written, so a department that migrates in
+                        October types <b>1247</b> on its first entry and the chain continues from
+                        there instead of restarting at one.
+                    </div>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_register_search" model="ir.ui.view">
+        <field name="name">legal.register.search</field>
+        <field name="model">legal.register</field>
+        <field name="arch" type="xml">
+            <search string="Registers">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="body_id"/>
+                <filter name="outgoing" string="صادر" domain="[('direction', '=', 'out')]"/>
+                <filter name="incoming" string="وارد" domain="[('direction', '=', 'in')]"/>
+                <separator/>
+                <filter name="secret" string="Confidential" domain="[('secrecy', '=', 'secret')]"/>
+                <separator/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_direction" string="Direction" context="{'group_by': 'direction'}"/>
+                    <filter name="group_body" string="Body" context="{'group_by': 'body_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_register" model="ir.actions.act_window">
+        <field name="name">Registers</field>
+        <field name="res_model">legal.register</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">One record per book you actually keep</p>
+            <p>
+                Most departments keep two - صادر and وارد. A department answering to three
+                ministries keeps a book per ministry, and one holding classified files keeps a
+                سري book with a different key holder. All three are rows here, never a
+                hard-coded list.
+            </p>
+        </field>
+    </record>
+
+</odoo>

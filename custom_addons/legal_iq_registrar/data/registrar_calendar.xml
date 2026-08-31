@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The Registrar's own working time, and why every pack ships one.
+
+        Every deadline this product quotes is counted in the *body's* working
+        days, through legal.gov.body._plan_days. An Iraqi office works Sunday to
+        Thursday, so a target counted in calendar days cries wolf every Friday
+        and Saturday, and a chase list that is wrong twice a week is a chase list
+        people learn to ignore.
+
+        The national closures are repeated in each content pack rather than
+        shipped once from a shared base, because a customer must be able to take
+        Tax without the Registrar. A leave row scoped to this calendar costs one
+        record; a hidden cross-pack dependency costs a support call.
+
+        The Islamic dates below are ASTRONOMICAL ESTIMATES for 1447-1448 AH.
+        Iraq announces عيد الفطر and عيد الأضحى by sighting, usually a day or
+        two before, and the announcement can move the date by one day in either
+        direction. They are shipped so that the calendar is roughly right rather
+        than obviously wrong, and they are meant to be corrected each year.
+    -->
+    <data noupdate="1">
+
+        <record id="calendar_mot_registrar" model="resource.calendar">
+            <field name="name">دوام دائرة تسجيل الشركات (الأحد - الخميس، ٠٨:٣٠ - ١٤:١٥)</field>
+            <field name="tz">Asia/Baghdad</field>
+            <field name="hours_per_day">5.75</field>
+            <field name="attendance_ids" eval="[
+                (5, 0, 0),
+                (0, 0, {'name': 'الأحد', 'dayofweek': '6', 'hour_from': 8.5, 'hour_to': 14.25, 'day_period': 'full_day'}),
+                (0, 0, {'name': 'الاثنين', 'dayofweek': '0', 'hour_from': 8.5, 'hour_to': 14.25, 'day_period': 'full_day'}),
+                (0, 0, {'name': 'الثلاثاء', 'dayofweek': '1', 'hour_from': 8.5, 'hour_to': 14.25, 'day_period': 'full_day'}),
+                (0, 0, {'name': 'الأربعاء', 'dayofweek': '2', 'hour_from': 8.5, 'hour_to': 14.25, 'day_period': 'full_day'}),
+                (0, 0, {'name': 'الخميس', 'dayofweek': '3', 'hour_from': 8.5, 'hour_to': 14.25, 'day_period': 'full_day'}),
+            ]"/>
+        </record>
+
+        <record id="leave_mot_new_year_2026" model="resource.calendar.leaves">
+            <field name="name">رأس السنة الميلادية</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-01-01 00:00:00</field>
+            <field name="date_to">2026-01-01 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_army_day_2026" model="resource.calendar.leaves">
+            <field name="name">عيد الجيش العراقي</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-01-06 00:00:00</field>
+            <field name="date_to">2026-01-06 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_eid_fitr_2026" model="resource.calendar.leaves">
+            <field name="name">عيد الفطر (تقديري - يحدد بالرؤية)</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-03-20 00:00:00</field>
+            <field name="date_to">2026-03-22 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_nowruz_2026" model="resource.calendar.leaves">
+            <field name="name">عيد نوروز</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-03-21 00:00:00</field>
+            <field name="date_to">2026-03-21 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_labour_day_2026" model="resource.calendar.leaves">
+            <field name="name">عيد العمال</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-05-01 00:00:00</field>
+            <field name="date_to">2026-05-01 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_eid_adha_2026" model="resource.calendar.leaves">
+            <field name="name">عيد الأضحى (تقديري - يحدد بالرؤية)</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-05-27 00:00:00</field>
+            <field name="date_to">2026-05-30 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_hijri_new_year_2026" model="resource.calendar.leaves">
+            <field name="name">رأس السنة الهجرية (تقديري)</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-06-17 00:00:00</field>
+            <field name="date_to">2026-06-17 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_ashura_2026" model="resource.calendar.leaves">
+            <field name="name">عاشوراء (تقديري)</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-06-26 00:00:00</field>
+            <field name="date_to">2026-06-26 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_republic_day_2026" model="resource.calendar.leaves">
+            <field name="name">ذكرى ثورة الرابع عشر من تموز</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-07-14 00:00:00</field>
+            <field name="date_to">2026-07-14 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_mawlid_2026" model="resource.calendar.leaves">
+            <field name="name">المولد النبوي الشريف (تقديري)</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-08-25 00:00:00</field>
+            <field name="date_to">2026-08-25 23:59:59</field>
+        </record>
+
+        <record id="leave_mot_victory_day_2026" model="resource.calendar.leaves">
+            <field name="name">يوم النصر على داعش</field>
+            <field name="calendar_id" ref="calendar_mot_registrar"/>
+            <field name="date_from">2026-12-10 00:00:00</field>
+            <field name="date_to">2026-12-10 23:59:59</field>
+        </record>
+
+    </data>
+</odoo>

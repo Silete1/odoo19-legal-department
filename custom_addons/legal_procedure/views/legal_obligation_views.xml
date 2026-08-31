@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_obligation_schedule_form" model="ir.ui.view">
+        <field name="name">legal.obligation.schedule.form</field>
+        <field name="model">legal.obligation.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Obligation">
+                <header>
+                    <button name="action_generate" type="object" string="Generate Periods"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="الإقرار الضريبي السنوي"/></h1>
+                    </div>
+                    <group>
+                        <group string="Who Wants It">
+                            <field name="code" placeholder="GCT-ANNUAL"/>
+                            <field name="body_id"/>
+                            <field name="jurisdiction_id"/>
+                            <field name="entity_id"
+                                   help="Leave empty to generate one period per legal entity."/>
+                            <field name="procedure_type_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="When It Is Due">
+                            <field name="frequency" widget="radio"/>
+                            <label for="due_day" string="Due On"
+                                   invisible="frequency not in ['fixed_annual_date', 'monthly']"/>
+                            <div class="o_row" invisible="frequency not in ['fixed_annual_date', 'monthly']">
+                                <field name="due_day"/>
+                                <span invisible="frequency != 'fixed_annual_date'">/</span>
+                                <field name="due_month" invisible="frequency != 'fixed_annual_date'"/>
+                            </div>
+                            <field name="offset_days"
+                                   invisible="frequency not in ['offset_from_fye', 'offset_before_expiry']"/>
+                            <field name="document_type_id"
+                                   invisible="frequency != 'offset_before_expiry'"
+                                   required="frequency == 'offset_before_expiry'"/>
+                            <field name="lead_days"/>
+                        </group>
+                    </group>
+                    <group string="What Happens If It Is Late">
+                        <field name="penalty_note" nolabel="1" colspan="2"
+                               placeholder="10% of the tax, capped at IQD 500,000"/>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        Write the formula, not “penalties apply”. A manager weighing whether to
+                        file late needs the number, and “penalties apply” tells them nothing they
+                        can weigh anything against.
+                    </div>
+                    <notebook>
+                        <page string="Periods" name="instances">
+                            <field name="instance_ids" readonly="1">
+                                <list decoration-danger="state == 'late'"
+                                      decoration-success="state == 'filed'">
+                                    <field name="period_key"/>
+                                    <field name="entity_id"/>
+                                    <field name="due_on"/>
+                                    <field name="start_by_date"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="case_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Instruction &amp; Provenance" name="instruction">
+                            <group>
+                                <group>
+                                    <field name="legal_basis"/>
+                                    <field name="legal_basis_url" widget="url"/>
+                                    <field name="last_verified_on"/>
+                                </group>
+                            </group>
+                            <field name="instruction"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_obligation_schedule_list" model="ir.ui.view">
+        <field name="name">legal.obligation.schedule.list</field>
+        <field name="model">legal.obligation.schedule</field>
+        <field name="arch" type="xml">
+            <list string="Obligations">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code" optional="hide"/>
+                <field name="body_id"/>
+                <field name="jurisdiction_id" optional="show"/>
+                <field name="frequency"/>
+                <field name="procedure_type_id" optional="show"/>
+                <field name="lead_days" optional="hide"/>
+                <field name="instance_count" string="Periods"/>
+                <field name="last_verified_on" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_obligation_schedule" model="ir.actions.act_window">
+        <field name="name">Recurring Obligations</field>
+        <field name="res_model">legal.obligation.schedule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Configure a recurring deadline</p>
+            <p>
+                Four shapes, because Iraqi practice has four: a fixed annual date, an offset
+                from the financial year end, a monthly day, and an offset before a document
+                expires. Each one generates a dated row per period, so “have we filed social
+                security for March” is answered by a record rather than by its absence.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_legal_obligation_instance_list" model="ir.ui.view">
+        <field name="name">legal.obligation.instance.list</field>
+        <field name="model">legal.obligation.instance</field>
+        <field name="arch" type="xml">
+            <list string="Periods" create="false"
+                  decoration-danger="state == 'late'"
+                  decoration-success="state == 'filed'"
+                  decoration-muted="state == 'waived'">
+                <field name="schedule_id"/>
+                <field name="period_key"/>
+                <field name="entity_id"/>
+                <field name="body_id" optional="show"/>
+                <field name="start_by_date"/>
+                <field name="due_on"/>
+                <field name="state" widget="badge"/>
+                <field name="case_id"/>
+                <field name="penalty_note" optional="show"/>
+                <field name="filed_on" optional="hide"/>
+                <button name="action_open_case" type="object" string="Open The File"
+                        icon="fa-folder-open-o" class="btn-link"
+                        invisible="state in ['filed', 'waived']"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_obligation_instance_form" model="ir.ui.view">
+        <field name="name">legal.obligation.instance.form</field>
+        <field name="model">legal.obligation.instance</field>
+        <field name="arch" type="xml">
+            <form string="Period">
+                <header>
+                    <button name="action_open_case" type="object" string="Open The File"
+                            class="btn-primary" invisible="state in ['filed', 'waived']"/>
+                    <button name="action_mark_filed" type="object" string="Mark Filed"
+                            invisible="state in ['filed', 'waived']"/>
+                    <button name="action_waive" type="object" string="Waive"
+                            invisible="state in ['filed', 'waived']"
+                            groups="legal_core.group_legal_manager"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="period_key" readonly="1"/></h1>
+                        <h3><field name="schedule_id" readonly="1"/></h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="entity_id"/>
+                            <field name="body_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="start_by_date" readonly="1"/>
+                            <field name="due_on"/>
+                            <field name="filed_on"/>
+                            <field name="case_id"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning" role="alert" invisible="not penalty_note">
+                        <field name="penalty_note" nolabel="1" readonly="1"/>
+                    </div>
+                    <field name="note"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_obligation_instance_calendar" model="ir.ui.view">
+        <field name="name">legal.obligation.instance.calendar</field>
+        <field name="model">legal.obligation.instance</field>
+        <field name="arch" type="xml">
+            <calendar string="Deadlines" date_start="due_on" color="body_id" mode="month"
+                      quick_create="false">
+                <field name="schedule_id"/>
+                <field name="entity_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_legal_obligation_instance_search" model="ir.ui.view">
+        <field name="name">legal.obligation.instance.search</field>
+        <field name="model">legal.obligation.instance</field>
+        <field name="arch" type="xml">
+            <search string="Periods">
+                <field name="schedule_id"/>
+                <field name="period_key"/>
+                <field name="entity_id"/>
+                <field name="body_id"/>
+                <filter name="outstanding" string="Outstanding"
+                        domain="[('state', 'in', ['not_started', 'in_progress', 'late'])]"/>
+                <filter name="late" string="Late" domain="[('state', '=', 'late')]"/>
+                <filter name="start_now" string="Should Have Started"
+                        domain="[('start_by_date', '&lt;=', context_today().strftime('%Y-%m-%d')), ('state', '=', 'not_started')]"/>
+                <separator/>
+                <filter name="due" string="Due" date="due_on"/>
+                <group>
+                    <filter name="group_schedule" string="Obligation" context="{'group_by': 'schedule_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_body" string="Body" context="{'group_by': 'body_id'}"/>
+                    <filter name="group_entity" string="Legal Entity" context="{'group_by': 'entity_id'}"/>
+                    <filter name="group_due" string="Due Month" context="{'group_by': 'due_on:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_obligation_instance" model="ir.actions.act_window">
+        <field name="name">Compliance Calendar</field>
+        <field name="res_model">legal.obligation.instance</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="context">{'search_default_outstanding': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nothing outstanding</p>
+            <p>
+                Every statutory period is a row with a state, generated ahead of time. That is
+                deliberate: an empty screen here means somebody has looked and filed, not that
+                nobody has looked.
+            </p>
+        </field>
+    </record>
+
+</odoo>

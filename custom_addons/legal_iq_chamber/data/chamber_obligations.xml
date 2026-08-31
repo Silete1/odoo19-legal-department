@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="obl_chamber_renewal" model="legal.obligation.schedule">
+            <field name="name">تجديد هوية غرفة التجارة</field>
+            <field name="code">CH-IDENTITY-RENEWAL</field>
+            <field name="body_id" ref="body_chamber_baghdad"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_chamber_identity"/>
+            <field name="offset_days">60</field>
+            <field name="lead_days">21</field>
+            <field name="penalty_note">لا غرامة مالية معروفة، لكن الأثر أقسى: هوية غير نافذة عند تاريخ الغلق تُسقط العطاء كاملاً</field>
+            <field name="legal_basis">إعلانات مناقصات محافظة بغداد: «هوية غرفة تجارة نافذة» و«هوية غرفة تجارة صنف (ممتاز) نافذة»</field>
+            <field name="legal_basis_url">https://bcc.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>هذا هو الالتزام الذي لا يترتب عليه غرامة ومع ذلك يكلّف أكثر من أي التزام
+                آخر في الحزمة: العطاء يُرفض عند الغلق ولا يُصحَّح بعده. المهلة 60 يوماً قبل
+                الانتهاء و21 يوماً زمن إنجاز، أي أن التنبيه يبدأ قبل ثلاثة أشهر تقريباً من
+                يوم لا تستطيع فيه المشاركة في مناقصة.</p>
+            </field>
+        </record>
+
+        <record id="obl_commercial_register_entry" model="legal.obligation.schedule">
+            <field name="name">القيد في السجل التجاري بعد التأسيس</field>
+            <field name="code">CH-COMMERCIAL-REGISTER</field>
+            <field name="body_id" ref="body_chamber_registry"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_commercial_register"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_trade_name_approval"/>
+            <field name="offset_days">30</field>
+            <field name="lead_days">10</field>
+            <field name="legal_basis">التسجيل في السجل التجاري لدى الغرفة المحلية خلال 30 يوماً من استلام شهادة التأسيس</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p><b>هذا التزام حدثي لا دوري.</b> المهلة تبدأ من استلام شهادة التأسيس، وليست
+                لها دورة سنوية. عُلِّق هنا على انتهاء صلاحية الموافقة الأولية على الاسم لأنها
+                أقرب تاريخ يعرفه السجل، وهو تقريب مقصود: الغرض تنبيه مبكر لا احتساب قانوني.
+                إن كانت شهادة التأسيس لديك مقيّدة في السجل فاضبط المهلة عليها يدوياً.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Almost every type here is ``is_per_subject``, and that flag is doing real
+        work. A visa request letter routinely covers eight engineers on one
+        numbered ت list: one letter, one register number, eight passports, eight
+        medicals, eight visas. A checklist that cannot expand per person either
+        asks for "passport" once - and the file leaves with seven missing - or
+        forces the department to open eight files for one letter, which is not
+        what the ministry received.
+    -->
+    <data noupdate="1">
+
+        <record id="doctype_passport" model="legal.document.type">
+            <field name="name">جواز السفر</field>
+            <field name="name_en">Passport</field>
+            <field name="code">RES-PASSPORT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_personal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">5</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">180</field>
+            <field name="renewal_lead_days">60</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">مستمسك شخصي - المدة تتبع جواز كل شخص</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>المدة الافتراضية خمس سنوات لأن أغلب الجوازات كذلك، لكن <b>التاريخ المثبت في
+                الجواز هو المرجع</b> ويجب إدخاله. جواز يوشك على الانتهاء يمنع منح إقامة كاملة
+                المدة، ولذلك نافذة التنبيه هنا ستة أشهر لا شهر.</p>
+            </field>
+        </record>
+
+        <record id="doctype_entry_visa" model="legal.document.type">
+            <field name="name">سمة الدخول</field>
+            <field name="name_en">Entry Visa</field>
+            <field name="code">RES-ENTRY-VISA</field>
+            <field name="kind_id" ref="legal_core.doc_kind_personal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_residency"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">3</field>
+            <field name="validity_uom">month</field>
+            <field name="notice_days">30</field>
+            <field name="renewal_lead_days">21</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017 - السمة الاعتيادية تخوّل حاملها الدخول مرة واحدة خلال ثلاثة أشهر من منحها والبقاء مدة لا تزيد على ثلاثة أشهر</field>
+            <field name="legal_basis_url">https://ur.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>السمة الاعتيادية: دخول مرة واحدة خلال ثلاثة أشهر من المنح، وإقامة لا
+                    تزيد على ثلاثة أشهر. الأنواع العملية: سمة أعمال (تتطلب كفالة شركة محلية،
+                    وغالباً متعددة الدخول)، وسمة عمل (بكفالة التوظيف)، وسمة زيارة دينية، وسمة
+                    إعلامية.</p>
+                    <p>مدة النفاذ المرصودة في الممارسة 30 يوماً في حالات كثيرة، قابلة للتمديد
+                    30 يوماً في مكاتب الإقامة المحلية للسياحة والأعمال والزيارة الدينية. رسم
+                    السمة الإلكترونية المرصود نحو 160 دولاراً، وتمديد الإقليم 100,000 دينار.
+                    <b>هذه أرقام مرصودة لا تعرفة منشورة.</b></p>
+                </div>
+            </field>
+        </record>
+
+        <record id="doctype_residency_permit" model="legal.document.type">
+            <field name="name">إقامة الأجنبي</field>
+            <field name="name_en">Residency Permit</field>
+            <field name="code">RES-RESIDENCY-PERMIT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_personal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_residency"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">30</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017</field>
+            <field name="legal_basis_url">https://ur.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>المدة تتبع سبب الإقامة: المتزوج من عراقية يُمنح ثلاث سنوات لكل تجديد (المادة
+                21)، والمتعاقد مع وزارة أو شركة يُمنح المدة المناسبة بمسوّغ قانوني. المدة
+                الافتراضية هنا سنة، وهي الحالة الأشيع للعامل الأجنبي. في الإقليم تُجدَّد بطاقة
+                الإقامة لستة أشهر أو سنة.</p>
+            </field>
+        </record>
+
+        <record id="doctype_work_permit" model="legal.document.type">
+            <field name="name">إجازة العمل للأجنبي</field>
+            <field name="name_en">Work Permit</field>
+            <field name="code">RES-WORK-PERMIT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_licence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_labour_department"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">30</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون العمل رقم 37 لسنة 2015 وتعليمات ممارسة الأجانب العمل في العراق؛ وآلية 2025: الإجازة لسنة ويُقدَّم التجديد خلال الشهر الأخير قبل الانتهاء</field>
+            <field name="legal_basis_url">https://molsa.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>الرسم 250,000 دينار اتحادياً، و110,000 دينار في إقليم كردستان مع تأمين
+                    صحي إلزامي. سقف العمالة الأجنبية 50% من مجموع العاملين في المشروع.</p>
+                    <p><b>أسباب الإلغاء:</b> معلومات كاذبة، وفاة صاحب العمل دون تحديث البيانات،
+                    وفاة العامل، انتهاء العقد، غلق المشروع، الغياب غير المبرر، ومزاولة مهنة غير
+                    المهنة المجازة.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="doctype_medical_examination" model="legal.document.type">
+            <field name="name">الفحص الطبي وخلو الأمراض السارية</field>
+            <field name="name_en">Medical Examination Certificate</field>
+            <field name="code">RES-MEDICAL</field>
+            <field name="kind_id" ref="legal_core.doc_kind_personal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">90</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">شروط منح الإقامة المعلنة من وزارة الداخلية: أن يكون الطالب خالياً من الأمراض السارية والمعدية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+            <field name="instruction" type="html">
+                <p>مستند صحي شخصي، ولذلك يُقيَّد <b>سرياً</b>: يراه المدير القانوني وضباط
+                متابعة الجهة المصدرة فقط. لا ينتهي بتاريخ لكنه يُرفض متى قدُم - نافذة الحداثة
+                90 يوماً.</p>
+            </field>
+        </record>
+
+        <record id="doctype_employment_contract" model="legal.document.type">
+            <field name="name">عقد العمل الموقّع</field>
+            <field name="name_en">Signed Employment Contract</field>
+            <field name="code">RES-EMPLOYMENT-CONTRACT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="validity_model">none</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="requires_translation" eval="True"/>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">آلية 2025: العقد متوفر بالعربية والإنكليزية أو بلغة العامل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="doctype_security_clearance" model="legal.document.type">
+            <field name="name">الموافقة الأمنية</field>
+            <field name="name_en">Security Clearance</field>
+            <field name="code">RES-SECURITY-CLEARANCE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_moi"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">180</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">آلية 2025: عدم وجود مانع أمني شرط لمنح إجازة العمل؛ والتدقيقات الأمنية تبدأ مع طلب التخويل بالعمل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="doctype_arrival_report" model="legal.document.type">
+            <field name="name">تبليغ الوصول إلى مديرية الإقامة</field>
+            <field name="name_en">Arrival Report</field>
+            <field name="code">RES-ARRIVAL-REPORT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_residency_baghdad"/>
+            <field name="validity_model">none</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">إلزام الوافدين بمراجعة مديرية شؤون الإقامة خلال أول عشرة أيام من الوصول</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <record id="doctype_sponsor_letter" model="legal.document.type">
+            <field name="name">كتاب الشركة بطلب استقدام الأجنبي</field>
+            <field name="name_en">Employer Sponsorship Letter</field>
+            <field name="code">RES-SPONSOR-LETTER</field>
+            <field name="kind_id" ref="legal_core.doc_kind_authority"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_sponsor_ministry"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">90</field>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">المستمسكات المعتادة لمسار الكفالة من صاحب العمل: كتاب رسمي من صاحب العمل يطلب استخدام الشخص</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">90</field>
+        </record>
+
+        <record id="doctype_photographs" model="legal.document.type">
+            <field name="name">صورتان شخصيتان بخلفية بيضاء</field>
+            <field name="name_en">Photographs (white background)</field>
+            <field name="code">RES-PHOTOGRAPHS</field>
+            <field name="kind_id" ref="legal_core.doc_kind_personal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="validity_model">none</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">المستمسكات المعتادة لمسار الكفالة من صاحب العمل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">100</field>
+            <field name="instruction" type="html">
+                <p>سطر تافه في الظاهر، وهو أكثر أسباب المراجعة الثانية شيوعاً. الخلفية البيضاء
+                شرط، والصور الملوّنة بخلفية أخرى تُردّ.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

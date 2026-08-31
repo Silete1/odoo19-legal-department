@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalKpiTile">
+        <div t-attf-class="o_legal_tile o_legal_tone_{{ props.tone }} {{ props.lead ? 'o_legal_tile_lead' : '' }} {{ clickable ? 'o_legal_tile_open' : '' }}"
+             t-att-data-kpi="props.icon"
+             t-att-role="clickable ? 'button' : null"
+             t-att-tabindex="clickable ? 0 : null"
+             t-on-click="() => this.onClick()"
+             t-on-keydown="onKeydown">
+            <div class="o_legal_tile_head">
+                <i t-if="props.icon" t-attf-class="fa {{ props.icon }} o_legal_tile_icon"
+                   role="img" aria-hidden="true"/>
+                <span class="o_legal_tile_label" t-esc="props.label"/>
+            </div>
+            <!-- dir="ltr": a bare numeral is safe inside an Arabic paragraph,
+                 but anything the server may one day prefix - a sign, a unit -
+                 would be reordered by the bidi algorithm. -->
+            <span class="o_legal_tile_value o_legal_num" dir="ltr" t-esc="displayValue"/>
+            <span class="o_legal_tile_hint" t-if="props.hint" t-esc="props.hint"/>
+            <i t-if="clickable" class="fa fa-angle-right o_legal_tile_go"
+               role="img" aria-hidden="true"/>
+        </div>
+    </t>
+
+</templates>

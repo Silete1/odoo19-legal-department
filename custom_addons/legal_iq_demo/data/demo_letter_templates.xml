@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Letter templates for the worked example.
+
+        The content packs deliberately ship bodies, procedures and document types
+        but no letter templates, because the wording of a كتاب is the company's
+        own voice and no pack should put words in a customer's mouth. These four
+        exist so the demonstration shows the feature working end to end, and so a
+        consultant has a shape to copy rather than a blank form.
+
+        The placeholder vocabulary is fixed and documented on
+        legal.letter.template.PLACEHOLDERS - deliberately str substitution rather
+        than QWeb or safe_eval, because the person editing a letter template is
+        the legal manager, and handing that person an expression language is
+        handing them a way to run code from a form view.
+
+        show_qr stays FALSE on every one of them. A verification code printed on a
+        government-facing letter that resolves to a 404 is worse than no code: it
+        invites the recipient to test it, and it fails in front of them. Turn it on
+        in the same release that ships the public verification route.
+    -->
+    <data noupdate="1">
+
+        <record id="letter_tmpl_tax_followup" model="legal.letter.template">
+            <field name="name">متابعة معاملة لدى الهيئة العامة للضرائب</field>
+            <field name="code">TMPL-GCT-FOLLOWUP</field>
+            <field name="body_id" ref="legal_iq_tax.body_gct"/>
+            <field name="letterhead_variant">preprinted</field>
+            <field name="show_qr" eval="False"/>
+            <field name="show_subject_table" eval="False"/>
+            <field name="sequence">10</field>
+            <field name="subject_template">{subject}</field>
+            <field name="cc_list">نسخة منه إلى / القسم القانوني - للحفظ</field>
+            <field name="body_template" type="html">
+                <div>
+                    <p>{salutation}</p>
+                    <p>
+                        إشارة إلى كتابنا المرقم {our_number} في {our_date}، وبالإشارة إلى
+                        كتابكم المرقم {their_number} في {their_date}، نرجو التفضل بالإيعاز
+                        لمن يلزم بإكمال إجراءات المعاملة المؤشرة أعلاه.
+                    </p>
+                    <p>مع فائق الاحترام والتقدير.</p>
+                </div>
+            </field>
+            <field name="note">The everyday chase letter. Written to be re-sent as a تذكير without editing, which is why it cites both references.</field>
+        </record>
+
+        <record id="letter_tmpl_tax_clearance_request" model="legal.letter.template">
+            <field name="name">طلب براءة ذمة ضريبية</field>
+            <field name="code">TMPL-GCT-CLEARANCE</field>
+            <field name="body_id" ref="legal_iq_tax.body_gct"/>
+            <field name="letterhead_variant">preprinted</field>
+            <field name="show_qr" eval="False"/>
+            <field name="show_subject_table" eval="False"/>
+            <field name="sequence">20</field>
+            <field name="subject_template">طلب إصدار براءة ذمة ضريبية</field>
+            <field name="body_template" type="html">
+                <div>
+                    <p>{salutation}</p>
+                    <p>
+                        نرجو التفضل بالموافقة على إصدار براءة ذمة ضريبية لشركتنا
+                        ({entity})، وذلك لغرض الاشتراك في المناقصات، علماً أن الشركة
+                        مستمرة بتقديم تصاريحها الضريبية في مواعيدها القانونية.
+                    </p>
+                    <p>مع فائق الاحترام والتقدير.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="letter_tmpl_residency_visa" model="legal.letter.template">
+            <field name="name">طلب منح سمة دخول لخبير أجنبي</field>
+            <field name="code">TMPL-RES-VISA</field>
+            <field name="body_id" ref="legal_iq_residency.body_sponsor_ministry"/>
+            <field name="letterhead_variant">preprinted</field>
+            <field name="show_qr" eval="False"/>
+            <!--
+                The one template that prints the numbered ت table: a single letter
+                routinely covers several experts, which the React prototype modelled
+                with exactly one hard-coded row while plainly intending N.
+            -->
+            <field name="show_subject_table" eval="True"/>
+            <field name="sequence">30</field>
+            <field name="subject_template">طلب منح سمة دخول</field>
+            <field name="cc_list">نسخة منه إلى / مديرية شؤون الإقامة&#10;نسخة منه إلى / القسم القانوني - للحفظ</field>
+            <field name="body_template" type="html">
+                <div>
+                    <p>{salutation}</p>
+                    <p>
+                        نرجو التفضل بالنظر في منح سمة دخول إلى جمهورية العراق للسادة
+                        المدرجة أسماؤهم في الجدول أدناه، وذلك لغرض متابعة أعمال الشركة
+                        ({entity}) بموجب العقد المبرم معها.
+                    </p>
+                    <p>مع فائق الاحترام والتقدير.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="letter_tmpl_registrar_amendment" model="legal.letter.template">
+            <field name="name">تبليغ تعديل لدى مسجل الشركات</field>
+            <field name="code">TMPL-MOT-AMEND</field>
+            <field name="body_id" ref="legal_iq_registrar.body_mot_registrar"/>
+            <field name="letterhead_variant">preprinted</field>
+            <field name="show_qr" eval="False"/>
+            <field name="show_subject_table" eval="False"/>
+            <field name="sequence">40</field>
+            <field name="subject_template">{subject}</field>
+            <field name="body_template" type="html">
+                <div>
+                    <p>{salutation}</p>
+                    <p>
+                        استناداً إلى أحكام قانون الشركات رقم (21) لسنة 1997 المعدل، نود
+                        تبليغكم بالتعديل المؤشر أعلاه الخاص بشركتنا ({entity})، مرفقاً
+                        طياً المستمسكات المطلوبة.
+                    </p>
+                    <p>راجين التفضل بالتأشير والمصادقة، مع فائق الاحترام والتقدير.</p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

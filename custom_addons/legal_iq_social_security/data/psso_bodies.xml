@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="body_molsa" model="legal.gov.body">
+            <field name="name">وزارة العمل والشؤون الاجتماعية</field>
+            <field name="short_name">العمل</field>
+            <field name="code">MOLSA</field>
+            <field name="body_type_id" ref="legal_core.body_type_ministry"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة العمل والشؤون الاجتماعية</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://molsa.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_psso"/>
+            <field name="legal_basis">قانون العمل رقم 37 لسنة 2015</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="body_psso" model="legal.gov.body">
+            <field name="name">دائرة التقاعد والضمان الاجتماعي للعمال</field>
+            <field name="short_name">الضمان</field>
+            <field name="code">PSSO</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_molsa"/>
+            <field name="letterhead_recipient">وزارة العمل والشؤون الاجتماعية
+دائرة التقاعد والضمان الاجتماعي للعمال</field>
+            <field name="salutation">السيد مدير عام دائرة التقاعد والضمان الاجتماعي للعمال المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://rss.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_psso"/>
+            <field name="colour">6</field>
+            <field name="legal_basis">قانون التقاعد والضمان الاجتماعي للعمال رقم 18 لسنة 2023، المنشور في الوقائع العراقية العدد 4734 في 28 آب 2023 والنافذ من 1 كانون الأول 2023، وقد حلّ محل قانون 39 لسنة 1971</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">20</field>
+            <field name="note" type="html">
+                <div>
+                    <p>الدائرة ممولة ذاتياً من الاشتراكات، وفروع التأمين أربعة: الضمان الصحي،
+                    وضمان إصابات العمل، وضمان التقاعد، وضمان الخدمات.</p>
+                    <p><b>الاشتراكات:</b> 17% من الأجور الإجمالية - 5% على العامل تُستقطع و12%
+                    على صاحب العمل - إضافة إلى 8% تتحملها الدولة عن العاملين العراقيين في غير
+                    قطاع النفط والغاز، ويتحملها <b>صاحب العمل</b> عن العاملين الأجانب المسجلين.
+                    أصحاب العمل في القطاع النفطي («الأولية») يساهمون بنسبة 25%.</p>
+                    <p><b>وعاء الاشتراك</b> أعيد تعريفه ليشمل الراتب الأساس نقداً أو عيناً
+                    <b>مضافاً إليه جميع المخصصات</b>، بعد أن كان يقتصر على المخصصات الثابتة التي
+                    تتجاوز 30% من الأساس. الحد الأدنى للوعاء 350,000 دينار والحد الأعلى
+                    1,750,000 دينار (خمسة أضعاف الحد الأدنى للأجور). ومن يغادر منتصف الشهر
+                    يُستحق عنه اشتراك شهر كامل.</p>
+                    <p><b>في إقليم كردستان</b> النسب 12% صاحب عمل و5% عامل، بلا نسبة «أولية»
+                    نفطية، وقانون 18 لسنة 2023 لم يُعتمد في الإقليم بعد.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="body_psso_registration" model="legal.gov.body">
+            <field name="name">شعبة التسجيل وضم العاملين</field>
+            <field name="short_name">التسجيل والضم</field>
+            <field name="code">PSSO-REG</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_psso"/>
+            <field name="letterhead_recipient">دائرة التقاعد والضمان الاجتماعي للعمال
+شعبة التسجيل وضم العاملين</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://rss.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_psso"/>
+            <field name="legal_basis">المادتان 23 و93 من قانون 18 لسنة 2023: يبلَّغ صاحب العمل الدائرة بالتعيين خلال 30 يوماً من تاريخ الاستخدام</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="body_psso_contributions" model="legal.gov.body">
+            <field name="name">شعبة الاشتراكات</field>
+            <field name="short_name">الاشتراكات</field>
+            <field name="code">PSSO-CONTRIB</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_psso"/>
+            <field name="letterhead_recipient">دائرة التقاعد والضمان الاجتماعي للعمال
+شعبة الاشتراكات</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://rss.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_psso"/>
+            <field name="legal_basis">المادة 92 والمادة 17 من قانون 18 لسنة 2023 - غرامة تأخير 1% شهرياً اعتباراً من اليوم 121 بسقف 100% من أصل المبلغ</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">stale</field>
+            <field name="sequence">40</field>
+            <field name="note" type="html">
+                <p><b>موعد التسديد محل خلاف بين مصدرين معتبرين:</b> مكاتب محاماة تذكر «نهاية
+                الشهر التقويمي التالي»، بينما تذكر جهات رواتب «خلال 15 يوماً من نهاية الشهر».
+                اعتُمد الأول في جدول الالتزامات لأنه الأفضل توثيقاً، وحالة التحقق هنا «تحتاج
+                إعادة تدقيق». اسأل شعبة الاشتراكات وثبّت الجواب.</p>
+            </field>
+        </record>
+
+        <record id="body_psso_inspection" model="legal.gov.body">
+            <field name="name">شعبة التفتيش</field>
+            <field name="short_name">التفتيش</field>
+            <field name="code">PSSO-INSPECT</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_psso"/>
+            <field name="letterhead_recipient">دائرة التقاعد والضمان الاجتماعي للعمال
+شعبة التفتيش</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_psso"/>
+            <field name="legal_basis">تأييد الكشف ضمن إجراء تسجيل المشروع</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="body_psso_clearance" model="legal.gov.body">
+            <field name="name">شعبة سلامة الموقف وبراءة الذمة</field>
+            <field name="short_name">سلامة الموقف</field>
+            <field name="code">PSSO-CLEARANCE</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_psso"/>
+            <field name="letterhead_recipient">دائرة التقاعد والضمان الاجتماعي للعمال
+شعبة سلامة الموقف</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">online</field>
+            <field name="portal_url">https://rss.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_psso"/>
+            <field name="legal_basis">خدمة سلامة الموقف على منظومة ضمان الرقمية - براءة ذمة تؤكد وفاء المشروع بالتزامات الاشتراك</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">60</field>
+            <field name="note" type="html">
+                <p>لاستحصال براءة الذمة لغرض مناقصة يجب تزويد الدائرة بنسخة من <b>إعلان
+                المناقصة أو كتاب الدعوة الرسمي</b>. هذه هي الوثيقة التي يُنسى إحضارها فتُردّ
+                المعاملة من أول شباك.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

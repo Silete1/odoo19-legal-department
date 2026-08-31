@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="body_chamber_baghdad" model="legal.gov.body">
+            <field name="name">غرفة تجارة بغداد</field>
+            <field name="short_name">الغرفة</field>
+            <field name="code">CHAMBER-BGD</field>
+            <field name="body_type_id" ref="legal_core.body_type_chamber"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">غرفة تجارة بغداد</field>
+            <field name="salutation">السيد رئيس غرفة تجارة بغداد المحترم</field>
+            <field name="address">بغداد - شارع الرشيد</field>
+            <field name="open_hours">الأحد - الأربعاء ٠٨:٠٠ - ١٤:٠٠، والخميس ٠٨:٠٠ - ١٣:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="portal_url">https://bcc.iq</field>
+            <field name="resource_calendar_id" ref="calendar_chamber"/>
+            <field name="colour">5</field>
+            <field name="legal_basis">السجل التجاري يُمسك لدى الغرف المحلية، والتسجيل فيه خلال 30 يوماً من استلام شهادة التأسيس؛ ويُعترض على قرارات الغرفة أمام المحكمة المختصة خلال 30 يوماً من التبليغ</field>
+            <field name="legal_basis_url">https://bcc.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">10</field>
+            <field name="note" type="html">
+                <div>
+                    <p>الغرفة هي المحطة <b>الأولى</b> لا الأخيرة: حجز الاسم التجاري يسبق المسجل.
+                    الإجراء موثّق بـ16 خطوة داخل غرفة بغداد، ثم 8 خطوات لدى الاتحاد.</p>
+                    <p>الصيدليات والمخازن والفنادق والمعامل والمطاعم والقاعات والمقاهي غير
+                    أعضاء: يُمنحون اسماً تجارياً بلا هوية.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="body_chamber_federation" model="legal.gov.body">
+            <field name="name">اتحاد الغرف التجارية العراقية</field>
+            <field name="short_name">الاتحاد</field>
+            <field name="code">CHAMBER-FED</field>
+            <field name="body_type_id" ref="legal_core.body_type_federation"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">اتحاد الغرف التجارية العراقية</field>
+            <field name="salutation">السيد رئيس اتحاد الغرف التجارية العراقية المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_chamber"/>
+            <field name="legal_basis">اتحاد الغرف التجارية العراقية - جهة التحقق الوطني من تفرّد الاسم التجاري، لأن قواعد بيانات الغرف المحلية غير مترابطة إلكترونياً فيتم التثبيت لديه بإجراء مستقل من ثماني خطوات</field>
+            <field name="legal_basis_url">https://bcc.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">20</field>
+            <field name="note" type="html">
+                <p>الاتحاد موجود لأن قواعد بيانات الأسماء في الغرف المحلية <b>غير مترابطة
+                إلكترونياً</b>، فصار التحقق الوطني من تفرّد الاسم إجراءً مادياً منفصلاً من ثماني
+                خطوات. من يعامل موافقة الغرفة على الاسم كأنها نهائية يكتشف الخطأ بعد أن يكون قد
+                طبع العقد.</p>
+            </field>
+        </record>
+
+        <record id="body_chamber_registry" model="legal.gov.body">
+            <field name="name">شعبة السجل التجاري - غرفة تجارة بغداد</field>
+            <field name="short_name">السجل التجاري</field>
+            <field name="code">CHAMBER-REGISTRY</field>
+            <field name="body_type_id" ref="legal_core.body_type_chamber"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_chamber_baghdad"/>
+            <field name="letterhead_recipient">غرفة تجارة بغداد
+شعبة السجل التجاري</field>
+            <field name="open_hours">الأحد - الأربعاء ٠٨:٠٠ - ١٤:٠٠، والخميس حتى ١٣:٠٠</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_chamber"/>
+            <field name="legal_basis">التسجيل في السجل التجاري خلال 30 يوماً من استلام شهادة التأسيس، ويشمل أسماء المؤسسين ورئيس مجلس الإدارة والمدير المفوض واسم الشركة وتاريخ التأسيس وعناوين المركز والفروع داخل العراق وخارجه ووصف النشاط التجاري</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">30</field>
+        </record>
+
+    </data>
+</odoo>

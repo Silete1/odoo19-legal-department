@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalWorklist">
+        <section class="o_legal_card o_legal_worklist">
+            <header class="o_legal_card_head">
+                <h3 class="o_legal_card_title">
+                    <t t-esc="props.title"/>
+                    <span class="o_legal_count o_legal_num" dir="ltr" t-esc="props.total"/>
+                </h3>
+            </header>
+            <p class="o_legal_card_hint" t-if="props.hint" t-esc="props.hint"/>
+
+            <!-- Empty is a result, not a blank: it says what would be here. -->
+            <div class="o_legal_empty" t-if="!props.files.length">
+                <i class="fa fa-check-circle" role="img" aria-hidden="true"/>
+                <div>
+                    <p class="o_legal_empty_title" t-esc="props.empty"/>
+                    <p class="o_legal_empty_hint" t-if="props.emptyHint" t-esc="props.emptyHint"/>
+                </div>
+            </div>
+
+            <ul class="o_legal_rows" t-else="">
+                <li t-foreach="props.files" t-as="file" t-key="file.id"
+                    t-attf-class="o_legal_row o_legal_age_{{ file.age_band }}"
+                    t-att-data-case="file.id">
+                    <!-- The WHOLE row is the button. Linking only the reference
+                         made GOV.UK's own users mistake the status tag beside
+                         it for a second control, and this row has three. -->
+                    <button t-on-click="() => this.props.onOpenRecord(file)"
+                            t-attf-aria-label="{{ file.name }} — {{ file.step_label }}">
+                        <span class="o_legal_row_ref o_legal_num" dir="ltr">
+                            <i class="fa fa-star o_legal_row_star" t-if="file.urgent"
+                               role="img" t-att-title="label.urgent"/>
+                            <t t-esc="file.name"/>
+                        </span>
+                        <span class="o_legal_row_subject" t-esc="file.subject"/>
+                        <span class="o_legal_row_body">
+                            <span class="o_legal_chip o_legal_body_chip" t-esc="file.body_label"/>
+                        </span>
+                        <span class="o_legal_row_step">
+                            <span class="o_legal_chip" t-esc="file.step_label"/>
+                        </span>
+                        <span class="o_legal_row_clock">
+                            <LegalClockBadge payload="file.clock" compact="true"/>
+                        </span>
+                        <span class="o_legal_row_age">
+                            <!-- The bar is a display scale; the figure beside it
+                                 is the fact. Both are needed - the bar for the
+                                 sweep down the column, the figure because the
+                                 bar is capped at a fortnight. -->
+                            <span class="o_legal_meter" aria-hidden="true">
+                                <span class="o_legal_meter_fill"
+                                      t-attf-style="inline-size: {{ file.age_percent }}%;"/>
+                            </span>
+                            <span class="o_legal_row_days o_legal_num" dir="ltr"
+                                  t-att-title="label.atThisStep"
+                                  t-esc="file.at_step_days"/>
+                            <!-- Quieter, because the reader acts on the first
+                                 number and is accountable for this one. -->
+                            <span class="o_legal_row_total o_legal_num" dir="ltr"
+                                  t-att-title="label.sinceOpened"
+                                  t-esc="file.since_open_days"/>
+                            <span class="visually-hidden">
+                                <t t-esc="file.at_step_label"/> <t t-esc="label.atThisStep"/>,
+                                <t t-esc="file.since_open_label"/> <t t-esc="label.sinceOpened"/>
+                            </span>
+                        </span>
+                    </button>
+                    <p class="o_legal_row_blocker" t-if="file.blocker_summary"
+                       t-esc="file.blocker_summary"/>
+                </li>
+            </ul>
+
+            <footer class="o_legal_card_foot" t-if="props.files.length">
+                <button class="btn btn-link btn-sm o_legal_more" t-if="props.onOpenAll"
+                        t-on-click="() => this.props.onOpenAll()">
+                    <t t-esc="label.openAll"/>
+                    <i class="fa fa-angle-right" role="img" aria-hidden="true"/>
+                </button>
+                <span class="o_legal_foot_note" t-esc="label.ages"/>
+            </footer>
+        </section>
+    </t>
+
+</templates>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         تسجيل كتاب وارد - the mail room, in six fields.
+         ================================================================ -->
+    <record id="view_legal_correspondence_register_wizard_form" model="ir.ui.view">
+        <field name="name">legal.correspondence.register.wizard.form</field>
+        <field name="model">legal.correspondence.register.wizard</field>
+        <field name="arch" type="xml">
+            <form string="تسجيل كتاب وارد">
+                <group>
+                    <group string="الكتاب">
+                        <field name="gov_body_id"/>
+                        <field name="body_section"/>
+                        <field name="their_number" placeholder="ك/م/١٢٣٤"/>
+                        <field name="their_date"/>
+                        <field name="subject" placeholder="تقدير ضريبي لسنة ٢٠٢٥"/>
+                    </group>
+                    <group string="قيدنا">
+                        <field name="register_id"/>
+                        <field name="kind_id"/>
+                        <field name="our_date"/>
+                        <field name="secrecy"/>
+                        <field name="document_action"/>
+                        <field name="entity_id"/>
+                        <field name="reply_to_id"/>
+                    </group>
+                </group>
+                <group string="المرفقات">
+                    <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
+                </group>
+                <field name="note" placeholder="ملاحظة عند التسلّم" nolabel="1"/>
+                <footer>
+                    <button name="action_register" type="object" string="تسجيل ومنح الرقم"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="إلغاء" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_correspondence_register_wizard" model="ir.actions.act_window">
+        <field name="name">تسجيل كتاب وارد</field>
+        <field name="res_model">legal.correspondence.register.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- ================================================================
+         إلغاء قيد - the line drawn across the page.
+         ================================================================ -->
+    <record id="view_legal_correspondence_void_wizard_form" model="ir.ui.view">
+        <field name="name">legal.correspondence.void.wizard.form</field>
+        <field name="model">legal.correspondence.void.wizard</field>
+        <field name="arch" type="xml">
+            <form string="إلغاء قيد">
+                <group>
+                    <field name="correspondence_id" invisible="1"/>
+                    <field name="our_number"/>
+                    <field name="subject"/>
+                    <field name="replacement_id"/>
+                </group>
+                <field name="reason" placeholder="سبب الإلغاء: كتاب مكرر، أو رُفض عند الشباك، أو لم يُرسل."/>
+                <div class="alert alert-warning" role="alert">
+                    الرقم يبقى في الدفتر ولا يُعاد استعماله. القيد الملغى يحتفظ بموضعه تماماً كما
+                    يبقى السطر المشطوب في السجل الورقي، وإلا صار في الدفتر ثغرة لا يستطيع أحد
+                    تفسيرها بعد سنوات.
+                </div>
+                <footer>
+                    <button name="action_void" type="object" string="تأكيد الإلغاء"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="تراجع" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         تدوين اتصال - what the counter actually said.
+         ================================================================ -->
+    <record id="view_legal_contact_note_wizard_form" model="ir.ui.view">
+        <field name="name">legal.contact.note.wizard.form</field>
+        <field name="model">legal.contact.note.wizard</field>
+        <field name="arch" type="xml">
+            <form string="تدوين اتصال">
+                <group>
+                    <group>
+                        <field name="correspondence_id"/>
+                        <field name="kind_id"/>
+                        <field name="gov_body_id"/>
+                        <field name="body_section"/>
+                    </group>
+                    <group>
+                        <field name="contact_date"/>
+                        <field name="spoke_to" placeholder="أبو أحمد - معاون مدير القسم"/>
+                        <field name="promised_on"/>
+                        <field name="entity_id"/>
+                        <field name="subject"/>
+                    </group>
+                </group>
+                <field name="said" placeholder="قال إن الإضبارة لدى المستشار القانوني، ووعد بمراجعتها بعد العيد."/>
+                <div class="alert alert-info" role="alert">
+                    هذا التدوين لا يأخذ رقماً في السجل - لم يمر بالدفتر أصلاً. لكن التاريخ الموعود
+                    ينقل مهلة الرد إليه ويوقف الملاحقة التالية، فلا يلاحق النظام جهةً أجابت فعلاً.
+                </div>
+                <footer>
+                    <button name="action_record" type="object" string="حفظ التدوين"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="إلغاء" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_contact_note_wizard" model="ir.actions.act_window">
+        <field name="name">تدوين اتصال</field>
+        <field name="res_model">legal.contact.note.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

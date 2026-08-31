@@ -1,0 +1,289 @@
+// The furniture every screen in this module shares: the ground, the card, the
+// band heading, the chip, the meter and the empty state.
+//
+// Loaded first because the directory sorts first under the manifest glob, but
+// nothing here is overridden by a later file - each component styles its own
+// classes and only its own. That is deliberate: a stylesheet whose correctness
+// depends on the alphabetical order of a glob is a bug waiting for the day
+// somebody renames a folder.
+//
+// Every colour is a real Odoo 19 backend SCSS token resolved at compile time,
+// so a theme that overrides the tokens re-skins this for free:
+// $o-view-background-color and $o-brand-primary from primary_variables.scss,
+// $border-color / $text-muted / $body-color / $success / $warning / $danger
+// from bootstrap_overridden.scss. CSS custom properties such as --card-bg are
+// NOT declared anywhere in Odoo 19 and must never be used: they resolve to
+// their fallback and the theme is bypassed silently.
+//
+// Spacing is written in LOGICAL properties throughout - margin-inline-start,
+// padding-inline-end, border-inline-start, text-align: start. Odoo mirrors the
+// interface by piping the compiled CSS through rtlcss over the *physical*
+// properties and never sets `direction` itself, so logical properties are
+// untouched by that pass and cannot be mirrored twice. Every component that
+// lays itself out therefore stamps its own `dir` from the server flag, and
+// physical and logical are never mixed inside one rule.
+//
+// Arabic typography, which is not negotiable: letter-spacing stays 0 because
+// Arabic letters connect and tracking breaks the joins; nothing is italic,
+// because an obliqued naskh slants the joins the wrong way; line-height runs
+// above the Latin so a kasra is not clipped; and body text never drops below
+// 14px.
+
+$o-legal-radius: 8px;
+
+.o_legal_screen {
+    // This class lands on the Layout's `.o_content`. The page is taller than
+    // the viewport by design, and `.o_action_manager` above it is
+    // `overflow: hidden`, so unless this element is the scroller everything
+    // below the fold is simply unreachable. Both halves are needed: without
+    // the cap there is nothing for `auto` to scroll, without `auto` the cap
+    // only clips.
+    max-block-size: 100%;
+    overflow-y: auto;
+
+    // Flat bordered cards need something to sit on, and a tint costs no ink
+    // where a shadow would add some to every card on the page.
+    background-color: mix($o-gray-200, $o-view-background-color, 45%);
+
+    // Arabic is set slightly looser than the Latin default. Applied to the
+    // screen rather than to `[lang]` because the payload, not the browser,
+    // decides which way round the page runs.
+    &[dir="rtl"],
+    [dir="rtl"] & {
+        line-height: 1.6;
+        letter-spacing: 0;
+    }
+}
+
+.o_legal_body {
+    padding: 1.25rem;
+    max-inline-size: 100rem;
+    margin-inline: auto;
+}
+
+// ------------------------------------------------------------------ loading
+.o_legal_loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-block-size: 60vh;
+    color: $text-muted;
+}
+
+.o_legal_spinner {
+    inline-size: 1.1rem;
+    block-size: 1.1rem;
+    border: 2px solid $border-color;
+    border-block-start-color: $o-brand-primary;
+    border-radius: 50%;
+    animation: o_legal_spin 0.7s linear infinite;
+}
+
+@keyframes o_legal_spin { to { transform: rotate(360deg); } }
+
+// -------------------------------------------------------------------- bands
+.o_legal_band_head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-block: 1.5rem 0.65rem;
+
+    &:first-child { margin-block-start: 0; }
+}
+
+.o_legal_band_title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $text-muted;
+    margin: 0;
+
+    // Uppercasing and tracking are Latin devices. In Arabic they do nothing at
+    // best and break the joins at worst, so both are dropped when the page is
+    // right to left rather than applied and hoped over.
+    [dir="rtl"] & {
+        text-transform: none;
+        letter-spacing: 0;
+        font-size: 0.88rem;
+    }
+}
+
+.o_legal_band_sub {
+    font-size: 0.85rem;
+    color: $text-muted;
+}
+
+// -------------------------------------------------------------------- cards
+.o_legal_card {
+    border: 1px solid $border-color;
+    border-radius: $o-legal-radius;
+    background-color: $o-view-background-color;
+    padding: 1rem 1.1rem;
+}
+
+.o_legal_card_head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.o_legal_card_title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: $body-color;
+    margin: 0 0 0.2rem;
+}
+
+.o_legal_card_hint {
+    font-size: 0.82rem;
+    color: $text-muted;
+    margin: 0 0 0.6rem;
+}
+
+.o_legal_count {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: $text-muted;
+    padding: 0.05rem 0.45rem;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+}
+
+.o_legal_card_foot {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-block-start: 0.6rem;
+    padding-block-start: 0.5rem;
+    border-block-start: 1px solid $border-color;
+}
+
+.o_legal_more {
+    padding: 0;
+
+    // The chevron points along the reading direction, so it turns round with
+    // the page instead of pointing back the way the reader came. This is one
+    // of the few icons whose meaning is tied to reading order; a clock, a
+    // magnifier or a tick must never be mirrored.
+    .fa { margin-inline-start: 0.25rem; }
+    [dir="rtl"] & .fa { transform: scaleX(-1); }
+}
+
+.o_legal_foot_note {
+    font-size: 0.75rem;
+    color: $text-muted;
+}
+
+// -------------------------------------------------------------- empty states
+// Empty is a result, not a blank. Every column and every section renders even
+// when it holds nothing and says what would be there, because "nothing is
+// waiting to be filed" is the answer to the clerk's question and an absent
+// panel is not.
+.o_legal_empty {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1.4rem 0.4rem;
+    color: $text-muted;
+
+    .fa {
+        color: $success;
+        font-size: 1.25rem;
+        flex: 0 0 auto;
+    }
+}
+
+.o_legal_empty_title {
+    margin: 0;
+    font-weight: 600;
+    color: $body-color;
+}
+
+.o_legal_empty_hint {
+    margin: 0.2rem 0 0;
+    font-size: 0.85rem;
+}
+
+// --------------------------------------------------------------------- chips
+.o_legal_chip {
+    display: inline-block;
+    max-inline-size: 100%;
+    padding: 0.1rem 0.45rem;
+    border-radius: 10px;
+    background-color: $o-gray-200;
+    color: $body-color;
+    font-size: 0.78rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// The body chip carries the body's own colour as a rule down its leading edge
+// rather than as a tinted ground: a tint behind Arabic text costs contrast for
+// no information, and the body's name is already the label.
+.o_legal_body_chip {
+    border-inline-start: 3px solid $o-brand-primary;
+    background-color: transparent;
+    padding-inline-start: 0.4rem;
+    border-radius: 0;
+    font-weight: 600;
+}
+
+// -------------------------------------------------------------------- meters
+// A display scale, not a deadline. No Iraqi body publishes a per-step target,
+// so the exact figure always sits beside the bar and the word "target" appears
+// only where a configured service level really says one.
+.o_legal_meter {
+    display: block;
+    block-size: 6px;
+    background-color: $o-gray-200;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.o_legal_meter_fill {
+    display: block;
+    block-size: 100%;
+    border-start-end-radius: 3px;
+    border-end-end-radius: 3px;
+    background-color: $o-brand-primary;
+    transition: inline-size 0.35s ease;
+}
+
+// The three status hues, used identically wherever ageing is shown so one
+// colour always means one thing - and always beside the written figure.
+.o_legal_age_fresh .o_legal_meter_fill { background-color: $success; }
+.o_legal_age_slipping .o_legal_meter_fill { background-color: $warning; }
+.o_legal_age_stuck .o_legal_meter_fill { background-color: $danger; }
+
+// ------------------------------------------------------------------- numbers
+// Every register number, reference, date and counter is pinned `dir="ltr"` in
+// the markup; this only makes them line up in a column.
+.o_legal_num {
+    font-variant-numeric: tabular-nums;
+}
+
+// -------------------------------------------------------------- degradation
+// The module is installed in pieces. A screen whose sibling model is not there
+// yet says so, once, in a quiet note - rather than drawing three empty columns
+// and letting the clerk conclude the register is broken.
+.o_legal_degraded {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-block-end: 1rem;
+    padding: 0.6rem 0.85rem;
+    border: 1px dashed $border-color;
+    border-radius: $o-legal-radius;
+    color: $text-muted;
+    font-size: 0.85rem;
+}

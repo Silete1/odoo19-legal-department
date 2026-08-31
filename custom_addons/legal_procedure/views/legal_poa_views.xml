@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_poa_form" model="ir.ui.view">
+        <field name="name">legal.poa.form</field>
+        <field name="model">legal.poa</field>
+        <field name="arch" type="xml">
+            <form string="Power Of Attorney">
+                <header>
+                    <button name="action_activate" type="object" string="Put In Force"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_revoke" type="object" string="Revoke"
+                            invisible="state != 'active'"
+                            groups="legal_core.group_legal_approver"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Revoked" bg_color="text-bg-danger"
+                            invisible="state != 'revoked'"/>
+                    <widget name="web_ribbon" title="Lapsed" bg_color="text-bg-warning"
+                            invisible="state != 'expired'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="وكالة عامة لدى الهيئة العامة للضرائب"/></h1>
+                    </div>
+                    <group>
+                        <group string="Who May Stand At The Counter">
+                            <field name="agent_partner_id"/>
+                            <field name="agent_user_id"/>
+                            <field name="agent_is_lawyer"/>
+                            <field name="bar_association_id" invisible="not agent_is_lawyer"/>
+                            <field name="bar_registration_number" invisible="not agent_is_lawyer"/>
+                            <field name="entity_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="The Deed">
+                            <field name="number"/>
+                            <field name="notary_office"/>
+                            <field name="issue_date"/>
+                            <field name="expiry_date"/>
+                            <field name="notice_days"/>
+                            <field name="expiry_state" readonly="1" widget="badge"
+                                   decoration-success="expiry_state == 'valid'"
+                                   decoration-warning="expiry_state in ['due_soon', 'expiring']"
+                                   decoration-danger="expiry_state == 'expired'"/>
+                            <field name="scope"/>
+                            <field name="document_id"/>
+                        </group>
+                    </group>
+                    <group string="Which Counters Accept It">
+                        <field name="body_ids" widget="many2many_tags" nolabel="1" colspan="2"/>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        Leaving the list empty means “good anywhere”. Most Iraqi bodies want to see
+                        themselves named on the deed, so an empty list is worth a second look.
+                    </div>
+                    <notebook>
+                        <page string="Scope" name="scope">
+                            <field name="scope_note"
+                                   placeholder="The words the deed actually uses. The counter reads these, so paraphrasing them is how a file gets refused."/>
+                        </page>
+                        <page string="Revocation" name="revocation" invisible="state != 'revoked'">
+                            <group>
+                                <field name="revoked_on"/>
+                                <field name="revocation_reason"/>
+                            </group>
+                        </page>
+                        <page string="Files" name="cases">
+                            <field name="case_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="procedure_type_id"/>
+                                    <field name="step_id"/>
+                                    <field name="current_body_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Scans" name="scans">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_poa_list" model="ir.ui.view">
+        <field name="name">legal.poa.list</field>
+        <field name="model">legal.poa</field>
+        <field name="arch" type="xml">
+            <list string="Powers Of Attorney"
+                  decoration-danger="state == 'revoked' or expiry_state == 'expired'"
+                  decoration-warning="expiry_state in ['due_soon', 'expiring']">
+                <field name="name"/>
+                <field name="number"/>
+                <field name="agent_partner_id"/>
+                <field name="entity_id" optional="hide"/>
+                <field name="scope"/>
+                <field name="body_ids" widget="many2many_tags" optional="show"/>
+                <field name="issue_date" optional="hide"/>
+                <field name="expiry_date"/>
+                <field name="days_to_expiry" optional="show"/>
+                <field name="expiry_state" widget="badge" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-danger="state == 'revoked'"/>
+                <field name="case_count" string="Files" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_poa_search" model="ir.ui.view">
+        <field name="name">legal.poa.search</field>
+        <field name="model">legal.poa</field>
+        <field name="arch" type="xml">
+            <search string="Powers Of Attorney">
+                <field name="name" filter_domain="['|', '|', ('name', 'ilike', self), ('number', 'ilike', self), ('agent_partner_id', 'ilike', self)]"/>
+                <field name="agent_partner_id"/>
+                <field name="body_ids"/>
+                <filter name="in_force" string="In Force" domain="[('state', '=', 'active')]"/>
+                <filter name="expiring" string="Expiring" domain="[('expiry_state', 'in', ['due_soon', 'expiring'])]"/>
+                <filter name="revoked" string="Revoked" domain="[('state', '=', 'revoked')]"/>
+                <filter name="lawyers" string="Advocates" domain="[('agent_is_lawyer', '=', True)]"/>
+                <group>
+                    <filter name="group_agent" string="Agent" context="{'group_by': 'agent_partner_id'}"/>
+                    <filter name="group_scope" string="Scope" context="{'group_by': 'scope'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_poa" model="ir.actions.act_window">
+        <field name="name">Powers Of Attorney</field>
+        <field name="res_model">legal.poa</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_in_force': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Record the وكالة before somebody needs it</p>
+            <p>
+                A counter will not deal with a person who is not named on the deed, for that
+                body, on the day they turn up. Recording all three here is what lets a file
+                be stopped at the desk rather than on the pavement outside the ministry.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_legal_poa_revoke_form" model="ir.ui.view">
+        <field name="name">legal.poa.revoke.form</field>
+        <field name="model">legal.poa.revoke</field>
+        <field name="arch" type="xml">
+            <form string="Revoke">
+                <group>
+                    <field name="poa_id" readonly="1"/>
+                    <field name="revoked_on"/>
+                    <field name="reason" required="1" placeholder="Why the authority was withdrawn."/>
+                    <field name="notify_bodies"/>
+                </group>
+                <div class="alert alert-warning" role="alert">
+                    An Iraqi body does not learn of a revocation until it is told. Every counter
+                    on the deed still holds the old copy, and a file presented there tomorrow is
+                    presented on the deed you have just revoked.
+                </div>
+                <footer>
+                    <button name="action_confirm" type="object" string="Revoke"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

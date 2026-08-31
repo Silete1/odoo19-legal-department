@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ==============================================================
+             1. تسجيل المشروع - registration, five steps and free
+             ============================================================== -->
+
+        <record id="proc_psso_registration" model="legal.procedure.type">
+            <field name="name">تسجيل المشروع لدى الضمان الاجتماعي</field>
+            <field name="code">SSD-REGISTRATION</field>
+            <field name="body_id" ref="body_psso_registration"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_psso_project_certificate"/>
+            <field name="sequence_code">SSD-REG/%(range_year)s/</field>
+            <field name="expected_duration_days">3</field>
+            <field name="channel">hybrid</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">no</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">قانون التقاعد والضمان الاجتماعي للعمال رقم 18 لسنة 2023؛ والإجراء موثّق بخمس خطوات خلال 1-3 أيام بلا رسوم</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">6</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>المستمسكات: استمارة طلب الشركة، وإجازة التسجيل بنسختين، وهوية سارية.
+                الإجراء مجاني - وأي مبلغ يُطلب عند الشباك ليس رسماً.</p>
+            </field>
+        </record>
+
+        <record id="phase_ssdreg_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_ssdreg_body" model="legal.procedure.phase">
+            <field name="name">لدى الدائرة</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_ssdreg_close" model="legal.procedure.phase">
+            <field name="name">الشمول</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_ssdreg_prepare" model="legal.procedure.step">
+            <field name="name">تدقيق بيانات الشركة وتهيئة المستمسكات</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="phase_id" ref="phase_ssdreg_prepare"/>
+            <field name="gov_body_id" ref="body_psso_registration"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">تسجيلات قيد التهيئة</field>
+            <field name="desk_hint">إجازة التسجيل بنسختين وهوية سارية</field>
+            <field name="desk_empty">لا توجد تسجيلات قيد التهيئة</field>
+        </record>
+
+        <record id="step_ssdreg_submit" model="legal.procedure.step">
+            <field name="name">تقديم مستمسكات الشركة</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="phase_id" ref="phase_ssdreg_body"/>
+            <field name="gov_body_id" ref="body_psso_registration"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">طلبات بانتظار التقديم</field>
+            <field name="desk_empty">لا توجد طلبات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_ssdreg_inspection" model="legal.procedure.step">
+            <field name="name">الكشف على المشروع واستحصال التأييد</field>
+            <field name="code">INSPECTION</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="phase_id" ref="phase_ssdreg_body"/>
+            <field name="gov_body_id" ref="body_psso_inspection"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">3</field>
+            <field name="rotting_threshold_days">21</field>
+            <field name="return_to_step_id" ref="step_ssdreg_prepare"/>
+            <field name="desk_title">بانتظار الكشف</field>
+            <field name="desk_hint">الكشف يقع في مقر المشروع لا في الدائرة</field>
+            <field name="desk_empty">لا توجد كشوف معلّقة</field>
+            <field name="desk_note_template">راجعنا شعبة التفتيش بشأن موعد الكشف وأفادوا بأن</field>
+        </record>
+
+        <record id="step_ssdreg_approval" model="legal.procedure.step">
+            <field name="name">استحصال رقم الدور وموافقة الشمول</field>
+            <field name="code">APPROVAL</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="phase_id" ref="phase_ssdreg_body"/>
+            <field name="gov_body_id" ref="body_psso_registration"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">بانتظار موافقة الشمول</field>
+            <field name="desk_empty">لا توجد موافقات معلّقة</field>
+        </record>
+
+        <record id="step_ssdreg_done" model="legal.procedure.step">
+            <field name="name">شُمِل المشروع وصدر رقمه</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="phase_id" ref="phase_ssdreg_close"/>
+            <field name="gov_body_id" ref="body_psso_registration"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">50</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">مشاريع مشمولة</field>
+            <field name="desk_empty">لا توجد مشاريع مشمولة</field>
+        </record>
+
+        <record id="trans_ssdreg_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال المستمسكات</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_psso_registration"/>
+            <field name="from_step_id" ref="step_ssdreg_inspection"/>
+            <field name="to_step_id" ref="step_ssdreg_prepare"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ==============================================================
+             2. ضم عامل جديد خلال 30 يوماً - the thirty-day notification
+             ============================================================== -->
+
+        <record id="proc_psso_new_hire" model="legal.procedure.type">
+            <field name="name">ضم عامل جديد إلى الضمان (خلال 30 يوماً)</field>
+            <field name="code">SSD-NEW-HIRE</field>
+            <field name="body_id" ref="body_psso_registration"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">many</field>
+            <field name="sequence_code">SSD-HIRE/%(range_year)s/</field>
+            <field name="expected_duration_days">10</field>
+            <field name="channel">online</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">no</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_subjects">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">المادتان 23 و93 من قانون التقاعد والضمان الاجتماعي للعمال رقم 18 لسنة 2023: يبلَّغ صاحب العمل الدائرة بالتعيين خلال 30 يوماً من تاريخ الاستخدام</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">2</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>المعاملة تحمل قائمة أسماء لا اسماً واحداً: دفعة تعيينات شهر واحد كتاب
+                    واحد وعدة أسطر، وهذا سبب ضبط «عدة أشخاص» على هذه المعاملة.</p>
+                    <p><b>كلفة عدم الالتزام:</b> غرامة جزائية من 1,000,000 إلى 5,000,000 دينار
+                    لعدم التسجيل أو التسجيل الناقص، وتعويض للدائرة يعادل خمسة أضعاف الاشتراكات
+                    غير المسددة، وغرامة تأخير 1% شهرياً من اليوم 121 بسقف 100% من الأصل. مثال
+                    عملي منشور: عشرة عمال برواتب 500,000 دينار على ثلاث سنوات ≈ 219 مليون دينار
+                    مقابل 30.6 مليون لو سُدِّدت في وقتها، أي نحو سبعة أضعاف.</p>
+                    <p>محكمة التمييز الاتحادية أكدت في آذار 2025 أن هذه الالتزامات <b>لا تسقط
+                    بالعفو</b> لأنها من الموارد المالية لصندوق التقاعد.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_hire_prepare" model="legal.procedure.phase">
+            <field name="name">جمع البيانات</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_psso_new_hire"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_hire_submit" model="legal.procedure.phase">
+            <field name="name">التبليغ</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_psso_new_hire"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_hire_close" model="legal.procedure.phase">
+            <field name="name">الشمول</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_psso_new_hire"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_hire_collect" model="legal.procedure.step">
+            <field name="name">جمع بيانات العاملين الجدد ومستمسكاتهم</field>
+            <field name="code">COLLECT</field>
+            <field name="procedure_type_id" ref="proc_psso_new_hire"/>
+            <field name="phase_id" ref="phase_hire_prepare"/>
+            <field name="gov_body_id" ref="body_psso_registration"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">7</field>
+            <field name="desk_title">تعيينات بانتظار الضم</field>
+            <field name="desk_hint">المهلة 30 يوماً من تاريخ الاستخدام لا من تاريخ المباشرة الإدارية</field>
+            <field name="desk_empty">لا توجد تعيينات بانتظار الضم</field>
+        </record>
+
+        <record id="step_hire_submit" model="legal.procedure.step">
+            <field name="name">تقديم استمارات الضم إلى الدائرة</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_psso_new_hire"/>
+            <field name="phase_id" ref="phase_hire_submit"/>
+            <field name="gov_body_id" ref="body_psso_registration"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="return_to_step_id" ref="step_hire_collect"/>
+            <field name="desk_title">استمارات بانتظار التقديم</field>
+            <field name="desk_empty">لا توجد استمارات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_hire_done" model="legal.procedure.step">
+            <field name="name">ضُم العاملون</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_psso_new_hire"/>
+            <field name="phase_id" ref="phase_hire_close"/>
+            <field name="gov_body_id" ref="body_psso_registration"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">30</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">دفعات مضمومة</field>
+            <field name="desk_empty">لا توجد دفعات مضمومة</field>
+        </record>
+
+        <record id="req_hire_enrolment" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_psso_enrolment"/>
+            <field name="procedure_type_id" ref="proc_psso_new_hire"/>
+            <field name="step_id" ref="step_hire_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+            <field name="note">استمارة لكل عامل - القائمة تتوسع سطراً لكل اسم على المعاملة.</field>
+        </record>
+
+        <!-- ==============================================================
+             3. الاشتراك الشهري
+             ============================================================== -->
+
+        <record id="proc_psso_monthly" model="legal.procedure.type">
+            <field name="name">تسديد الاشتراك الشهري</field>
+            <field name="code">SSD-MONTHLY</field>
+            <field name="body_id" ref="body_psso_contributions"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="sequence_code">SSD-MON/%(range_year)s/</field>
+            <field name="expected_duration_days">3</field>
+            <field name="channel">online</field>
+            <field name="has_outgoing_letter">optional</field>
+            <field name="has_incoming_reply">no</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_poa">no</field>
+            <field name="requires_documents">optional</field>
+            <field name="legal_basis">قانون 18 لسنة 2023 - الاشتراك 17% (5% عامل + 12% صاحب عمل) إضافة إلى 8% للأجانب المسجلين على صاحب العمل، و25% لأصحاب العمل في القطاع النفطي</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>الوعاء = الراتب الأساس نقداً أو عيناً + <b>جميع</b> المخصصات، بحد أدنى
+                350,000 دينار وحد أعلى 1,750,000 دينار. من غادر منتصف الشهر يُستحق عنه اشتراك
+                شهر كامل. غرامة التأخير 1% شهرياً من اليوم 121 بسقف 100% من الأصل.</p>
+            </field>
+        </record>
+
+        <record id="phase_mon_prepare" model="legal.procedure.phase">
+            <field name="name">الاحتساب</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_psso_monthly"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_mon_pay" model="legal.procedure.phase">
+            <field name="name">التسديد</field>
+            <field name="code">PAY</field>
+            <field name="procedure_type_id" ref="proc_psso_monthly"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="step_mon_compute" model="legal.procedure.step">
+            <field name="name">احتساب الاشتراك على وعاء الشهر</field>
+            <field name="code">COMPUTE</field>
+            <field name="procedure_type_id" ref="proc_psso_monthly"/>
+            <field name="phase_id" ref="phase_mon_prepare"/>
+            <field name="gov_body_id" ref="body_psso_contributions"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">أشهر قيد الاحتساب</field>
+            <field name="desk_hint">الوعاء يشمل جميع المخصصات منذ قانون 2023، لا الثابتة وحدها</field>
+            <field name="desk_empty">لا توجد أشهر قيد الاحتساب</field>
+        </record>
+
+        <record id="step_mon_pay" model="legal.procedure.step">
+            <field name="name">التسديد عبر منظومة ضمان أو الشعبة</field>
+            <field name="code">PAY</field>
+            <field name="procedure_type_id" ref="proc_psso_monthly"/>
+            <field name="phase_id" ref="phase_mon_pay"/>
+            <field name="gov_body_id" ref="body_psso_contributions"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">اشتراكات غير مسددة</field>
+            <field name="desk_hint">احتفظ بالوصل - هو ما تطلبه شعبة سلامة الموقف لاحقاً</field>
+            <field name="desk_empty">لا توجد اشتراكات غير مسددة</field>
+        </record>
+
+        <record id="step_mon_done" model="legal.procedure.step">
+            <field name="name">سُدِّد اشتراك الشهر</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_psso_monthly"/>
+            <field name="phase_id" ref="phase_mon_pay"/>
+            <field name="gov_body_id" ref="body_psso_contributions"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">30</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">أشهر مسددة</field>
+            <field name="desk_empty">لا توجد أشهر مسددة</field>
+        </record>
+
+        <!-- ==============================================================
+             4. البيان السنوي
+             ============================================================== -->
+
+        <record id="proc_psso_annual_statement" model="legal.procedure.type">
+            <field name="name">تقديم البيان السنوي للمشروع</field>
+            <field name="code">SSD-ANNUAL-STATEMENT</field>
+            <field name="body_id" ref="body_psso_contributions"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_psso_annual_statement"/>
+            <field name="sequence_code">SSD-ANN/%(range_year)s/</field>
+            <field name="expected_duration_days">10</field>
+            <field name="channel">online</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">no</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">البيان السنوي - إحدى خدمات أصحاب العمل المنشورة على منظومة ضمان الرقمية</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <p><b>لم يُعثر على موعد قانوني منشور للبيان السنوي.</b> الالتزام المرافق يضبطه
+                على 90 يوماً من نهاية السنة المالية كتقدير تشغيلي معقول - صحّحه متى عرفت
+                الموعد الذي يطبّقه فرعك.</p>
+            </field>
+        </record>
+
+        <record id="phase_ann_prepare" model="legal.procedure.phase">
+            <field name="name">الإعداد</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_psso_annual_statement"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_ann_submit" model="legal.procedure.phase">
+            <field name="name">التقديم</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_psso_annual_statement"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="step_ann_prepare" model="legal.procedure.step">
+            <field name="name">إعداد البيان ومطابقته مع الاشتراكات الشهرية</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_psso_annual_statement"/>
+            <field name="phase_id" ref="phase_ann_prepare"/>
+            <field name="gov_body_id" ref="body_psso_contributions"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">10</field>
+            <field name="desk_title">بيانات سنوية قيد الإعداد</field>
+            <field name="desk_hint">الفروق مع الاشتراكات الشهرية تُكتشف هنا لا في التفتيش</field>
+            <field name="desk_empty">لا توجد بيانات سنوية قيد الإعداد</field>
+        </record>
+
+        <record id="step_ann_submit" model="legal.procedure.step">
+            <field name="name">تقديم البيان السنوي</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_psso_annual_statement"/>
+            <field name="phase_id" ref="phase_ann_submit"/>
+            <field name="gov_body_id" ref="body_psso_contributions"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">3</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="return_to_step_id" ref="step_ann_prepare"/>
+            <field name="desk_title">بيانات بانتظار التقديم</field>
+            <field name="desk_empty">لا توجد بيانات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_ann_done" model="legal.procedure.step">
+            <field name="name">قُدِّم البيان السنوي</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_psso_annual_statement"/>
+            <field name="phase_id" ref="phase_ann_submit"/>
+            <field name="gov_body_id" ref="body_psso_contributions"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">30</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">بيانات مقدَّمة</field>
+            <field name="desk_empty">لا توجد بيانات مقدَّمة</field>
+        </record>
+
+        <record id="req_ann_statement" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_psso_annual_statement"/>
+            <field name="procedure_type_id" ref="proc_psso_annual_statement"/>
+            <field name="step_id" ref="step_ann_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ==============================================================
+             5. براءة الذمة / سلامة الموقف - for a tender
+             ============================================================== -->
+
+        <record id="proc_psso_clearance" model="legal.procedure.type">
+            <field name="name">استحصال براءة الذمة (سلامة الموقف) لغرض مناقصة</field>
+            <field name="code">SSD-CLEARANCE</field>
+            <field name="body_id" ref="body_psso_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_psso_clearance"/>
+            <field name="sequence_code">SSD-CLR/%(range_year)s/</field>
+            <field name="expected_duration_days">5</field>
+            <field name="lead_time_days">10</field>
+            <field name="channel">online</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">no</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">خدمة سلامة الموقف على منظومة ضمان - وثيقة تؤكد وفاء المشروع بجميع التزامات الاشتراك؛ ويجب تزويد الدائرة بنسخة من إعلان المناقصة أو كتاب الدعوة الرسمي</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="phase_sclr_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_sclr_body" model="legal.procedure.phase">
+            <field name="name">لدى الدائرة</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_sclr_close" model="legal.procedure.phase">
+            <field name="name">الاستلام</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_sclr_settle" model="legal.procedure.step">
+            <field name="name">تسوية الاشتراكات المتأخرة قبل الطلب</field>
+            <field name="code">SETTLE</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="phase_id" ref="phase_sclr_prepare"/>
+            <field name="gov_body_id" ref="body_psso_contributions"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">متأخرات قبل براءة الذمة</field>
+            <field name="desk_hint">لا تُصدر البراءة قبل التسوية - ابدأ من هنا لا من الطلب</field>
+            <field name="desk_empty">لا توجد متأخرات معلّقة</field>
+        </record>
+
+        <record id="step_sclr_request" model="legal.procedure.step">
+            <field name="name">تقديم الطلب مع إعلان المناقصة</field>
+            <field name="code">REQUEST</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="phase_id" ref="phase_sclr_body"/>
+            <field name="gov_body_id" ref="body_psso_clearance"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">طلبات براءة ذمة</field>
+            <field name="desk_hint">نسخة إعلان المناقصة أو كتاب الدعوة إلزامية</field>
+            <field name="desk_empty">لا توجد طلبات براءة ذمة</field>
+        </record>
+
+        <record id="step_sclr_issue" model="legal.procedure.step">
+            <field name="name">تدقيق الموقف وإصدار البراءة</field>
+            <field name="code">ISSUE</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="phase_id" ref="phase_sclr_body"/>
+            <field name="gov_body_id" ref="body_psso_clearance"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">3</field>
+            <field name="rotting_threshold_days">14</field>
+            <field name="return_to_step_id" ref="step_sclr_settle"/>
+            <field name="desk_title">طلبات لدى الدائرة</field>
+            <field name="desk_empty">لا توجد طلبات لدى الدائرة</field>
+            <field name="desk_note_template">راجعنا شعبة سلامة الموقف وأفادوا بأن الطلب</field>
+        </record>
+
+        <record id="step_sclr_done" model="legal.procedure.step">
+            <field name="name">صدرت براءة الذمة</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="phase_id" ref="phase_sclr_close"/>
+            <field name="gov_body_id" ref="body_psso_clearance"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">40</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">براءات صادرة</field>
+            <field name="desk_empty">لا توجد براءات صادرة</field>
+        </record>
+
+        <record id="trans_sclr_return" model="legal.procedure.transition">
+            <field name="name">إعادة - يلزم تسوية المتأخرات</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="from_step_id" ref="step_sclr_issue"/>
+            <field name="to_step_id" ref="step_sclr_settle"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_sclr_project" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_psso_project_certificate"/>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="step_id" ref="step_sclr_request"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_sclr_receipts" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_psso_monthly_receipt"/>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="step_id" ref="step_sclr_settle"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+            <field name="note">وصولات الأشهر غير المشمولة بآخر براءة ذمة.</field>
+        </record>
+
+        <record id="doctype_psso_project_certificate" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_psso_registration"/>
+        </record>
+
+        <record id="doctype_psso_clearance" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="renewal_procedure_type_id" ref="proc_psso_clearance"/>
+        </record>
+
+        <record id="doctype_psso_annual_statement" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_psso_annual_statement"/>
+        </record>
+
+    </data>
+</odoo>

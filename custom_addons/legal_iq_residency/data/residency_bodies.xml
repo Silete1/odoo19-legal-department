@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The sponsoring ministry is a body here, and that is the point.
+
+        The prototype hard-coded «وزارة النفط - دائرة الدراسات والتخطيط والمتابعة
+        / قسم سمات الدخول» into a letter template and into a workflow state named
+        ``sent_ministry``. A customer sponsored by the Ministry of Transport
+        would have needed a developer. Here it is one row with a letterhead
+        block, and swapping it is an afternoon's configuration.
+
+        Note also that this pack ships the Labour Ministry's Department of Labour
+        and Vocational Training under its own code rather than referring to the
+        social-security pack's MOLSA record. The two packs must be installable
+        independently, so neither may reference the other's data.
+    -->
+    <data noupdate="1">
+
+        <record id="body_moi" model="legal.gov.body">
+            <field name="name">وزارة الداخلية</field>
+            <field name="short_name">الداخلية</field>
+            <field name="code">MOI</field>
+            <field name="body_type_id" ref="legal_core.body_type_ministry"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة الداخلية</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://moi.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_residency"/>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017 - الوزارة المختصة بمنح سمات الدخول والإقامة والموافقات الأمنية</field>
+            <field name="legal_basis_url">https://moi.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="body_residency" model="legal.gov.body">
+            <field name="name">مديرية شؤون الإقامة</field>
+            <field name="short_name">الإقامة</field>
+            <field name="code">MOI-RESIDENCY</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_moi"/>
+            <field name="letterhead_recipient">وزارة الداخلية
+مديرية شؤون الإقامة</field>
+            <field name="salutation">السيد مدير عام مديرية شؤون الإقامة المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://eservice.ur.gov.iq/index/new-service/10669</field>
+            <field name="resource_calendar_id" ref="calendar_residency"/>
+            <field name="colour">7</field>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017 (وما زال قانون 36 لسنة 1961 مذكوراً في مصادر ثانوية)</field>
+            <field name="legal_basis_url">https://ur.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">20</field>
+            <field name="note" type="html">
+                <div>
+                    <p><b>شروط منح الإقامة</b> كما أعلنتها الوزارة: أن يكون الدخول مشروعاً، وأن
+                    تكون للطالب وسيلة عيش، وألا يكون متهماً أو محكوماً، وأن يكون خالياً من
+                    الأمراض السارية والمعدية.</p>
+                    <p>المادة 21 من قانون 76 لسنة 2017: الأجنبي أو العربي المتزوج من عراقية
+                    (والعكس) يُمنح إقامة ثلاث سنوات لكل تجديد. وتُمنح الإقامة كذلك لمن له عقد
+                    مع وزارة أو شركة وتقتضي الضرورة بقاءه مدة مناسبة بمسوّغ قانوني.</p>
+                    <p><b>الوافد ملزم بمراجعة المديرية خلال أول عشرة أيام من وصوله.</b></p>
+                    <p>في إقليم كردستان تدير مديريات الإقامة في المحافظات كتالوج خدمات خاصاً بها
+                    حسب قناة الكفالة، وبطاقات الإقامة هناك تُجدَّد لستة أشهر أو سنة.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="body_residency_baghdad" model="legal.gov.body">
+            <field name="name">قسم إقامة بغداد</field>
+            <field name="short_name">إقامة بغداد</field>
+            <field name="code">MOI-RESIDENCY-BGD</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_residency"/>
+            <field name="letterhead_recipient">وزارة الداخلية
+مديرية شؤون الإقامة
+قسم إقامة بغداد</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_residency"/>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017؛ والوافد ملزم بمراجعة المديرية خلال أول عشرة أيام من وصوله، والتمديد للسياحة والأعمال والزيارة الدينية يتم في المكاتب المحلية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">30</field>
+            <field name="note" type="html">
+                <p>التمديد للسياحة والأعمال والزيارة الدينية يتم في مكاتب الإقامة المحلية لمدة
+                30 يوماً إضافية بحسب الممارسة المرصودة.</p>
+            </field>
+        </record>
+
+        <record id="body_mofa_consular" model="legal.gov.body">
+            <field name="name">دائرة العلاقات القنصلية - قسم السمات، وزارة الخارجية</field>
+            <field name="short_name">القنصلية</field>
+            <field name="code">MOFA-CONSULAR</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة الخارجية
+دائرة العلاقات القنصلية
+قسم السمات</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://mofa.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_residency"/>
+            <field name="legal_basis">التنسيق بين وزارتي الداخلية والخارجية لمنح سمات الدخول</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">40</field>
+            <field name="note" type="html">
+                <p>السمة تُؤشَّر في جواز الأجنبي، وتُستحصل من البعثة العراقية في الخارج بعد
+                صدور الموافقة. سمة المستثمر الأجنبي إجراء من ثلاث خطوات عبر النافذة الواحدة
+                للهيئة الوطنية للاستثمار برسم 25,000 دينار.</p>
+            </field>
+        </record>
+
+        <record id="body_sponsor_ministry" model="legal.gov.body">
+            <field name="name">وزارة النفط - دائرة الدراسات والتخطيط والمتابعة / قسم سمات الدخول</field>
+            <field name="short_name">قسم السمات - النفط</field>
+            <field name="code">MOO-VISA</field>
+            <field name="body_type_id" ref="legal_core.body_type_ministry"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة النفط
+دائرة الدراسات والتخطيط والمتابعة
+قسم سمات الدخول</field>
+            <field name="salutation">السيد المدير العام المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_residency"/>
+            <field name="colour">3</field>
+            <field name="legal_basis">الوزارة القطاعية الراعية تحيل طلب السمة إلى مديرية شؤون الإقامة</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">50</field>
+            <field name="note" type="html">
+                <p><b>هذا السجل هو المثال، لا القاعدة.</b> الوزارة الراعية تختلف باختلاف نشاط
+                الشركة: النقل للنقل، والصناعة للمعامل، والاستثمار للمشاريع المجازة. غيّر هذا
+                السجل - أو أضف سجلاً ثانياً - وأعِد توجيه خطوات المعاملة إليه، ولن يلزم سطر
+                برمجي واحد. النموذج الأولي كان يثبّت هذه الجهة في الشيفرة، وهذه هي بالضبط
+                المشكلة التي تحلّها هذه الحزمة.</p>
+            </field>
+        </record>
+
+        <record id="body_labour_department" model="legal.gov.body">
+            <field name="name">دائرة العمل والتدريب المهني</field>
+            <field name="short_name">العمل والتدريب</field>
+            <field name="code">MOLSA-WORK</field>
+            <field name="body_type_id" ref="legal_core.body_type_directorate"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة العمل والشؤون الاجتماعية
+دائرة العمل والتدريب المهني</field>
+            <field name="salutation">السيد مدير عام دائرة العمل والتدريب المهني المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="portal_url">https://molsa.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_residency"/>
+            <field name="legal_basis">قانون العمل رقم 37 لسنة 2015 وتعليمات ممارسة الأجانب العمل في العراق؛ وآلية 2025 الجديدة</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">60</field>
+            <field name="note" type="html">
+                <div>
+                    <p>لا يجوز لصاحب عمل في القطاع الخاص أو المختلط أو التعاوني استخدام أجنبي
+                    بلا إجازة عمل نافذة، ولا يجوز للأجنبي مباشرة أي عمل قبل الحصول عليها.
+                    الرسم <b>250,000 دينار</b>.</p>
+                    <p>آلية 2025: الإجازة لسنة قابلة للتجديد، ويُقدَّم طلب التجديد <b>خلال
+                    الشهر الأخير قبل الانتهاء</b>. العمالة الأجنبية مقيّدة بسقف <b>50%</b> من
+                    مجموع العاملين في المشروع.</p>
+                    <p><b>الترتيب الاتحادي:</b> الإقامة أولاً ثم إجازة العمل. <b>وفي إقليم
+                    كردستان العكس تماماً:</b> بطاقة الإقامة شرط مسبق لإجازة العمل، والرسم
+                    110,000 دينار، مع تأمين صحي إلزامي.</p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

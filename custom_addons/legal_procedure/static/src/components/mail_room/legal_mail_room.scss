@@ -1,0 +1,181 @@
+// The Mail Room.
+//
+// Three columns of equal weight, because the clerk's morning genuinely has
+// three parts and none of them is subordinate to the others. They collapse to
+// two and then to one on narrow screens rather than shrinking, because a
+// column narrower than about 20rem stops holding a subject line and a subject
+// line is what the clerk is scanning for.
+//
+// Everything is logical, and the template stamps its own `dir` from the server
+// flag - so the head row, the columns and the row internals all reverse
+// together and rtlcss has nothing to do.
+
+.o_legal_mail_room {
+
+    // ------------------------------------------------------------- the head
+    .o_legal_head_row {
+        display: grid;
+        grid-template-columns: minmax(14rem, 1fr) minmax(0, 2.2fr);
+        gap: 1rem;
+        align-items: stretch;
+        margin-block-end: 1rem;
+
+        @media (max-width: 991px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .o_legal_hero {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        justify-content: center;
+    }
+
+    .o_legal_hero_label {
+        font-size: 0.85rem;
+        color: $text-muted;
+    }
+
+    .o_legal_hero_value {
+        align-self: flex-start;
+        padding: 0;
+        border: 0;
+        background: none;
+        font-size: 3rem;
+        line-height: 1.05;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: $o-brand-primary;
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: 2px;
+        }
+    }
+
+    // Zero is legible and is not a button: opening an empty list is a dead end
+    // and the reader has to work out for themselves that nothing broke.
+    .o_legal_hero_zero { color: $text-muted; }
+
+    .o_legal_hero_note {
+        margin: 0;
+        font-size: 0.85rem;
+        color: $text-muted;
+    }
+
+    .o_legal_tiles {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+
+        @media (max-width: 767px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    // ---------------------------------------------------------- the columns
+    .o_legal_columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: start;
+
+        @media (max-width: 1399px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media (max-width: 991px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .o_legal_column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .o_legal_mr_rows {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .o_legal_mr_row {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding-block: 0.6rem;
+
+        + .o_legal_mr_row { border-block-start: 1px solid $border-color; }
+    }
+
+    .o_legal_mr_line {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.3rem 0.5rem;
+        font-size: 0.82rem;
+        color: $text-muted;
+    }
+
+    .o_legal_mr_ref { font-weight: 600; }
+
+    // The subject is the row's own link and it is the widest target on it,
+    // because it is what the clerk reads to decide anything at all.
+    .o_legal_mr_subject {
+        padding: 0;
+        border: 0;
+        background: none;
+        text-align: start;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $body-color;
+        line-height: 1.45;
+
+        &:hover { color: $o-brand-primary; }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: 2px;
+        }
+    }
+
+    .o_legal_mr_draft {
+        background-color: rgba($warning, 0.15);
+        color: $body-color;
+    }
+
+    .o_legal_mr_meter {
+        inline-size: 4rem;
+        flex: 0 0 auto;
+    }
+
+    .o_legal_mr_meter_label {
+        font-weight: 600;
+        color: $body-color;
+    }
+
+    .o_legal_mr_actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.5rem;
+        margin-block-start: 0.15rem;
+    }
+
+    // The blocker beside the greyed twin, in words as well as in the title
+    // attribute - a tooltip is not available to a touch user or to a printer,
+    // and this is the sentence that says what to do next.
+    .o_legal_mr_blocker {
+        font-size: 0.8rem;
+        color: $text-muted;
+        flex: 1 1 12rem;
+    }
+
+    .o_legal_mr_due,
+    .o_legal_mr_next {
+        font-size: 0.8rem;
+        color: $text-muted;
+    }
+}

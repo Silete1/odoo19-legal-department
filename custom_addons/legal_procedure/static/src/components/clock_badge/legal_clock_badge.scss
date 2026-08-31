@@ -1,0 +1,111 @@
+// The waiting clock, on the case form, in a Mail Room row and in a list cell.
+//
+// Three rules it shares with everything else in the module:
+//   * the status palette is the only place colour carries meaning, and it
+//     never carries it alone - every verdict ships an icon and the written
+//     words beside its hue;
+//   * urgency and lateness stay visually distinct. The priority star is a
+//     clerk's judgement and keeps $warning to itself; this is the clock's
+//     verdict, and it is a chip. A file can be one, the other or both, and the
+//     screen has to let the reader tell which;
+//   * whose clock it is - ours or theirs - is stated in words before it is
+//     stated in shape, because that distinction is the whole argument.
+
+.o_legal_clock {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+
+    .o_legal_clock_chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        align-self: flex-start;
+        padding: 0.1rem 0.5rem;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        background-color: $o-view-background-color;
+        line-height: 1.5;
+        white-space: nowrap;
+        max-inline-size: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .o_legal_clock_kind { font-weight: 600; }
+
+    .o_legal_clock_age {
+        color: $text-muted;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .o_legal_clock_detail {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.15rem 0.75rem;
+        color: $text-muted;
+        font-size: 0.8rem;
+    }
+
+    .o_legal_clock_overdue {
+        font-weight: 600;
+        color: $body-color;
+    }
+
+    .o_legal_clock_escalated {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        align-self: flex-start;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $danger;
+    }
+
+    // ------------------------------------------------------------- verdicts
+    &.o_legal_clock_on_track .o_legal_clock_chip {
+        border-color: rgba($success, 0.45);
+        .fa { color: $success; }
+    }
+
+    &.o_legal_clock_warning .o_legal_clock_chip {
+        border-color: rgba($warning, 0.55);
+        background-color: rgba($warning, 0.08);
+        .fa { color: $warning; }
+    }
+
+    &.o_legal_clock_overdue .o_legal_clock_chip {
+        border-color: rgba($danger, 0.6);
+        background-color: rgba($danger, 0.09);
+        .fa, .o_legal_clock_kind { color: $danger; }
+    }
+
+    &.o_legal_clock_paused .o_legal_clock_chip {
+        .fa, .o_legal_clock_kind { color: $text-muted; }
+    }
+
+    // A file sitting at a counter is drawn with a dashed edge: our own clock
+    // is paused and there is nothing on this desk to do about it but chase.
+    // Shape rather than a fourth hue, because the palette is already carrying
+    // three meanings and a fourth would stop being readable.
+    &.o_legal_clock_at_body .o_legal_clock_chip {
+        border-style: dashed;
+    }
+
+    // -------------------------------------------------------------- compact
+    &.o_legal_clock_compact .o_legal_clock_chip {
+        padding: 0 0.4rem;
+        font-size: 0.78rem;
+    }
+}
+
+// On a form the badge sits between the rail and the first group, so it takes
+// the rail's own bottom margin rather than colliding with it.
+.o_form_view .o_legal_clock { margin-block-end: 1rem; }
+
+// In a list cell it must not stretch the row: the chip, and nothing else.
+.o_list_view .o_legal_clock {
+    .o_legal_clock_detail,
+    .o_legal_clock_escalated { display: none; }
+}

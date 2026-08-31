@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Multi-company first. Configuration with no company is shared;
+            everything transactional is scoped the ordinary Odoo way.
+        -->
+
+        <record id="rule_legal_procedure_type_company" model="ir.rule">
+            <field name="name">Procedure: own company or shared</field>
+            <field name="model_id" ref="model_legal_procedure_type"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_obligation_schedule_company" model="ir.rule">
+            <field name="name">Obligation: own company or shared</field>
+            <field name="model_id" ref="model_legal_obligation_schedule"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_obligation_instance_company" model="ir.rule">
+            <field name="name">Obligation period: own company</field>
+            <field name="model_id" ref="model_legal_obligation_instance"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_case_company" model="ir.rule">
+            <field name="name">File: own company</field>
+            <field name="model_id" ref="model_legal_case"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_poa_company" model="ir.rule">
+            <field name="name">Power of attorney: own company</field>
+            <field name="model_id" ref="model_legal_poa"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_action_log_company" model="ir.rule">
+            <field name="name">Trail: own company</field>
+            <field name="model_id" ref="model_legal_action_log"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_sla_escalation_company" model="ir.rule">
+            <field name="name">Escalation: own company</field>
+            <field name="model_id" ref="model_legal_sla_escalation"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!--
+            Confidentiality and per-body scoping, in that order.
+
+            A legal department holds privileged files, scanned passports and
+            personal powers of attorney, so a confidential file is visible to the
+            legal manager and to the officers of the body it belongs to, and to
+            nobody else. Note that the scoping traverses
+            ``body_id.officer_ids`` - a real foreign key and a real many2many on
+            legal.gov.body - which is why per-body visibility never needed a
+            group per ministry. A consultant grants it from an ordinary form, and
+            installing a content pack creates no security objects at all.
+
+            The rule is written on the three working groups rather than globally
+            so that the manager and the auditor keep an unrestricted view; a
+            global rule would have to be OR-ed with a manager clause and would be
+            harder to read for exactly the audience that has to trust it.
+        -->
+
+        <record id="rule_legal_case_confidential" model="ir.rule">
+            <field name="name">File: confidential ones are restricted</field>
+            <field name="model_id" ref="model_legal_case"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', '|', ('confidential', '=', False), ('body_id.officer_ids', 'in', [user.id]), ('user_id', '=', user.id), ('runner_partner_id', '=', user.partner_id.id)]</field>
+        </record>
+
+        <record id="rule_legal_case_manager" model="ir.rule">
+            <field name="name">File: the legal manager sees everything</field>
+            <field name="model_id" ref="model_legal_case"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_legal_action_log_confidential" model="ir.rule">
+            <field name="name">Trail: follows its file</field>
+            <field name="model_id" ref="model_legal_action_log"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver'))]"/>
+            <field name="domain_force">['|', '|', ('case_id.confidential', '=', False), ('case_id.body_id.officer_ids', 'in', [user.id]), ('case_id.user_id', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_legal_action_log_manager" model="ir.rule">
+            <field name="name">Trail: the legal manager and the auditor read everything</field>
+            <field name="model_id" ref="model_legal_action_log"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_case_return_form" model="ir.ui.view">
+        <field name="name">legal.case.return.form</field>
+        <field name="model">legal.case.return</field>
+        <field name="arch" type="xml">
+            <form string="Return For Correction">
+                <group>
+                    <field name="case_id" readonly="1"/>
+                    <field name="procedure_type_id" invisible="1"/>
+                    <field name="step_id"/>
+                </group>
+                <separator string="What The Counter Said"/>
+                <field name="reason" required="1"
+                       placeholder="نقص في المستمسكات: يطلبون تأييد براءة ذمة حديث وصورة مصدقة من عقد الإيجار"/>
+                <separator string="Documents They Refused"/>
+                <field name="document_line_ids" widget="many2many">
+                    <list create="false">
+                        <field name="document_type_id"/>
+                        <field name="subject_id"/>
+                        <field name="line_status" widget="badge"/>
+                    </list>
+                </field>
+                <div class="alert alert-info" role="alert">
+                    This opens a new round. Nothing from the previous round is deleted - the
+                    lines that were already accepted are marked superseded and kept, because
+                    what they objected to is the only thing the correction can be measured
+                    against.
+                </div>
+                <footer>
+                    <button name="action_confirm" type="object" string="Return It"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

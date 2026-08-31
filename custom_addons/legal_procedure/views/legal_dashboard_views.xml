@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The two OWL screens of the module, and the menu items that make one of
+        them the place the application opens.
+
+        `path` gives each a bookmarkable URL - /odoo/legal-mailroom and
+        /odoo/legal-desk - which matters more in a government office than it
+        sounds: a manager can send that URL in a message and it opens the
+        screen rather than the application, and a clerk can pin it.
+
+        There is deliberately no third action for "the tax desk" or "the
+        chamber desk". A body is a panel inside these screens, driven by its
+        own configuration record, because a per-body landing action is how a
+        configurable module quietly becomes twelve forked ones.
+    -->
+
+    <record id="action_legal_mail_room" model="ir.actions.client">
+        <field name="name">The Mail Room</field>
+        <field name="tag">legal_mail_room</field>
+        <field name="path">legal-mailroom</field>
+    </record>
+
+    <record id="action_legal_desk" model="ir.actions.client">
+        <field name="name">My Desk</field>
+        <field name="tag">legal_desk</field>
+        <field name="path">legal-desk</field>
+    </record>
+
+    <!--
+        Odoo opens an application on its first *visible* menu item, so the
+        ordering below is the landing mechanism: the Mail Room is first, and it
+        is the register clerk's whole day - what arrived, what we are chasing,
+        what has to go out. My Desk follows it for everyone who works files
+        rather than the book.
+    -->
+
+    <menuitem id="menu_legal_mail_room"
+              name="Mail Room"
+              parent="legal_core.menu_legal_root"
+              action="action_legal_mail_room"
+              groups="legal_core.group_legal_clerk"
+              sequence="1"/>
+
+    <menuitem id="menu_legal_desk"
+              name="My Desk"
+              parent="legal_core.menu_legal_root"
+              action="action_legal_desk"
+              groups="legal_core.group_legal_clerk"
+              sequence="2"/>
+
+</odoo>

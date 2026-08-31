@@ -1,0 +1,96 @@
+// My Desk.
+//
+// Band A is a two-part grid: the hero and its tiles on one side, the worklist
+// on the other, because the reader's eye should land on "how much" and then
+// travel straight into "which". At narrow widths the worklist goes underneath
+// rather than beside, since the worklist is the part that must keep its
+// columns and the hero is the part that survives being wide.
+//
+// The hero styles are shared with the Mail Room by class name rather than by
+// duplication, and both screens declare their own `dir` from the payload.
+
+.o_legal_desk {
+
+    .o_legal_desk_grid {
+        display: grid;
+        grid-template-columns: minmax(15rem, 1fr) minmax(0, 2.6fr);
+        gap: 1rem;
+        align-items: start;
+
+        @media (max-width: 1199px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .o_legal_desk_left {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .o_legal_hero {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+
+    .o_legal_hero_label {
+        font-size: 0.85rem;
+        color: $text-muted;
+    }
+
+    .o_legal_hero_value {
+        align-self: flex-start;
+        padding: 0;
+        border: 0;
+        background: none;
+        font-size: 3rem;
+        line-height: 1.05;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: $o-brand-primary;
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: 2px;
+        }
+    }
+
+    .o_legal_hero_zero { color: $text-muted; }
+
+    .o_legal_hero_note {
+        margin: 0;
+        font-size: 0.85rem;
+        color: $text-muted;
+    }
+
+    .o_legal_tiles {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+
+        // Beside the worklist the tiles stack; underneath it they run across,
+        // because a stacked column of three tiles at full width is a wall.
+        @media (max-width: 1199px) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @media (max-width: 767px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    // One panel per body, two across on a wide screen. Never one: a clerk who
+    // deals with five bodies would otherwise scroll through five full-width
+    // cards to find the one that is open this afternoon.
+    .o_legal_bodies {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: start;
+
+        @media (max-width: 1199px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}

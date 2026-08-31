@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Arabic is activated before the users are created, because res.users.lang
+        is a Selection built from the *installed* languages: setting a user's
+        language to one the database does not have raises rather than falling
+        back, and the demo would fail on its third record.
+
+        ar_001 (base.lang_ar) is Arabic with direction Right-to-Left, which is
+        what puts the whole back office into RTL - the thing this product is
+        least useful without.
+    -->
+    <!--
+        The empty list is not decoration: _activate_lang is not an @api.model
+        method, so the loader takes the first argument as the recordset to bind
+        to and the rest as the call's arguments. Passing just the code binds
+        'ar_001' as the recordset and then calls the method with nothing.
+    -->
+    <function model="res.lang" name="_activate_lang" eval="[[], 'ar_001']"/>
+</odoo>

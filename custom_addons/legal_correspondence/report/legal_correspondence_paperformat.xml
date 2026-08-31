@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Two formats, because Iraqi departments print official letters on two
+            kinds of paper and the difference between them is four centimetres of
+            top margin.
+
+            On pre-printed letterhead paper the emblem, the republic line and the
+            company name are already on the sheet. The PDF must leave that band
+            empty, or the letter comes out with two letterheads printed over each
+            other - which is the single most common way a generated Iraqi letter
+            is rejected at the window.
+        -->
+
+        <record id="paperformat_legal_letter_preprinted" model="report.paperformat">
+            <field name="name">Legal Official Letter - Pre-printed Paper (A4)</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <!-- 55mm of clear air for the pre-printed head. -->
+            <field name="margin_top">55</field>
+            <field name="margin_bottom">25</field>
+            <field name="margin_left">18</field>
+            <field name="margin_right">18</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">6</field>
+            <field name="dpi">96</field>
+        </record>
+
+        <record id="paperformat_legal_letter_drawn" model="report.paperformat">
+            <field name="name">Legal Official Letter - Emblem Drawn (A4)</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">14</field>
+            <field name="margin_bottom">25</field>
+            <field name="margin_left">18</field>
+            <field name="margin_right">18</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">6</field>
+            <field name="dpi">96</field>
+        </record>
+
+    </data>
+</odoo>

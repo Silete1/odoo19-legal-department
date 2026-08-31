@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="obl_psso_monthly" model="legal.obligation.schedule">
+            <field name="name">تسديد اشتراك الضمان الاجتماعي الشهري</field>
+            <field name="code">SSD-MONTHLY</field>
+            <field name="body_id" ref="body_psso_contributions"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_psso_monthly"/>
+            <field name="frequency">monthly</field>
+            <field name="due_day">31</field>
+            <field name="lead_days">10</field>
+            <field name="penalty_note">غرامة تأخير 1% شهرياً اعتباراً من اليوم 121 من التأخير بسقف 100% من أصل المبلغ (المادتان 92 و17 من قانون 18 لسنة 2023)</field>
+            <field name="legal_basis">قانون التقاعد والضمان الاجتماعي للعمال رقم 18 لسنة 2023 - تستحق الاشتراكات شهرياً</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p><b>هذا الموعد محل خلاف بين مصدرين معتبرين، وهو مشحون على أضعف
+                    الاحتمالين أماناً.</b> مكاتب محاماة تذكر أن الاشتراك يستحق <b>بنهاية الشهر
+                    التقويمي التالي</b>، بينما تذكر جهات معالجة رواتب أنه يستحق <b>خلال 15
+                    يوماً من نهاية الشهر</b>. اعتُمد اليوم الحادي والثلاثون (أي نهاية الشهر
+                    التالي) لأنه الأفضل توثيقاً.</p>
+                    <p>إن كان فرعك يطبّق قاعدة الخمسة عشر يوماً فغيّر «اليوم» إلى 15، ولا تكتفِ
+                    بمهلة الإنجاز: الفارق بين القراءتين ستة عشر يوماً، وهو فارق يكفي لبدء عدّاد
+                    الغرامة.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="obl_psso_annual_statement" model="legal.obligation.schedule">
+            <field name="name">تقديم البيان السنوي للمشروع</field>
+            <field name="code">SSD-ANNUAL-STATEMENT</field>
+            <field name="body_id" ref="body_psso_contributions"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_psso_annual_statement"/>
+            <field name="frequency">offset_from_fye</field>
+            <field name="offset_days">90</field>
+            <field name="lead_days">21</field>
+            <field name="legal_basis">البيان السنوي - إحدى خدمات أصحاب العمل على منظومة ضمان الرقمية</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p><b>الموعد تقدير لا نص.</b> لم يُعثر على موعد قانوني منشور للبيان السنوي،
+                فضُبط على 90 يوماً من نهاية السنة المالية كي لا يمرّ العام دون تقديمه. صحّحه متى
+                عرفت الموعد الذي يطبّقه فرعك، ولا تحتجّ به على الدائرة.</p>
+            </field>
+        </record>
+
+        <record id="obl_psso_clearance_renewal" model="legal.obligation.schedule">
+            <field name="name">تجديد براءة الذمة من الضمان الاجتماعي</field>
+            <field name="code">SSD-CLEARANCE-RENEWAL</field>
+            <field name="body_id" ref="body_psso_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="procedure_type_id" ref="proc_psso_clearance"/>
+            <field name="frequency">offset_before_expiry</field>
+            <field name="document_type_id" ref="doctype_psso_clearance"/>
+            <field name="offset_days">45</field>
+            <field name="lead_days">10</field>
+            <field name="legal_basis">تُطلب براءة الذمة عند التقدم للمناقصات، ويُشترط نفاذها عند تاريخ الغلق</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+        </record>
+
+    </data>
+</odoo>

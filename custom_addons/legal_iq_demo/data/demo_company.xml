@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The demo company is the database's own main company rather than a second
+        one. That is deliberate: the correspondence registers, the file-number
+        sequences and every company-scoped record rule are already bound to it,
+        and a second company would put the demo behind a company switcher the
+        first time anybody opened the mail room.
+
+        noupdate="1" on every demonstration file, and for a different reason than
+        the content packs have it.
+
+        Updating any pack in this suite marks the modules that depend on it for
+        upgrade, so a plain ``-u legal_iq_tax`` re-runs this demo. With
+        noupdate="0" that means re-writing ``legal.case.step_id`` - which the
+        engine refuses outright, correctly, because a file is moved by the
+        buttons on it and never by writing to it - and re-writing a registered
+        register entry's number, which the register refuses for the same kind of
+        reason. Both refusals are the product working; noupdate="1" is how the
+        demonstration stops asking them to be broken.
+    -->
+    <data noupdate="1">
+
+        <record id="base.main_company" model="res.company">
+            <field name="name">شركة الرافدين للتجارة والمقاولات العامة المحدودة</field>
+            <field name="legal_letterhead_line1">جمهورية العراق</field>
+            <field name="legal_letterhead_line2">وزارة التجارة - دائرة تسجيل الشركات</field>
+            <field name="legal_letterhead_line3">شركة الرافدين للتجارة والمقاولات العامة المحدودة</field>
+            <field name="legal_letterhead_line4">القسم القانوني وشؤون الدوائر</field>
+            <field name="legal_letterhead_logo" type="base64" file="legal_iq_demo/static/img/letterhead_emblem.png"/>
+            <field name="legal_numeral_system">western</field>
+            <field name="legal_show_hijri" eval="False"/>
+        </record>
+
+        <record id="entity_rafidain" model="legal.entity">
+            <field name="name">شركة الرافدين للتجارة والمقاولات العامة المحدودة</field>
+            <field name="name_en">Al-Rafidain General Trading &amp; Contracting Co. Ltd</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="entity_form_id" ref="legal_core.entity_form_llc"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="incorporation_date">2016-03-14</field>
+            <field name="financial_year_end">2025-12-31</field>
+            <field name="capital">750000000</field>
+            <field name="activity_description">التجارة العامة، والمقاولات الإنشائية والكهروميكانيكية، وتجهيز المواد والمعدات للدوائر الحكومية والقطاع الخاص.</field>
+            <field name="address">بغداد - الكرادة الشرقية - محلة 903 - زقاق 15 - بناية رقم 27، الطابق الثاني</field>
+            <field name="note" type="html">
+                <div>
+                    <p>شركة تجارية ومقاولات متوسطة الحجم، عدد العاملين المسجلين لدى الضمان 46،
+                    منهم ثلاثة موظفين أجانب على إقامات عمل.</p>
+                    <p>تشارك بانتظام في مناقصات محافظة بغداد، ولذلك ملفها الحرج هو أن تبقى
+                    هوية الغرفة نافذة وكتاب عدم الممانعة الضريبي نافذاً عند تاريخ الغلق - لا
+                    عند تاريخ التقديم.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="base.main_company" model="res.company">
+            <field name="legal_entity_id" ref="entity_rafidain"/>
+        </record>
+
+        <!-- ============================================================
+             Four numbers at four windows. This is the model the three
+             architectures argued about, and the one a clerk is asked for first.
+             ============================================================ -->
+
+        <record id="identifier_registrar" model="legal.entity.identifier">
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="body_id" ref="legal_iq_registrar.body_mot_registrar"/>
+            <field name="kind_id" ref="legal_core.identifier_kind_registration"/>
+            <field name="value">م.ش/47215</field>
+            <field name="section">قسم التأسيس</field>
+            <field name="issue_date">2016-03-14</field>
+        </record>
+
+        <record id="identifier_tax" model="legal.entity.identifier">
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="kind_id" ref="legal_core.identifier_kind_tax_file"/>
+            <field name="value">1/ش/2016/8843</field>
+            <field name="section">قسم الشركات - شعبة التقدير الثانية</field>
+            <field name="issue_date">2016-05-02</field>
+            <field name="note">المراجعة تكون بالشعبة لا بالقسم - الشعبة الثانية، الطابق الثالث.</field>
+        </record>
+
+        <record id="identifier_social_security" model="legal.entity.identifier">
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="body_id" ref="legal_iq_social_security.body_psso_registration"/>
+            <field name="kind_id" ref="legal_core.identifier_kind_social_security"/>
+            <field name="value">ب/119374</field>
+            <field name="section">شعبة التسجيل وضم العاملين</field>
+            <field name="issue_date">2016-06-19</field>
+        </record>
+
+        <record id="identifier_chamber" model="legal.entity.identifier">
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="body_id" ref="legal_iq_chamber.body_chamber_baghdad"/>
+            <field name="kind_id" ref="legal_core.identifier_kind_chamber"/>
+            <field name="value">62/3/188402</field>
+            <field name="section">شعبة العضوية</field>
+            <field name="issue_date">2016-04-05</field>
+        </record>
+
+        <!-- ============================================================
+             Who may sign, and the seal that makes a letter a letter
+             ============================================================ -->
+
+        <record id="signatory_managing_director" model="legal.signatory">
+            <field name="name">عمّار سعدي عبد الجبار الجنابي</field>
+            <field name="name_en">Ammar Saadi Abduljabbar Al-Janabi</field>
+            <field name="title">المدير المفوض</field>
+            <field name="title_en">Managing Director</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="specimen_signature" type="base64" file="legal_iq_demo/static/img/signature_md.png"/>
+            <field name="stamp_image" type="base64" file="legal_iq_demo/static/img/seal_company.png"/>
+            <field name="valid_from">2022-09-01</field>
+            <field name="is_default" eval="True"/>
+            <field name="sequence">10</field>
+            <field name="note">عُيّن بمحضر الهيئة العامة في 2022/8/24 والمصادق عليه من المسجل. توقيعه هو المودع لدى مصرف الرشيد ودائرة تسجيل الشركات.</field>
+        </record>
+
+        <record id="signatory_deputy" model="legal.signatory">
+            <field name="name">هدى كاظم حسين العبيدي</field>
+            <field name="name_en">Huda Kadhim Hussein Al-Obeidi</field>
+            <field name="title">معاون المدير المفوض للشؤون الإدارية والقانونية</field>
+            <field name="title_en">Deputy Managing Director, Legal and Administrative Affairs</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="specimen_signature" type="base64" file="legal_iq_demo/static/img/signature_deputy.png"/>
+            <field name="stamp_image" type="base64" file="legal_iq_demo/static/img/seal_company.png"/>
+            <field name="valid_from">2024-02-01</field>
+            <field name="body_ids" eval="[(6, 0, [
+                ref('legal_iq_social_security.body_psso_registration'),
+                ref('legal_iq_social_security.body_psso_contributions'),
+                ref('legal_iq_residency.body_residency_baghdad'),
+            ])]"/>
+            <field name="sequence">20</field>
+            <field name="note">مخوّلة بالتوقيع أمام الضمان الاجتماعي ودائرة الإقامة فقط - وهذه الحدود هي بالضبط ما يجعل الكتاب مقبولاً في شباك ومرفوضاً في آخر، ولذلك هي بيانات لا عُرف شفهي.</field>
+        </record>
+
+    </data>
+</odoo>

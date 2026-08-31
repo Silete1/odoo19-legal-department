@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="doctype_psso_project_certificate" model="legal.document.type">
+            <field name="name">شهادة تسجيل المشروع لدى الضمان (رقم المشروع)</field>
+            <field name="name_en">Social Security Project Registration</field>
+            <field name="code">SSD-PROJECT-CERT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_identity"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_psso_registration"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون التقاعد والضمان الاجتماعي للعمال رقم 18 لسنة 2023</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>رقم المشروع هو ما تُسأل عنه في كل مراجعة لاحقة، ويُقيَّد في سجل معرِّفات
+                الكيان لا في حقل نصي على الشركة.</p>
+            </field>
+        </record>
+
+        <record id="doctype_psso_clearance" model="legal.document.type">
+            <field name="name">براءة الذمة من الضمان الاجتماعي (سلامة الموقف)</field>
+            <field name="name_en">Social Security Clearance</field>
+            <field name="code">SSD-CLEARANCE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_psso_clearance"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">6</field>
+            <field name="validity_uom">month</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">10</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">خدمة سلامة الموقف على منظومة ضمان الرقمية</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p><b>مدة النفاذ اجتهاد لا نص.</b> لم يُعثر على مدة صلاحية منشورة لبراءة ذمة
+                الضمان؛ الافتراض هنا ستة أشهر لتظهر على لوحة التجديد. التاريخ المثبت على
+                الوثيقة هو المرجع. ولاستحصالها لمناقصة يجب تقديم نسخة من إعلان المناقصة أو
+                كتاب الدعوة الرسمي.</p>
+            </field>
+        </record>
+
+        <record id="doctype_psso_annual_statement" model="legal.document.type">
+            <field name="name">البيان السنوي للمشروع</field>
+            <field name="name_en">Annual Project Statement</field>
+            <field name="code">SSD-ANNUAL-STATEMENT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_psso_contributions"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">البيان السنوي - إحدى خدمات أصحاب العمل على منظومة ضمان الرقمية</field>
+            <field name="legal_basis_url">https://rss.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="doctype_psso_enrolment" model="legal.document.type">
+            <field name="name">استمارة ضم عامل إلى الضمان الاجتماعي</field>
+            <field name="name_en">Employee Enrolment Form</field>
+            <field name="code">SSD-ENROLMENT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_personal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_psso_registration"/>
+            <field name="validity_model">none</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">المادتان 23 و93 من قانون 18 لسنة 2023 - التبليغ عن التعيين خلال 30 يوماً</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <p>استمارة لكل عامل لا استمارة للدفعة. غرامة عدم التسجيل أو التسجيل الناقص
+                جزائية بين مليون وخمسة ملايين دينار، وتحكم المحكمة إضافة إلى ذلك بتعويض للدائرة
+                يعادل <b>خمسة أضعاف</b> قيمة الاشتراكات غير المسددة.</p>
+            </field>
+        </record>
+
+        <record id="doctype_psso_monthly_receipt" model="legal.document.type">
+            <field name="name">وصل تسديد الاشتراك الشهري</field>
+            <field name="name_en">Monthly Contribution Receipt</field>
+            <field name="code">SSD-MONTHLY-RECEIPT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_psso_contributions"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">تسديد الاشتراك الشهري - إحدى خدمات أصحاب العمل على منظومة ضمان</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="doctype_psso_inspection_confirmation" model="legal.document.type">
+            <field name="name">تأييد الكشف على المشروع</field>
+            <field name="name_en">Site Inspection Confirmation</field>
+            <field name="code">SSD-INSPECTION</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_psso_inspection"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">180</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">خطوة «استحصال تأييد الكشف» ضمن إجراء التسجيل الخماسي</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">60</field>
+        </record>
+
+    </data>
+</odoo>

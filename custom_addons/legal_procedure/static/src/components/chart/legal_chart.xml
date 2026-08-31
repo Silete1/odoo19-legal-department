@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalChart">
+        <!-- The wrapper, not the canvas, owns the height: Chart.js sizes the
+             canvas to its parent, and a canvas left to size itself inside a
+             flex or grid parent grows on every resize. role="img" plus the
+             label is the whole of what a canvas can offer a screen reader,
+             which is why every caller also renders its figures as a table. -->
+        <div class="o_legal_chart" t-attf-style="height: {{ props.height }}px;"
+             role="img" t-att-aria-label="props.ariaLabel">
+            <canvas t-ref="canvas"/>
+        </div>
+    </t>
+
+</templates>

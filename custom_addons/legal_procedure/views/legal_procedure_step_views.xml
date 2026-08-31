@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_procedure_step_form" model="ir.ui.view">
+        <field name="name">legal.procedure.step.form</field>
+        <field name="model">legal.procedure.step</field>
+        <field name="arch" type="xml">
+            <form string="Step">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="تقديم الطلب إلى شعبة التسجيل"/></h1>
+                    </div>
+                    <group>
+                        <group string="Where It Happens">
+                            <field name="procedure_type_id" options="{'no_create': True}"/>
+                            <field name="code" placeholder="SUBMIT"/>
+                            <field name="phase_id"/>
+                            <field name="gov_body_id"/>
+                            <field name="kind"/>
+                            <field name="outcome" invisible="kind != 'terminal'"/>
+                            <field name="responsible_group_id"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group string="How Long, And What Next">
+                            <field name="target_days"/>
+                            <field name="rotting_threshold_days"/>
+                            <field name="auto_next"/>
+                            <field name="return_to_step_id"/>
+                            <field name="requires_letter"/>
+                            <field name="letter_template_id" invisible="not requires_letter"/>
+                            <field name="fold"/>
+                            <field name="colour" widget="color_picker"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="The Desk Panel" name="desk">
+                            <p class="text-muted">
+                                These four strings are what makes a new body's desk panel work with
+                                no JavaScript at all. The empty state is the most read string in any
+                                queue and the one most often left as “No records”, so it is worth
+                                writing properly: say what would appear here and what to do about it.
+                            </p>
+                            <group>
+                                <field name="desk_title" placeholder="بانتظار التسجيل"/>
+                                <field name="desk_hint" placeholder="الملفات المقدمة والتي لم تُسجل بعد"/>
+                                <field name="desk_empty" placeholder="لا توجد معاملات بانتظار التسجيل - كل ما قُدم قد سُجل"/>
+                                <field name="desk_note_template"
+                                       placeholder="راجعنا الشعبة وأفادوا بأن المعاملة قيد التدقيق"/>
+                            </group>
+                        </page>
+                        <page string="Counter Walk" name="checks">
+                            <p class="text-muted">
+                                A براءة ذمة is twenty-two windows inside one step. Listing them here
+                                is what turns “the file is at the Tax Commission” into “it is at
+                                window 7 waiting for ختم الحجوزات الضريبية”.
+                            </p>
+                            <field name="check_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="counter"/>
+                                    <field name="check_kind"/>
+                                    <field name="produces_stamp"/>
+                                    <field name="is_required"/>
+                                    <field name="note" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Capture Fields" name="capture">
+                            <field name="capture_field_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="label"/>
+                                    <field name="code"/>
+                                    <field name="field_type"/>
+                                    <field name="selection_values"
+                                           invisible="field_type != 'selection'"/>
+                                    <field name="required"/>
+                                    <field name="placeholder"/>
+                                    <field name="help_text" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Documents Demanded Here" name="requirements">
+                            <field name="requirement_ids" readonly="1">
+                                <list>
+                                    <field name="document_type_id"/>
+                                    <field name="is_required"/>
+                                    <field name="per_subject"/>
+                                    <field name="minimum_grade_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Instruction" name="instruction">
+                            <field name="clerk_instruction"
+                                   placeholder="Four photocopies, stamped by the manager, in a green folder. Ask for Abu Ahmed on the second floor before eleven."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_procedure_step_list" model="ir.ui.view">
+        <field name="name">legal.procedure.step.list</field>
+        <field name="model">legal.procedure.step</field>
+        <field name="arch" type="xml">
+            <list string="Steps">
+                <field name="sequence" widget="handle"/>
+                <field name="procedure_type_id"/>
+                <field name="name"/>
+                <field name="phase_id"/>
+                <field name="gov_body_id"/>
+                <field name="kind" widget="badge"/>
+                <field name="target_days"/>
+                <field name="auto_next"/>
+                <field name="check_count" string="Counters"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_procedure_step_search" model="ir.ui.view">
+        <field name="name">legal.procedure.step.search</field>
+        <field name="model">legal.procedure.step</field>
+        <field name="arch" type="xml">
+            <search string="Steps">
+                <field name="name"/>
+                <field name="procedure_type_id"/>
+                <field name="gov_body_id"/>
+                <filter name="at_body" string="At A Counter" domain="[('kind', '=', 'at_body')]"/>
+                <filter name="terminal" string="Closing Steps" domain="[('kind', '=', 'terminal')]"/>
+                <group>
+                    <filter name="group_procedure" string="Procedure" context="{'group_by': 'procedure_type_id'}"/>
+                    <filter name="group_body" string="Body" context="{'group_by': 'gov_body_id'}"/>
+                    <filter name="group_phase" string="Phase" context="{'group_by': 'phase_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_procedure_step" model="ir.actions.act_window">
+        <field name="name">Steps</field>
+        <field name="res_model">legal.procedure.step</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_procedure': 1}</field>
+    </record>
+
+    <record id="view_legal_procedure_phase_list" model="ir.ui.view">
+        <field name="name">legal.procedure.phase.list</field>
+        <field name="model">legal.procedure.phase</field>
+        <field name="arch" type="xml">
+            <list string="Phases" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="procedure_type_id"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="kind"/>
+                <field name="step_count" string="Steps"/>
+                <field name="colour" widget="color_picker" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_procedure_phase" model="ir.actions.act_window">
+        <field name="name">Phases</field>
+        <field name="res_model">legal.procedure.phase</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="view_legal_procedure_field_list" model="ir.ui.view">
+        <field name="name">legal.procedure.field.list</field>
+        <field name="model">legal.procedure.field</field>
+        <field name="arch" type="xml">
+            <list string="Capture Fields" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="procedure_type_id" readonly="1"/>
+                <field name="step_id"/>
+                <field name="label"/>
+                <field name="code"/>
+                <field name="field_type"/>
+                <field name="selection_values" invisible="field_type != 'selection'"/>
+                <field name="required"/>
+                <field name="placeholder" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_procedure_field" model="ir.actions.act_window">
+        <field name="name">Capture Fields</field>
+        <field name="res_model">legal.procedure.field</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Capture a fact one counter asks for</p>
+            <p>
+                A capture field is the right home for something that matters at one window
+                and nowhere else. It is the wrong home for a fee, a receipt, an expiry or a
+                register number - the whole department reports on those, so each of them has
+                a real column of its own and the engine refuses the name here.
+            </p>
+        </field>
+    </record>
+
+</odoo>

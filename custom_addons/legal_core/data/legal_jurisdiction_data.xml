@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        noupdate="1" throughout every content file in this product.
+
+        The tempting alternative is noupdate="0" on the argument that only
+        untouched records are refreshed. Odoo does not track "touched": with
+        noupdate="0" a module update overwrites the record unconditionally,
+        customer edits included. A customer who corrected a fee or a deadline
+        would silently lose the correction on the next upgrade, which is the
+        worst possible failure for a compliance product. Changes to shipped data
+        therefore go through explicit migrations/ scripts instead.
+    -->
+    <data noupdate="1">
+
+        <record id="jurisdiction_iq_federal" model="legal.jurisdiction">
+            <field name="name">جمهورية العراق - السلطة الاتحادية</field>
+            <field name="code">IQ-FED</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="jurisdiction_iq_kri" model="legal.jurisdiction">
+            <field name="name">إقليم كردستان العراق</field>
+            <field name="code">IQ-KRI</field>
+            <field name="sequence">20</field>
+            <field name="note" type="html">
+                <p>A genuinely separate jurisdiction, not a region of the federal one for
+                these purposes. The corporate return is due 30 June rather than 31 May,
+                there is no withholding on contract payments, the company registry issues a
+                fourteen-digit UEN, and a residency card is a prerequisite of a work permit
+                rather than the other way round.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

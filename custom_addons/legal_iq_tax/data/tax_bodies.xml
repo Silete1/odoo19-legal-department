@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The Commission is not one counter, and modelling it as one is the single
+        most expensive mistake available here.
+
+        A clerk does not go to "the Tax Commission". They go to قسم الشركات to
+        file, to قسم الاستقطاع المباشر to remit, to قسم الحجوزات الضريبية for one
+        stamp on the براءة ذمة walk, to القسم القانوني when the file is disputed
+        and to لجنة الاستئناف when it is appealed. Each of those has its own
+        queue, its own officers, its own opening behaviour and its own answer to
+        "who is sitting on this". They are therefore sections of one body, which
+        is what legal.gov.body.parent_id is for.
+
+        Note that لجنة الاستئناف is a section here rather than a separate body.
+        It sits inside the Commission, and an appeal that leaves the building is
+        a cassation - which is a court, not a section, and is not shipped in this
+        pack because the pack ends where the Commission does.
+    -->
+    <data noupdate="1">
+
+        <record id="body_mof" model="legal.gov.body">
+            <field name="name">وزارة المالية</field>
+            <field name="short_name">المالية</field>
+            <field name="code">MOF</field>
+            <field name="body_type_id" ref="legal_core.body_type_ministry"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">وزارة المالية</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://mof.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">الوزارة التي تتبعها الهيئة العامة للضرائب، وهي السلطة المالية المقصودة في قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل</field>
+            <field name="legal_basis_url">https://mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="body_gct" model="legal.gov.body">
+            <field name="name">الهيئة العامة للضرائب</field>
+            <field name="short_name">الضرائب</field>
+            <field name="code">GCT</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_mof"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب</field>
+            <field name="salutation">السيد رئيس الهيئة العامة للضرائب المحترم</field>
+            <field name="address">بغداد - شارع الخلفاء</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">hybrid</field>
+            <field name="portal_url">https://tax.mof.gov.iq</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="colour">1</field>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل؛ وقانون ضريبة العقار رقم 162 لسنة 1959؛ وقانون رقم 19 لسنة 2010 لقطاع النفط والغاز</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">20</field>
+            <field name="note" type="html">
+                <div>
+                    <p>الموقع ينشر الاستمارات والأدلة والتعاميم، لكن لم يُعثر على منظومة إلكترونية
+                    عاملة من طرف إلى طرف لتقديم الإقرار السنوي وتسديده - العمل ما يزال ورقياً
+                    في جوهره.</p>
+                    <p><b>التعاميم</b> هي الآلية التي تتغير بها القواعد دون تشريع، ولذلك يُتوقّع
+                    أن تُحدَّث بيانات هذه الحزمة عند كل تعميم لا عند كل تعديل قانوني.</p>
+                    <p>منذ 2025 شدّدت الهيئة تطبيق قواعد تدقيق البيانات المالية ورفعت نشاط
+                    التدقيق والإنفاذ بشكل ملحوظ.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="body_gct_companies" model="legal.gov.body">
+            <field name="name">قسم الشركات</field>
+            <field name="short_name">قسم الشركات</field>
+            <field name="code">GCT-COMPANIES</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+قسم الشركات</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">تقديم تصريح ضريبة الشركات والبيانات المالية بموعد أقصاه 31 أيار من السنة التالية للسنة الضريبية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="body_gct_withholding" model="legal.gov.body">
+            <field name="name">قسم الاستقطاع المباشر</field>
+            <field name="short_name">الاستقطاع المباشر</field>
+            <field name="code">GCT-WITHHOLDING</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+قسم الاستقطاع المباشر</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">تعليمات الاستقطاع المباشر: يُورَّد المستقطع خلال 15 يوماً من الشهر التالي لشهر الاستقطاع، ويُقدَّم جدول الاستقطاعات السنوي في موعد أقصاه 31 آذار</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">40</field>
+            <field name="note" type="html">
+                <p>الشرائح على الدخل السنوي بعد التنزيلات: 3% حتى 250,000 دينار، 5% من 250,000
+                إلى 500,000، 10% من 500,000 إلى 1,000,000، و15% لما زاد. التأخير في التسديد:
+                إضافة 5% بعد 21 يوماً، تتضاعف بعد 21 يوماً أخرى، مع فائدة بسعر المصرف السائد.</p>
+            </field>
+        </record>
+
+        <record id="body_gct_large_taxpayers" model="legal.gov.body">
+            <field name="name">قسم كبار مكلفي الدخل</field>
+            <field name="short_name">كبار المكلفين</field>
+            <field name="code">GCT-LARGE</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+قسم كبار مكلفي الدخل</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">قسم كبار مكلفي الدخل - أحد أقسام الهيئة المنشورة، وتُدار منه ملفات الشركات الكبيرة برقم ملف مستقل عن قسم الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">50</field>
+            <field name="note" type="html">
+                <p>الشركات الكبيرة تُدار من هنا لا من قسم الشركات، ورقم الملف يختلف. هذا هو
+                القسم الذي يُسأل عنه المراجع أولاً، ولذلك يُثبَّت اسم القسم على سطر المعرِّف في
+                سجل الأرقام.</p>
+            </field>
+        </record>
+
+        <record id="body_gct_seizures" model="legal.gov.body">
+            <field name="name">قسم الحجوزات الضريبية</field>
+            <field name="short_name">الحجوزات</field>
+            <field name="code">GCT-SEIZURES</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+قسم الحجوزات الضريبية</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">قسم الحجوزات الضريبية - محطة إلزامية في إجراء براءة الذمة: ختم الحجوزات الضريبية ثم الموافقة برفع الحجز</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">60</field>
+            <field name="note" type="html">
+                <p>محطة إلزامية في جولة براءة الذمة: ختم الحجوزات الضريبية، ثم لاحقاً الموافقة
+                برفع الحجز. الملف يتعثر هنا أكثر من أي شباك آخر في الجولة.</p>
+            </field>
+        </record>
+
+        <record id="body_gct_audit" model="legal.gov.body">
+            <field name="name">قسم التدقيق والفحص الضريبي</field>
+            <field name="short_name">التدقيق الضريبي</field>
+            <field name="code">GCT-AUDIT</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+قسم التدقيق والفحص الضريبي</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">الفحص الضريبي إلزامي، وتفحص السلطة البيانات المالية لتحديد الالتزام قبل إصدار براءة الذمة</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="body_gct_legal" model="legal.gov.body">
+            <field name="name">القسم القانوني</field>
+            <field name="short_name">القانوني - الضرائب</field>
+            <field name="code">GCT-LEGAL</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+القسم القانوني</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">القسم القانوني في الهيئة - السلطة المالية التي يُقدَّم إليها الاعتراض التحريري خلال 21 يوماً من التبليغ بالتقدير</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <record id="body_gct_appeal_committee" model="legal.gov.body">
+            <field name="name">لجنة الاستئناف الضريبي</field>
+            <field name="short_name">لجنة الاستئناف</field>
+            <field name="code">GCT-APPEAL</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+لجنة الاستئناف</field>
+            <field name="salutation">السيد رئيس لجنة الاستئناف المحترم</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل - الاستئناف خلال 21 يوماً من التبليغ بقرار رفض الاعتراض</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">verified</field>
+            <field name="sequence">90</field>
+            <field name="note" type="html">
+                <p>اللجنة لا تسير في الاستئناف إذا كانت الأقساط غير مسددة، تماماً كما لا يُسمع
+                الاعتراض ابتداءً ما لم تُسدَّد الضريبة المقدرة خلال مدة الاعتراض.</p>
+            </field>
+        </record>
+
+        <record id="body_gct_karrada_branch" model="legal.gov.body">
+            <field name="name">فرع الكرادة الشرقية - الهيئة العامة للضرائب</field>
+            <field name="short_name">فرع الكرادة</field>
+            <field name="code">GCT-KARRADA</field>
+            <field name="body_type_id" ref="legal_core.body_type_commission"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="parent_id" ref="body_gct"/>
+            <field name="letterhead_recipient">وزارة المالية
+الهيئة العامة للضرائب
+فرع الكرادة الشرقية</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="calendar_gct"/>
+            <field name="legal_basis">فروع الهيئة في بغداد والمحافظات - إجراءات البطاقة الضريبية موثّقة على مستوى الفرع لا على مستوى المركز</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">not_researched</field>
+            <field name="sequence">100</field>
+            <field name="note" type="html">
+                <p>نموذج لفرع من فروع بغداد (الكرادة الشرقية، الأعظمية، كرخ المركز، الرصافة،
+                بغداد الجديدة) ولفروع المحافظات. إجراءات البطاقة الضريبية موثّقة على مستوى الفرع
+                لا الهيئة، فأضف فرعك ثم أعِد توجيه خطوات المعاملة إليه - وهذا بالضبط ما تعنيه
+                عبارة «مهيّأة لا مبرمجة».</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

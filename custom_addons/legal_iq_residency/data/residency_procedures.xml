@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        THE PROOF.
+
+        The React prototype declared this workflow as a thirteen-value TypeScript
+        union - draft, dept_approval, dept_approved, rejected, letter_pending,
+        sent_ministry, at_ministry, sent_residency, at_residency, visa_issued,
+        visa_received, completed, expired - and every transition between them was
+        a branch in a component. Adding a state, a second sponsoring ministry, or
+        one more captured fact meant a developer and a release.
+
+        Below, every one of those states is a row. The buttons are rows. The
+        captured facts are rows. Nothing in this file is code, and the whole
+        chain can be re-pointed at the Ministry of Transport by editing one
+        legal.gov.body record.
+
+        Three of the prototype's fields are deliberately absent:
+        ministryOutgoingNumber, ministryOutgoingDate and ministryIncomingNumber
+        are رقم الصادر and رقم الوارد - register entries, not properties of a visa
+        request. The engine reserves those names and points at
+        legal.correspondence, because "what did we send the Ministry of Oil last
+        quarter" is a question asked in aggregate, and an answer buried inside one
+        workflow's payload cannot be given.
+    -->
+    <data noupdate="1">
+
+        <!-- ==============================================================
+             1. سمة الدخول - the entry visa chain
+             ============================================================== -->
+
+        <record id="proc_entry_visa" model="legal.procedure.type">
+            <field name="name">سمة دخول لموظف أجنبي</field>
+            <field name="code">RES-ENTRY-VISA</field>
+            <field name="body_id" ref="body_residency"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">many</field>
+            <field name="result_document_type_id" ref="doctype_entry_visa"/>
+            <field name="sequence_code">VISA/%(range_year)s/</field>
+            <field name="expected_duration_days">45</field>
+            <field name="lead_time_days">30</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">optional</field>
+            <field name="has_result_document">required</field>
+            <field name="has_subjects">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017 - السمة موافقة على دخول الأجنبي أراضي الجمهورية تُؤشَّر في جوازه</field>
+            <field name="legal_basis_url">https://ur.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">7</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>الكتاب الواحد يغطي عدة أشخاص على جدول «ت» مرقّم - أحد عشر مهندساً كتاب
+                    واحد وأحد عشر سطراً، لا أحد عشر كتاباً. لذلك ضُبطت هذه المعاملة على
+                    «عدة أشخاص».</p>
+                    <p>الترتيب العملي كما يصفه الممارسون: يقدّم صاحب العمل أو الوكيل المحلي طلب
+                    التخويل بالعمل إلى وزارة العمل والداخلية، وتبدأ التدقيقات الأمنية، وعند
+                    الموافقة الأولية يستحصل الأجنبي السمة من الخارج، وبعد الوصول تُنجز الفحوص
+                    الطبية والبصمات والتسجيل الأمني، ثم <b>الإقامة أولاً ثم إجازة العمل</b>.</p>
+                    <p><b>الوافد ملزم بمراجعة مديرية شؤون الإقامة خلال أول عشرة أيام من
+                    وصوله.</b></p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_visa_request" model="legal.procedure.phase">
+            <field name="name">الطلب والموافقة الداخلية</field>
+            <field name="code">REQUEST</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_visa_letter" model="legal.procedure.phase">
+            <field name="name">إصدار الكتاب الرسمي</field>
+            <field name="code">LETTER</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_visa_ministry" model="legal.procedure.phase">
+            <field name="name">لدى الوزارة الراعية</field>
+            <field name="code">MINISTRY</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="phase_visa_residency" model="legal.procedure.phase">
+            <field name="name">لدى مديرية الإقامة</field>
+            <field name="code">RESIDENCY</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="kind">decide</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="phase_visa_close" model="legal.procedure.phase">
+            <field name="name">الإصدار والاستلام</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="kind">close</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- draft -->
+        <record id="step_visa_draft" model="legal.procedure.step">
+            <field name="name">مسودة الطلب</field>
+            <field name="code">DRAFT</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_request"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">طلبات سمات قيد الإعداد</field>
+            <field name="desk_hint">جدول «ت» بأسماء الأشخاص وجوازاتهم قبل العرض على المدير</field>
+            <field name="desk_empty">لا توجد طلبات سمات قيد الإعداد</field>
+            <field name="clerk_instruction" type="html">
+                <p>تأكد من صلاحية الجوازات: جواز يوشك على الانتهاء يُقصِّر مدة السمة أو يمنعها.</p>
+            </field>
+        </record>
+
+        <record id="field_visa_type" model="legal.procedure.field">
+            <field name="label">نوع السمة</field>
+            <field name="code">visa_type</field>
+            <field name="step_id" ref="step_visa_draft"/>
+            <field name="field_type">selection</field>
+            <field name="selection_values">سمة دخول مفردة,سمة دخول متعددة,سمة عمل,سمة طوارئ,سمة زيارة تجارية</field>
+            <field name="required" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="field_visa_requested_days" model="legal.procedure.field">
+            <field name="label">مدة الإقامة المطلوبة (أيام)</field>
+            <field name="code">requested_duration_days</field>
+            <field name="step_id" ref="step_visa_draft"/>
+            <field name="field_type">integer</field>
+            <field name="required" eval="True"/>
+            <field name="placeholder">90</field>
+            <field name="help_text">السمة الاعتيادية لا تتجاوز ثلاثة أشهر</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="field_visa_purpose" model="legal.procedure.field">
+            <field name="label">الغرض من الزيارة</field>
+            <field name="code">visit_purpose</field>
+            <field name="step_id" ref="step_visa_draft"/>
+            <field name="field_type">text</field>
+            <field name="required" eval="True"/>
+            <field name="placeholder">الإشراف على تشغيل وحدة المعالجة في مشروع ...</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- dept_approval -->
+        <record id="step_visa_dept_approval" model="legal.procedure.step">
+            <field name="name">بانتظار موافقة مدير القسم</field>
+            <field name="code">DEPT-APPROVAL</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_request"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">internal</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="auto_next" eval="False"/>
+            <field name="return_to_step_id" ref="step_visa_draft"/>
+            <field name="desk_title">بانتظار موافقة مدير القسم</field>
+            <field name="desk_hint">التدقيق الفني قبل أن يخرج الكتاب من الشركة</field>
+            <field name="desk_empty">لا توجد طلبات بانتظار الموافقة</field>
+        </record>
+
+        <record id="field_visa_manager_note" model="legal.procedure.field">
+            <field name="label">ملاحظات مدير القسم</field>
+            <field name="code">department_manager_note</field>
+            <field name="step_id" ref="step_visa_dept_approval"/>
+            <field name="field_type">text</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- letter_pending -->
+        <record id="step_visa_letter" model="legal.procedure.step">
+            <field name="name">بانتظار إصدار الكتاب الرسمي</field>
+            <field name="code">LETTER</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_letter"/>
+            <field name="gov_body_id" ref="body_sponsor_ministry"/>
+            <field name="kind">internal</field>
+            <field name="sequence">30</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">كتب بانتظار الإصدار</field>
+            <field name="desk_hint">التوقيع والختم - الكتاب بلا ختم مسودة لا كتاب رسمي</field>
+            <field name="desk_empty">لا توجد كتب بانتظار الإصدار</field>
+        </record>
+
+        <!-- sent_ministry -->
+        <record id="step_visa_sent_ministry" model="legal.procedure.step">
+            <field name="name">أُرسل إلى الوزارة الراعية</field>
+            <field name="code">SENT-MINISTRY</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_ministry"/>
+            <field name="gov_body_id" ref="body_sponsor_ministry"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">كتب أُرسلت للوزارة</field>
+            <field name="desk_hint">قيّد رقم الصادر وتاريخه في سجل الصادر - لا هنا</field>
+            <field name="desk_empty">لا توجد كتب مرسلة بانتظار الوصل</field>
+        </record>
+
+        <!-- at_ministry -->
+        <record id="step_visa_at_ministry" model="legal.procedure.step">
+            <field name="name">لدى الوزارة الراعية</field>
+            <field name="code">AT-MINISTRY</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_ministry"/>
+            <field name="gov_body_id" ref="body_sponsor_ministry"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">50</field>
+            <field name="target_days">15</field>
+            <field name="rotting_threshold_days">45</field>
+            <field name="auto_next" eval="False"/>
+            <field name="return_to_step_id" ref="step_visa_letter"/>
+            <field name="desk_title">معاملات لدى الوزارة</field>
+            <field name="desk_hint">اسأل عن رقم الوارد لديهم - به تُتابع لا باسم الشخص</field>
+            <field name="desk_empty">لا توجد معاملات لدى الوزارة</field>
+            <field name="desk_note_template">راجعنا قسم سمات الدخول في الوزارة وأفادوا بأن المعاملة</field>
+        </record>
+
+        <!-- sent_residency -->
+        <record id="step_visa_sent_residency" model="legal.procedure.step">
+            <field name="name">مُحوَّلة إلى مديرية شؤون الإقامة</field>
+            <field name="code">SENT-RESIDENCY</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_residency"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">60</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">معاملات محوَّلة إلى الإقامة</field>
+            <field name="desk_hint">تاريخ الإحالة هو ما تبدأ منه متابعة الإقامة</field>
+            <field name="desk_empty">لا توجد معاملات محوَّلة</field>
+        </record>
+
+        <!-- at_residency -->
+        <record id="step_visa_at_residency" model="legal.procedure.step">
+            <field name="name">لدى مديرية شؤون الإقامة</field>
+            <field name="code">AT-RESIDENCY</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_residency"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">70</field>
+            <field name="target_days">20</field>
+            <field name="rotting_threshold_days">60</field>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">معاملات لدى الإقامة</field>
+            <field name="desk_hint">حالة المعاملة عند الشباك، لا مجرد «قيد الإجراء»</field>
+            <field name="desk_empty">لا توجد معاملات لدى الإقامة</field>
+            <field name="desk_note_template">راجعنا مديرية شؤون الإقامة وأفادوا بأن المعاملة</field>
+        </record>
+
+        <record id="field_visa_residency_status" model="legal.procedure.field">
+            <field name="label">حالة المعاملة لدى الإقامة</field>
+            <field name="code">residency_status_details</field>
+            <field name="step_id" ref="step_visa_at_residency"/>
+            <field name="field_type">char</field>
+            <field name="placeholder">لدى شعبة التدقيق الأمني - وعدوا بالإنجاز بعد العيد</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- visa_issued -->
+        <record id="step_visa_issued" model="legal.procedure.step">
+            <field name="name">صدرت السمة</field>
+            <field name="code">ISSUED</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_close"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">80</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">سمات صادرة بانتظار الاستلام</field>
+            <field name="desk_hint">قيّد رقم السمة ومدتها - منهما يُحسب تاريخ الانتهاء</field>
+            <field name="desk_empty">لا توجد سمات صادرة</field>
+        </record>
+
+        <record id="field_visa_number" model="legal.procedure.field">
+            <field name="label">رقم السمة</field>
+            <field name="code">visa_number</field>
+            <field name="step_id" ref="step_visa_issued"/>
+            <field name="field_type">char</field>
+            <field name="required" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="field_visa_validity_days" model="legal.procedure.field">
+            <field name="label">مدة صلاحية السمة (أيام)</field>
+            <field name="code">visa_validity_days</field>
+            <field name="step_id" ref="step_visa_issued"/>
+            <field name="field_type">integer</field>
+            <field name="required" eval="True"/>
+            <field name="placeholder">90</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="field_visa_entry_date" model="legal.procedure.field">
+            <field name="label">تاريخ الدخول إلى العراق</field>
+            <field name="code">iraq_entry_date</field>
+            <field name="step_id" ref="step_visa_issued"/>
+            <field name="field_type">date</field>
+            <field name="help_text">منه تُحسب مهلة العشرة أيام لمراجعة مديرية الإقامة</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- visa_received -->
+        <record id="step_visa_received" model="legal.procedure.step">
+            <field name="name">تم استلام السمة</field>
+            <field name="code">RECEIVED</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_close"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">internal</field>
+            <field name="sequence">90</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">سمات مستلمة بانتظار القيد</field>
+            <field name="desk_hint">تُقيَّد السمة في سجل مستمسكات الشركة باسم الشخص</field>
+            <field name="desk_empty">لا توجد سمات بانتظار القيد</field>
+        </record>
+
+        <record id="field_visa_followup_years" model="legal.procedure.field">
+            <field name="label">مدة المتابعة طويلة الأمد</field>
+            <field name="code">long_term_followup_years</field>
+            <field name="step_id" ref="step_visa_received"/>
+            <field name="field_type">selection</field>
+            <field name="selection_values">سنة واحدة,سنتان,ثلاث سنوات</field>
+            <field name="help_text">تنبيه يُرفع قبل شهر من نهاية المدة لمراجعة وضع الشخص</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- completed -->
+        <record id="step_visa_completed" model="legal.procedure.step">
+            <field name="name">مكتملة</field>
+            <field name="code">COMPLETED</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_close"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">100</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">معاملات مكتملة</field>
+            <field name="desk_empty">لا توجد معاملات مكتملة</field>
+        </record>
+
+        <!-- rejected -->
+        <record id="step_visa_rejected" model="legal.procedure.step">
+            <field name="name">مرفوضة</field>
+            <field name="code">REJECTED</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_close"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">rejected</field>
+            <field name="sequence">110</field>
+            <field name="fold" eval="True"/>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">معاملات مرفوضة</field>
+            <field name="desk_empty">لا توجد معاملات مرفوضة</field>
+        </record>
+
+        <!-- expired -->
+        <record id="step_visa_expired" model="legal.procedure.step">
+            <field name="name">انتهت صلاحيتها دون استعمال</field>
+            <field name="code">EXPIRED</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="phase_id" ref="phase_visa_close"/>
+            <field name="gov_body_id" ref="body_residency"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">expired</field>
+            <field name="sequence">120</field>
+            <field name="fold" eval="True"/>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">سمات انتهت دون استعمال</field>
+            <field name="desk_empty">لا توجد سمات منتهية</field>
+            <field name="clerk_instruction" type="html">
+                <p>السمة الاعتيادية تخوّل الدخول <b>مرة واحدة خلال ثلاثة أشهر من منحها</b>؛
+                من لم يدخل خلالها فقد سمته، وتُستأنف المعاملة من البداية. تسجيل هذه الحالة
+                كرفض يشوّه إحصاءات الرفض لدى الإقامة وهي ليست رفضاً منهم.</p>
+            </field>
+        </record>
+
+        <!-- The named buttons. These are the moves the ordering cannot express. -->
+
+        <record id="trans_visa_dept_return" model="legal.procedure.transition">
+            <field name="name">إعادة الطلب للتصحيح</field>
+            <field name="code">DEPT-RETURN</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_dept_approval"/>
+            <field name="to_step_id" ref="step_visa_draft"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_visa_dept_approve" model="legal.procedure.transition">
+            <field name="name">موافقة مدير القسم</field>
+            <field name="code">DEPT-APPROVE</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_dept_approval"/>
+            <field name="to_step_id" ref="step_visa_letter"/>
+            <field name="require_documents" eval="True"/>
+            <field name="sequence">20</field>
+            <field name="note">حارس المستمسكات هنا حقيقي: الكتاب الذي يخرج ناقص المرفقات يعود من الوزارة بعد أسبوعين، لا بعد ساعة.</field>
+        </record>
+
+        <record id="trans_visa_dept_reject" model="legal.procedure.transition">
+            <field name="name">رفض الطلب</field>
+            <field name="code">DEPT-REJECT</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_dept_approval"/>
+            <field name="to_step_id" ref="step_visa_rejected"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="trans_visa_ministry_return" model="legal.procedure.transition">
+            <field name="name">إعادة من الوزارة لاستكمال النواقص</field>
+            <field name="code">MINISTRY-RETURN</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_at_ministry"/>
+            <field name="to_step_id" ref="step_visa_letter"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="trans_visa_refer_residency" model="legal.procedure.transition">
+            <field name="name">تحويل المعاملة إلى دائرة الإقامة</field>
+            <field name="code">REFER-RESIDENCY</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_at_ministry"/>
+            <field name="to_step_id" ref="step_visa_sent_residency"/>
+            <field name="sequence">50</field>
+            <field name="note">اسم الزر هو ما يقوله الموظف، لا «اعتماد» ولا «التالي». تسمية هذه الحركة «Approve» ثم عرضها بالعربية هي كيف ينتهي البرنامج إلى مطالبة موظف عراقي بالضغط على «موافقة» لإحالة معاملة إلى دائرة الإقامة.</field>
+        </record>
+
+        <record id="trans_visa_ministry_reject" model="legal.procedure.transition">
+            <field name="name">رفض من الوزارة الراعية</field>
+            <field name="code">MINISTRY-REJECT</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_at_ministry"/>
+            <field name="to_step_id" ref="step_visa_rejected"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="trans_visa_residency_issue" model="legal.procedure.transition">
+            <field name="name">صدور السمة</field>
+            <field name="code">RESIDENCY-ISSUE</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_at_residency"/>
+            <field name="to_step_id" ref="step_visa_issued"/>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="trans_visa_residency_reject" model="legal.procedure.transition">
+            <field name="name">رفض من مديرية الإقامة</field>
+            <field name="code">RESIDENCY-REJECT</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_at_residency"/>
+            <field name="to_step_id" ref="step_visa_rejected"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">80</field>
+        </record>
+
+        <record id="trans_visa_expire" model="legal.procedure.transition">
+            <field name="name">انتهت صلاحية السمة دون دخول</field>
+            <field name="code">EXPIRE</field>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="from_step_id" ref="step_visa_issued"/>
+            <field name="to_step_id" ref="step_visa_expired"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">90</field>
+        </record>
+
+        <record id="req_visa_passport" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_passport"/>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="step_id" ref="step_visa_draft"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_visa_photographs" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_photographs"/>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="step_id" ref="step_visa_draft"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_visa_contract" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_employment_contract"/>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="step_id" ref="step_visa_letter"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="req_visa_sponsor_letter" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_sponsor_letter"/>
+            <field name="procedure_type_id" ref="proc_entry_visa"/>
+            <field name="step_id" ref="step_visa_letter"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- ==============================================================
+             2. الإقامة - the residency permit, after arrival
+             ============================================================== -->
+
+        <record id="proc_residency_permit" model="legal.procedure.type">
+            <field name="name">استحصال إقامة لموظف أجنبي</field>
+            <field name="code">RES-RESIDENCY-PERMIT</field>
+            <field name="body_id" ref="body_residency_baghdad"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">one</field>
+            <field name="result_document_type_id" ref="doctype_residency_permit"/>
+            <field name="sequence_code">RES/%(range_year)s/</field>
+            <field name="expected_duration_days">21</field>
+            <field name="lead_time_days">30</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">optional</field>
+            <field name="has_result_document">required</field>
+            <field name="has_subjects">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">قانون إقامة الأجانب رقم 76 لسنة 2017؛ ومراجعة المديرية خلال أول عشرة أيام من الوصول</field>
+            <field name="legal_basis_url">https://ur.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p><b>الترتيب الاتحادي:</b> الإقامة أولاً ثم إجازة العمل. <b>وفي إقليم كردستان
+                العكس:</b> بطاقة الإقامة شرط مسبق لإجازة العمل، والتسلسل هناك: سمة دخول ←
+                فحص طبي ← بطاقة إقامة ← إجازة عمل.</p>
+            </field>
+        </record>
+
+        <record id="phase_res_arrival" model="legal.procedure.phase">
+            <field name="name">الوصول والفحوص</field>
+            <field name="code">ARRIVAL</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_res_body" model="legal.procedure.phase">
+            <field name="name">لدى الإقامة</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_res_close" model="legal.procedure.phase">
+            <field name="name">الإصدار</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_res_arrival" model="legal.procedure.step">
+            <field name="name">تبليغ الوصول خلال عشرة أيام</field>
+            <field name="code">ARRIVAL</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="phase_id" ref="phase_res_arrival"/>
+            <field name="gov_body_id" ref="body_residency_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">10</field>
+            <field name="target_days">10</field>
+            <field name="desk_title">وافدون بانتظار التبليغ</field>
+            <field name="desk_hint">عشرة أيام من الوصول - وهي مهلة قصيرة تُنسى في أول أسبوع عمل</field>
+            <field name="desk_empty">لا يوجد وافدون بانتظار التبليغ</field>
+        </record>
+
+        <record id="step_res_medical" model="legal.procedure.step">
+            <field name="name">الفحص الطبي والبصمات</field>
+            <field name="code">MEDICAL</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="phase_id" ref="phase_res_arrival"/>
+            <field name="gov_body_id" ref="body_residency_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">فحوص طبية معلّقة</field>
+            <field name="desk_hint">خلو الأمراض السارية والمعدية شرط منح الإقامة</field>
+            <field name="desk_empty">لا توجد فحوص معلّقة</field>
+        </record>
+
+        <record id="step_res_submit" model="legal.procedure.step">
+            <field name="name">تقديم طلب الإقامة</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="phase_id" ref="phase_res_body"/>
+            <field name="gov_body_id" ref="body_residency_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">2</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">طلبات إقامة بانتظار التقديم</field>
+            <field name="desk_empty">لا توجد طلبات إقامة بانتظار التقديم</field>
+        </record>
+
+        <record id="step_res_review" model="legal.procedure.step">
+            <field name="name">التدقيق لدى الإقامة</field>
+            <field name="code">REVIEW</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="phase_id" ref="phase_res_body"/>
+            <field name="gov_body_id" ref="body_residency_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">14</field>
+            <field name="rotting_threshold_days">45</field>
+            <field name="return_to_step_id" ref="step_res_submit"/>
+            <field name="desk_title">طلبات لدى الإقامة</field>
+            <field name="desk_empty">لا توجد طلبات لدى الإقامة</field>
+            <field name="desk_note_template">راجعنا قسم إقامة بغداد وأفادوا بأن المعاملة</field>
+        </record>
+
+        <record id="step_res_issue" model="legal.procedure.step">
+            <field name="name">استلام بطاقة الإقامة</field>
+            <field name="code">ISSUE</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="phase_id" ref="phase_res_close"/>
+            <field name="gov_body_id" ref="body_residency_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">50</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">إقامات جاهزة للاستلام</field>
+            <field name="desk_hint">قيّد تاريخ الانتهاء - عليه يعمل تنبيه التجديد</field>
+            <field name="desk_empty">لا توجد إقامات جاهزة</field>
+        </record>
+
+        <record id="step_res_done" model="legal.procedure.step">
+            <field name="name">صدرت الإقامة</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="phase_id" ref="phase_res_close"/>
+            <field name="gov_body_id" ref="body_residency_baghdad"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">60</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">إقامات صادرة</field>
+            <field name="desk_empty">لا توجد إقامات صادرة</field>
+        </record>
+
+        <record id="trans_res_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال المستمسكات</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="from_step_id" ref="step_res_review"/>
+            <field name="to_step_id" ref="step_res_submit"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_res_passport" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_passport"/>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="step_id" ref="step_res_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+            <field name="note">مع صفحة السمة وختم الدخول.</field>
+        </record>
+
+        <record id="req_res_medical" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_medical_examination"/>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="step_id" ref="step_res_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_res_contract" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_employment_contract"/>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="step_id" ref="step_res_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="req_res_arrival" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_arrival_report"/>
+            <field name="procedure_type_id" ref="proc_residency_permit"/>
+            <field name="step_id" ref="step_res_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- ==============================================================
+             3. إجازة العمل - the work permit, after the residency
+             ============================================================== -->
+
+        <record id="proc_work_permit" model="legal.procedure.type">
+            <field name="name">استحصال إجازة عمل لأجنبي</field>
+            <field name="code">RES-WORK-PERMIT</field>
+            <field name="body_id" ref="body_labour_department"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">one</field>
+            <field name="result_document_type_id" ref="doctype_work_permit"/>
+            <field name="sequence_code">WP/%(range_year)s/</field>
+            <field name="expected_duration_days">30</field>
+            <field name="lead_time_days">30</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">required</field>
+            <field name="has_subjects">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">قانون العمل رقم 37 لسنة 2015 وتعليمات ممارسة الأجانب العمل في العراق؛ وآلية كانون الثاني 2025</field>
+            <field name="legal_basis_url">https://molsa.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>شروط آلية 2025: دخول وإقامة مشروعان، وعدم وجود مانع أمني، وعقد بالعربية
+                    والإنكليزية أو بلغة العامل، وإثبات قدرة صاحب العمل المالية على دفع أجور
+                    العامل الأجنبي، وإثبات الحاجة الفعلية لعدم توفر بديل عراقي مناسب، ووثائق
+                    المهارة والخبرة والكفاءة والفحوص الطبية. وتُقيَّد إمكانية تغيير المهنة أو
+                    صاحب العمل دون موافقة.</p>
+                    <p>سقف العمالة الأجنبية <b>50%</b> من مجموع العاملين في المشروع - وهي نقطة
+                    حساسة جداً في المشاريع الكبيرة. ويُذكر أيضاً معيار قرابة عاملَين عراقيَين
+                    لكل عامل أجنبي في فروع الشركات الأجنبية.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_wp_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_wp_body" model="legal.procedure.phase">
+            <field name="name">لدى دائرة العمل</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_wp_close" model="legal.procedure.phase">
+            <field name="name">الإصدار</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_wp_prepare" model="legal.procedure.step">
+            <field name="name">تهيئة الملف وإثبات الحاجة وعدم توفر البديل</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="phase_id" ref="phase_wp_prepare"/>
+            <field name="gov_body_id" ref="body_labour_department"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">إجازات عمل قيد التهيئة</field>
+            <field name="desk_hint">تحقق من نسبة العمالة الأجنبية قبل التقديم - السقف 50%</field>
+            <field name="desk_empty">لا توجد إجازات عمل قيد التهيئة</field>
+        </record>
+
+        <record id="step_wp_submit" model="legal.procedure.step">
+            <field name="name">تقديم الطلب إلى دائرة العمل والتدريب المهني</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="phase_id" ref="phase_wp_body"/>
+            <field name="gov_body_id" ref="body_labour_department"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">طلبات بانتظار التقديم</field>
+            <field name="desk_empty">لا توجد طلبات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_wp_review" model="legal.procedure.step">
+            <field name="name">التدقيق والموافقة الأمنية</field>
+            <field name="code">REVIEW</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="phase_id" ref="phase_wp_body"/>
+            <field name="gov_body_id" ref="body_labour_department"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">20</field>
+            <field name="rotting_threshold_days">60</field>
+            <field name="return_to_step_id" ref="step_wp_prepare"/>
+            <field name="desk_title">طلبات لدى دائرة العمل</field>
+            <field name="desk_hint">التدقيق الأمني هو ما يطيل المدة عادةً لا التدقيق الفني</field>
+            <field name="desk_empty">لا توجد طلبات لدى دائرة العمل</field>
+            <field name="desk_note_template">راجعنا دائرة العمل والتدريب المهني وأفادوا بأن الطلب</field>
+        </record>
+
+        <record id="step_wp_pay" model="legal.procedure.step">
+            <field name="name">تسديد رسم الإجازة واستلامها</field>
+            <field name="code">PAY</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="phase_id" ref="phase_wp_close"/>
+            <field name="gov_body_id" ref="body_labour_department"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">إجازات بانتظار الرسم والاستلام</field>
+            <field name="desk_empty">لا توجد إجازات بانتظار الاستلام</field>
+        </record>
+
+        <record id="step_wp_done" model="legal.procedure.step">
+            <field name="name">صدرت إجازة العمل</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="phase_id" ref="phase_wp_close"/>
+            <field name="gov_body_id" ref="body_labour_department"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">50</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">إجازات صادرة</field>
+            <field name="desk_empty">لا توجد إجازات صادرة</field>
+        </record>
+
+        <record id="trans_wp_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال النواقص</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="from_step_id" ref="step_wp_review"/>
+            <field name="to_step_id" ref="step_wp_prepare"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="fee_wp_permit" model="legal.fee.rule">
+            <field name="name">رسم إجازة العمل</field>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="step_id" ref="step_wp_pay"/>
+            <field name="computation">fixed</field>
+            <field name="amount">250000</field>
+            <field name="legal_basis">تعليمات ممارسة الأجانب العمل في العراق - رسم إجازة العمل 250,000 دينار</field>
+            <field name="legal_basis_url">https://molsa.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">في إقليم كردستان الرسم 110,000 دينار (نحو 84 دولاراً) مع تأمين صحي إلزامي. وفي حالات تسوية الوضع القانوني رُصد رسم قانوني منفصل قدره 4,720,000 دينار.</field>
+        </record>
+
+        <record id="req_wp_residency" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_residency_permit"/>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="step_id" ref="step_wp_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+            <field name="note">اتحادياً: الإقامة أولاً ثم الإجازة. في الإقليم بطاقة الإقامة شرط مسبق أيضاً وإن اختلف الترتيب في الوصف.</field>
+        </record>
+
+        <record id="req_wp_contract" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_employment_contract"/>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="step_id" ref="step_wp_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_wp_security" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_security_clearance"/>
+            <field name="procedure_type_id" ref="proc_work_permit"/>
+            <field name="step_id" ref="step_wp_review"/>
+            <field name="is_required" eval="True"/>
+            <field name="per_subject" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="doctype_entry_visa" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_entry_visa"/>
+        </record>
+
+        <record id="doctype_residency_permit" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_residency_permit"/>
+            <field name="renewal_procedure_type_id" ref="proc_residency_permit"/>
+        </record>
+
+        <record id="doctype_work_permit" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_work_permit"/>
+            <field name="renewal_procedure_type_id" ref="proc_work_permit"/>
+        </record>
+
+    </data>
+</odoo>

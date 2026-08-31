@@ -1,0 +1,189 @@
+// The document checklist, in GOV.UK task-list anatomy.
+//
+// The row is one grid: marker, body, status. The status column is fixed so the
+// tags line up down the page and the eye can sweep them, which is the only
+// reason to have a tag column at all. Everything is logical - the marker sits
+// on the inline-start edge and moves to the right of the row in Arabic without
+// a single rtlcss guard.
+//
+// Colour is the last carrier, never the first: every row states its status in
+// words and in an icon before it states it in a hue, so the list survives a
+// photocopy, a fax and a deuteranopic reader. The seven statuses get four
+// tints between them, because seven distinguishable hues do not exist at this
+// size and pretending otherwise makes all seven unreadable.
+
+.o_legal_checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .o_legal_checklist_head {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    // ------------------------------------------------------------- sections
+    .o_legal_check_section_head {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        inline-size: 100%;
+        padding: 0.35rem 0.2rem;
+        border: 0;
+        border-block-end: 1px solid $border-color;
+        background: none;
+        text-align: start;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: $body-color;
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: 2px;
+        }
+
+        // The disclosure chevron points along the reading direction when it is
+        // closed, so it turns round; when it is open it points down and must
+        // not be touched.
+        [dir="rtl"] & .fa-angle-right { transform: scaleX(-1); }
+    }
+
+    .o_legal_check_rows {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    // ------------------------------------------------------------------ row
+    .o_legal_check_target {
+        display: grid;
+        grid-template-columns: 1.6rem minmax(0, 1fr) 9rem;
+        align-items: start;
+        gap: 0.6rem;
+        inline-size: 100%;
+        padding: 0.55rem 0.3rem;
+        border: 0;
+        background: none;
+        text-align: start;
+        color: $body-color;
+        transition: background-color 0.12s ease;
+
+        &:hover { background-color: $o-gray-100; }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: -2px;
+        }
+
+        @media (max-width: 767px) {
+            grid-template-columns: 1.6rem minmax(0, 1fr);
+            .o_legal_check_status {
+                grid-column: 2;
+                text-align: start;
+            }
+        }
+    }
+
+    .o_legal_check_row + .o_legal_check_row .o_legal_check_target {
+        border-block-start: 1px solid $border-color;
+    }
+
+    .o_legal_check_icon {
+        display: flex;
+        justify-content: center;
+        padding-block-start: 0.1rem;
+        color: $text-muted;
+    }
+
+    .o_legal_check_main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-inline-size: 0;
+    }
+
+    .o_legal_check_name {
+        font-weight: 600;
+        // Arabic body text is never set below 14px, and this is the line the
+        // clerk actually reads down the page.
+        font-size: 0.95rem;
+    }
+
+    .o_legal_check_required_mark {
+        color: $danger;
+        margin-inline-start: 0.15rem;
+    }
+
+    // What the counter wants. One line, no full stop, and it does not wrap
+    // into a paragraph - if it needs a paragraph it belongs on the record.
+    .o_legal_check_hint {
+        font-size: 0.85rem;
+        color: $text-muted;
+    }
+
+    .o_legal_check_meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    // Visible, green, and written out - not a tint on the row. A clerk who
+    // cannot see that the tax card is already held uploads a second copy of
+    // it, and now the register has two.
+    .o_legal_check_register {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.05rem 0.45rem;
+        border: 1px solid rgba($success, 0.5);
+        border-radius: 10px;
+        background-color: rgba($success, 0.1);
+        color: $success;
+        font-weight: 600;
+    }
+
+    .o_legal_check_status {
+        justify-self: end;
+        text-align: end;
+        font-size: 0.85rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .o_legal_check_producer {
+        padding: 0 0 0.4rem;
+        margin-inline-start: 2.2rem;
+        .fa { margin-inline-end: 0.3rem; }
+    }
+
+    // -------------------------------------------------------- the seven codes
+    // Four tints for seven statuses. Nothing is "not started" red: a document
+    // nobody has asked for yet is not a failure, and colouring it as one is
+    // how a checklist teaches the reader to ignore its colours.
+    .o_legal_check_not_required {
+        .o_legal_check_icon, .o_legal_check_status, .o_legal_check_name {
+            color: $text-muted;
+        }
+    }
+
+    .o_legal_check_not_submitted .o_legal_check_status { color: $text-muted; }
+
+    .o_legal_check_submitted,
+    .o_legal_check_under_review {
+        .o_legal_check_icon, .o_legal_check_status { color: $warning; }
+    }
+
+    .o_legal_check_accepted {
+        .o_legal_check_icon, .o_legal_check_status { color: $success; }
+    }
+
+    .o_legal_check_rejected,
+    .o_legal_check_expired {
+        .o_legal_check_icon, .o_legal_check_status { color: $danger; }
+    }
+
+    .o_legal_check_blockers { margin-block-end: 0; ul { margin-block-end: 0; } }
+}

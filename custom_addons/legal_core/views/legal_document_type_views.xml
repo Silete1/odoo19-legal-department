@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_document_type_list" model="ir.ui.view">
+        <field name="name">legal.document.type.list</field>
+        <field name="model">legal.document.type</field>
+        <field name="arch" type="xml">
+            <list string="Document Types">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="kind_id"/>
+                <field name="issuing_body_id"/>
+                <field name="validity_model"/>
+                <field name="validity_value" optional="show"/>
+                <field name="validity_uom" optional="show"/>
+                <field name="notice_days" optional="show"/>
+                <field name="renewal_lead_days" optional="show"/>
+                <field name="is_per_subject" optional="hide"/>
+                <field name="jurisdiction_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_document_type_form" model="ir.ui.view">
+        <field name="name">legal.document.type.form</field>
+        <field name="model">legal.document.type</field>
+        <field name="arch" type="xml">
+            <form string="Document Type">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="هوية غرفة التجارة"/></h1>
+                        <h3><field name="name_en" placeholder="Chamber of Commerce identity"/></h3>
+                    </div>
+                    <group>
+                        <group string="What It Is">
+                            <field name="code"/>
+                            <field name="kind_id"/>
+                            <field name="issuing_body_id"/>
+                            <field name="jurisdiction_id"/>
+                            <field name="is_per_subject"/>
+                            <field name="company_register"/>
+                        </group>
+                        <group string="How Long It Lasts">
+                            <field name="validity_model" widget="radio"/>
+                            <label for="validity_value" invisible="validity_model != 'expiry'"/>
+                            <div class="o_row" invisible="validity_model != 'expiry'">
+                                <field name="validity_value"/>
+                                <field name="validity_uom"/>
+                            </div>
+                            <field name="freshness_days" invisible="validity_model != 'freshness'"/>
+                            <field name="notice_days" invisible="validity_model == 'none'"/>
+                            <field name="renewal_lead_days" invisible="validity_model == 'none'"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert" invisible="validity_model != 'freshness'">
+                        A document that goes stale rather than expiring: a paid electricity bill,
+                        a bank تأييد, a supporting letter. Council of Ministers directive 16180 of
+                        2024 made the latest paid electricity and water bills mandatory attachments
+                        at the Registrar, and the Ministry of Planning refuses any supporting letter
+                        issued more than a year before the application.
+                    </div>
+                    <notebook>
+                        <page string="Authenticity" name="authenticity">
+                            <p class="text-muted">
+                                The Iraqi certification ladder. Ticking these makes the checklist ask
+                                for them, so a clerk is not turned away at the window for bringing an
+                                uncertified copy.
+                            </p>
+                            <group>
+                                <field name="requires_certified_copy"/>
+                                <field name="requires_notarisation"/>
+                                <field name="requires_translation"/>
+                                <field name="requires_legalisation"/>
+                            </group>
+                        </page>
+                        <page string="Grades" name="grades">
+                            <p class="text-muted">
+                                A tender does not merely demand a valid Chamber identity; it demands
+                                هوية غرفة تجارة صنف (ممتاز) نافذة. Grades make that checkable.
+                            </p>
+                            <field name="grade_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="max_contract_value"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="What The Counter Wants" name="instruction">
+                            <field name="instruction"
+                                   placeholder="How many copies, stamped by whom, in what folder, at which window."/>
+                        </page>
+                        <page string="Provenance" name="provenance">
+                            <group>
+                                <field name="legal_basis"/>
+                                <field name="legal_basis_url" widget="url"/>
+                                <field name="last_verified_on"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_document_type_search" model="ir.ui.view">
+        <field name="name">legal.document.type.search</field>
+        <field name="model">legal.document.type</field>
+        <field name="arch" type="xml">
+            <search string="Document Types">
+                <field name="name" filter_domain="['|', '|', ('name', 'ilike', self), ('name_en', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="issuing_body_id"/>
+                <field name="kind_id"/>
+                <filter name="expiring_type" string="Expires" domain="[('validity_model', '=', 'expiry')]"/>
+                <filter name="freshness_type" string="Must Be Recent" domain="[('validity_model', '=', 'freshness')]"/>
+                <group>
+                    <filter name="group_kind" string="Kind" context="{'group_by': 'kind_id'}"/>
+                    <filter name="group_body" string="Issuing Body" context="{'group_by': 'issuing_body_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_document_type" model="ir.actions.act_window">
+        <field name="name">Document Types</field>
+        <field name="res_model">legal.document.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_legal_document_kind_list" model="ir.ui.view">
+        <field name="name">legal.document.kind.list</field>
+        <field name="model">legal.document.kind</field>
+        <field name="arch" type="xml">
+            <list string="Document Kinds" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_document_kind" model="ir.actions.act_window">
+        <field name="name">Document Kinds</field>
+        <field name="res_model">legal.document.kind</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

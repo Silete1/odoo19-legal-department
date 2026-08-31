@@ -1,0 +1,13 @@
+// Targeted rules for the Legal Department backend.
+//
+// Deliberately small. Everything that can be a Bootstrap utility class in the
+// arch is one, because a rule here is a rule somebody has to find later. What
+// is left is the handful of things Odoo has no utility for.
+
+.o_legal_stale {
+    // A shipped configuration record nobody has re-read. Iraqi practice changes
+    // by circular, so an unverified fee or deadline is flagged rather than
+    // quietly trusted.
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+}

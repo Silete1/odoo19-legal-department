@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalCounterWalk">
+        <section class="o_legal_walk" t-att-dir="payload.rtl ? 'rtl' : 'ltr'"
+                 t-att-data-step="payload.step_key || ''"
+                 t-att-data-done="payload.done" t-att-data-total="payload.total">
+
+            <header class="o_legal_card_head">
+                <h3 class="o_legal_card_title">
+                    <t t-esc="payload.step_label || label.title"/>
+                    <span class="o_legal_count o_legal_num" dir="ltr"
+                          t-esc="payload.meter_label"/>
+                </h3>
+            </header>
+
+            <div class="o_legal_empty" t-if="!counters.length">
+                <i class="fa fa-map-signs" role="img" aria-hidden="true"/>
+                <div>
+                    <p class="o_legal_empty_title" t-esc="label.empty"/>
+                    <p class="o_legal_empty_hint" t-esc="label.emptyHint"/>
+                </div>
+            </div>
+
+            <ol class="o_legal_walk_list" t-else="">
+                <li t-foreach="counters" t-as="counter" t-key="counter.id"
+                    t-att-class="counterClass(counter)"
+                    t-att-data-counter="counter.id">
+                    <!-- Whole-row target and a real button: the runner is doing
+                         this one-handed, standing up, on a telephone. -->
+                    <button type="button" class="o_legal_counter_target"
+                            t-on-click="() => this.toggle(counter)"
+                            t-att-aria-pressed="isObtained(counter)"
+                            t-attf-aria-label="{{ counter.label }} — {{ isObtained(counter) ? label.obtained : label.pending }}">
+                        <span class="o_legal_counter_marker o_legal_num" dir="ltr"
+                              aria-hidden="true">
+                            <i class="fa fa-check" t-if="isObtained(counter)"/>
+                            <t t-else="" t-esc="counter.sequence_label || counter_index + 1"/>
+                        </span>
+
+                        <span class="o_legal_counter_main">
+                            <span class="o_legal_counter_name">
+                                <t t-esc="counter.label"/>
+                                <span class="o_legal_counter_here" t-if="counter.id === currentId"
+                                      t-esc="label.next"/>
+                            </span>
+                            <span class="o_legal_counter_where" t-if="counter.location"
+                                  t-esc="counter.location"/>
+                            <span class="o_legal_counter_instruction" t-if="counter.instruction"
+                                  t-esc="counter.instruction"/>
+                            <span class="o_legal_counter_meta">
+                                <span class="o_legal_chip" t-if="counter.bring">
+                                    <t t-esc="label.bring"/>: <t t-esc="counter.bring"/>
+                                </span>
+                                <!-- The stamp is what the walk is for, so it is
+                                     named and not implied by a tick. -->
+                                <span class="o_legal_chip o_legal_counter_stamp"
+                                      t-if="counter.produces_stamp">
+                                    <i class="fa fa-certificate" role="img" aria-hidden="true"/>
+                                    <t t-esc="counter.produces_stamp"/>
+                                </span>
+                                <span class="o_legal_chip" t-if="counter.fee_label">
+                                    <t t-esc="label.fee"/>:
+                                    <span dir="ltr" class="o_legal_num" t-esc="counter.fee_label"/>
+                                </span>
+                                <span class="o_legal_chip" t-if="counter.receipt_number">
+                                    <t t-esc="label.receipt"/>:
+                                    <span dir="ltr" class="o_legal_num"
+                                          t-esc="counter.receipt_number"/>
+                                </span>
+                            </span>
+                        </span>
+
+                        <span class="o_legal_counter_state">
+                            <t t-esc="isObtained(counter) ? label.obtained : label.pending"/>
+                            <span class="o_legal_counter_on o_legal_num" dir="ltr"
+                                  t-if="counter.obtained_on" t-esc="counter.obtained_on"/>
+                        </span>
+                    </button>
+                </li>
+            </ol>
+
+            <footer class="o_legal_card_foot" t-if="counters.length">
+                <button type="button" class="btn btn-primary btn-sm"
+                        t-att-disabled="!unsavedCount"
+                        t-on-click="() => this.save()">
+                    <t t-esc="label.save"/>
+                </button>
+                <!-- Stated rather than implied. A widget that batches has to
+                     say how much it is holding, or the runner walks away from
+                     an afternoon of ticks. -->
+                <span class="o_legal_foot_note" t-if="unsavedCount"
+                      t-esc="unsavedLabel"/>
+            </footer>
+        </section>
+    </t>
+
+</templates>

@@ -1,0 +1,88 @@
+// One actionable number.
+//
+// The accent is a rule down the leading edge rather than a tinted ground,
+// because a tint behind a large figure costs contrast for no information. It
+// sits on `border-inline-start`, so it moves to the right of the tile in
+// Arabic along with the rest of the layout and needs no rtlcss guard.
+//
+// The tone never carries the meaning alone: the icon and the caption say the
+// same thing in shape and in words.
+
+.o_legal_tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    background-color: $o-view-background-color;
+    border-inline-start: 3px solid $border-color;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+
+    &.o_legal_tile_open {
+        cursor: pointer;
+
+        &:hover {
+            border-color: $o-brand-primary;
+            transform: translateY(-1px);
+        }
+
+        &:focus-visible {
+            outline: 2px solid $o-brand-primary;
+            outline-offset: 2px;
+        }
+    }
+}
+
+.o_legal_tile_head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: $text-muted;
+    font-size: 0.85rem;
+}
+
+.o_legal_tile_icon { font-size: 0.9rem; }
+
+.o_legal_tile_value {
+    font-size: 2rem;
+    line-height: 1.15;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: $body-color;
+}
+
+.o_legal_tile_hint {
+    font-size: 0.8rem;
+    color: $text-muted;
+}
+
+.o_legal_tile_go {
+    position: absolute;
+    inset-block-start: 0.85rem;
+    inset-inline-end: 0.9rem;
+    color: $text-muted;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+
+    // An arrow is one of the few glyphs whose meaning is tied to reading
+    // direction, so it turns round. A clock, a tick or a magnifier never does.
+    [dir="rtl"] & { transform: scaleX(-1); }
+}
+
+.o_legal_tile_open:hover .o_legal_tile_go { opacity: 1; }
+
+// Status accents. A neutral tile keeps the plain border: a tile reading zero
+// is not an alarm, and colouring every tile leaves nothing for the ones that
+// matter.
+.o_legal_tone_attention {
+    border-inline-start-color: $warning;
+    .o_legal_tile_icon { color: $warning; }
+}
+
+.o_legal_tone_critical {
+    border-inline-start-color: $danger;
+    .o_legal_tile_icon { color: $danger; }
+}

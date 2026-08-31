@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_correspondence_kind_list" model="ir.ui.view">
+        <field name="name">legal.correspondence.kind.list</field>
+        <field name="model">legal.correspondence.kind</field>
+        <field name="arch" type="xml">
+            <list string="Correspondence Kinds">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="direction"/>
+                <field name="is_submission" optional="show"/>
+                <field name="is_acknowledgement" optional="show"/>
+                <field name="is_return" optional="show"/>
+                <field name="is_reminder" optional="hide"/>
+                <field name="is_repeatable" optional="hide"/>
+                <field name="is_issued_document" optional="hide"/>
+                <field name="closes_thread" optional="show"/>
+                <field name="expects_reply" optional="show"/>
+                <field name="default_reply_days" optional="show"/>
+                <field name="is_contact_note" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_correspondence_kind_form" model="ir.ui.view">
+        <field name="name">legal.correspondence.kind.form</field>
+        <field name="model">legal.correspondence.kind</field>
+        <field name="arch" type="xml">
+            <form string="Correspondence Kind">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="إعادة للاستكمال"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identity">
+                            <field name="code" placeholder="RETURN"/>
+                            <field name="direction"/>
+                            <field name="colour" widget="color_picker"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="The Reply Clock">
+                            <field name="expects_reply"/>
+                            <field name="default_reply_days" invisible="not expects_reply"/>
+                            <field name="closes_thread"/>
+                        </group>
+                    </group>
+                    <group string="What This Kind Means To The Engine">
+                        <group>
+                            <field name="is_submission"/>
+                            <field name="is_acknowledgement"/>
+                            <field name="is_return"/>
+                        </group>
+                        <group>
+                            <field name="is_reminder"/>
+                            <field name="is_repeatable"/>
+                            <field name="is_contact_note"/>
+                        </group>
+                    </group>
+                    <group string="Produces A Document">
+                        <field name="is_issued_document"/>
+                        <field name="document_type_id" invisible="not is_issued_document"
+                               required="is_issued_document"/>
+                    </group>
+                    <div class="alert alert-info" role="alert" invisible="not is_contact_note">
+                        An entry of this kind takes <b>no register number</b>. It never touched the
+                        book - somebody picked up a telephone - but it is evidence, it moves the
+                        reply clock onto the date the counter promised, and it stops the next chase
+                        firing on a body that has already answered.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not is_acknowledgement">
+                        A وصل proves the letter was <b>received</b>. It closes nothing and answers
+                        nothing, and it must never stop the reply clock - otherwise the department
+                        reports a two-day turnaround at a body that has not yet opened the file.
+                    </div>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_correspondence_kind_search" model="ir.ui.view">
+        <field name="name">legal.correspondence.kind.search</field>
+        <field name="model">legal.correspondence.kind</field>
+        <field name="arch" type="xml">
+            <search string="Correspondence Kinds">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <filter name="outgoing" string="صادر" domain="[('direction', '=', 'out')]"/>
+                <filter name="incoming" string="وارد" domain="[('direction', '=', 'in')]"/>
+                <separator/>
+                <filter name="contact_notes" string="Takes No Number" domain="[('is_contact_note', '=', True)]"/>
+                <filter name="expects_reply" string="Expects A Reply" domain="[('expects_reply', '=', True)]"/>
+                <group>
+                    <filter name="group_direction" string="Direction" context="{'group_by': 'direction'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_correspondence_kind" model="ir.actions.act_window">
+        <field name="name">Correspondence Kinds</field>
+        <field name="res_model">legal.correspondence.kind</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Flags, not a hard-coded list</p>
+            <p>
+                A customer who needs إنذار قانوني adds a row and ticks "expects a reply" and
+                "closes nothing". Every clock, counter and board understands it immediately,
+                because the meaning is carried by the flags and not by the code.
+            </p>
+        </field>
+    </record>
+
+</odoo>

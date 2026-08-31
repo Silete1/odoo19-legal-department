@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Multi-company first. A register is a physical book kept by one
+            company; entries never leak across companies, and a letter template
+            with no company is a shared model everyone may print from.
+        -->
+
+        <record id="rule_legal_register_company" model="ir.rule">
+            <field name="name">Register: own company</field>
+            <field name="model_id" ref="model_legal_register"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_correspondence_company" model="ir.rule">
+            <field name="name">Correspondence: own company</field>
+            <field name="model_id" ref="model_legal_correspondence"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <record id="rule_legal_letter_template_company" model="ir.rule">
+            <field name="name">Letter template: own company or shared</field>
+            <field name="model_id" ref="model_legal_letter_template"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!--
+            سري. A confidential entry - a summons, a tax investigation, a labour
+            complaint naming an employee - is visible to the legal manager and to
+            the officers of the body it is with, and to nobody else.
+
+            The traversal is gov_body_id.officer_ids, exactly as in legal_core:
+            per-body visibility is data on the body, never a security group per
+            ministry. Installing a content pack must not create security objects.
+
+            Note the deliberate asymmetry with the entry's own company rule: a
+            clerk who cannot see a secret entry cannot see its number either, so
+            the sequence lookup runs sudo. The book must be complete even when
+            the reader is not allowed to read all of it, or the next number
+            collides with one that is hidden.
+        -->
+
+        <record id="rule_legal_correspondence_secret" model="ir.rule">
+            <field name="name">Correspondence: confidential entries are restricted</field>
+            <field name="model_id" ref="model_legal_correspondence"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver')), (4, ref('group_legal_registrar'))]"/>
+            <field name="domain_force">['|', ('secrecy', '!=', 'secret'), ('gov_body_id.officer_ids', 'in', [user.id])]</field>
+        </record>
+
+        <record id="rule_legal_correspondence_manager" model="ir.rule">
+            <field name="name">Correspondence: the legal manager sees everything</field>
+            <field name="model_id" ref="model_legal_correspondence"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="rule_legal_correspondence_line_secret" model="ir.rule">
+            <field name="name">Subject line: follows its entry</field>
+            <field name="model_id" ref="model_legal_correspondence_line"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_clerk')), (4, ref('legal_core.group_legal_officer')), (4, ref('legal_core.group_legal_approver')), (4, ref('group_legal_registrar'))]"/>
+            <field name="domain_force">['|', ('correspondence_id.secrecy', '!=', 'secret'), ('correspondence_id.gov_body_id.officer_ids', 'in', [user.id])]</field>
+        </record>
+
+        <record id="rule_legal_correspondence_line_manager" model="ir.rule">
+            <field name="name">Subject line: the legal manager sees everything</field>
+            <field name="model_id" ref="model_legal_correspondence_line"/>
+            <field name="groups" eval="[(4, ref('legal_core.group_legal_manager')), (4, ref('legal_core.group_legal_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

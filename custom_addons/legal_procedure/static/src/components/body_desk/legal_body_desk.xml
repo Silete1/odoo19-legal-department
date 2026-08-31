@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalBodyDesk">
+        <section class="o_legal_card o_legal_body_desk" t-att-data-body="body.key">
+            <header class="o_legal_body_head">
+                <h3 class="o_legal_card_title">
+                    <span class="o_legal_chip o_legal_body_chip" t-esc="body.label"/>
+                    <span class="o_legal_count o_legal_num" dir="ltr"
+                          t-if="body.outstanding" t-esc="body.outstanding"/>
+                    <span class="o_legal_body_clear_note" t-else="" t-esc="label.clear"/>
+                </h3>
+                <div class="o_legal_body_facts">
+                    <!-- The opening hours are on the panel because a clerk who
+                         arrives at 14:20 has wasted a morning, and no case list
+                         would ever have told them. -->
+                    <span class="o_legal_body_hours" t-if="body.open_hours">
+                        <i class="fa fa-clock-o" role="img" aria-hidden="true"/>
+                        <span dir="auto" t-esc="body.open_hours"/>
+                    </span>
+                    <button type="button" class="btn btn-link btn-sm o_legal_body_notes_toggle"
+                            t-if="body.counter_notes"
+                            t-on-click="() => this.toggleNotes()"
+                            t-att-aria-expanded="state.notes">
+                        <i class="fa fa-map-marker" role="img" aria-hidden="true"/>
+                        <t t-esc="label.showNotes"/>
+                    </button>
+                </div>
+            </header>
+
+            <!-- «الطابق الثاني، شباك ٣، أحضر نسختين». Behind a disclosure
+                 because it is long and it is read once, not every morning. -->
+            <div class="o_legal_body_notes" t-if="state.notes &amp;&amp; body.counter_notes">
+                <t t-out="body.counter_notes"/>
+            </div>
+
+            <div t-foreach="sections" t-as="section" t-key="section.key"
+                 t-att-class="sectionClass(section)"
+                 t-att-data-section="section.key">
+                <header class="o_legal_body_section_head">
+                    <h4 class="o_legal_body_section_title">
+                        <t t-esc="section.title"/>
+                        <span class="o_legal_count o_legal_num" dir="ltr"
+                              t-if="section.count" t-esc="section.count"/>
+                    </h4>
+                    <p class="o_legal_body_section_hint" t-if="section.hint"
+                       t-esc="section.hint"/>
+                </header>
+
+                <!-- The empty state is configuration, not a string in this
+                     template: a new body produces a working panel with the
+                     right sentence in it and no code at all. -->
+                <p class="o_legal_body_section_empty" t-if="!section.rows.length"
+                   t-esc="section.empty"/>
+
+                <ul class="o_legal_body_rows" t-else="">
+                    <li t-foreach="section.rows" t-as="row" t-key="row.id"
+                        class="o_legal_body_row">
+                        <button type="button" t-on-click="() => this.open(row)"
+                                t-attf-aria-label="{{ row.name || row.our_number }} — {{ row.subject }}">
+                            <span class="o_legal_body_row_ref o_legal_num" dir="ltr"
+                                  t-esc="row.name || row.our_number"/>
+                            <span class="o_legal_body_row_subject" t-esc="row.subject"/>
+                            <span class="o_legal_body_row_clock">
+                                <LegalClockBadge payload="row.clock" compact="true"
+                                                 t-if="row.clock"/>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+
+                <footer class="o_legal_body_section_foot" t-if="section.action">
+                    <button type="button" class="btn btn-link btn-sm o_legal_more"
+                            t-on-click="() => this.openSection(section)">
+                        <t t-esc="label.openAll"/>
+                        <i class="fa fa-angle-right" role="img" aria-hidden="true"/>
+                    </button>
+                    <span class="o_legal_foot_note" t-if="overflow(section)"
+                          t-esc="moreLabel(section)"/>
+                </footer>
+            </div>
+        </section>
+    </t>
+
+</templates>

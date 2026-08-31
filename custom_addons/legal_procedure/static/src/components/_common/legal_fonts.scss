@@ -1,0 +1,77 @@
+// Tajawal on screen, from the copy Odoo already ships.
+//
+// Three facts make this file necessary and make it look the way it does.
+//
+// **Odoo bundles Tajawal but does not put it on screen.** Seven weights of
+// local .ttf plus the OFL notice live at `web/static/fonts/google/Tajawal/`,
+// and `web/static/fonts/fonts.scss` declares them - but that stylesheet is
+// listed in `web.report_assets_common`, not in `web.assets_backend`. So the
+// PDFs get Tajawal and the interface does not.
+//
+// **We must not simply add `fonts.scss` to our backend bundle.** That same
+// file also declares "Odoo Unicode Support Noto", which pulls NotoSansArabic
+// from `https://fonts.odoocdn.com`. The target deployment is an Iraqi
+// corporate network that may be firewalled or entirely air-gapped, where that
+// fetch fails silently and costs every page a stalled request. So this file
+// declares only the three weights we use, over the SAME-ORIGIN local paths.
+//
+// **Nothing is vendored.** The .ttf files are Odoo's, the licence is SIL OFL
+// 1.1, and adding a second copy of a font that is already on disk would double
+// the download for nothing.
+//
+// It lives under `components/_common/` rather than in a `scss/` folder of its
+// own so that the manifest's component glob picks it up without a second
+// manifest entry - one less thing to get wrong when a file is added.
+//
+// If the customer wants a genuine naskh face for the interface - some diwans
+// will - Amiri and Noto Naskh Arabic are both OFL 1.1 and are added the same
+// way, and the *report* stylesheet needs the same treatment plus `fc-cache -f`
+// on the server, because wkhtmltopdf resolves fonts through the server's own
+// fontconfig and not through the browser.
+
+@font-face {
+    font-family: "Tajawal";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/web/static/fonts/google/Tajawal/Tajawal-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Tajawal";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/web/static/fonts/google/Tajawal/Tajawal-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Tajawal";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/web/static/fonts/google/Tajawal/Tajawal-Bold.ttf") format("truetype");
+}
+
+// Applied to this module's own screens only, and never to the whole backend:
+// re-typesetting every list and form in the database is not this module's
+// decision to make. The Latin fallbacks are stock-Linux-safe on purpose - a
+// stack naming "Segoe UI" or "Tahoma" works on a Windows development machine
+// and on no server anyone will deploy to.
+.o_legal_screen,
+.o_legal_rail,
+.o_legal_checklist,
+.o_legal_walk,
+.o_legal_clock,
+.o_legal_body_desk {
+    font-family: "Tajawal", "Noto Naskh Arabic", "DejaVu Sans", sans-serif;
+
+    // Arabic letters connect; tracking breaks the joins, an obliqued naskh
+    // slants them wrongly, and a kasra is clipped at the Latin line-height.
+    letter-spacing: 0;
+    font-style: normal;
+    line-height: 1.55;
+
+    // A default underline collides with the dots below the baseline.
+    a { text-decoration-skip-ink: auto; }
+}

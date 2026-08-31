@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_signatory_list" model="ir.ui.view">
+        <field name="name">legal.signatory.list</field>
+        <field name="model">legal.signatory</field>
+        <field name="arch" type="xml">
+            <list string="Authorised Signatories">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="title"/>
+                <field name="entity_id"/>
+                <field name="valid_from"/>
+                <field name="valid_to" decoration-warning="valid_to != False"/>
+                <field name="is_default" widget="boolean_toggle"/>
+                <field name="body_ids" widget="many2many_tags" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_signatory_form" model="ir.ui.view">
+        <field name="name">legal.signatory.form</field>
+        <field name="model">legal.signatory</field>
+        <field name="arch" type="xml">
+            <form string="Authorised Signatory">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                        <h3><field name="title" placeholder="المدير المفوض"/></h3>
+                    </div>
+                    <group>
+                        <group string="Who">
+                            <field name="entity_id"/>
+                            <field name="name_en"/>
+                            <field name="title_en"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="partner_id"/>
+                            <field name="appointment_document_id"/>
+                        </group>
+                        <group string="When">
+                            <field name="valid_from"/>
+                            <field name="valid_to"/>
+                            <field name="is_default"/>
+                            <field name="body_ids" widget="many2many_tags"
+                                   placeholder="Leave empty if every counter accepts this signature"/>
+                        </group>
+                    </group>
+                    <separator string="Signature And Seal"/>
+                    <div class="alert alert-info" role="alert">
+                        An Iraqi official letter is constituted by the letterhead, the signature
+                        and the ختم printed together. A letter without the seal is a draft, and
+                        the counter will say so.
+                    </div>
+                    <group>
+                        <group string="Specimen Signature">
+                            <field name="specimen_signature" widget="image" nolabel="1"
+                                   options="{'size': [220, 110]}"/>
+                        </group>
+                        <group string="Official Seal (الختم)">
+                            <field name="stamp_image" widget="image" nolabel="1"
+                                   options="{'size': [180, 180]}"/>
+                        </group>
+                    </group>
+                    <field name="note" placeholder="Which bodies hold a filed specimen, and any restriction on scope."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_signatory" model="ir.actions.act_window">
+        <field name="name">Signatories &amp; Seals</field>
+        <field name="res_model">legal.signatory</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Record who signs, and the seal that goes with them</p>
+            <p>
+                When the managing director changes, every letter template that named him
+                becomes wrong, and a department usually finds out one rejected letter at a
+                time. Here it is one record with an end date.
+            </p>
+        </field>
+    </record>
+
+</odoo>

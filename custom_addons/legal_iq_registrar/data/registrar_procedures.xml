@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The Registrar's procedures, as rows.
+
+        Read one thing here before changing anything: there is almost no
+        legal.procedure.transition in this file. A walk that never branches needs
+        none, because the engine synthesises each advance from the step ordering.
+        The transitions that do exist are the moves the ordering cannot express -
+        the return for completion, and the refusal - and those are exactly the two
+        moves an Iraqi file actually makes. Ten rows saying "from 3 to 4" would be
+        ten rows a consultant can get wrong, carrying no information the sequence
+        did not already carry.
+
+        Every step names a body even when the body is us. "Prepare the file" is a
+        step at the legal department, "deposit the capital" is a step at the bank,
+        and forcing the answer is what lets the desk panel and the working-day
+        clocks work with no special cases.
+    -->
+    <data noupdate="1">
+
+        <!-- ==============================================================
+             1. تأسيس شركة - company formation
+             ============================================================== -->
+
+        <record id="proc_incorporation" model="legal.procedure.type">
+            <field name="name">تأسيس شركة</field>
+            <field name="code">MOT-INCORP</field>
+            <field name="body_id" ref="body_mot_registrar_incorporation"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="version">1.0</field>
+            <field name="effective_from">2024-04-01</field>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_incorporation_certificate"/>
+            <field name="sequence_code">MOT-INC/%(range_year)s/</field>
+            <field name="expected_duration_days">20</field>
+            <field name="channel">hybrid</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">required</field>
+            <field name="has_subjects">no</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">قانون الشركات رقم 21 لسنة 1997 المعدل، المواد 13-28؛ وتوجيه الأمانة العامة لمجلس الوزراء 16180 في 1 نيسان 2024 بشأن قوائم الكهرباء والماء</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">4</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>المسار الواقعي: حجز الاسم التجاري لدى غرفة التجارة والاتحاد أولاً، ثم
+                    المسجل. المدة العملية 20-25 يوماً لغير المساهمة (2-3 أيام للمحدودة إذا كانت
+                    المستمسكات كاملة)، وقرابة شهرين للمساهمة.</p>
+                    <p>الموافقات القطاعية <b>قبل</b> التسجيل: وزارة الداخلية إذا كان أحد المؤسسين
+                    أجنبياً؛ البنك المركزي للمصارف وشركات الاستثمار المالي والتحويل المالي؛ وزارة
+                    النقل لنشاط النقل؛ وزارة النفط إذا كان النشاط خدمات نفطية وأحد المؤسسين أجنبياً؛
+                    الداخلية وجهاز الأمن الوطني لخدمات الحماية.</p>
+                    <p>بعد التسجيل: الاجتماع التأسيسي خلال 30 يوماً من موافقة المسجل، والتسجيل في
+                    السجل التجاري لدى غرفة التجارة خلال 30 يوماً من استلام شهادة التأسيس.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_incorp_prepare" model="legal.procedure.phase">
+            <field name="name">تهيئة الملف</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_incorp_submit" model="legal.procedure.phase">
+            <field name="name">الإيداع لدى المسجل</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_incorp_with_body" model="legal.procedure.phase">
+            <field name="name">لدى المسجل</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="phase_incorp_decide" model="legal.procedure.phase">
+            <field name="name">المصادقة والنشر</field>
+            <field name="code">DECIDE</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="kind">decide</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="phase_incorp_close" model="legal.procedure.phase">
+            <field name="name">الاستلام والإنجاز</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="kind">close</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="step_incorp_prepare" model="legal.procedure.step">
+            <field name="name">إعداد عقد التأسيس ومستمسكات المؤسسين</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_prepare"/>
+            <field name="gov_body_id" ref="body_mot_registrar_incorporation"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">ملفات قيد التهيئة</field>
+            <field name="desk_hint">المستمسكات كاملة والعقد مطبوع قبل الذهاب إلى الشباك</field>
+            <field name="desk_empty">لا توجد ملفات تأسيس قيد التهيئة</field>
+            <field name="clerk_instruction" type="html">
+                <p>الحد الأدنى لرأس المال (المادة 28): مساهمة 2,000,000 دينار، محدودة 1,000,000،
+                والمشروع الفردي والتضامنية والبسيطة 500,000. شركات التأمين وإعادة التأمين
+                والاستثمار المالي والمصارف والتحويل المالي يجب أن تكون مساهمة (المادة 10).</p>
+            </field>
+        </record>
+
+        <record id="step_incorp_notary" model="legal.procedure.step">
+            <field name="name">تصديق عقد التأسيس لدى الكاتب العدل</field>
+            <field name="code">NOTARY</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_prepare"/>
+            <field name="gov_body_id" ref="body_notary"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">1</field>
+            <field name="desk_title">لدى الكاتب العدل</field>
+            <field name="desk_hint">مطلوب للشركة البسيطة، والحضور الشخصي شرط</field>
+            <field name="desk_empty">لا توجد عقود لدى الكاتب العدل</field>
+            <field name="clerk_instruction" type="html">
+                <p>إلزامي للشركة البسيطة بموجب قانون الشركات، واختياري لغيرها. الوكالة لا تُنظَّم
+                بالبريد - الحضور الشخصي مطلوب.</p>
+            </field>
+        </record>
+
+        <record id="step_incorp_capital_deposit" model="legal.procedure.step">
+            <field name="name">إيداع رأس المال لدى مصرف مجاز</field>
+            <field name="code">CAPITAL-DEPOSIT</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_prepare"/>
+            <field name="gov_body_id" ref="body_rasheed_bank"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">إيداع رأس المال</field>
+            <field name="desk_hint">التأييد المصرفي باسم الشركة تحت التأسيس</field>
+            <field name="desk_empty">لا توجد إيداعات رأسمال معلّقة</field>
+            <field name="desk_note_template">راجعنا المصرف بشأن تأييد الإيداع وأفادوا بأن</field>
+        </record>
+
+        <record id="step_incorp_submit" model="legal.procedure.step">
+            <field name="name">تقديم الطلب إلى قسم التأسيس</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_submit"/>
+            <field name="gov_body_id" ref="body_mot_registrar_incorporation"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">بانتظار الإيداع لدى المسجل</field>
+            <field name="desk_hint">يُثبَّت على الطلب تاريخ الواردة والرسوم المستوفاة</field>
+            <field name="desk_empty">لا توجد طلبات بانتظار الإيداع</field>
+        </record>
+
+        <record id="step_incorp_review" model="legal.procedure.step">
+            <field name="name">تدقيق المستمسكات والبتّ في الطلب</field>
+            <field name="code">REVIEW</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_with_body"/>
+            <field name="gov_body_id" ref="body_mot_registrar_incorporation"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">50</field>
+            <field name="target_days">10</field>
+            <field name="rotting_threshold_days">30</field>
+            <field name="auto_next" eval="True"/>
+            <field name="return_to_step_id" ref="step_incorp_prepare"/>
+            <field name="desk_title">لدى المسجل للتدقيق</field>
+            <field name="desk_hint">المهلة القانونية للقبول أو الرفض عشرة أيام من الإيداع</field>
+            <field name="desk_empty">لا توجد معاملات لدى المسجل</field>
+            <field name="desk_note_template">راجعنا قسم التأسيس وأفادوا بأن المعاملة</field>
+            <field name="clerk_instruction" type="html">
+                <p>يجب أن يبتّ المسجل خلال 10 أيام من تاريخ الإيداع. الرفض يُعترض عليه لدى الوزير
+                خلال 30 يوماً، ثم أمام المحكمة المختصة خلال 30 يوماً من التبليغ بقرار الوزير.</p>
+            </field>
+        </record>
+
+        <record id="step_incorp_pay_fees" model="legal.procedure.step">
+            <field name="name">تسديد الرسوم في مصرف الرشيد</field>
+            <field name="code">PAY-FEES</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_decide"/>
+            <field name="gov_body_id" ref="body_rasheed_bank"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">60</field>
+            <field name="target_days">1</field>
+            <field name="desk_title">رسوم غير مسددة</field>
+            <field name="desk_hint">الوصل الأصلي يُرفق بالملف - لا يُقبل التصوير</field>
+            <field name="desk_empty">لا توجد رسوم تأسيس غير مسددة</field>
+        </record>
+
+        <record id="step_incorp_publish" model="legal.procedure.step">
+            <field name="name">نشر قرار التأسيس في النشرة اليومية</field>
+            <field name="code">PUBLISH</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_decide"/>
+            <field name="gov_body_id" ref="body_mot_registrar_bulletin"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">70</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">بانتظار النشر</field>
+            <field name="desk_hint">يُسجَّل رقم النشرة وتاريخها - النشر شرط النفاذ</field>
+            <field name="desk_empty">لا توجد قرارات بانتظار النشر</field>
+        </record>
+
+        <record id="step_incorp_collect" model="legal.procedure.step">
+            <field name="name">استلام شهادة التأسيس وإجازة التسجيل</field>
+            <field name="code">COLLECT</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_incorporation"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">80</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">جاهز للاستلام</field>
+            <field name="desk_hint">يحضر المعتمد بالوكالة وهوية نقابة المحامين</field>
+            <field name="desk_empty">لا توجد شهادات جاهزة للاستلام</field>
+        </record>
+
+        <record id="step_incorp_done" model="legal.procedure.step">
+            <field name="name">أُنجزت المعاملة وسُجلت الشركة</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_incorporation"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">90</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">معاملات منجزة</field>
+            <field name="desk_empty">لا توجد معاملات منجزة بعد</field>
+            <field name="clerk_instruction" type="html">
+                <p>بعد الإنجاز: الاجتماع التأسيسي خلال 30 يوماً من موافقة المسجل، والتسجيل في
+                السجل التجاري لدى غرفة التجارة خلال 30 يوماً من استلام الشهادة.</p>
+            </field>
+        </record>
+
+        <record id="step_incorp_refused" model="legal.procedure.step">
+            <field name="name">رُفض الطلب</field>
+            <field name="code">REFUSED</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="phase_id" ref="phase_incorp_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_incorporation"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">rejected</field>
+            <field name="sequence">100</field>
+            <field name="fold" eval="True"/>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">طلبات مرفوضة</field>
+            <field name="desk_empty">لا توجد طلبات مرفوضة</field>
+            <field name="clerk_instruction" type="html">
+                <p>الاعتراض على الرفض يُقدَّم إلى الوزير خلال 30 يوماً من التبليغ، ثم إلى المحكمة
+                المختصة خلال 30 يوماً من التبليغ بقرار الوزير. الرفض يجب أن يكون مسبباً.</p>
+            </field>
+        </record>
+
+        <record id="trans_incorp_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال النواقص</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="from_step_id" ref="step_incorp_review"/>
+            <field name="to_step_id" ref="step_incorp_prepare"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+            <field name="note">الإعادة للتصحيح هي الحركة الأشيع فعلياً لدى المسجل، وتسجيلها كإعادة لا كرفض هو ما يجعل إحصاءات إعادة العمل صادقة.</field>
+        </record>
+
+        <record id="trans_incorp_refuse" model="legal.procedure.transition">
+            <field name="name">رفض الطلب</field>
+            <field name="code">REFUSE</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="from_step_id" ref="step_incorp_review"/>
+            <field name="to_step_id" ref="step_incorp_refused"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Fees. The figures are the Ministry's own published brief for a
+             company OTHER than a joint stock; the joint-stock variant is named
+             in each note rather than shipped as a second schedule, because a
+             clerk reading a fee needs to see both numbers at once. -->
+
+        <record id="fee_incorp_registration" model="legal.fee.rule">
+            <field name="name">رسم التسجيل</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_pay_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">20000</field>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات - رسوم التأسيس</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">20,000 دينار لغير الشركة المساهمة، و200,000 دينار للشركة المساهمة.</field>
+        </record>
+
+        <record id="fee_incorp_capital_stamp" model="legal.fee.rule">
+            <field name="name">طابع على رأس المال</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_pay_fees"/>
+            <field name="computation">percent_capital</field>
+            <field name="amount">0.2</field>
+            <field name="is_stamp_duty" eval="True"/>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات: طابع بنسبة 0.002 من رأس المال</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="note">0.002 من رأس المال، أي 0.2%. تُحتسب على رأس المال المثبت على الكيان.</field>
+        </record>
+
+        <record id="fee_incorp_contract_stamp" model="legal.fee.rule">
+            <field name="name">طابع على العقد والطلب</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_pay_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">650</field>
+            <field name="is_stamp_duty" eval="True"/>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="fee_incorp_founders_auth" model="legal.fee.rule">
+            <field name="name">تصديق بيانات المؤسسين</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_pay_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">5000</field>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="note">5,000 دينار لغير المساهمة، و25,000 دينار للشركة المساهمة.</field>
+        </record>
+
+        <record id="fee_incorp_publication" model="legal.fee.rule">
+            <field name="name">أجور نشر قرار التأسيس</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_publish"/>
+            <field name="computation">fixed</field>
+            <field name="amount">10000</field>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="fee_incorp_filing" model="legal.fee.rule">
+            <field name="name">رسم الإيداع</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_pay_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">750</field>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="fee_incorp_consultation" model="legal.fee.rule">
+            <field name="name">أجور الاستشارة</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_pay_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">1000</field>
+            <field name="is_optional" eval="True"/>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات - لغير الشركة المساهمة</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">70</field>
+            <field name="note">للشركة المساهمة يحل محلها رسم دراسة الجدوى الاقتصادية 25,000 دينار.</field>
+        </record>
+
+        <record id="fee_incorp_confirmation" model="legal.fee.rule">
+            <field name="name">رسم التأييد</field>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_pay_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">1000</field>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- Documents. Note where each is demanded: the checklist that asks for
+             everything on day one is the checklist people learn to ignore. -->
+
+        <record id="req_incorp_formation_contract" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_formation_contract"/>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">3</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_incorp_bank_capital" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_bank_capital_confirmation"/>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_incorp_lease" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_certified_lease"/>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">30</field>
+            <field name="note">أو سند الملكية إن كان المقر مملوكاً للشركة.</field>
+        </record>
+
+        <record id="req_incorp_electricity" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_electricity_bill"/>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">40</field>
+            <field name="note">آخر قائمة مسددة - توجيه الأمانة العامة لمجلس الوزراء 16180 في 2024/4/1.</field>
+        </record>
+
+        <record id="req_incorp_water" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_water_bill"/>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="step_id" ref="step_incorp_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="req_incorp_poa" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_lawyer_power_of_attorney"/>
+            <field name="procedure_type_id" ref="proc_incorporation"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">60</field>
+            <field name="note">مطلوبة في كل شباك تقريباً مع هوية نقابة المحامين، ولذلك لا تُربط بخطوة واحدة.</field>
+        </record>
+
+        <!-- ==============================================================
+             2. زيادة رأس المال - capital increase
+             ============================================================== -->
+
+        <record id="proc_capital_increase" model="legal.procedure.type">
+            <field name="name">زيادة رأس المال</field>
+            <field name="code">MOT-CAPITAL-INCREASE</field>
+            <field name="body_id" ref="body_mot_registrar_amendment"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="sequence_code">MOT-CAP/%(range_year)s/</field>
+            <field name="expected_duration_days">5</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">المواد 54-57 و203 و216 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>تُنجَز خلال 3 أيام متى اكتملت المستمسكات. المسجل يخاطب الجهة القطاعية
+                    المختصة خلال 15 يوماً. <b>تُدفع الغرامات التأخيرية عند هذه المعاملة</b> -
+                    المادة 216 تفرض 100 دينار عن كل يوم تأخير في تقديم البيانات المطلوبة، وهي
+                    تُستوفى هنا قبل إتمام الزيادة.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_cap_prepare" model="legal.procedure.phase">
+            <field name="name">تهيئة المستمسكات</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_cap_with_body" model="legal.procedure.phase">
+            <field name="name">لدى المسجل</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_cap_close" model="legal.procedure.phase">
+            <field name="name">المصادقة والإنجاز</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_cap_assembly" model="legal.procedure.step">
+            <field name="name">قرار الهيئة العامة بالزيادة ومحضر الاجتماع</field>
+            <field name="code">ASSEMBLY</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="phase_id" ref="phase_cap_prepare"/>
+            <field name="gov_body_id" ref="body_mot_registrar_amendment"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">قرارات الهيئة العامة قيد الإعداد</field>
+            <field name="desk_empty">لا توجد قرارات زيادة رأسمال قيد الإعداد</field>
+        </record>
+
+        <record id="step_cap_bank" model="legal.procedure.step">
+            <field name="name">إيداع الزيادة والحصول على التأييد المصرفي</field>
+            <field name="code">BANK</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="phase_id" ref="phase_cap_prepare"/>
+            <field name="gov_body_id" ref="body_rasheed_bank"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">بانتظار التأييد المصرفي</field>
+            <field name="desk_hint">موقّع من المدير المخوَّل في المصارف الأهلية، ومن الإدارة العامة في الحكومية</field>
+            <field name="desk_empty">لا توجد تأييدات مصرفية معلّقة</field>
+        </record>
+
+        <record id="step_cap_submit" model="legal.procedure.step">
+            <field name="name">تقديم الطلب إلى قسم التعديل</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="phase_id" ref="phase_cap_with_body"/>
+            <field name="gov_body_id" ref="body_mot_registrar_amendment"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">بانتظار الإيداع</field>
+            <field name="desk_hint">الطلب موقّع من المدير المفوض ومثبت عليه تاريخ الواردة</field>
+            <field name="desk_empty">لا توجد طلبات زيادة بانتظار الإيداع</field>
+        </record>
+
+        <record id="step_cap_fines" model="legal.procedure.step">
+            <field name="name">تسوية الغرامات التأخيرية</field>
+            <field name="code">FINES</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="phase_id" ref="phase_cap_with_body"/>
+            <field name="gov_body_id" ref="body_mot_registrar_amendment"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">غرامات تأخيرية غير مسواة</field>
+            <field name="desk_hint">100 دينار عن كل يوم تأخير في تقديم البيانات (المادة 216)</field>
+            <field name="desk_empty">لا توجد غرامات معلّقة</field>
+        </record>
+
+        <record id="step_cap_ratify" model="legal.procedure.step">
+            <field name="name">مصادقة المسجل ونشر القرار</field>
+            <field name="code">RATIFY</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="phase_id" ref="phase_cap_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_bulletin"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">50</field>
+            <field name="target_days">3</field>
+            <field name="return_to_step_id" ref="step_cap_assembly"/>
+            <field name="desk_title">بانتظار المصادقة والنشر</field>
+            <field name="desk_hint">التعديل لا ينفذ إلا بمصادقة المسجل والنشر (المادة 203)</field>
+            <field name="desk_empty">لا توجد قرارات بانتظار المصادقة</field>
+        </record>
+
+        <record id="step_cap_done" model="legal.procedure.step">
+            <field name="name">أُنجزت الزيادة</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="phase_id" ref="phase_cap_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_amendment"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">60</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">زيادات منجزة</field>
+            <field name="desk_empty">لا توجد زيادات منجزة</field>
+        </record>
+
+        <record id="trans_cap_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال النواقص</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="from_step_id" ref="step_cap_ratify"/>
+            <field name="to_step_id" ref="step_cap_assembly"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_cap_ga_minutes" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_general_assembly_minutes"/>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="step_id" ref="step_cap_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+            <field name="note">يتضمن أسماء المساهمين وحصصهم، وموقّع منهم.</field>
+        </record>
+
+        <record id="req_cap_bank" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_bank_capital_confirmation"/>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="step_id" ref="step_cap_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_cap_accounts" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_audited_accounts"/>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="step_id" ref="step_cap_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">30</field>
+            <field name="note">الحسابات الختامية لآخر سنة مالية مصادقة من محاسب مجاز، ومعها تأييد المحاسب بأنه اطّلع على كتاب المصرف وأثبته في الدفاتر.</field>
+        </record>
+
+        <record id="fee_cap_stamp" model="legal.fee.rule">
+            <field name="name">طابع على مقدار الزيادة</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="step_id" ref="step_cap_submit"/>
+            <field name="computation">percent_capital</field>
+            <field name="amount">0.2</field>
+            <field name="is_stamp_duty" eval="True"/>
+            <field name="legal_basis">النشرة التعريفية لدائرة تسجيل الشركات - طابع 0.002 على رأس المال</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">تُحتسب على مقدار الزيادة لا على رأس المال بعد الزيادة. القاعدة هنا تحتسب على رأس المال المثبت على الكيان، فيصحح المبلغ يدوياً عند الحاجة.</field>
+        </record>
+
+        <record id="fee_cap_late" model="legal.fee.rule">
+            <field name="name">غرامة تأخير تقديم البيانات</field>
+            <field name="procedure_type_id" ref="proc_capital_increase"/>
+            <field name="step_id" ref="step_cap_fines"/>
+            <field name="computation">fixed</field>
+            <field name="amount">100</field>
+            <field name="is_optional" eval="True"/>
+            <field name="legal_basis">المادة 216 من قانون الشركات رقم 21 لسنة 1997: 100 دينار عن كل يوم تأخير</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="note">المبلغ عن يوم واحد - يُضرب بعدد أيام التأخير عند التسوية.</field>
+        </record>
+
+        <!-- ==============================================================
+             3. نقل مقر الشركة - address change, seven days
+             ============================================================== -->
+
+        <record id="proc_address_change" model="legal.procedure.type">
+            <field name="name">نقل مقر الشركة (تبليغ خلال 7 أيام)</field>
+            <field name="code">MOT-ADDRESS-CHANGE</field>
+            <field name="body_id" ref="body_mot_registrar_amendment"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="sequence_code">MOT-ADR/%(range_year)s/</field>
+            <field name="expected_duration_days">5</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">optional</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">المادة 200 من قانون الشركات رقم 21 لسنة 1997: يبلَّغ المسجل بتغيير العنوان خلال 7 أيام؛ والمادة 216 غرامة 100 دينار عن كل يوم تأخير</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>سبعة أيام مهلة قصيرة جداً، والغرامة يومية. افتح المعاملة يوم توقيع عقد الإيجار
+                الجديد لا يوم الانتقال الفعلي.</p>
+            </field>
+        </record>
+
+        <record id="phase_adr_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_adr_body" model="legal.procedure.phase">
+            <field name="name">لدى المسجل</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_adr_close" model="legal.procedure.phase">
+            <field name="name">الإنجاز</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_adr_prepare" model="legal.procedure.step">
+            <field name="name">إعداد التبليغ وعقد الإيجار الجديد</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="phase_id" ref="phase_adr_prepare"/>
+            <field name="gov_body_id" ref="body_mot_registrar_amendment"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">تبليغات نقل المقر قيد الإعداد</field>
+            <field name="desk_hint">المهلة سبعة أيام من تاريخ التغيير</field>
+            <field name="desk_empty">لا توجد تبليغات نقل مقر قيد الإعداد</field>
+        </record>
+
+        <record id="step_adr_submit" model="legal.procedure.step">
+            <field name="name">تبليغ المسجل بالعنوان الجديد</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="phase_id" ref="phase_adr_body"/>
+            <field name="gov_body_id" ref="body_mot_registrar_amendment"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">بانتظار التبليغ</field>
+            <field name="desk_hint">خلال 7 أيام - المادة 200</field>
+            <field name="desk_empty">لا توجد تبليغات معلّقة</field>
+        </record>
+
+        <record id="step_adr_ratify" model="legal.procedure.step">
+            <field name="name">تأشير التغيير ونشره</field>
+            <field name="code">RATIFY</field>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="phase_id" ref="phase_adr_body"/>
+            <field name="gov_body_id" ref="body_mot_registrar_bulletin"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">3</field>
+            <field name="return_to_step_id" ref="step_adr_prepare"/>
+            <field name="desk_title">بانتظار التأشير والنشر</field>
+            <field name="desk_empty">لا توجد تعديلات عنوان بانتظار النشر</field>
+        </record>
+
+        <record id="step_adr_done" model="legal.procedure.step">
+            <field name="name">أُنجز التبليغ</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="phase_id" ref="phase_adr_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_amendment"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">40</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">تبليغات منجزة</field>
+            <field name="desk_empty">لا توجد تبليغات منجزة</field>
+        </record>
+
+        <record id="req_adr_lease" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_certified_lease"/>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="step_id" ref="step_adr_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_adr_electricity" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_electricity_bill"/>
+            <field name="procedure_type_id" ref="proc_address_change"/>
+            <field name="step_id" ref="step_adr_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ==============================================================
+             4. تسجيل فرع شركة أجنبية - foreign branch registration
+             ============================================================== -->
+
+        <record id="proc_foreign_branch" model="legal.procedure.type">
+            <field name="name">تسجيل فرع شركة أجنبية</field>
+            <field name="code">MOT-FRN-BRANCH-REG</field>
+            <field name="body_id" ref="body_mot_registrar_foreign"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_foreign_branch_licence"/>
+            <field name="sequence_code">MOT-FRN/%(range_year)s/</field>
+            <field name="expected_duration_days">30</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 المعدل، المواد 2 و3 و4 و5</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>المادة 2: لا يجوز فتح الفرع إلا بعد مرور سنة على تأسيس الشركة الأم، وتُقدَّم
+                    الوثائق مترجمة إلى العربية ومصدقة في بلد التأسيس.</p>
+                    <p>المادة 3: يبتّ المسجل خلال <b>15 يوم عمل</b>، والسكوت يعدّ قبولاً. تصدر
+                    الإجازة خلال 7 أيام عمل من النشر بعد تسديد الرسوم.</p>
+                    <p>المادة 4: الإجازة ليست بذاتها إجازة لممارسة النشاط. المادة 5: بعد الإجازة
+                    يجب إيداع وثيقة العنوان الكامل، وتأييد حساب جارٍ لدى مصرف عراقي مجاز، ورخصة
+                    ممارسة النشاط من الجهة القطاعية عند الاقتضاء، وكتاب نقابة المحامين بتعيين
+                    مشاور قانوني - ولا يجوز للفرع مزاولة العمل قبل إيداعها.</p>
+                    <p>المادة 6: لا يمارس الفرع النشاط إلا في إحدى أربع حالات - تنفيذ عقد مع جهة
+                    حكومية أو قطاع عام أو مختلط، أو توقيع عقد استثماري، أو حيازة إجازة عمل من جهة
+                    عراقية مخوَّلة قانوناً، أو العمل مع القطاع الخاص العراقي بعقد لا يقل عن مليون
+                    دولار.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_frn_prepare" model="legal.procedure.phase">
+            <field name="name">التصديق والترجمة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_frn_submit" model="legal.procedure.phase">
+            <field name="name">الإيداع</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_frn_decide" model="legal.procedure.phase">
+            <field name="name">البتّ والنشر</field>
+            <field name="code">DECIDE</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="kind">decide</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="phase_frn_close" model="legal.procedure.phase">
+            <field name="name">الإجازة والإيداعات اللاحقة</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="kind">close</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="step_frn_translate" model="legal.procedure.step">
+            <field name="name">ترجمة وثائق الشركة الأم إلى العربية</field>
+            <field name="code">TRANSLATE</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_prepare"/>
+            <field name="gov_body_id" ref="body_translators_association"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">10</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">لدى الترجمة</field>
+            <field name="desk_hint">الترجمة تُحتسب بالصفحة - أرسل الحزمة كاملة دفعة واحدة</field>
+            <field name="desk_empty">لا توجد وثائق لدى الترجمة</field>
+        </record>
+
+        <record id="step_frn_legalise" model="legal.procedure.step">
+            <field name="name">تصديق الوثائق لدى دائرة التصديقات</field>
+            <field name="code">LEGALISE</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_prepare"/>
+            <field name="gov_body_id" ref="body_mofa_authentication"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">7</field>
+            <field name="rotting_threshold_days">30</field>
+            <field name="desk_title">لدى التصديقات</field>
+            <field name="desk_hint">لا يوجد أبوستيل - السلسلة ثلاث محطات وتستغرق وقتاً حقيقياً</field>
+            <field name="desk_empty">لا توجد وثائق لدى التصديقات</field>
+            <field name="desk_note_template">راجعنا دائرة التصديقات وأفادوا بأن المعاملة</field>
+        </record>
+
+        <record id="step_frn_submit" model="legal.procedure.step">
+            <field name="name">تقديم طلب فتح الفرع</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_submit"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">بانتظار الإيداع</field>
+            <field name="desk_hint">مع وثيقة تخويل الشخص المكلف بتقديم الطلب ومستمسكاته</field>
+            <field name="desk_empty">لا توجد طلبات فروع بانتظار الإيداع</field>
+        </record>
+
+        <record id="step_frn_review" model="legal.procedure.step">
+            <field name="name">البتّ في الطلب</field>
+            <field name="code">REVIEW</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_decide"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">15</field>
+            <field name="rotting_threshold_days">45</field>
+            <field name="return_to_step_id" ref="step_frn_submit"/>
+            <field name="desk_title">لدى المسجل للبتّ</field>
+            <field name="desk_hint">15 يوم عمل، والسكوت بعدها يعدّ قبولاً (المادة 3)</field>
+            <field name="desk_empty">لا توجد طلبات فروع لدى المسجل</field>
+            <field name="desk_note_template">راجعنا قسم الفروع الأجنبية وأفادوا بأن الطلب</field>
+        </record>
+
+        <record id="step_frn_publish" model="legal.procedure.step">
+            <field name="name">تسديد الرسوم والنشر في النشرة</field>
+            <field name="code">PUBLISH</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_decide"/>
+            <field name="gov_body_id" ref="body_mot_registrar_bulletin"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">50</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">بانتظار النشر</field>
+            <field name="desk_hint">النشر بعد تسديد الرسوم، والإجازة تصدر خلال 7 أيام عمل منه</field>
+            <field name="desk_empty">لا توجد موافقات بانتظار النشر</field>
+        </record>
+
+        <record id="step_frn_licence" model="legal.procedure.step">
+            <field name="name">استلام إجازة التسجيل</field>
+            <field name="code">LICENCE</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">60</field>
+            <field name="target_days">7</field>
+            <field name="desk_title">إجازات جاهزة للاستلام</field>
+            <field name="desk_hint">يُشترط إيداع عقد إيجار مصدق قبل إصدار كتاب إرسال الإجازة</field>
+            <field name="desk_empty">لا توجد إجازات جاهزة</field>
+        </record>
+
+        <record id="step_frn_post_filings" model="legal.procedure.step">
+            <field name="name">الإيداعات اللاحقة للإجازة (المادة 5)</field>
+            <field name="code">POST-FILINGS</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">internal</field>
+            <field name="sequence">70</field>
+            <field name="target_days">10</field>
+            <field name="desk_title">إيداعات المادة 5 المعلّقة</field>
+            <field name="desk_hint">لا يجوز للفرع مزاولة العمل قبل إيداعها كاملة</field>
+            <field name="desk_empty">لا توجد إيداعات لاحقة معلّقة</field>
+        </record>
+
+        <record id="step_frn_done" model="legal.procedure.step">
+            <field name="name">الفرع مسجَّل ومستكمل</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">80</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">فروع مسجَّلة</field>
+            <field name="desk_empty">لا توجد فروع منجزة</field>
+        </record>
+
+        <record id="step_frn_refused" model="legal.procedure.step">
+            <field name="name">رُفض الطلب برفض مسبَّب</field>
+            <field name="code">REFUSED</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="phase_id" ref="phase_frn_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">rejected</field>
+            <field name="sequence">90</field>
+            <field name="fold" eval="True"/>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">طلبات فروع مرفوضة</field>
+            <field name="desk_empty">لا توجد طلبات مرفوضة</field>
+        </record>
+
+        <record id="trans_frn_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال النواقص</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="from_step_id" ref="step_frn_review"/>
+            <field name="to_step_id" ref="step_frn_submit"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="trans_frn_refuse" model="legal.procedure.transition">
+            <field name="name">رفض مسبَّب</field>
+            <field name="code">REFUSE</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="from_step_id" ref="step_frn_review"/>
+            <field name="to_step_id" ref="step_frn_refused"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">20</field>
+            <field name="note">المادة 3 توجب أن يكون الرفض مسبباً، ولذلك سبب الرفض إلزامي هنا.</field>
+        </record>
+
+        <record id="fee_frn_registration" model="legal.fee.rule">
+            <field name="name">رسم تسجيل فرع الشركة الأجنبية</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_publish"/>
+            <field name="computation">fixed</field>
+            <field name="amount">126250</field>
+            <field name="legal_basis">النشرة التعريفية لوزارة التجارة - رسم تسجيل فرع أو مكتب تمثيل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">رقمان متعارضان في المصادر: 126,250 ديناراً في النشرة التعريفية لوزارة التجارة، و200,000 دينار في دليل eRegulations الذي يضع الكلفة الإجمالية للتسجيل الأجنبي عند نحو 680,750 ديناراً عبر 18 خطوة و7 مؤسسات. اعتُمد رقم الوزارة لأنه المصدر الأولي، ويجب التحقق منه على الشباك قبل الاعتماد عليه.</field>
+        </record>
+
+        <record id="fee_frn_publication" model="legal.fee.rule">
+            <field name="name">أجور النشر</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_publish"/>
+            <field name="computation">fixed</field>
+            <field name="amount">25000</field>
+            <field name="legal_basis">دليل eRegulations - تسجيل شركة أجنبية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="fee_frn_document_check" model="legal.fee.rule">
+            <field name="name">أجور تدقيق الوثائق</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_submit"/>
+            <field name="computation">fixed</field>
+            <field name="amount">50000</field>
+            <field name="legal_basis">دليل eRegulations - تسجيل شركة أجنبية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="fee_frn_archiving" model="legal.fee.rule">
+            <field name="name">أجور الأرشفة</field>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_publish"/>
+            <field name="computation">fixed</field>
+            <field name="amount">2750</field>
+            <field name="legal_basis">دليل eRegulations - تسجيل شركة أجنبية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="req_frn_parent_registration" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_foreign_parent_registration"/>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+            <field name="note">شهادة تسجيل نافذة مترجمة ومصدقة، ومعها عقد التأسيس وقائمة أعضاء مجلس الإدارة والمخوّلين بالتوقيع ومستمسكاتهم.</field>
+        </record>
+
+        <record id="req_frn_beneficial_owner" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_beneficial_owner_undertaking"/>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_frn_expediter" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_expediter_authorisation"/>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="req_frn_accounts" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_audited_accounts"/>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">40</field>
+            <field name="note">الحسابات الختامية لآخر سنة مالية أو التي قبلها (المادة 2).</field>
+        </record>
+
+        <record id="req_frn_lease" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_certified_lease"/>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_licence"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">50</field>
+            <field name="note">يجب إيداعه قبل إصدار كتاب «إرسال إجازة».</field>
+        </record>
+
+        <record id="req_frn_bank_account" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_bank_account_confirmation"/>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_post_filings"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="req_frn_bar_advisor" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_bar_legal_advisor"/>
+            <field name="procedure_type_id" ref="proc_foreign_branch"/>
+            <field name="step_id" ref="step_frn_post_filings"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- ==============================================================
+             5. الحسابات الختامية السنوية لفرع الشركة الأجنبية - eight months
+             ============================================================== -->
+
+        <record id="proc_branch_annual_accounts" model="legal.procedure.type">
+            <field name="name">تقديم الحسابات الختامية السنوية لفرع الشركة الأجنبية</field>
+            <field name="code">MOT-BRANCH-ACCOUNTS</field>
+            <field name="body_id" ref="body_mot_registrar_foreign"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="sequence_code">MOT-ACC/%(range_year)s/</field>
+            <field name="expected_duration_days">10</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">no</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">المادة 8 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017: تُقدَّم الحسابات الختامية المدققة وتقرير النشاط خلال الأشهر الثمانية التالية لانتهاء السنة</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+            <field name="instruction" type="html">
+                <p>لسنة مالية تنتهي في 31 كانون الأول يكون الموعد 31 آب. التخلف عن الحضور
+                لتقديم الحسابات سنتين متتاليتين بلا عذر مشروع يوجب إلغاء الإجازة وشطب الفرع
+                (المادة 11). وهناك أيضاً غرامة 10,000 دينار على كل فرع لشركة عاملة في العراق
+                لا يقدم حساباته الختامية خلال 6 أشهر من نهاية السنة المالية بحسب ما يفحصه
+                ديوان الرقابة المالية.</p>
+            </field>
+        </record>
+
+        <record id="phase_bracc_prepare" model="legal.procedure.phase">
+            <field name="name">التدقيق والإعداد</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_bracc_submit" model="legal.procedure.phase">
+            <field name="name">الإيداع لدى المسجل</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_bracc_close" model="legal.procedure.phase">
+            <field name="name">الإنجاز</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_bracc_audit" model="legal.procedure.step">
+            <field name="name">تدقيق الحسابات لدى محاسب مجاز في العراق</field>
+            <field name="code">AUDIT</field>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="phase_id" ref="phase_bracc_prepare"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">20</field>
+            <field name="rotting_threshold_days">60</field>
+            <field name="desk_title">حسابات قيد التدقيق</field>
+            <field name="desk_hint">السجلات المحاسبية تُمسك باللغة العربية (المادة 5)</field>
+            <field name="desk_empty">لا توجد حسابات فروع قيد التدقيق</field>
+        </record>
+
+        <record id="step_bracc_report" model="legal.procedure.step">
+            <field name="name">إعداد تقرير النشاط السنوي</field>
+            <field name="code">REPORT</field>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="phase_id" ref="phase_bracc_prepare"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">internal</field>
+            <field name="sequence">20</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">تقارير النشاط قيد الإعداد</field>
+            <field name="desk_empty">لا توجد تقارير نشاط قيد الإعداد</field>
+        </record>
+
+        <record id="step_bracc_submit" model="legal.procedure.step">
+            <field name="name">تقديم الحسابات والتقرير إلى المسجل</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="phase_id" ref="phase_bracc_submit"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">2</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="return_to_step_id" ref="step_bracc_audit"/>
+            <field name="desk_title">بانتظار الإيداع</field>
+            <field name="desk_hint">الموعد النهائي 31 آب لسنة مالية تنتهي في 31 كانون الأول</field>
+            <field name="desk_empty">لا توجد حسابات بانتظار الإيداع</field>
+        </record>
+
+        <record id="step_bracc_done" model="legal.procedure.step">
+            <field name="name">قُدِّمت الحسابات وأُشِّرت</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="phase_id" ref="phase_bracc_close"/>
+            <field name="gov_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">40</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">إيداعات منجزة</field>
+            <field name="desk_empty">لا توجد إيداعات منجزة</field>
+        </record>
+
+        <record id="req_bracc_accounts" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_audited_accounts"/>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="step_id" ref="step_bracc_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_bracc_report" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_activity_report"/>
+            <field name="procedure_type_id" ref="proc_branch_annual_accounts"/>
+            <field name="step_id" ref="step_bracc_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ==============================================================
+             6. الهيئة العامة السنوية - the annual general assembly filings
+             ============================================================== -->
+
+        <record id="proc_general_assembly" model="legal.procedure.type">
+            <field name="name">اجتماع الهيئة العامة السنوي وإيداع الحسابات</field>
+            <field name="code">MOT-GENERAL-ASSEMBLY</field>
+            <field name="body_id" ref="body_mot_registrar"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="sequence_code">MOT-GA/%(range_year)s/</field>
+            <field name="expected_duration_days">30</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">optional</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">المواد 86 و88 و127 و133 و135 و139 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">60</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>المادة 86: تجتمع الهيئة العامة مرة في السنة على الأقل. المادة 88: مهلة
+                    الدعوة 15 يوماً على الأقل، وتُنشر في الجريدة الرسمية والصحف. المادة 127: تُرسل
+                    نسخ الحسابات الختامية وتقارير المدقق إلى المسجل <b>مع الدعوة</b>. المادة 135:
+                    تُناقش الحسابات خلال 60 يوماً من إتمام التدقيق. المادة 139: تُرفع الحسابات
+                    الكاملة والخطط السنوية وقرارات الهيئة إلى المسجل وإلى الجهة القطاعية المختصة.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_ga_prepare" model="legal.procedure.phase">
+            <field name="name">التدقيق والدعوة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_ga_meet" model="legal.procedure.phase">
+            <field name="name">الاجتماع</field>
+            <field name="code">MEET</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="kind">decide</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_ga_file" model="legal.procedure.phase">
+            <field name="name">الرفع إلى المسجل</field>
+            <field name="code">FILE</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="kind">submit</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_ga_audit" model="legal.procedure.step">
+            <field name="name">إتمام تدقيق الحسابات الختامية</field>
+            <field name="code">AUDIT</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="phase_id" ref="phase_ga_prepare"/>
+            <field name="gov_body_id" ref="body_mot_registrar"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">30</field>
+            <field name="desk_title">حسابات قيد التدقيق</field>
+            <field name="desk_empty">لا توجد حسابات قيد التدقيق</field>
+        </record>
+
+        <record id="step_ga_notice" model="legal.procedure.step">
+            <field name="name">نشر الدعوة قبل 15 يوماً وإرسال الحسابات مع الدعوة</field>
+            <field name="code">NOTICE</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="phase_id" ref="phase_ga_prepare"/>
+            <field name="gov_body_id" ref="body_gazette"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">15</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">دعوات بانتظار النشر</field>
+            <field name="desk_hint">المهلة 15 يوماً على الأقل قبل الاجتماع - المادة 88</field>
+            <field name="desk_empty">لا توجد دعوات بانتظار النشر</field>
+        </record>
+
+        <record id="step_ga_meeting" model="legal.procedure.step">
+            <field name="name">انعقاد الهيئة العامة ومناقشة الحسابات</field>
+            <field name="code">MEETING</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="phase_id" ref="phase_ga_meet"/>
+            <field name="gov_body_id" ref="body_mot_registrar"/>
+            <field name="kind">internal</field>
+            <field name="sequence">30</field>
+            <field name="target_days">60</field>
+            <field name="desk_title">اجتماعات مقررة</field>
+            <field name="desk_hint">خلال 60 يوماً من إتمام التدقيق - المادة 135</field>
+            <field name="desk_empty">لا توجد اجتماعات مقررة</field>
+        </record>
+
+        <record id="step_ga_file" model="legal.procedure.step">
+            <field name="name">رفع الحسابات والخطط والقرارات إلى المسجل</field>
+            <field name="code">FILE</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="phase_id" ref="phase_ga_file"/>
+            <field name="gov_body_id" ref="body_mot_registrar"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">10</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="return_to_step_id" ref="step_ga_meeting"/>
+            <field name="desk_title">بانتظار الرفع إلى المسجل</field>
+            <field name="desk_hint">وإلى الجهة القطاعية المختصة أيضاً - المادة 139</field>
+            <field name="desk_empty">لا توجد قرارات بانتظار الرفع</field>
+        </record>
+
+        <record id="step_ga_done" model="legal.procedure.step">
+            <field name="name">أُنجزت الالتزامات السنوية</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="phase_id" ref="phase_ga_file"/>
+            <field name="gov_body_id" ref="body_mot_registrar"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">50</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">سنوات منجزة</field>
+            <field name="desk_empty">لا توجد سنوات منجزة</field>
+        </record>
+
+        <record id="req_ga_accounts" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_audited_accounts"/>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="step_id" ref="step_ga_notice"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+            <field name="note">المادة 127: نسخ الحسابات الختامية وتقارير المدقق تُرسل إلى المسجل مع الدعوة، لا بعد الاجتماع.</field>
+        </record>
+
+        <record id="req_ga_minutes" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_general_assembly_minutes"/>
+            <field name="procedure_type_id" ref="proc_general_assembly"/>
+            <field name="step_id" ref="step_ga_file"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- The edges that make the prerequisite graph traversable: a blocked
+             checklist line can now offer the procedure that produces the paper,
+             instead of leaving the clerk to work out which counter issues it. -->
+
+        <record id="doctype_incorporation_certificate" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_incorporation"/>
+        </record>
+
+        <record id="doctype_foreign_branch_licence" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_foreign_branch"/>
+        </record>
+
+        <record id="doctype_audited_accounts" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_general_assembly"/>
+        </record>
+
+    </data>
+</odoo>

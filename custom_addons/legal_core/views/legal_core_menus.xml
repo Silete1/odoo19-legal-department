@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        legal_core is not an application in its own right - it is the shelf the
+        other modules stand on - but it still needs somewhere to put the body and
+        document registers when it is installed alone. The root menu is defined
+        here and reused by legal_correspondence and legal_procedure, so there is
+        one Legal Department app rather than three.
+    -->
+
+    <menuitem id="menu_legal_root"
+              name="Legal"
+              web_icon="legal_core,static/description/icon.png"
+              sequence="45"/>
+
+    <menuitem id="menu_legal_registers"
+              name="Registers"
+              parent="menu_legal_root"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_document"
+              name="Company Documents"
+              parent="menu_legal_registers"
+              action="action_legal_document"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_document_renewals"
+              name="Renewals Due"
+              parent="menu_legal_registers"
+              action="action_legal_document_renewals"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_entity"
+              name="Legal Entities"
+              parent="menu_legal_registers"
+              action="action_legal_entity"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_gov_body_reg"
+              name="Government Bodies"
+              parent="menu_legal_registers"
+              action="action_legal_gov_body"
+              sequence="40"/>
+
+    <!-- Configuration -->
+
+    <menuitem id="menu_legal_config"
+              name="Configuration"
+              parent="menu_legal_root"
+              sequence="90"
+              groups="group_legal_manager"/>
+
+    <menuitem id="menu_legal_config_bodies"
+              name="Government Bodies"
+              parent="menu_legal_config"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_body"
+              name="Bodies"
+              parent="menu_legal_config_bodies"
+              action="action_legal_gov_body"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_body_type"
+              name="Body Types"
+              parent="menu_legal_config_bodies"
+              action="action_legal_gov_body_type"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_config_jurisdiction"
+              name="Jurisdictions"
+              parent="menu_legal_config_bodies"
+              action="action_legal_jurisdiction"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_config_documents"
+              name="Documents"
+              parent="menu_legal_config"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_config_document_type"
+              name="Document Types"
+              parent="menu_legal_config_documents"
+              action="action_legal_document_type"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_document_kind"
+              name="Document Kinds"
+              parent="menu_legal_config_documents"
+              action="action_legal_document_kind"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_config_entities"
+              name="Entities"
+              parent="menu_legal_config"
+              sequence="30"/>
+
+    <menuitem id="menu_legal_config_entity_form"
+              name="Legal Forms"
+              parent="menu_legal_config_entities"
+              action="action_legal_entity_form"
+              sequence="10"/>
+
+    <menuitem id="menu_legal_config_identifier_kind"
+              name="Identifier Kinds"
+              parent="menu_legal_config_entities"
+              action="action_legal_entity_identifier_kind"
+              sequence="20"/>
+
+    <menuitem id="menu_legal_config_signatory"
+              name="Signatories &amp; Seals"
+              parent="menu_legal_config_entities"
+              action="action_legal_signatory"
+              sequence="30"/>
+
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            The list is long on purpose. The counters that actually block an Iraqi
+            filing are not all ministries: a company registration passes through the
+            Bar Association, a licensed bank, the Translators Association, the notary
+            and two newspapers, and directive 16180 of 2024 added the electricity and
+            water directorates by demanding their paid bills. A body model that only
+            admits government hierarchy cannot hold any of them, and each one then
+            degrades into a free-text note nobody can chase.
+        -->
+
+        <record id="body_type_ministry" model="legal.gov.body.type">
+            <field name="name">وزارة</field>
+            <field name="code">MINISTRY</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="body_type_directorate" model="legal.gov.body.type">
+            <field name="name">دائرة / مديرية</field>
+            <field name="code">DIRECTORATE</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="body_type_commission" model="legal.gov.body.type">
+            <field name="name">هيئة</field>
+            <field name="code">COMMISSION</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="body_type_municipality" model="legal.gov.body.type">
+            <field name="name">بلدية / أمانة</field>
+            <field name="code">MUNICIPALITY</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="body_type_chamber" model="legal.gov.body.type">
+            <field name="name">غرفة تجارة / صناعة</field>
+            <field name="code">CHAMBER</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="body_type_federation" model="legal.gov.body.type">
+            <field name="name">اتحاد</field>
+            <field name="code">FEDERATION</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="body_type_syndicate" model="legal.gov.body.type">
+            <field name="name">نقابة</field>
+            <field name="code">SYNDICATE</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="body_type_bank" model="legal.gov.body.type">
+            <field name="name">مصرف</field>
+            <field name="code">BANK</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <record id="body_type_notary" model="legal.gov.body.type">
+            <field name="name">كاتب عدل</field>
+            <field name="code">NOTARY</field>
+            <field name="sequence">90</field>
+        </record>
+
+        <record id="body_type_court" model="legal.gov.body.type">
+            <field name="name">محكمة</field>
+            <field name="code">COURT</field>
+            <field name="sequence">100</field>
+        </record>
+
+        <record id="body_type_publisher" model="legal.gov.body.type">
+            <field name="name">جهة نشر (الوقائع / الصحف)</field>
+            <field name="code">PUBLISHER</field>
+            <field name="sequence">110</field>
+        </record>
+
+        <record id="body_type_utility" model="legal.gov.body.type">
+            <field name="name">دائرة خدمات (كهرباء / ماء)</field>
+            <field name="code">UTILITY</field>
+            <field name="sequence">120</field>
+        </record>
+
+        <record id="body_type_service_office" model="legal.gov.body.type">
+            <field name="name">مكتب خدمات (ترجمة / تصديق)</field>
+            <field name="code">SERVICE_OFFICE</field>
+            <field name="sequence">130</field>
+        </record>
+
+    </data>
+</odoo>

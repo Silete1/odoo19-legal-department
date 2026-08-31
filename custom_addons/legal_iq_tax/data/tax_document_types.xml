@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Note the duplication with the Registrar pack: this pack ships its own
+        "audited financial statements" type rather than referring to the
+        Registrar's. That is deliberate. A customer must be able to install Tax
+        without the Registrar, and a cross-pack reference would make one pack
+        silently require another. The cost is one extra row in a configuration
+        table; the cost of the alternative is a customer who cannot buy Tax alone.
+
+        Two validity models are in play. A tax clearance and a no-objection
+        letter carry a date and expire - a Baghdad Governorate tender demands the
+        no-objection letter be نافذ الصلاحية عند تاريخ الغلق, valid *at the
+        closing date*, which is a question only an expiry model can answer. The
+        financial statements and the return do not expire at all; they are
+        superseded by next year's.
+    -->
+    <data noupdate="1">
+
+        <record id="doctype_tax_card" model="legal.document.type">
+            <field name="name">البطاقة الضريبية (هوية المكلف)</field>
+            <field name="name_en">Tax Identification Card</field>
+            <field name="code">GCT-TAX-CARD</field>
+            <field name="kind_id" ref="legal_core.doc_kind_identity"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">إجراءات الهيئة العامة للضرائب لإصدار البطاقة الضريبية</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>بطاقة الشركة الأجنبية إجراء من 30 خطوة في مرحلتين (19 خطوة تسجيل عبر 15 شباك
+                تقدير + 11 خطوة للبطاقة)، بكلفة 11,000 دينار خلال 1-4 أيام، و<b>البطاقة لا تُعدّ
+                منجزة قبل تفعيلها</b> - وهذه الخطوة الأخيرة هي التي تُنسى.</p>
+            </field>
+        </record>
+
+        <record id="doctype_annual_return" model="legal.document.type">
+            <field name="name">تصريح ضريبة الشركات (الإقرار السنوي)</field>
+            <field name="name_en">Corporate Income Tax Return</field>
+            <field name="code">GCT-ANNUAL-RETURN</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct_companies"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل - يُقدَّم مع البيانات المالية في موعد أقصاه 31 أيار من السنة التالية للسنة الضريبية</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p>المعدلات: 35% للأنشطة الخاضعة لقانون 19 لسنة 2010 (النفط والغاز) و15% لما
+                عداها. المرفقات: البيانات المالية الكاملة والجداول الساندة (أ - ي) للتسويات
+                المحاسبية والمستندات المؤيدة من وصولات وفواتير ووثائق كمركية. السجلات تُمسك
+                وفق النظام المحاسبي الموحد وتبقى متاحة للفحص.</p>
+            </field>
+        </record>
+
+        <record id="doctype_financial_statements" model="legal.document.type">
+            <field name="name">البيانات المالية المدققة (لأغراض ضريبية)</field>
+            <field name="name_en">Audited Financial Statements (Tax)</field>
+            <field name="code">GCT-FINANCIAL-STATEMENTS</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct_companies"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">النظام المحاسبي الموحد؛ ومنذ 2025 تطبّق الهيئة قواعد تدقيق البيانات المالية بصرامة</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="doctype_tax_clearance" model="legal.document.type">
+            <field name="name">براءة الذمة الضريبية</field>
+            <field name="name_en">Tax Clearance Certificate</field>
+            <field name="code">GCT-CLEARANCE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">14</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">تعليمات رقم 2 لسنة 2008 الفصل الثاني المادة 4؛ وقانون رسم الطابع لسنة 2012؛ والنظام رقم 1 لسنة 2007؛ ونظام أجور الخدمات في الهيئة</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p><b>مدة النفاذ غير مؤكدة.</b> لم يُعثر على نص منشور يحدد صلاحية براءة الذمة
+                    الضريبية بمدة معينة؛ المدة الافتراضية هنا سنة واحدة كي تظهر البراءة على لوحة
+                    التجديد بدل أن تُنسى. <b>المرجع هو التاريخ المثبت على الوثيقة نفسها</b> -
+                    صحّحه عند القيد.</p>
+                    <p>تنتهي الجولة برقم PIN. الجهات الحكومية المتعاقدة على سلع أو خدمات تُلزم
+                    المقاول بإبراز براءة ذمة الاستقطاع المباشر، والمناقصات تطلب براءة الذمة لجميع
+                    الشركاء في حالة التحالف.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="doctype_no_objection" model="legal.document.type">
+            <field name="name">كتاب عدم ممانعة صادر من الهيئة العامة للضرائب</field>
+            <field name="name_en">Tax No-Objection Letter</field>
+            <field name="code">GCT-NO-OBJECTION</field>
+            <field name="kind_id" ref="legal_core.doc_kind_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">6</field>
+            <field name="validity_uom">month</field>
+            <field name="notice_days">30</field>
+            <field name="renewal_lead_days">10</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">إعلانات مناقصات محافظة بغداد: «كتاب عدم ممانعة صادر من الهيئة العامة للضرائب نافذ الصلاحية عند تاريخ الغلق»</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+            <field name="instruction" type="html">
+                <p>العبارة التي تُرفض عليها العطاءات هي <b>«نافذ الصلاحية عند تاريخ الغلق»</b>:
+                الفحص ليس عن اليوم بل عن تاريخ غلق المناقصة، ولذلك يُسأل السجل عن تاريخ مستقبلي.
+                المدة الافتراضية ستة أشهر اجتهاد تشغيلي - التاريخ المثبت على الكتاب هو المرجع.</p>
+            </field>
+        </record>
+
+        <record id="doctype_wht_monthly_form" model="legal.document.type">
+            <field name="name">استمارة الاستقطاع المباشر ض.د/4أ</field>
+            <field name="name_en">Withholding Return Form D/4A</field>
+            <field name="code">GCT-FORM-DD4A</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct_withholding"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">تعليمات الاستقطاع المباشر - تُقدَّم بنسختين وتتضمن بيانات الموظفين والدخول والتنزيلات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="doctype_wht_annual_schedule" model="legal.document.type">
+            <field name="name">جدول استقطاعات الضريبة السنوي</field>
+            <field name="name_en">Annual Payroll Deduction Schedule</field>
+            <field name="code">GCT-WHT-SCHEDULE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct_withholding"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">يُنظَّم في نهاية السنة المالية ويُقدَّم في موعد أقصاه 31 آذار من السنة التالية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="doctype_assessment_notice" model="legal.document.type">
+            <field name="name">إشعار التقدير الضريبي</field>
+            <field name="name_en">Tax Assessment Notice</field>
+            <field name="code">GCT-ASSESSMENT-NOTICE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل - يبدأ من تاريخ التبليغ ميعاد الاعتراض البالغ 21 يوماً</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">80</field>
+            <field name="instruction" type="html">
+                <p>تاريخ التبليغ هو ما يبدأ منه العدّ، لا تاريخ الكتاب ولا تاريخ استلامه في
+                البريد. قيّد التاريخين معاً: تاريخهم على الكتاب، وتاريخ التبليغ الفعلي.</p>
+            </field>
+        </record>
+
+        <record id="doctype_tax_objection" model="legal.document.type">
+            <field name="name">لائحة الاعتراض على التقدير</field>
+            <field name="name_en">Notice of Objection</field>
+            <field name="code">GCT-OBJECTION-NOTICE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct_legal"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">الاعتراض التحريري إلى السلطة المالية خلال 21 يوماً من التبليغ، ولا يُسمع ما لم تُسدَّد الضريبة المقدرة خلال مدة الاعتراض</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">90</field>
+        </record>
+
+        <record id="doctype_tax_payment_receipt" model="legal.document.type">
+            <field name="name">وصل تسديد ضريبي</field>
+            <field name="name_en">Tax Payment Receipt</field>
+            <field name="code">GCT-PAYMENT-RECEIPT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_gct"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">تُستحق مبالغ الضريبة خلال ثلاثة أيام من تاريخ التقدير</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">100</field>
+        </record>
+
+    </data>
+</odoo>

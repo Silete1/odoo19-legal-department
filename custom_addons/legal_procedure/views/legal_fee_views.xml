@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_fee_rule_list" model="ir.ui.view">
+        <field name="name">legal.fee.rule.list</field>
+        <field name="model">legal.fee.rule</field>
+        <field name="arch" type="xml">
+            <list string="Fee Rules" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="procedure_type_id"/>
+                <field name="name"/>
+                <field name="step_id"/>
+                <field name="computation"/>
+                <field name="amount"/>
+                <field name="minimum_amount" optional="hide"/>
+                <field name="maximum_amount" optional="hide"/>
+                <field name="currency_id" groups="base.group_multi_currency"/>
+                <field name="is_stamp_duty"/>
+                <field name="is_optional" optional="hide"/>
+                <!-- Beside the amount on purpose: a figure with no date next to it invites trust. -->
+                <field name="last_verified_on"/>
+                <field name="legal_basis" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_fee_rule" model="ir.actions.act_window">
+        <field name="name">Fee Schedule</field>
+        <field name="res_model">legal.fee.rule</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_group_procedure': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Record what a procedure costs</p>
+            <p>
+                Published Iraqi figures conflict, so a fee here is guidance rather than gospel.
+                Fill in when it was last checked and where the figure comes from: a number with
+                no date beside it invites a clerk to trust it and turn up short.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_legal_fee_rule_search" model="ir.ui.view">
+        <field name="name">legal.fee.rule.search</field>
+        <field name="model">legal.fee.rule</field>
+        <field name="arch" type="xml">
+            <search string="Fee Rules">
+                <field name="name"/>
+                <field name="procedure_type_id"/>
+                <filter name="stamp" string="Stamp Duty" domain="[('is_stamp_duty', '=', True)]"/>
+                <filter name="unverified" string="Never Checked" domain="[('last_verified_on', '=', False)]"/>
+                <group>
+                    <filter name="group_procedure" string="Procedure" context="{'group_by': 'procedure_type_id'}"/>
+                    <filter name="group_step" string="Step" context="{'group_by': 'step_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_legal_fee_list" model="ir.ui.view">
+        <field name="name">legal.fee.list</field>
+        <field name="model">legal.fee</field>
+        <field name="arch" type="xml">
+            <list string="Fees" decoration-warning="state == 'due'">
+                <field name="case_id"/>
+                <field name="name"/>
+                <field name="step_id" optional="hide"/>
+                <field name="amount" sum="Quoted"/>
+                <field name="amount_paid" sum="Paid"/>
+                <field name="variance" sum="Difference" optional="show"/>
+                <field name="receipt_number"/>
+                <field name="paid_on"/>
+                <field name="is_stamp_duty" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'paid'"
+                       decoration-warning="state == 'due'"/>
+                <field name="currency_id" column_invisible="True"/>
+                <button name="action_mark_paid" type="object" string="Paid"
+                        icon="fa-money" class="btn-link" invisible="state == 'paid'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_fee_search" model="ir.ui.view">
+        <field name="name">legal.fee.search</field>
+        <field name="model">legal.fee</field>
+        <field name="arch" type="xml">
+            <search string="Fees">
+                <field name="name"/>
+                <field name="case_id"/>
+                <field name="receipt_number"/>
+                <filter name="due" string="Unpaid" domain="[('state', '=', 'due')]"/>
+                <filter name="stamp" string="Stamp Duty" domain="[('is_stamp_duty', '=', True)]"/>
+                <filter name="paid_on" string="Paid" date="paid_on"/>
+                <group>
+                    <filter name="group_case" string="File" context="{'group_by': 'case_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_month" string="Month Paid" context="{'group_by': 'paid_on:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_fee" model="ir.actions.act_window">
+        <field name="name">Fees Paid</field>
+        <field name="res_model">legal.fee</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

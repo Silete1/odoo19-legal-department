@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        ONE form view for every procedure in the product.
+
+        The has_* matrix drives it. Six Selection columns of required / optional /
+        not used decide which pages appear and which fields insist on an answer,
+        so adding the Directorate of Civil Defence is data entry rather than a
+        new form, a new renderer and a new release.
+    -->
+
+    <record id="view_legal_procedure_type_form" model="ir.ui.view">
+        <field name="name">legal.procedure.type.form</field>
+        <field name="model">legal.procedure.type</field>
+        <field name="arch" type="xml">
+            <form string="Procedure">
+                <header>
+                    <button name="action_validate" type="object" string="Check The Graph"
+                            class="btn-primary"
+                            help="Walks the steps and refuses to stay quiet about an unreachable step, a dead end, or a condition that can never be true."/>
+                    <button name="action_new_version" type="object" string="New Version"
+                            confirm="This closes the current version and copies it. Files already open stay on the version they started under. Continue?"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_cases" type="object" class="oe_stat_button"
+                                icon="fa-folder-open-o">
+                            <field name="case_count" widget="statinfo" string="Files"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-warning"
+                            invisible="not superseded_by_id"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="تأسيس شركة محدودة"/></h1>
+                    </div>
+                    <group>
+                        <group string="Where And For Whom">
+                            <field name="code" placeholder="MOT-INCORP"/>
+                            <field name="body_id"/>
+                            <field name="jurisdiction_id"/>
+                            <field name="channel" widget="radio" options="{'horizontal': true}"/>
+                            <field name="subject_cardinality"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="colour" widget="color_picker"/>
+                        </group>
+                        <group string="Version">
+                            <field name="version"/>
+                            <field name="effective_from"/>
+                            <field name="effective_to"/>
+                            <field name="superseded_by_id" readonly="1"/>
+                            <field name="supersedes_id" readonly="1"/>
+                            <field name="is_current" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="What It Uses">
+                            <field name="has_outgoing_letter"/>
+                            <field name="has_incoming_reply"/>
+                            <field name="has_fee"/>
+                            <field name="requires_documents"/>
+                            <field name="has_subjects"/>
+                            <field name="has_poa"/>
+                            <field name="has_result_document"/>
+                        </group>
+                        <group string="What It Produces And How Long It Takes">
+                            <field name="result_document_type_id"
+                                   invisible="has_result_document == 'no'"
+                                   required="has_result_document == 'required'"/>
+                            <field name="renewal_of_type_id"/>
+                            <field name="expected_duration_days"/>
+                            <field name="lead_time_days"/>
+                            <field name="letter_template_id"
+                                   invisible="has_outgoing_letter == 'no'"/>
+                            <field name="automated_sequence"/>
+                            <field name="sequence_code" invisible="not automated_sequence"
+                                   placeholder="MOT/%%(range_year)s/"/>
+                            <field name="sequence_id" invisible="not sequence_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Phases" name="phases">
+                            <p class="text-muted">
+                                Four to six coarse phases. A twenty-two counter walk is still four
+                                phases on the rail, because nobody can hold twenty-two segments in
+                                their head and the manager only wants to know whether the file is
+                                being prepared, sitting with the body, being decided or finished.
+                            </p>
+                            <field name="phase_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="kind"/>
+                                    <field name="step_count" string="Steps"/>
+                                    <field name="colour" widget="color_picker" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Steps" name="steps">
+                            <p class="text-muted">
+                                A linear procedure needs no transitions at all: leave “advance
+                                automatically” set and the engine moves to the next step in this
+                                order. Add a transition only for a branch, a return or a rejection.
+                            </p>
+                            <field name="step_ids" context="{'default_procedure_type_id': id}">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code" optional="hide"/>
+                                    <field name="phase_id"/>
+                                    <field name="gov_body_id"/>
+                                    <field name="kind" widget="badge"
+                                           decoration-info="kind == 'at_body'"
+                                           decoration-success="kind == 'terminal'"/>
+                                    <field name="outcome" optional="hide"/>
+                                    <field name="responsible_group_id" optional="show"/>
+                                    <field name="target_days"/>
+                                    <field name="rotting_threshold_days" optional="hide"/>
+                                    <field name="auto_next"/>
+                                    <field name="requires_letter" optional="hide"/>
+                                    <field name="check_count" string="Counters" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Transitions" name="transitions">
+                            <p class="text-muted">
+                                The name of a transition is the button the clerk presses, so write it
+                                in their words - “تحويل المعاملة إلى دائرة الإقامة”, not “Approve”.
+                            </p>
+                            <field name="transition_ids" context="{'default_procedure_type_id': id}">
+                                <list editable="bottom" decoration-warning="is_return">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="from_step_id"/>
+                                    <field name="to_step_id"/>
+                                    <field name="group_ids" widget="many2many_tags" optional="show"/>
+                                    <field name="condition_domain" optional="hide"/>
+                                    <field name="require_reason"/>
+                                    <field name="require_documents"/>
+                                    <field name="require_fees_paid" optional="hide"/>
+                                    <field name="require_valid_poa"/>
+                                    <field name="is_return"/>
+                                    <field name="procedure_type_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Documents" name="requirements"
+                              invisible="requires_documents == 'no'">
+                            <field name="requirement_ids" context="{'default_procedure_type_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="document_type_id"/>
+                                    <field name="step_id"/>
+                                    <field name="is_required"/>
+                                    <field name="per_subject"/>
+                                    <field name="minimum_grade_id" optional="show"/>
+                                    <field name="copies" optional="show"/>
+                                    <field name="applicability_domain" optional="show"
+                                           placeholder="[('subject_ids.nationality_id.code', '!=', 'IQ')]"/>
+                                    <field name="note" optional="hide"/>
+                                    <field name="procedure_type_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Fees" name="fees" invisible="has_fee == 'no'">
+                            <p class="text-muted">
+                                Published Iraqi figures conflict, so a fee is guidance rather than
+                                gospel. The date it was last checked sits beside the amount on
+                                purpose: a number with no date next to it invites a clerk to trust it.
+                            </p>
+                            <field name="fee_rule_ids" context="{'default_procedure_type_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="step_id"/>
+                                    <field name="computation"/>
+                                    <field name="amount"/>
+                                    <field name="minimum_amount" optional="hide"/>
+                                    <field name="maximum_amount" optional="hide"/>
+                                    <field name="currency_id" groups="base.group_multi_currency"/>
+                                    <field name="is_stamp_duty"/>
+                                    <field name="is_optional" optional="hide"/>
+                                    <field name="last_verified_on"/>
+                                    <field name="legal_basis" optional="show"/>
+                                    <field name="procedure_type_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Service Levels" name="sla">
+                            <p class="text-muted">
+                                Counted in the body's own working days. A target counted in calendar
+                                days cries wolf every Friday and goes berserk over Eid, and a chase
+                                list that is wrong four days in seven is one people learn to close
+                                without reading.
+                            </p>
+                            <field name="sla_rule_ids" context="{'default_procedure_type_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="step_id"/>
+                                    <field name="target_days"/>
+                                    <field name="warning_days"/>
+                                    <field name="escalation_days"/>
+                                    <field name="escalate_to_group_id"/>
+                                    <field name="company_id" groups="base.group_multi_company"/>
+                                    <field name="procedure_type_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Capture Fields" name="capture">
+                            <p class="text-muted">
+                                Facts that matter at one counter and nowhere else. A fee, a receipt
+                                number, an expiry or a register number is refused here on purpose -
+                                the whole department reports on those, and a fact buried in a
+                                per-step payload is invisible to every report for ever.
+                            </p>
+                            <field name="field_ids" readonly="1">
+                                <list>
+                                    <field name="step_id"/>
+                                    <field name="sequence"/>
+                                    <field name="label"/>
+                                    <field name="code"/>
+                                    <field name="field_type"/>
+                                    <field name="required"/>
+                                    <field name="placeholder" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Instruction &amp; Provenance" name="instruction">
+                            <group>
+                                <group string="Provenance">
+                                    <field name="legal_basis"/>
+                                    <field name="legal_basis_url" widget="url"/>
+                                    <field name="last_verified_on"/>
+                                </group>
+                            </group>
+                            <separator string="The Standing Instruction"/>
+                            <field name="instruction"
+                                   placeholder="Which floor, how many photocopies, what to bring, who to ask for."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_procedure_type_list" model="ir.ui.view">
+        <field name="name">legal.procedure.type.list</field>
+        <field name="model">legal.procedure.type</field>
+        <field name="arch" type="xml">
+            <list string="Procedures" decoration-muted="not is_current">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code" optional="show"/>
+                <field name="body_id"/>
+                <field name="jurisdiction_id" optional="show"/>
+                <field name="version"/>
+                <field name="effective_from" optional="hide"/>
+                <field name="effective_to" optional="hide"/>
+                <field name="step_count" string="Steps"/>
+                <field name="requirement_count" string="Documents" optional="show"/>
+                <field name="case_count" string="Files" optional="show"/>
+                <field name="expected_duration_days" optional="hide"/>
+                <field name="last_verified_on" optional="show"/>
+                <field name="is_current" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_procedure_type_kanban" model="ir.ui.view">
+        <field name="name">legal.procedure.type.kanban</field>
+        <field name="model">legal.procedure.type</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="body_id">
+                <field name="colour"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="name"/></strong>
+                            <span class="badge text-bg-secondary">v<field name="version"/></span>
+                        </div>
+                        <div class="text-muted small"><field name="jurisdiction_id"/></div>
+                        <div class="mt-1 small">
+                            <field name="step_count"/> step(s),
+                            <field name="requirement_count"/> document(s)
+                        </div>
+                        <div class="mt-1 small text-muted" invisible="not last_verified_on">
+                            Checked <field name="last_verified_on"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_legal_procedure_type_search" model="ir.ui.view">
+        <field name="name">legal.procedure.type.search</field>
+        <field name="model">legal.procedure.type</field>
+        <field name="arch" type="xml">
+            <search string="Procedures">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="body_id"/>
+                <field name="jurisdiction_id"/>
+                <field name="result_document_type_id"/>
+                <filter name="current" string="Current Version" domain="[('is_current', '=', True)]"/>
+                <filter name="superseded" string="Superseded" domain="[('superseded_by_id', '!=', False)]"/>
+                <separator/>
+                <filter name="unverified" string="Never Verified" domain="[('last_verified_on', '=', False)]"/>
+                <group>
+                    <filter name="group_body" string="Body" context="{'group_by': 'body_id'}"/>
+                    <filter name="group_jurisdiction" string="Jurisdiction" context="{'group_by': 'jurisdiction_id'}"/>
+                    <filter name="group_channel" string="Channel" context="{'group_by': 'channel'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_procedure_type" model="ir.actions.act_window">
+        <field name="name">Procedures</field>
+        <field name="res_model">legal.procedure.type</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'search_default_current': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Configure a procedure</p>
+            <p>
+                A procedure owns its steps, its phases, its document checklist, its fees
+                and its service levels. Configure it once and every file that follows it
+                knows which counter is next and what that counter will demand.
+            </p>
+        </field>
+    </record>
+
+</odoo>

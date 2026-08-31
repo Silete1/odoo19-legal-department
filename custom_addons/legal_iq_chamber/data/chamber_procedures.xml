@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ==============================================================
+             1. تجديد هوية غرفة التجارة - the annual renewal a tender turns on
+             ============================================================== -->
+
+        <record id="proc_chamber_renewal" model="legal.procedure.type">
+            <field name="name">تجديد هوية غرفة التجارة</field>
+            <field name="code">CH-IDENTITY-RENEWAL</field>
+            <field name="body_id" ref="body_chamber_baghdad"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_chamber_identity"/>
+            <field name="sequence_code">CH-REN/%(range_year)s/</field>
+            <field name="expected_duration_days">5</field>
+            <field name="lead_time_days">21</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">إعلانات مناقصات محافظة بغداد تشترط «هوية غرفة تجارة نافذة» وللأعمال الكبرى «صنف (ممتاز) نافذة» - والتجديد سنوي</field>
+            <field name="legal_basis_url">https://bcc.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">5</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>الحضور الشخصي للمدير المفوض أو وكيله بوكالة رسمية، ومعه الأصول وأربع صور
+                    شخصية.</p>
+                    <p><b>الرسوم غير مؤكدة.</b> المصادر تعطي ثلاثة أرقام مختلفة لرسوم الغرفة،
+                    ولم يُعثر على جدول تجديد سنوي منشور صنفاً صنفاً. اسأل الغرفة عن رسم صنفك
+                    قبل الذهاب، والرقم المشحون هنا للاسترشاد لا للاعتماد.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_chren_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_chren_body" model="legal.procedure.phase">
+            <field name="name">لدى الغرفة</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_chren_close" model="legal.procedure.phase">
+            <field name="name">الاستلام</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_chren_prepare" model="legal.procedure.step">
+            <field name="name">تهيئة المستمسكات وصور المدير المفوض</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="phase_id" ref="phase_chren_prepare"/>
+            <field name="gov_body_id" ref="body_chamber_baghdad"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">تجديدات قيد التهيئة</field>
+            <field name="desk_hint">أربع صور شخصية والأصول - لا تُقبل الصور الضوئية</field>
+            <field name="desk_empty">لا توجد تجديدات قيد التهيئة</field>
+        </record>
+
+        <record id="step_chren_submit" model="legal.procedure.step">
+            <field name="name">تقديم طلب التجديد وحضور المدير المفوض</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="phase_id" ref="phase_chren_body"/>
+            <field name="gov_body_id" ref="body_chamber_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">طلبات بانتظار التقديم</field>
+            <field name="desk_hint">الحضور الشخصي أو وكالة رسمية</field>
+            <field name="desk_empty">لا توجد طلبات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_chren_fees" model="legal.procedure.step">
+            <field name="name">تسديد رسوم الصنف والتأمينات</field>
+            <field name="code">FEES</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="phase_id" ref="phase_chren_body"/>
+            <field name="gov_body_id" ref="body_chamber_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">1</field>
+            <field name="return_to_step_id" ref="step_chren_prepare"/>
+            <field name="desk_title">رسوم غير مسددة</field>
+            <field name="desk_hint">الرسم يتبع الصنف والنشاط - تحقق من الرقم عند الشباك</field>
+            <field name="desk_empty">لا توجد رسوم غرفة غير مسددة</field>
+        </record>
+
+        <record id="step_chren_collect" model="legal.procedure.step">
+            <field name="name">استلام الهوية المجددة</field>
+            <field name="code">COLLECT</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="phase_id" ref="phase_chren_close"/>
+            <field name="gov_body_id" ref="body_chamber_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">هويات جاهزة للاستلام</field>
+            <field name="desk_hint">قيّد الصنف وتاريخ النفاذ - المناقصة تفحص الاثنين</field>
+            <field name="desk_empty">لا توجد هويات جاهزة</field>
+        </record>
+
+        <record id="step_chren_done" model="legal.procedure.step">
+            <field name="name">جُدِّدت الهوية</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="phase_id" ref="phase_chren_close"/>
+            <field name="gov_body_id" ref="body_chamber_baghdad"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">50</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">هويات مجددة</field>
+            <field name="desk_empty">لا توجد هويات مجددة</field>
+        </record>
+
+        <record id="trans_chren_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال المستمسكات</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="from_step_id" ref="step_chren_fees"/>
+            <field name="to_step_id" ref="step_chren_prepare"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="fee_chren_category" model="legal.fee.rule">
+            <field name="name">رسوم التأمينات والنشاط التجاري (بحسب الصنف)</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="step_id" ref="step_chren_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">131751</field>
+            <field name="maximum_amount">500000</field>
+            <field name="legal_basis">النشرة التعريفية لوزارة التجارة: رسم التسجيل لدى الغرفة المحلية 131,751 ديناراً</field>
+            <field name="legal_basis_url">https://mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">رقمان متعارضان: النشرة التعريفية لوزارة التجارة تعطي 131,751 ديناراً، بينما يعطي دليل eRegulations رسم تأمينات ونشاط تجاري «يصل إلى 500,000 دينار» يتغير بحسب النشاط، والنسخة العربية من الإجراء تذكر 500,000 صراحة. اعتُمد رقم الوزارة كقيمة أساس لأنه المصدر الأولي، وشُحن السقف 500,000 كحدّ أعلى. لم يُعثر على جدول رسوم تجديد سنوي منشور لكل صنف - تحقق قبل الدفع.</field>
+        </record>
+
+        <record id="fee_chren_certificate" model="legal.fee.rule">
+            <field name="name">رسم إصدار الشهادة</field>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="step_id" ref="step_chren_fees"/>
+            <field name="computation">fixed</field>
+            <field name="amount">25000</field>
+            <field name="legal_basis">النسخة العربية من إجراء الغرفة - رسم إصدار شهادة</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_chren_md_papers" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_chamber_manager_photos"/>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="step_id" ref="step_chren_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_chren_register_entry" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_commercial_register_entry"/>
+            <field name="procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="step_id" ref="step_chren_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ==============================================================
+             2. حجز الاسم التجاري - name reservation, chamber then federation
+             ============================================================== -->
+
+        <record id="proc_trade_name" model="legal.procedure.type">
+            <field name="name">حجز الاسم التجاري وتثبيته لدى الاتحاد</field>
+            <field name="code">CH-TRADE-NAME</field>
+            <field name="body_id" ref="body_chamber_baghdad"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_federation_name_letter"/>
+            <field name="sequence_code">CH-NAME/%(range_year)s/</field>
+            <field name="expected_duration_days">7</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">optional</field>
+            <field name="legal_basis">إجراء غرفة تجارة بغداد لحجز الاسم التجاري (16 خطوة) ثم إجراء الاتحاد (8 خطوات)</field>
+            <field name="legal_basis_url">https://bcc.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p>هذه المعاملة تسبق المسجل ولا تتبعه. موافقة الغرفة وحدها ليست نهائية: التحقق
+                الوطني من تفرّد الاسم يتم لدى الاتحاد لأن قواعد بيانات الغرف غير مترابطة.</p>
+            </field>
+        </record>
+
+        <record id="phase_name_chamber" model="legal.procedure.phase">
+            <field name="name">لدى الغرفة</field>
+            <field name="code">CHAMBER</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_name_federation" model="legal.procedure.phase">
+            <field name="name">لدى الاتحاد</field>
+            <field name="code">FEDERATION</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="kind">decide</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="step_name_availability" model="legal.procedure.step">
+            <field name="name">التحقق من توفر الاسم في قاعدة بيانات الغرفة</field>
+            <field name="code">AVAILABILITY</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="phase_id" ref="phase_name_chamber"/>
+            <field name="gov_body_id" ref="body_chamber_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">10</field>
+            <field name="target_days">1</field>
+            <field name="desk_title">أسماء قيد التحقق</field>
+            <field name="desk_hint">جهّز اسمين بديلين - الرفض هنا شائع</field>
+            <field name="desk_empty">لا توجد أسماء قيد التحقق</field>
+        </record>
+
+        <record id="step_name_initial_approval" model="legal.procedure.step">
+            <field name="name">الموافقة الأولية وتسديد رسوم الصنف</field>
+            <field name="code">INITIAL-APPROVAL</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="phase_id" ref="phase_name_chamber"/>
+            <field name="gov_body_id" ref="body_chamber_baghdad"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="return_to_step_id" ref="step_name_availability"/>
+            <field name="desk_title">بانتظار الموافقة الأولية</field>
+            <field name="desk_hint">تدقيق الدفع والختم ثم توقيع المدير العام</field>
+            <field name="desk_empty">لا توجد أسماء بانتظار الموافقة الأولية</field>
+        </record>
+
+        <record id="step_name_federation" model="legal.procedure.step">
+            <field name="name">تثبيت الاسم وطنياً لدى الاتحاد</field>
+            <field name="code">FEDERATION</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="phase_id" ref="phase_name_federation"/>
+            <field name="gov_body_id" ref="body_chamber_federation"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">3</field>
+            <field name="return_to_step_id" ref="step_name_availability"/>
+            <field name="desk_title">أسماء لدى الاتحاد</field>
+            <field name="desk_hint">التحقق الوطني - قد يُرفض اسم وافقت عليه الغرفة</field>
+            <field name="desk_empty">لا توجد أسماء لدى الاتحاد</field>
+            <field name="desk_note_template">راجعنا الاتحاد بشأن تثبيت الاسم وأفادوا بأن</field>
+        </record>
+
+        <record id="step_name_done" model="legal.procedure.step">
+            <field name="name">ثُبِّت الاسم التجاري</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="phase_id" ref="phase_name_federation"/>
+            <field name="gov_body_id" ref="body_chamber_federation"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">40</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">أسماء مثبتة</field>
+            <field name="desk_empty">لا توجد أسماء مثبتة</field>
+        </record>
+
+        <record id="trans_name_refused" model="legal.procedure.transition">
+            <field name="name">الاسم غير متاح - إعادة الاختيار</field>
+            <field name="code">RETRY</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="from_step_id" ref="step_name_federation"/>
+            <field name="to_step_id" ref="step_name_availability"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="fee_name_reservation" model="legal.fee.rule">
+            <field name="name">رسم حجز الاسم التجاري</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="step_id" ref="step_name_initial_approval"/>
+            <field name="computation">fixed</field>
+            <field name="amount">4750</field>
+            <field name="legal_basis">النسخة العربية من إجراء الغرفة - رسم حجز الاسم التجاري</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">يضاف إليه رسم إداري للاسم التجاري 1,500 دينار في النسخة الإنجليزية من الإجراء.</field>
+        </record>
+
+        <record id="fee_name_federation_archiving" model="legal.fee.rule">
+            <field name="name">رسم الأرشفة لدى الاتحاد</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="step_id" ref="step_name_federation"/>
+            <field name="computation">fixed</field>
+            <field name="amount">1000</field>
+            <field name="legal_basis">إجراء الاتحاد - رسم أرشفة وختم</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="fee_name_federation_support" model="legal.fee.rule">
+            <field name="name">رسوم دعم لدى الاتحاد</field>
+            <field name="procedure_type_id" ref="proc_trade_name"/>
+            <field name="step_id" ref="step_name_federation"/>
+            <field name="computation">fixed</field>
+            <field name="amount">5000</field>
+            <field name="is_optional" eval="True"/>
+            <field name="legal_basis">النسخة العربية من إجراء الاتحاد</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="note">النشرة التعريفية لوزارة التجارة تعطي بدلاً من ذلك 125,000 دينار لكتاب تثبيت الاسم من الاتحاد - فرق كبير غير مفسَّر بين المصدرين.</field>
+        </record>
+
+        <!-- ==============================================================
+             3. التسجيل في السجل التجاري - within 30 days of incorporation
+             ============================================================== -->
+
+        <record id="proc_commercial_register" model="legal.procedure.type">
+            <field name="name">التسجيل في السجل التجاري (خلال 30 يوماً)</field>
+            <field name="code">CH-COMMERCIAL-REGISTER</field>
+            <field name="body_id" ref="body_chamber_registry"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_commercial_register_entry"/>
+            <field name="sequence_code">CH-REG/%(range_year)s/</field>
+            <field name="expected_duration_days">5</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">optional</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">التسجيل في السجل التجاري لدى الغرفة المحلية خلال 30 يوماً من استلام شهادة التأسيس</field>
+            <field name="legal_basis_url">https://bcc.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>البيانات المطلوبة: أسماء المؤسسين، ورئيس مجلس الإدارة والمدير المفوض، واسم
+                الشركة وتاريخ تأسيسها، وعناوين المركز والفروع داخل العراق وخارجه، ووصف النشاط
+                التجاري.</p>
+            </field>
+        </record>
+
+        <record id="phase_creg_prepare" model="legal.procedure.phase">
+            <field name="name">التهيئة</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_commercial_register"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_creg_body" model="legal.procedure.phase">
+            <field name="name">لدى شعبة السجل</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_commercial_register"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="step_creg_prepare" model="legal.procedure.step">
+            <field name="name">تهيئة بيانات القيد</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_commercial_register"/>
+            <field name="phase_id" ref="phase_creg_prepare"/>
+            <field name="gov_body_id" ref="body_chamber_registry"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">قيود قيد التهيئة</field>
+            <field name="desk_hint">المهلة 30 يوماً من استلام شهادة التأسيس</field>
+            <field name="desk_empty">لا توجد قيود قيد التهيئة</field>
+        </record>
+
+        <record id="step_creg_submit" model="legal.procedure.step">
+            <field name="name">تقديم طلب القيد</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_commercial_register"/>
+            <field name="phase_id" ref="phase_creg_body"/>
+            <field name="gov_body_id" ref="body_chamber_registry"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="return_to_step_id" ref="step_creg_prepare"/>
+            <field name="desk_title">طلبات قيد بانتظار التقديم</field>
+            <field name="desk_empty">لا توجد طلبات قيد بانتظار التقديم</field>
+        </record>
+
+        <record id="step_creg_done" model="legal.procedure.step">
+            <field name="name">تم القيد في السجل التجاري</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_commercial_register"/>
+            <field name="phase_id" ref="phase_creg_body"/>
+            <field name="gov_body_id" ref="body_chamber_registry"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">30</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">قيود منجزة</field>
+            <field name="desk_empty">لا توجد قيود منجزة</field>
+        </record>
+
+        <record id="doctype_chamber_identity" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_chamber_renewal"/>
+            <field name="renewal_procedure_type_id" ref="proc_chamber_renewal"/>
+        </record>
+
+        <record id="doctype_federation_name_letter" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_trade_name"/>
+        </record>
+
+        <record id="doctype_commercial_register_entry" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_commercial_register"/>
+        </record>
+
+    </data>
+</odoo>

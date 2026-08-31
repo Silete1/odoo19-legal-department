@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        The trail is read-only everywhere, including here. No group has write or
+        unlink on it in the access rules, and the model refuses both even under
+        sudo, so this view is deliberately a window with no controls.
+    -->
+
+    <record id="view_legal_action_log_list" model="ir.ui.view">
+        <field name="name">legal.action.log.list</field>
+        <field name="model">legal.action.log</field>
+        <field name="arch" type="xml">
+            <list string="Trail" create="false" edit="false" delete="false"
+                  decoration-info="action == 'transition'"
+                  decoration-danger="action in ['return', 'escalate']">
+                <field name="logged_on"/>
+                <field name="case_id"/>
+                <field name="action"/>
+                <field name="description"/>
+                <field name="reason" optional="show"/>
+                <field name="step_name" string="Step"/>
+                <field name="body_name" string="Body" optional="show"/>
+                <field name="round" optional="hide"/>
+                <field name="closes_step" optional="hide"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_action_log_form" model="ir.ui.view">
+        <field name="name">legal.action.log.form</field>
+        <field name="model">legal.action.log</field>
+        <field name="arch" type="xml">
+            <form string="Trail Entry" create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="case_id"/>
+                            <field name="action"/>
+                            <field name="description"/>
+                            <field name="reason"/>
+                        </group>
+                        <group string="As It Was Configured Then">
+                            <field name="step_code"/>
+                            <field name="step_name"/>
+                            <field name="body_name"/>
+                            <field name="group_code"/>
+                            <field name="round"/>
+                            <field name="user_id"/>
+                            <field name="logged_on"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_action_log_search" model="ir.ui.view">
+        <field name="name">legal.action.log.search</field>
+        <field name="model">legal.action.log</field>
+        <field name="arch" type="xml">
+            <search string="Trail">
+                <field name="case_id"/>
+                <field name="description"/>
+                <field name="user_id"/>
+                <filter name="moves" string="Moves Only" domain="[('closes_step', '=', True)]"/>
+                <filter name="returns" string="Returns" domain="[('action', '=', 'return')]"/>
+                <group>
+                    <filter name="group_case" string="File" context="{'group_by': 'case_id'}"/>
+                    <filter name="group_action" string="Action" context="{'group_by': 'action'}"/>
+                    <filter name="group_user" string="By" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_day" string="Day" context="{'group_by': 'logged_on:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_action_log" model="ir.actions.act_window">
+        <field name="name">Action Trail</field>
+        <field name="res_model">legal.action.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_legal_sla_escalation_list" model="ir.ui.view">
+        <field name="name">legal.sla.escalation.list</field>
+        <field name="model">legal.sla.escalation</field>
+        <field name="arch" type="xml">
+            <list string="Escalations" create="false" decoration-danger="is_open">
+                <field name="raised_on"/>
+                <field name="case_id"/>
+                <field name="step_id"/>
+                <field name="level" widget="badge"
+                       decoration-warning="level == '1'"
+                       decoration-danger="level in ['2', '3']"/>
+                <field name="reason"/>
+                <field name="due_on"/>
+                <field name="escalated_to_group_id" optional="show"/>
+                <field name="round" optional="hide"/>
+                <field name="resolved_on"/>
+                <field name="is_open" column_invisible="True"/>
+                <button name="action_resolve" type="object" string="Resolve"
+                        icon="fa-check" class="btn-link" invisible="not is_open"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_sla_escalation_search" model="ir.ui.view">
+        <field name="name">legal.sla.escalation.search</field>
+        <field name="model">legal.sla.escalation</field>
+        <field name="arch" type="xml">
+            <search string="Escalations">
+                <field name="case_id"/>
+                <field name="step_id"/>
+                <filter name="open" string="Still Open" domain="[('is_open', '=', True)]"/>
+                <group>
+                    <filter name="group_case" string="File" context="{'group_by': 'case_id'}"/>
+                    <filter name="group_level" string="Level" context="{'group_by': 'level'}"/>
+                    <filter name="group_step" string="Step" context="{'group_by': 'step_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_sla_escalation" model="ir.actions.act_window">
+        <field name="name">Escalations</field>
+        <field name="res_model">legal.sla.escalation</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+
+</odoo>

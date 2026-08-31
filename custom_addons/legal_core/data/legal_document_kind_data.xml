@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="doc_kind_identity" model="legal.document.kind">
+            <field name="name">مستمسكات وهويات</field>
+            <field name="code">IDENTITY</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="doc_kind_licence" model="legal.document.kind">
+            <field name="name">إجازات ورخص</field>
+            <field name="code">LICENCE</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="doc_kind_clearance" model="legal.document.kind">
+            <field name="name">براءات ذمة وتأييدات</field>
+            <field name="code">CLEARANCE</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="doc_kind_constitutive" model="legal.document.kind">
+            <field name="name">وثائق التأسيس</field>
+            <field name="code">CONSTITUTIVE</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="doc_kind_financial" model="legal.document.kind">
+            <field name="name">وثائق مالية ومحاسبية</field>
+            <field name="code">FINANCIAL</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="doc_kind_authority" model="legal.document.kind">
+            <field name="name">وكالات وتخويلات</field>
+            <field name="code">AUTHORITY</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="doc_kind_personal" model="legal.document.kind">
+            <field name="name">وثائق الأشخاص (جوازات وإقامات)</field>
+            <field name="code">PERSONAL</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="doc_kind_evidence" model="legal.document.kind">
+            <field name="name">مستندات إسناد</field>
+            <field name="code">EVIDENCE</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- Identifier kinds: the numbers a clerk is asked for at the window. -->
+
+        <record id="identifier_kind_registration" model="legal.entity.identifier.kind">
+            <field name="name">رقم التسجيل لدى مسجل الشركات</field>
+            <field name="code">MOT_REG</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="identifier_kind_tax_file" model="legal.entity.identifier.kind">
+            <field name="name">رقم الملف الضريبي</field>
+            <field name="code">TAX_FILE</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="identifier_kind_social_security" model="legal.entity.identifier.kind">
+            <field name="name">رقم المشروع لدى الضمان الاجتماعي</field>
+            <field name="code">PSSO_PROJECT</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="identifier_kind_chamber" model="legal.entity.identifier.kind">
+            <field name="name">رقم العضوية في غرفة التجارة</field>
+            <field name="code">CHAMBER_MEMBER</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="identifier_kind_mop" model="legal.entity.identifier.kind">
+            <field name="name">رقم التسجيل في نظام التصنيف - وزارة التخطيط</field>
+            <field name="code">MOP_CLASS</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="identifier_kind_kri_uen" model="legal.entity.identifier.kind">
+            <field name="name">الرقم الموحد للمنشأة - إقليم كردستان (UEN)</field>
+            <field name="code">KRI_UEN</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Entity forms, with the Article 28 minimum capital. -->
+
+        <record id="entity_form_llc" model="legal.entity.form">
+            <field name="name">شركة ذات مسؤولية محدودة</field>
+            <field name="code">LLC</field>
+            <field name="jurisdiction_id" ref="jurisdiction_iq_federal"/>
+            <field name="minimum_capital">1000000</field>
+            <field name="legal_basis">المادة 28 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="entity_form_jsc" model="legal.entity.form">
+            <field name="name">شركة مساهمة</field>
+            <field name="code">JSC</field>
+            <field name="jurisdiction_id" ref="jurisdiction_iq_federal"/>
+            <field name="minimum_capital">2000000</field>
+            <field name="legal_basis">المادة 28 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="entity_form_partnership" model="legal.entity.form">
+            <field name="name">شركة تضامنية</field>
+            <field name="code">PARTNERSHIP</field>
+            <field name="jurisdiction_id" ref="jurisdiction_iq_federal"/>
+            <field name="minimum_capital">500000</field>
+            <field name="legal_basis">المادة 28 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="entity_form_simple" model="legal.entity.form">
+            <field name="name">شركة بسيطة</field>
+            <field name="code">SIMPLE</field>
+            <field name="jurisdiction_id" ref="jurisdiction_iq_federal"/>
+            <field name="minimum_capital">500000</field>
+            <field name="requires_notarised_contract" eval="True"/>
+            <field name="legal_basis">قانون الشركات رقم 21 لسنة 1997 - عقد التأسيس يصدق لدى الكاتب العدل</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="entity_form_sole" model="legal.entity.form">
+            <field name="name">مشروع فردي</field>
+            <field name="code">SOLE</field>
+            <field name="jurisdiction_id" ref="jurisdiction_iq_federal"/>
+            <field name="minimum_capital">500000</field>
+            <field name="legal_basis">المادة 28 من قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="entity_form_foreign_branch" model="legal.entity.form">
+            <field name="name">فرع شركة أجنبية</field>
+            <field name="code">FOREIGN_BRANCH</field>
+            <field name="jurisdiction_id" ref="jurisdiction_iq_federal"/>
+            <field name="legal_basis">نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 المعدل</field>
+            <field name="sequence">60</field>
+        </record>
+
+    </data>
+</odoo>

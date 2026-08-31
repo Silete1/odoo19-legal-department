@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_jurisdiction_list" model="ir.ui.view">
+        <field name="name">legal.jurisdiction.list</field>
+        <field name="model">legal.jurisdiction</field>
+        <field name="arch" type="xml">
+            <list string="Jurisdictions" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="parent_id"/>
+                <field name="company_ids" widget="many2many_tags" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_jurisdiction_form" model="ir.ui.view">
+        <field name="name">legal.jurisdiction.form</field>
+        <field name="model">legal.jurisdiction</field>
+        <field name="arch" type="xml">
+            <form string="Jurisdiction">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="parent_id"/>
+                        </group>
+                        <group>
+                            <field name="company_ids" widget="many2many_tags" groups="base.group_multi_company"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <separator string="Why This Jurisdiction Differs"/>
+                    <field name="note"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_jurisdiction" model="ir.actions.act_window">
+        <field name="name">Jurisdictions</field>
+        <field name="res_model">legal.jurisdiction</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Federal Iraq and the Kurdistan Region are already here</p>
+            <p>
+                Jurisdiction is a real axis, not a label. The same obligation has a
+                different deadline, a different rate and sometimes a different order
+                of steps in each, so a body, a procedure, an obligation and a document
+                type all declare which one they belong to.
+            </p>
+        </field>
+    </record>
+
+</odoo>

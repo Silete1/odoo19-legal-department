@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The register is stocked so that every bucket of ``expiry_state`` has
+        something in it. A demonstration in which everything is valid
+        demonstrates nothing: the renewal board, the readiness matrix and the
+        tender gate all only become legible when something on the screen is
+        actually wrong.
+
+        So: the Chamber identity is in force, the municipal licence expires
+        within the month, the social-security clearance is inside its notice
+        window, and **the tax clearance expired in March**. The 2025 Chamber
+        identity is created before the 2026 one on purpose - ``create`` supersedes
+        it automatically, which is the register's central behaviour and the one
+        worth seeing rather than reading about.
+    -->
+    <data noupdate="1">
+
+        <!-- ============================================================
+             A municipality, shipped here rather than in a content pack.
+
+             There is no legal_iq_municipal pack yet, and the demonstration needs
+             a licence that expires within the month because that is the shape of
+             the alert a manager must see. So the أمانة and its إجازة ممارسة مهنة
+             are configured here, in the demo, with their real legal basis - and
+             when the municipal pack is written, these two rows are what it
+             replaces.
+             ============================================================ -->
+
+        <record id="body_amanat_baghdad" model="legal.gov.body">
+            <field name="name">أمانة بغداد - مديرية بلدية الكرادة</field>
+            <field name="short_name">الأمانة</field>
+            <field name="code">AMANAT-BGD</field>
+            <field name="body_type_id" ref="legal_core.body_type_municipality"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="letterhead_recipient">أمانة بغداد
+مديرية بلدية الكرادة</field>
+            <field name="open_hours">٠٨:٠٠ - ١٤:٠٠، عطلة الجمعة والسبت</field>
+            <field name="channel">paper</field>
+            <field name="resource_calendar_id" ref="legal_iq_registrar.calendar_mot_registrar"/>
+            <field name="legal_basis">إجازة ممارسة مهنة تصدرها مديرية بلديات المحافظة أو أمانة بغداد؛ الرسم المهني 10% من قيمة عقد الإيجار، والإجازة سنوية قابلة للتجديد أو الإلغاء مع كشف موقعي</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="verification_status">stale</field>
+            <field name="officer_ids" eval="[(6, 0, [ref('user_clerk'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_clerk"/>
+            <field name="sequence">10</field>
+            <field name="note" type="html">
+                <p>سجل مؤقت ضمن بيانات العرض التوضيحي إلى أن تُكتب حزمة البلديات. حالة التحقق
+                «تحتاج إعادة تدقيق» عن قصد: الرسوم والمستمسكات البلدية تختلف بين المحافظات
+                وبين مديريات البلدية داخل المحافظة الواحدة.</p>
+            </field>
+        </record>
+
+        <record id="doctype_municipal_licence" model="legal.document.type">
+            <field name="name">إجازة ممارسة مهنة</field>
+            <field name="name_en">Municipal Trade Practice Licence</field>
+            <field name="code">MUN-TRADE-LICENCE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_licence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_amanat_baghdad"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">21</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">إجراء إجازة ممارسة المهنة لدى مديرية البلدية: سند ملكية حديث وخارطة عقار، ومستمسكات شخصية، وإجازة بناء حديثة، واستشهاد ضريبي، وعقد إيجار، وقائمة الماء، ووكالة مصدقة عند الحاجة؛ والإنجاز خلال 1-2 يوم عمل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>سنوية، ويُجرى عليها كشف موقعي من مهندس المنطقة، وتُؤشَّر المخالفات والغرامات
+                على الملف. المناقصات تطلبها صراحة ضمن قائمة التأهيل.</p>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             The register itself
+             ============================================================ -->
+
+        <record id="doc_incorporation_certificate" model="legal.document">
+            <field name="name">شهادة تأسيس شركة الرافدين للتجارة والمقاولات العامة المحدودة</field>
+            <field name="document_type_id" ref="legal_iq_registrar.doctype_incorporation_certificate"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">م.ش/47215</field>
+            <field name="issuing_body_id" ref="legal_iq_registrar.body_mot_registrar"/>
+            <field name="issue_date">2016-03-14</field>
+            <field name="state">active</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="doc_formation_contract" model="legal.document">
+            <field name="name">عقد تأسيس الشركة (النسخة المعدلة بعد زيادة رأس المال)</field>
+            <field name="document_type_id" ref="legal_iq_registrar.doctype_formation_contract"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">ع.ت/47215/3</field>
+            <field name="issuing_body_id" ref="legal_iq_registrar.body_mot_registrar_amendment"/>
+            <field name="issue_date">2023-07-11</field>
+            <field name="state">active</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="note" type="html">
+                <p>النسخة الثالثة، بعد زيادة رأس المال إلى 750,000,000 دينار والمصادقة عليها
+                ونشرها في النشرة اليومية.</p>
+            </field>
+        </record>
+
+        <record id="doc_tax_card" model="legal.document">
+            <field name="name">البطاقة الضريبية</field>
+            <field name="document_type_id" ref="legal_iq_tax.doctype_tax_card"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">1/ش/2016/8843</field>
+            <field name="issuing_body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="issue_date">2016-05-02</field>
+            <field name="state">active</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="doc_psso_project" model="legal.document">
+            <field name="name">شهادة شمول المشروع بالضمان الاجتماعي</field>
+            <field name="document_type_id" ref="legal_iq_social_security.doctype_psso_project_certificate"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">ب/119374</field>
+            <field name="issuing_body_id" ref="legal_iq_social_security.body_psso_registration"/>
+            <field name="issue_date">2016-06-19</field>
+            <field name="state">active</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Last year's Chamber identity, created first so that this year's
+             supersedes it on create. That trail is the register's whole claim. -->
+
+        <record id="doc_chamber_identity_2025" model="legal.document">
+            <field name="name">هوية غرفة تجارة بغداد - صنف أول (2025)</field>
+            <field name="document_type_id" ref="legal_iq_chamber.doctype_chamber_identity"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">62/3/188402-25</field>
+            <field name="issuing_body_id" ref="legal_iq_chamber.body_chamber_baghdad"/>
+            <field name="grade_id" ref="legal_iq_chamber.grade_chamber_first"/>
+            <field name="issue_date">2025-02-16</field>
+            <field name="expiry_date">2026-02-15</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">21</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="doc_chamber_identity_2026" model="legal.document">
+            <field name="name">هوية غرفة تجارة بغداد - صنف أول (2026)</field>
+            <field name="document_type_id" ref="legal_iq_chamber.doctype_chamber_identity"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">62/3/188402-26</field>
+            <field name="issuing_body_id" ref="legal_iq_chamber.body_chamber_baghdad"/>
+            <field name="grade_id" ref="legal_iq_chamber.grade_chamber_first"/>
+            <field name="issue_date">2026-02-10</field>
+            <field name="expiry_date">2027-02-09</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">21</field>
+            <field name="replacement_reason">التجديد السنوي للهوية</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="note" type="html">
+                <p>الصنف الأول يكفي لأغلب مناقصات المحافظة، ولا يكفي للأعمال التي تشترط
+                <b>صنف (ممتاز) نافذة</b>. هذا هو الفرق الذي لا يستطيع حقل نصي التعبير عنه.</p>
+            </field>
+        </record>
+
+        <!-- Expiring within the month. -->
+        <record id="doc_municipal_licence" model="legal.document">
+            <field name="name">إجازة ممارسة مهنة - مديرية بلدية الكرادة</field>
+            <field name="document_type_id" ref="doctype_municipal_licence"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">ك/م/2025/4471</field>
+            <field name="issuing_body_id" ref="body_amanat_baghdad"/>
+            <field name="issue_date">2025-09-21</field>
+            <field name="expiry_date">2026-09-20</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">21</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="note" type="html">
+                <p>التجديد يستلزم كشفاً موقعياً من مهندس المنطقة، والرسم المهني 10% من قيمة عقد
+                الإيجار. ابدأ قبل ثلاثة أسابيع من الانتهاء لا في الأسبوع الأخير.</p>
+            </field>
+        </record>
+
+        <!-- EXPIRED. This is the record the whole demonstration turns on. -->
+        <record id="doc_tax_clearance_expired" model="legal.document">
+            <field name="name">براءة الذمة الضريبية (منتهية)</field>
+            <field name="document_type_id" ref="legal_iq_tax.doctype_tax_clearance"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">PIN-2025-772041</field>
+            <field name="issuing_body_id" ref="legal_iq_tax.body_gct"/>
+            <field name="issue_date">2025-03-02</field>
+            <field name="expiry_date">2026-03-01</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">14</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="note" type="html">
+                <p>منتهية منذ آذار. أي مناقصة تُغلق اليوم ترفض الشركة على هذا السطر وحده، ولا
+                يُصحَّح بعد الغلق. الجولة موثّقة بيوم واحد لكن الملف يتعثر عادةً عند الحجوزات
+                الضريبية - ولذلك زمن الإنجاز المشحون أسبوعان لا يوم.</p>
+            </field>
+        </record>
+
+        <!-- Inside its notice window. -->
+        <record id="doc_psso_clearance" model="legal.document">
+            <field name="name">براءة ذمة الضمان الاجتماعي (سلامة الموقف)</field>
+            <field name="document_type_id" ref="legal_iq_social_security.doctype_psso_clearance"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">س.م/2026/1188</field>
+            <field name="issuing_body_id" ref="legal_iq_social_security.body_psso_clearance"/>
+            <field name="issue_date">2026-03-20</field>
+            <field name="expiry_date">2026-09-19</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">10</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="doc_certified_lease" model="legal.document">
+            <field name="name">عقد إيجار مقر الشركة - مصدق لدى الكاتب العدل</field>
+            <field name="document_type_id" ref="legal_iq_registrar.doctype_certified_lease"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">ك.ع/2026/9930</field>
+            <field name="issuing_body_id" ref="legal_iq_registrar.body_notary"/>
+            <field name="issue_date">2026-01-04</field>
+            <field name="expiry_date">2026-12-31</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">30</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="doc_lawyer_poa" model="legal.document">
+            <field name="name">وكالة المحامي أحمد سلمان الربيعي</field>
+            <field name="document_type_id" ref="legal_iq_registrar.doctype_lawyer_power_of_attorney"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">و/2025/22874</field>
+            <field name="issuing_body_id" ref="legal_iq_registrar.body_notary"/>
+            <field name="issue_date">2025-11-01</field>
+            <field name="expiry_date">2026-10-31</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">14</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="note" type="html">
+                <p>هي الوكالة التي يراجع بها المحامي في كل شباك تقريباً مع هوية النقابة.
+                انتهاؤها يوقف المراجعات كلها لا معاملة واحدة.</p>
+            </field>
+        </record>
+
+        <record id="doc_electricity_bill" model="legal.document">
+            <field name="name">قائمة الكهرباء المسددة - تموز 2026</field>
+            <field name="document_type_id" ref="legal_iq_registrar.doctype_electricity_bill"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="number">ك/903/2026/07</field>
+            <field name="issue_date">2026-08-04</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="note" type="html">
+                <p>لا تنتهي صلاحيتها وإنما تقدُم: نافذة القبول 60 يوماً. اطبع قائمة آب قبل
+                المراجعة القادمة.</p>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             A foreign employee, and the three per-person documents that make
+             the residency pack legible
+             ============================================================ -->
+
+        <record id="partner_foreign_engineer" model="res.partner">
+            <field name="name">محمد أنور خان</field>
+            <field name="function">مهندس ميكانيك أقدم - مشروع محطة المعالجة</field>
+            <field name="company_type">person</field>
+            <field name="comment">موظف أجنبي على كفالة الشركة. جنسيته باكستانية، ومعاملته هي التي تُظهر سلسلة السمة والإقامة وإجازة العمل.</field>
+        </record>
+
+        <record id="doc_engineer_passport" model="legal.document">
+            <field name="name">جواز سفر - محمد أنور خان</field>
+            <field name="document_type_id" ref="legal_iq_residency.doctype_passport"/>
+            <field name="partner_id" ref="partner_foreign_engineer"/>
+            <field name="number">AB4471902</field>
+            <field name="issue_date">2022-06-15</field>
+            <field name="expiry_date">2027-06-14</field>
+            <field name="notice_days">180</field>
+            <field name="renewal_lead_days">60</field>
+            <field name="confidential" eval="True"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Expiring: this is what the residency renewal file below is chasing. -->
+        <record id="doc_engineer_residency" model="legal.document">
+            <field name="name">إقامة - محمد أنور خان</field>
+            <field name="document_type_id" ref="legal_iq_residency.doctype_residency_permit"/>
+            <field name="partner_id" ref="partner_foreign_engineer"/>
+            <field name="number">إق/بغداد/2025/30871</field>
+            <field name="issuing_body_id" ref="legal_iq_residency.body_residency_baghdad"/>
+            <field name="issue_date">2025-10-05</field>
+            <field name="expiry_date">2026-10-04</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">30</field>
+            <field name="confidential" eval="True"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="doc_engineer_work_permit" model="legal.document">
+            <field name="name">إجازة عمل - محمد أنور خان</field>
+            <field name="document_type_id" ref="legal_iq_residency.doctype_work_permit"/>
+            <field name="partner_id" ref="partner_foreign_engineer"/>
+            <field name="number">إ.ع/2025/6612</field>
+            <field name="issuing_body_id" ref="legal_iq_residency.body_labour_department"/>
+            <field name="issue_date">2025-11-20</field>
+            <field name="expiry_date">2026-11-19</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">30</field>
+            <field name="confidential" eval="True"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="note" type="html">
+                <p>التجديد يُقدَّم <b>خلال الشهر الأخير</b> قبل الانتهاء بموجب آلية 2025،
+                أي بين 20 تشرين الأول و19 تشرين الثاني - لا قبل ذلك.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

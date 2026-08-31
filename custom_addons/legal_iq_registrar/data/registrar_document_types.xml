@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The paper the Registrar issues, and the paper it demands.
+
+        Three validity models are in use here and the distinction is the whole
+        reason legal.document.type has a validity_model at all:
+
+        * A certificate of incorporation never expires. It is superseded when the
+          company is amended, but it does not lapse - validity_model = 'none'.
+        * A certified lease or an expediter's authorisation expires on a date -
+          validity_model = 'expiry'.
+        * A paid electricity bill never expires and yet is refused the moment it
+          is old. Council of Ministers directive 16180 of 1 April 2024 made the
+          LATEST paid electricity and water bills mandatory attachments at the
+          Registrar, and the Ministry of Planning refuses any supporting letter
+          issued more than a year before the application. Both are
+          validity_model = 'freshness', and an expiry date could not express
+          either of them.
+    -->
+    <data noupdate="1">
+
+        <!-- ============================================================
+             What the Registrar issues
+             ============================================================ -->
+
+        <record id="doctype_incorporation_certificate" model="legal.document.type">
+            <field name="name">شهادة تأسيس الشركة</field>
+            <field name="name_en">Certificate of Incorporation</field>
+            <field name="code">MOT-INC-CERT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar"/>
+            <field name="validity_model">none</field>
+            <field name="requires_certified_copy" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون الشركات رقم 21 لسنة 1997 المعدل</field>
+            <field name="legal_basis_url">https://tasjeel.mot.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <p>المناقصات تطلبها «مصدقة من دائرة مسجل الشركات في وزارة التجارة» - النسخة
+                غير المصدقة تُرفض عند الغلق. يُسجَّل في السجل التجاري لدى غرفة التجارة خلال
+                30 يوماً من استلام الشهادة.</p>
+            </field>
+        </record>
+
+        <record id="doctype_formation_contract" model="legal.document.type">
+            <field name="name">عقد تأسيس الشركة</field>
+            <field name="name_en">Memorandum of Association</field>
+            <field name="code">MOT-FORMATION-CONTRACT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar"/>
+            <field name="validity_model">none</field>
+            <field name="requires_certified_copy" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المادة 203 من قانون الشركات رقم 21 لسنة 1997: لا يكون التعديل نافذاً ما لم يصادق عليه المسجل ويُنشر؛ وعقد الشركة البسيطة يصدق لدى الكاتب العدل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="doctype_foreign_branch_licence" model="legal.document.type">
+            <field name="name">إجازة تسجيل فرع شركة أجنبية</field>
+            <field name="name_en">Foreign Branch Registration Licence</field>
+            <field name="code">MOT-FRN-BRANCH-LIC</field>
+            <field name="kind_id" ref="legal_core.doc_kind_licence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المادة 3 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 - تصدر الإجازة خلال 7 أيام عمل من النشر</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+            <field name="instruction" type="html">
+                <p>المادة 4: إجازة التسجيل ليست بذاتها إجازة لممارسة النشاط. المادة 11: تُلغى
+                الإجازة ويُشطب الفرع بعد 4 سنوات دون نشاط، أو بعد سنتين متتاليتين من عدم تقديم
+                الحسابات الختامية.</p>
+            </field>
+        </record>
+
+        <record id="doctype_registrar_confirmation" model="legal.document.type">
+            <field name="name">تأييد صادر من دائرة تسجيل الشركات</field>
+            <field name="name_en">Registrar Confirmation Letter</field>
+            <field name="code">MOT-CONFIRMATION</field>
+            <field name="kind_id" ref="legal_core.doc_kind_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">365</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">تعليمات تسجيل وتصنيف شركات المقاولات: «يكون الكتاب أو التأييد المرافق صادراً خلال سنة من تاريخ تقديم الطلب»</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <p>لا ينتهي هذا التأييد بتاريخ، لكنه يُرفض متى صار أقدم مما تقبله الجهة
+                المستلمة - ولذلك نموذج الصلاحية «حداثة» وليس «انتهاء».</p>
+            </field>
+        </record>
+
+        <record id="doctype_bulletin_publication" model="legal.document.type">
+            <field name="name">إعلان النشرة اليومية (قرار التأسيس أو التعديل)</field>
+            <field name="name_en">Registrar Bulletin Publication</field>
+            <field name="code">MOT-BULLETIN-NOTICE</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar_bulletin"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المادة 203 من قانون الشركات رقم 21 لسنة 1997 - النشر شرط نفاذ التعديل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- ============================================================
+             What the Registrar demands
+             ============================================================ -->
+
+        <record id="doctype_general_assembly_minutes" model="legal.document.type">
+            <field name="name">محضر اجتماع الهيئة العامة</field>
+            <field name="name_en">General Assembly Minutes</field>
+            <field name="code">MOT-GA-MINUTES</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المواد 86 و88 و127 و139 من قانون الشركات رقم 21 لسنة 1997</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="doctype_md_election_minutes" model="legal.document.type">
+            <field name="name">محضر انتخاب أو تعيين المدير المفوض</field>
+            <field name="name_en">Managing Director Appointment Minutes</field>
+            <field name="code">MOT-MD-APPOINTMENT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_authority"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">قانون الشركات رقم 21 لسنة 1997 - تعيين وإعفاء المدير المفوض من إجراءات المسجل المنشورة</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">70</field>
+            <field name="instruction" type="html">
+                <p>هذا هو المستند الذي يُسند إليه المخوَّل بالتوقيع في سجل المخوّلين: تغيّر
+                المدير المفوض يعني أن كل قالب كتاب يسمّيه صار خاطئاً، ولذلك يُربط المحضر
+                بسجل المخوّلين بالتوقيع بدل أن يُعاد كتابة القوالب.</p>
+            </field>
+        </record>
+
+        <record id="doctype_audited_accounts" model="legal.document.type">
+            <field name="name">الحسابات الختامية المدققة</field>
+            <field name="name_en">Audited Final Accounts</field>
+            <field name="code">MOT-AUDITED-ACCOUNTS</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المواد 127 و133 و135 و139 من قانون الشركات رقم 21 لسنة 1997؛ والمادة 8 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">80</field>
+            <field name="instruction" type="html">
+                <p>تُدقَّق من محاسب مجاز في العراق. الشركات الخاصة يعيّن مدققها الهيئة العامة
+                (المادة 133) والشركات المختلطة يدققها ديوان الرقابة المالية. حسابات الفرع
+                الأجنبي تُقدَّم خلال ثمانية أشهر من نهاية السنة المالية مع تقرير النشاط.</p>
+            </field>
+        </record>
+
+        <record id="doctype_activity_report" model="legal.document.type">
+            <field name="name">تقرير نشاط فرع الشركة الأجنبية</field>
+            <field name="name_en">Foreign Branch Activity Report</field>
+            <field name="code">MOT-BRANCH-ACTIVITY-REPORT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المادة 8 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">90</field>
+        </record>
+
+        <record id="doctype_bank_capital_confirmation" model="legal.document.type">
+            <field name="name">تأييد مصرفي بإيداع رأس المال</field>
+            <field name="name_en">Bank Capital Deposit Confirmation</field>
+            <field name="code">MOT-BANK-CAPITAL</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_rasheed_bank"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">90</field>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">المواد 54-57 من قانون الشركات رقم 21 لسنة 1997 - زيادة رأس المال بقرار الهيئة العامة وموافقة المسجل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">100</field>
+            <field name="instruction" type="html">
+                <p>يُوقَّع من المدير المخوَّل في المصارف الأهلية، ومن الإدارة العامة في
+                المصارف الحكومية. ويرافقه تأييد المحاسب القانوني بأنه اطّلع على كتاب المصرف
+                وأثبته في الدفاتر.</p>
+            </field>
+        </record>
+
+        <record id="doctype_bank_account_confirmation" model="legal.document.type">
+            <field name="name">تأييد فتح حساب جارٍ لدى مصرف عراقي مجاز</field>
+            <field name="name_en">Current Account Confirmation</field>
+            <field name="code">MOT-BANK-ACCOUNT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_financial"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_rasheed_bank"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">90</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المادة 5 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">110</field>
+        </record>
+
+        <record id="doctype_bar_legal_advisor" model="legal.document.type">
+            <field name="name">كتاب نقابة المحامين بتعيين المشاور القانوني</field>
+            <field name="name_en">Bar Association Legal Advisor Letter</field>
+            <field name="code">MOT-BAR-ADVISOR</field>
+            <field name="kind_id" ref="legal_core.doc_kind_clearance"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_bar_association"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">365</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المادة 5 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 - كتاب من نقابة المحامين بتعيين مشاور قانوني للفرع</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">120</field>
+        </record>
+
+        <record id="doctype_lawyer_power_of_attorney" model="legal.document.type">
+            <field name="name">وكالة محامٍ (وكالة تسجيل)</field>
+            <field name="name_en">Lawyer Power of Attorney</field>
+            <field name="code">MOT-LAWYER-POA</field>
+            <field name="kind_id" ref="legal_core.doc_kind_authority"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_notary"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">45</field>
+            <field name="renewal_lead_days">14</field>
+            <field name="requires_notarisation" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">عقد الوكالة في القانون المدني العراقي رقم 40 لسنة 1951 المعدل؛ وقانون وكالة التسجيل رقم 4 لسنة 1999</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">130</field>
+            <field name="instruction" type="html">
+                <p><b>مدة النفاذ ليست قانونية بل تعاقدية.</b> لم يُعثر على مدة صلاحية منشورة
+                للوكالة العراقية: النفاذ يتبع المدة المذكورة في السند نفسه. المدة الافتراضية
+                هنا سنة واحدة كي لا تمرّ الوكالة دون مراجعة، ويجب على المستخدم تصحيح تاريخ
+                الانتهاء من نص الوكالة. تنتهي الوكالة أيضاً بإنجاز العمل، أو بالعزل، أو
+                باعتزال الوكيل، أو بوفاة أحد الطرفين أو فقد الأهلية.</p>
+            </field>
+        </record>
+
+        <record id="doctype_expediter_authorisation" model="legal.document.type">
+            <field name="name">وثيقة تخويل المراجع (المعتمد)</field>
+            <field name="name_en">Expediter Authorisation</field>
+            <field name="code">MOT-EXPEDITER-AUTH</field>
+            <field name="kind_id" ref="legal_core.doc_kind_authority"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">30</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">حزمة فروع الشركات الأجنبية لدى المسجل: «وثيقة تخويل الشخص المكلف بتقديم طلب فتح الفرع في العراق» و«صورة ضوئية ملونة للمستمسكات الشخصية للشخص المخول بالمراجعة»</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">140</field>
+            <field name="instruction" type="html">
+                <p>المعتمد دور رسمي معترف به له مستمسكاته المودعة لدى الدائرة، لا مجرد
+                موظف يحمل الأوراق. تغييره يستوجب إيداع تخويل جديد قبل أي مراجعة.</p>
+            </field>
+        </record>
+
+        <record id="doctype_certified_lease" model="legal.document.type">
+            <field name="name">عقد إيجار مصدق</field>
+            <field name="name_en">Certified Lease Contract</field>
+            <field name="code">MOT-LEASE-CERTIFIED</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_notary"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">30</field>
+            <field name="requires_certified_copy" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">حزمة الفروع الأجنبية لدى المسجل: يجب إيداع عقد إيجار مصدق قبل إصدار كتاب «إرسال إجازة»؛ والمادة 5 من نظام 2 لسنة 2017 (وثيقة مصدقة تثبت العنوان الكامل في العراق)</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">150</field>
+        </record>
+
+        <record id="doctype_title_deed" model="legal.document.type">
+            <field name="name">سند الملكية (الطابو) وخارطة العقار</field>
+            <field name="name_en">Title Deed and Property Map</field>
+            <field name="code">MOT-TITLE-DEED</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">مستمسكات إجازة ممارسة المهنة ومقر الشركة المسجل</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">160</field>
+        </record>
+
+        <record id="doctype_electricity_bill" model="legal.document.type">
+            <field name="name">قائمة الكهرباء المسددة</field>
+            <field name="name_en">Paid Electricity Bill</field>
+            <field name="code">MOT-ELECTRICITY-BILL</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">60</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">توجيه الأمانة العامة لمجلس الوزراء 16180 في 1 نيسان 2024 - إلزام إرفاق آخر قائمة كهرباء وماء مسددة لدى مسجل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">170</field>
+            <field name="instruction" type="html">
+                <p>القائمة لا تنتهي صلاحيتها، بل تصير قديمة: المطلوب <b>آخر</b> قائمة مسددة.
+                نافذة الحداثة هنا 60 يوماً وهي اجتهاد تشغيلي - إن كان الشباك في محافظتك
+                يقبل أقدم أو يشترط أحدث، فهذه هي القيمة التي تُعدَّل.</p>
+            </field>
+        </record>
+
+        <record id="doctype_water_bill" model="legal.document.type">
+            <field name="name">قائمة الماء المسددة</field>
+            <field name="name_en">Paid Water Bill</field>
+            <field name="code">MOT-WATER-BILL</field>
+            <field name="kind_id" ref="legal_core.doc_kind_evidence"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">60</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">توجيه الأمانة العامة لمجلس الوزراء 16180 في 1 نيسان 2024</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">180</field>
+        </record>
+
+        <record id="doctype_beneficial_owner_undertaking" model="legal.document.type">
+            <field name="name">تعهد المستفيد الحقيقي</field>
+            <field name="name_en">Beneficial Owner Undertaking</field>
+            <field name="code">MOT-BENEFICIAL-OWNER</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mot_registrar_foreign"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">حزمة فروع الشركات الأجنبية الصادرة عن دائرة تسجيل الشركات</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">190</field>
+            <field name="instruction" type="html">
+                <p>يتضمن اسم المستفيد الحقيقي ونسبة مساهمته، وجداول أعضاء مجلس الإدارة
+                (الاسم/المنصب/الجنسية/التوقيع/العنوان) والمساهمين ونوع المنفعة وعنوان الشركة
+                الأم وبريدها الإلكتروني والمخوّل بالتوقيع عنها.</p>
+            </field>
+        </record>
+
+        <record id="doctype_foreign_parent_registration" model="legal.document.type">
+            <field name="name">شهادة تسجيل نافذة للشركة الأم (مترجمة ومصدقة)</field>
+            <field name="name_en">Foreign Parent Registration Certificate</field>
+            <field name="code">MOT-PARENT-REG-CERT</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_mofa_authentication"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">365</field>
+            <field name="requires_legalisation" eval="True"/>
+            <field name="requires_translation" eval="True"/>
+            <field name="requires_certified_copy" eval="True"/>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">المادة 2 من نظام فروع الشركات الأجنبية رقم 2 لسنة 2017 - تقدَّم الوثائق مترجمة إلى العربية ومصدقة في بلد التأسيس؛ وقانون 52 لسنة 1970 لسلسلة التصديق</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">200</field>
+            <field name="instruction" type="html">
+                <p>لا يجوز فتح الفرع قبل مرور سنة على تأسيس الشركة الأم (المادة 2). سلسلة
+                التصديق ثلاث محطات ولا يوجد أبوستيل، فاحسب لها وقتاً حقيقياً في الخطة.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

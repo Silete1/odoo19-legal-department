@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The grades are the point of this file.
+
+        A Baghdad Governorate tender does not demand "a Chamber identity". It
+        demands هوية غرفة تجارة صنف (ممتاز) نافذة - an identity of a stated class,
+        in force at the closing date. A readiness check can evaluate "at least
+        صنف أول" against legal.licence.grade records, whose ``sequence`` is
+        seniority with lower meaning more senior; it can do nothing whatever with
+        a class somebody typed into a text field.
+
+        Basra Chamber publishes four classes for companies, five for individual
+        traders and four for brokers. The company ladder is shipped; the other
+        two are named in the note rather than shipped, because a company file has
+        no use for the broker ladder and an unused row is a row somebody picks by
+        mistake.
+    -->
+    <data noupdate="1">
+
+        <record id="doctype_chamber_identity" model="legal.document.type">
+            <field name="name">هوية غرفة التجارة</field>
+            <field name="name_en">Chamber of Commerce Membership Identity</field>
+            <field name="code">CH-IDENTITY</field>
+            <field name="kind_id" ref="legal_core.doc_kind_identity"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_chamber_baghdad"/>
+            <field name="validity_model">expiry</field>
+            <field name="validity_value">1</field>
+            <field name="validity_uom">year</field>
+            <field name="notice_days">60</field>
+            <field name="renewal_lead_days">21</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">إعلانات مناقصات محافظة بغداد تشترط «هوية غرفة تجارة نافذة»، وللأعمال الكبرى «هوية غرفة تجارة صنف (ممتاز) نافذة»</field>
+            <field name="legal_basis_url">https://bcc.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">5</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>الهوية سنوية، وتجديدها هو ما يبقي الشركة مؤهَّلة للمناقصات. الفحص في
+                    المناقصة عن النفاذ <b>عند تاريخ الغلق</b>، فالسؤال دائماً عن تاريخ مستقبلي.</p>
+                    <p>لم يُعثر على جدول رسوم تجديد منشور صنفاً صنفاً على صفحة موثوقة
+                    (bcc.iq/procedure ترجع 404)، والرسوم بحسب الصنف معلنة على صفحة الغرفة في
+                    فيسبوك فقط. اسأل الغرفة عن رسم صنفك قبل أن تعتمد أي رقم.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="grade_chamber_excellent" model="legal.licence.grade">
+            <field name="name">الصنف الممتاز</field>
+            <field name="code">CH-EXCELLENT</field>
+            <field name="document_type_id" ref="doctype_chamber_identity"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="grade_chamber_first" model="legal.licence.grade">
+            <field name="name">الصنف الأول</field>
+            <field name="code">CH-FIRST</field>
+            <field name="document_type_id" ref="doctype_chamber_identity"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="grade_chamber_second" model="legal.licence.grade">
+            <field name="name">الصنف الثاني</field>
+            <field name="code">CH-SECOND</field>
+            <field name="document_type_id" ref="doctype_chamber_identity"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="grade_chamber_third" model="legal.licence.grade">
+            <field name="name">الصنف الثالث</field>
+            <field name="code">CH-THIRD</field>
+            <field name="document_type_id" ref="doctype_chamber_identity"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="doctype_trade_name_approval" model="legal.document.type">
+            <field name="name">موافقة أولية على حجز الاسم التجاري</field>
+            <field name="name_en">Trade Name Initial Approval</field>
+            <field name="code">CH-TRADE-NAME</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_chamber_baghdad"/>
+            <field name="validity_model">freshness</field>
+            <field name="freshness_days">90</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">إجراء حجز الاسم التجاري لدى غرفة تجارة بغداد (16 خطوة)</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <p>الحجز لا ينتهي بتاريخ منشور لكنه يفقد قيمته إن تأخر التأسيس؛ نافذة الحداثة
+                هنا 90 يوماً وهي اجتهاد تشغيلي لا نص.</p>
+            </field>
+        </record>
+
+        <record id="doctype_federation_name_letter" model="legal.document.type">
+            <field name="name">كتاب الاتحاد بتثبيت الاسم التجاري</field>
+            <field name="name_en">Federation Trade Name Confirmation</field>
+            <field name="code">CH-FED-NAME-LETTER</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_chamber_federation"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">إجراء الاتحاد للتحقق الوطني من تفرّد الاسم (8 خطوات)</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="doctype_commercial_register_entry" model="legal.document.type">
+            <field name="name">قيد السجل التجاري</field>
+            <field name="name_en">Commercial Register Entry</field>
+            <field name="code">CH-COMMERCIAL-REGISTER</field>
+            <field name="kind_id" ref="legal_core.doc_kind_constitutive"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_chamber_registry"/>
+            <field name="validity_model">none</field>
+            <field name="company_register" eval="True"/>
+            <field name="legal_basis">التسجيل في السجل التجاري لدى الغرفة المحلية خلال 30 يوماً من استلام شهادة التأسيس</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="doctype_chamber_manager_photos" model="legal.document.type">
+            <field name="name">مستمسكات المدير المفوض وصوره الشخصية</field>
+            <field name="name_en">Managing Director Identity Papers and Photographs</field>
+            <field name="code">CH-MD-PAPERS</field>
+            <field name="kind_id" ref="legal_core.doc_kind_personal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="issuing_body_id" ref="body_chamber_baghdad"/>
+            <field name="validity_model">none</field>
+            <field name="is_per_subject" eval="True"/>
+            <field name="company_register" eval="False"/>
+            <field name="legal_basis">مستمسكات عضوية الشركات لدى الغرف: مستمسكات المدير المفوض وأربع صور شخصية وحضوره شخصياً أو بوكالة رسمية</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">50</field>
+            <field name="instruction" type="html">
+                <p>أربع صور شخصية، والحضور الشخصي للمدير المفوض أو من ينوب عنه بوكالة رسمية،
+                مع الأصول لا الصور.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

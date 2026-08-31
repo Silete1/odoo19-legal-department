@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_letter_template_list" model="ir.ui.view">
+        <field name="name">legal.letter.template.list</field>
+        <field name="model">legal.letter.template</field>
+        <field name="arch" type="xml">
+            <list string="Letter Templates">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="body_id"/>
+                <field name="signatory_id" optional="show"/>
+                <field name="letterhead_variant"/>
+                <field name="show_qr" optional="hide"/>
+                <field name="show_subject_table" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_letter_template_form" model="ir.ui.view">
+        <field name="name">legal.letter.template.form</field>
+        <field name="model">legal.letter.template</field>
+        <field name="arch" type="xml">
+            <form string="Letter Template">
+                <header>
+                    <button name="action_preview_placeholders" type="object" string="Show Placeholders"
+                            class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="طلب براءة ذمة من الهيئة العامة للضرائب"/></h1>
+                    </div>
+                    <group>
+                        <group string="Who It Is For">
+                            <field name="code" placeholder="TAX-CLEARANCE-REQ"/>
+                            <field name="body_id"/>
+                            <field name="signatory_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="How It Prints">
+                            <field name="letterhead_variant"/>
+                            <field name="show_qr"/>
+                            <field name="show_subject_table"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="The Letter" name="letter">
+                            <group>
+                                <field name="subject_template" placeholder="طلب براءة ذمة ضريبية لسنة {today}"/>
+                            </group>
+                            <field name="body_template" placeholder="تحية طيبة وبعد، ..."/>
+                        </page>
+                        <page string="Copies To" name="cc">
+                            <field name="cc_list" placeholder="القسم القانوني&#10;الأرشيف"/>
+                            <div class="text-muted">
+                                One recipient per line. Printed as نسخة منه إلى at the bottom left,
+                                where an Iraqi letter puts it.
+                            </div>
+                        </page>
+                        <page string="Placeholders" name="placeholders">
+                            <div class="alert alert-info" role="alert">
+                                Substituted at issue and then <b>frozen onto the entry</b>. A reprint
+                                returns the filed copy, not a re-render against today's template -
+                                because the template will have changed and the copy in the ministry's
+                                file will not have. An unknown placeholder is left as written, so a
+                                typo is visible on the draft instead of vanishing.
+                            </div>
+                            <group>
+                                <group string="Numbers And Dates">
+                                    <div>{our_number} - رقم الصادر</div>
+                                    <div>{our_date} - تاريخ الصادر</div>
+                                    <div>{their_number} - رقم كتابهم</div>
+                                    <div>{their_date} - تاريخ كتابهم</div>
+                                    <div>{today} - تاريخ اليوم</div>
+                                </group>
+                                <group string="Parties">
+                                    <div>{body} - الجهة</div>
+                                    <div>{body_section} - القسم</div>
+                                    <div>{body_reference} - رقم إضبارتهم</div>
+                                    <div>{salutation} - عبارة المخاطبة</div>
+                                    <div>{entity} / {entity_en} - اسم الشركة</div>
+                                    <div>{signatory} / {signatory_title} - الموقّع وصفته</div>
+                                    <div>{subject} - الموضوع</div>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_letter_template_search" model="ir.ui.view">
+        <field name="name">legal.letter.template.search</field>
+        <field name="model">legal.letter.template</field>
+        <field name="arch" type="xml">
+            <search string="Letter Templates">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="body_id"/>
+                <filter name="preprinted" string="Pre-printed Paper" domain="[('letterhead_variant', '=', 'preprinted')]"/>
+                <filter name="drawn" string="Draws The Emblem" domain="[('letterhead_variant', '=', 'drawn')]"/>
+                <group>
+                    <filter name="group_body" string="Body" context="{'group_by': 'body_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_letter_template" model="ir.actions.act_window">
+        <field name="name">Letter Templates</field>
+        <field name="res_model">legal.letter.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">The eight letters you write all year</p>
+            <p>
+                Holding them here is how the salutation, the addressee block and the signature
+                block stay correct when the managing director changes - instead of being wrong
+                in fourteen saved Word files nobody will find.
+            </p>
+        </field>
+    </record>
+
+</odoo>

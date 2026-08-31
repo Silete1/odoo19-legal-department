@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The recurring tax obligations, and the objection ladder.
+
+        The objection is the one procedure in this pack that genuinely branches,
+        and it is worth reading as the argument for the engine's shape: the walk
+        is linear until the السلطة المالية answers, and from that point there are
+        three real moves - accepted, rejected onward to the appeal committee, and
+        final. Those three are transition rows. Everything before them is
+        sequence, and no transition row is authored for any of it.
+    -->
+    <data noupdate="1">
+
+        <!-- ==============================================================
+             1. الإقرار الضريبي السنوي - the annual return, 31 May
+             ============================================================== -->
+
+        <record id="proc_annual_return" model="legal.procedure.type">
+            <field name="name">الإقرار الضريبي السنوي (تصريح ضريبة الشركات)</field>
+            <field name="code">GCT-ANNUAL-RETURN</field>
+            <field name="body_id" ref="body_gct_companies"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_annual_return"/>
+            <field name="sequence_code">GCT-RET/%(range_year)s/</field>
+            <field name="expected_duration_days">90</field>
+            <field name="lead_time_days">60</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">optional</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل - يُقدَّم التصريح مع البيانات المالية إلى قسم الشركات في المركز أو الفرع بموعد أقصاه 31 أيار من السنة التالية للسنة الضريبية</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">1</field>
+            <field name="sequence">10</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>المعدلات: 35% لأنشطة قانون 19 لسنة 2010 (النفط والغاز)، و15% لما عداها.
+                    في إقليم كردستان الموعد <b>30 حزيران</b> لا 31 أيار، وهذا سبب وجود
+                    «الاختصاص» حقلاً أول الدرجة على نوع المعاملة.</p>
+                    <p>غرامة التأخير: 10% من الضريبة بحد أقصى 500,000 دينار على من لا يقدم
+                    بالموعد أو يتسبب في تأخير إنجاز التقدير، ما لم يثبت عذراً مشروعاً. وهناك
+                    غرامة منفصلة 10,000 دينار على كل فرع لشركة عاملة في العراق لا يقدم حساباته
+                    الختامية خلال 6 أشهر من نهاية السنة المالية.</p>
+                    <p>الضريبة تُستحق خلال <b>ثلاثة أيام</b> من تاريخ التقدير، ولا توجد أقساط
+                    ربعية خلال السنة. إذا وصل التقدير مخالفاً لتقديرنا، افتح معاملة «الاعتراض
+                    على التقدير» - مهلتها 21 يوماً من التبليغ ولا تُمدَّد.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_ret_prepare" model="legal.procedure.phase">
+            <field name="name">الإعداد والتدقيق</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_ret_submit" model="legal.procedure.phase">
+            <field name="name">التقديم</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_ret_body" model="legal.procedure.phase">
+            <field name="name">لدى الهيئة</field>
+            <field name="code">WAIT</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="phase_ret_settle" model="legal.procedure.phase">
+            <field name="name">التقدير والتسديد</field>
+            <field name="code">SETTLE</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="kind">decide</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="phase_ret_close" model="legal.procedure.phase">
+            <field name="name">الإنجاز</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="kind">close</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="step_ret_prepare" model="legal.procedure.step">
+            <field name="name">إعداد البيانات المالية والجداول الساندة</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="phase_id" ref="phase_ret_prepare"/>
+            <field name="gov_body_id" ref="body_gct_companies"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">30</field>
+            <field name="desk_title">إقرارات قيد الإعداد</field>
+            <field name="desk_hint">الجداول الساندة (أ - ي) للتسويات المحاسبية جزء من الملف لا ملحق به</field>
+            <field name="desk_empty">لا توجد إقرارات قيد الإعداد</field>
+        </record>
+
+        <record id="step_ret_audit" model="legal.procedure.step">
+            <field name="name">تدقيق البيانات لدى محاسب مجاز</field>
+            <field name="code">AUDIT</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="phase_id" ref="phase_ret_prepare"/>
+            <field name="gov_body_id" ref="body_gct_companies"/>
+            <field name="kind">internal</field>
+            <field name="sequence">20</field>
+            <field name="target_days">20</field>
+            <field name="desk_title">بيانات لدى المدقق</field>
+            <field name="desk_empty">لا توجد بيانات لدى المدقق</field>
+        </record>
+
+        <record id="step_ret_submit" model="legal.procedure.step">
+            <field name="name">تقديم التصريح إلى قسم الشركات</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="phase_id" ref="phase_ret_submit"/>
+            <field name="gov_body_id" ref="body_gct_companies"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">1</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">بانتظار التقديم</field>
+            <field name="desk_hint">الموعد النهائي 31 أيار - والغرامة 10% بسقف 500,000 دينار</field>
+            <field name="desk_empty">لا توجد إقرارات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_ret_examination" model="legal.procedure.step">
+            <field name="name">الفحص والتدقيق الضريبي</field>
+            <field name="code">EXAMINATION</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="phase_id" ref="phase_ret_body"/>
+            <field name="gov_body_id" ref="body_gct_audit"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">60</field>
+            <field name="rotting_threshold_days">180</field>
+            <field name="return_to_step_id" ref="step_ret_prepare"/>
+            <field name="desk_title">لدى التدقيق الضريبي</field>
+            <field name="desk_hint">الفحص إلزامي، وتُطلب الدفاتر والمستندات المؤيدة</field>
+            <field name="desk_empty">لا توجد ملفات لدى التدقيق</field>
+            <field name="desk_note_template">راجعنا قسم التدقيق والفحص وأفادوا بأن الملف</field>
+        </record>
+
+        <record id="step_ret_assessment" model="legal.procedure.step">
+            <field name="name">تبليغ التقدير</field>
+            <field name="code">ASSESSMENT</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="phase_id" ref="phase_ret_settle"/>
+            <field name="gov_body_id" ref="body_gct_companies"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">50</field>
+            <field name="target_days">10</field>
+            <field name="desk_title">بانتظار التقدير</field>
+            <field name="desk_hint">قيّد تاريخ التبليغ لا تاريخ الكتاب - منه تُحسب مهلة الاعتراض</field>
+            <field name="desk_empty">لا توجد ملفات بانتظار التقدير</field>
+            <field name="clerk_instruction" type="html">
+                <p>إن كان التقدير محل خلاف: مهلة الاعتراض <b>21 يوماً من التبليغ</b>، ولا يُسمع
+                الاعتراض ما لم تُسدَّد الضريبة المقدرة خلال المدة نفسها. افتح معاملة «الاعتراض
+                على التقدير الضريبي» اليوم لا غداً.</p>
+            </field>
+        </record>
+
+        <record id="step_ret_payment" model="legal.procedure.step">
+            <field name="name">تسديد الضريبة المستحقة</field>
+            <field name="code">PAYMENT</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="phase_id" ref="phase_ret_settle"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">60</field>
+            <field name="target_days">3</field>
+            <field name="desk_title">ضرائب مستحقة غير مسددة</field>
+            <field name="desk_hint">تُستحق خلال ثلاثة أيام من تاريخ التقدير</field>
+            <field name="desk_empty">لا توجد ضرائب مستحقة</field>
+        </record>
+
+        <record id="step_ret_done" model="legal.procedure.step">
+            <field name="name">أُنجز الإقرار وسُدِّدت الضريبة</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="phase_id" ref="phase_ret_close"/>
+            <field name="gov_body_id" ref="body_gct_companies"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">70</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">سنوات منجزة</field>
+            <field name="desk_empty">لا توجد سنوات منجزة</field>
+        </record>
+
+        <record id="trans_ret_return" model="legal.procedure.transition">
+            <field name="name">إعادة لاستكمال المستندات</field>
+            <field name="code">RETURN</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="from_step_id" ref="step_ret_examination"/>
+            <field name="to_step_id" ref="step_ret_prepare"/>
+            <field name="is_return" eval="True"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_ret_statements" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_financial_statements"/>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="step_id" ref="step_ret_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_ret_tax_card" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_tax_card"/>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="fee_ret_late_filing" model="legal.fee.rule">
+            <field name="name">غرامة التأخير عن الموعد القانوني</field>
+            <field name="procedure_type_id" ref="proc_annual_return"/>
+            <field name="step_id" ref="step_ret_payment"/>
+            <field name="computation">fixed</field>
+            <field name="amount">500000</field>
+            <field name="maximum_amount">500000</field>
+            <field name="is_optional" eval="True"/>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل - 10% من الضريبة بحد أقصى 500,000 دينار</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">الغرامة نسبتها 10% من الضريبة وليست مبلغاً ثابتاً، والمحرّك لا يحتسب نسبة من ضريبة مقدَّرة. المبلغ المشحون هنا هو السقف 500,000 دينار، ويجب تصحيحه إلى 10% الفعلية متى كانت أقل. الغرامة لا تُفرض إذا أُثبت عذر مشروع.</field>
+        </record>
+
+        <!-- ==============================================================
+             2. الاستقطاع المباشر الشهري - monthly withholding, by the 15th
+             ============================================================== -->
+
+        <record id="proc_wht_monthly" model="legal.procedure.type">
+            <field name="name">تسديد الاستقطاع المباشر الشهري</field>
+            <field name="code">GCT-WHT-MONTHLY</field>
+            <field name="body_id" ref="body_gct_withholding"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="sequence_code">GCT-WHT/%(range_year)s/</field>
+            <field name="expected_duration_days">3</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">optional</field>
+            <field name="has_incoming_reply">no</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">تعليمات الاستقطاع المباشر: يُورَّد المستقطع إلى قسم الاستقطاع المباشر خلال 15 يوماً من الشهر التالي لشهر الاستقطاع</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">20</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p>الشرائح على الدخل السنوي بعد التنزيلات: 3% حتى 250,000 دينار، 5% من
+                    250,000 إلى 500,000، 10% من 500,000 إلى 1,000,000، و15% لما زاد.</p>
+                    <p>التأخير: إضافة <b>5%</b> بعد 21 يوماً، تتضاعف بعد 21 يوماً أخرى، مع فائدة
+                    بسعر المصرف السائد. لذلك الغرامة ليست خطية والتأجيل شهراً واحداً ليس نصف
+                    كلفة تأجيل شهرين.</p>
+                    <p>في إقليم كردستان لا يوجد استقطاع على مدفوعات العقود، وهو فرق جوهري عن
+                    الاتحاد لا مجرد اختلاف نسبة.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_wht_prepare" model="legal.procedure.phase">
+            <field name="name">الاحتساب</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_wht_pay" model="legal.procedure.phase">
+            <field name="name">التوريد</field>
+            <field name="code">PAY</field>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_wht_close" model="legal.procedure.phase">
+            <field name="name">الإنجاز</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="kind">close</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="step_wht_compute" model="legal.procedure.step">
+            <field name="name">احتساب الاستقطاع من رواتب الشهر</field>
+            <field name="code">COMPUTE</field>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="phase_id" ref="phase_wht_prepare"/>
+            <field name="gov_body_id" ref="body_gct_withholding"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">أشهر قيد الاحتساب</field>
+            <field name="desk_empty">لا توجد أشهر قيد الاحتساب</field>
+        </record>
+
+        <record id="step_wht_form" model="legal.procedure.step">
+            <field name="name">إعداد استمارة ض.د/4أ بنسختين</field>
+            <field name="code">FORM</field>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="phase_id" ref="phase_wht_prepare"/>
+            <field name="gov_body_id" ref="body_gct_withholding"/>
+            <field name="kind">internal</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="desk_title">استمارات قيد الإعداد</field>
+            <field name="desk_hint">نسختان - واحدة تبقى مختومة لدينا</field>
+            <field name="desk_empty">لا توجد استمارات قيد الإعداد</field>
+        </record>
+
+        <record id="step_wht_remit" model="legal.procedure.step">
+            <field name="name">توريد المبلغ وتقديم الاستمارة</field>
+            <field name="code">REMIT</field>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="phase_id" ref="phase_wht_pay"/>
+            <field name="gov_body_id" ref="body_gct_withholding"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">1</field>
+            <field name="desk_title">توريدات معلّقة</field>
+            <field name="desk_hint">المهلة 15 يوماً من الشهر التالي لشهر الاستقطاع</field>
+            <field name="desk_empty">لا توجد توريدات معلّقة</field>
+        </record>
+
+        <record id="step_wht_done" model="legal.procedure.step">
+            <field name="name">وُرِّد الاستقطاع</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="phase_id" ref="phase_wht_close"/>
+            <field name="gov_body_id" ref="body_gct_withholding"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">40</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">أشهر مسددة</field>
+            <field name="desk_empty">لا توجد أشهر مسددة</field>
+        </record>
+
+        <record id="req_wht_form" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_wht_monthly_form"/>
+            <field name="procedure_type_id" ref="proc_wht_monthly"/>
+            <field name="step_id" ref="step_wht_remit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ==============================================================
+             3. جدول الاستقطاعات السنوي - the annual schedule, 31 March
+             ============================================================== -->
+
+        <record id="proc_wht_annual" model="legal.procedure.type">
+            <field name="name">جدول استقطاعات الضريبة السنوي</field>
+            <field name="code">GCT-WHT-ANNUAL</field>
+            <field name="body_id" ref="body_gct_withholding"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="result_document_type_id" ref="doctype_wht_annual_schedule"/>
+            <field name="sequence_code">GCT-WHTY/%(range_year)s/</field>
+            <field name="expected_duration_days">15</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">optional</field>
+            <field name="has_fee">no</field>
+            <field name="has_result_document">required</field>
+            <field name="has_poa">optional</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">يُنظَّم جدول الاستقطاعات في نهاية السنة المالية ويُقدَّم إلى قسم الاستقطاع المباشر في موعد أقصاه 31 آذار من السنة التالية</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="phase_whty_prepare" model="legal.procedure.phase">
+            <field name="name">التنظيم</field>
+            <field name="code">PREP</field>
+            <field name="procedure_type_id" ref="proc_wht_annual"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_whty_submit" model="legal.procedure.phase">
+            <field name="name">التقديم</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_wht_annual"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="step_whty_prepare" model="legal.procedure.step">
+            <field name="name">تنظيم الجدول السنوي ومطابقته مع التوريدات الشهرية</field>
+            <field name="code">PREPARE</field>
+            <field name="procedure_type_id" ref="proc_wht_annual"/>
+            <field name="phase_id" ref="phase_whty_prepare"/>
+            <field name="gov_body_id" ref="body_gct_withholding"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">10</field>
+            <field name="desk_title">جداول قيد التنظيم</field>
+            <field name="desk_hint">المطابقة مع اثنتي عشرة استمارة ض.د/4أ قبل التقديم</field>
+            <field name="desk_empty">لا توجد جداول قيد التنظيم</field>
+        </record>
+
+        <record id="step_whty_submit" model="legal.procedure.step">
+            <field name="name">تقديم الجدول إلى قسم الاستقطاع المباشر</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_wht_annual"/>
+            <field name="phase_id" ref="phase_whty_submit"/>
+            <field name="gov_body_id" ref="body_gct_withholding"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">2</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="return_to_step_id" ref="step_whty_prepare"/>
+            <field name="desk_title">جداول بانتظار التقديم</field>
+            <field name="desk_hint">الموعد النهائي 31 آذار</field>
+            <field name="desk_empty">لا توجد جداول بانتظار التقديم</field>
+        </record>
+
+        <record id="step_whty_done" model="legal.procedure.step">
+            <field name="name">قُدِّم الجدول السنوي</field>
+            <field name="code">DONE</field>
+            <field name="procedure_type_id" ref="proc_wht_annual"/>
+            <field name="phase_id" ref="phase_whty_submit"/>
+            <field name="gov_body_id" ref="body_gct_withholding"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">30</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">جداول مقدَّمة</field>
+            <field name="desk_empty">لا توجد جداول مقدَّمة</field>
+        </record>
+
+        <record id="req_whty_schedule" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_wht_annual_schedule"/>
+            <field name="procedure_type_id" ref="proc_wht_annual"/>
+            <field name="step_id" ref="step_whty_submit"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- ==============================================================
+             4. الاعتراض على التقدير - the objection ladder, as a branch
+             ============================================================== -->
+
+        <record id="proc_objection" model="legal.procedure.type">
+            <field name="name">الاعتراض على التقدير الضريبي</field>
+            <field name="code">GCT-OBJECTION</field>
+            <field name="body_id" ref="body_gct_legal"/>
+            <field name="jurisdiction_id" ref="legal_core.jurisdiction_iq_federal"/>
+            <field name="subject_cardinality">none</field>
+            <field name="sequence_code">GCT-OBJ/%(range_year)s/</field>
+            <field name="expected_duration_days">120</field>
+            <field name="channel">paper</field>
+            <field name="has_outgoing_letter">required</field>
+            <field name="has_incoming_reply">required</field>
+            <field name="has_fee">required</field>
+            <field name="has_result_document">optional</field>
+            <field name="has_poa">required</field>
+            <field name="requires_documents">required</field>
+            <field name="legal_basis">قانون ضريبة الدخل رقم 113 لسنة 1982 المعدل - اعتراض تحريري خلال 21 يوماً من التبليغ، ثم استئناف خلال 21 يوماً من التبليغ بالرفض، ثم الطعن التمييزي</field>
+            <field name="legal_basis_url">https://tax.mof.gov.iq</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="colour">2</field>
+            <field name="sequence">40</field>
+            <field name="instruction" type="html">
+                <div>
+                    <p><b>شرطان يُسقطان الاعتراض قبل أن يُنظر فيه:</b> أن يُقدَّم خلال 21 يوماً من
+                    التبليغ، وأن تُسدَّد الضريبة المقدرة خلال مدة الاعتراض نفسها. الاعتراض
+                    المتأخر لا يُقبل إلا لغياب عن العراق أو مرض مقعد أو قوة قاهرة.</p>
+                    <p>لجنة الاستئناف لا تسير في الاستئناف إذا كانت الأقساط غير مسددة. ومتى تم
+                    الاتفاق، أو تأخر الاعتراض دون منح تمديد، صار التقدير <b>قطعياً</b>.</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="phase_obj_notice" model="legal.procedure.phase">
+            <field name="name">التبليغ والدراسة</field>
+            <field name="code">NOTICE</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="kind">prepare</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="phase_obj_file" model="legal.procedure.phase">
+            <field name="name">التسديد وتقديم الاعتراض</field>
+            <field name="code">FILE</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="kind">submit</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="phase_obj_authority" model="legal.procedure.phase">
+            <field name="name">لدى السلطة المالية</field>
+            <field name="code">AUTHORITY</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="kind">with_body</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="phase_obj_appeal" model="legal.procedure.phase">
+            <field name="name">الاستئناف والتمييز</field>
+            <field name="code">APPEAL</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="kind">decide</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="phase_obj_close" model="legal.procedure.phase">
+            <field name="name">الحسم</field>
+            <field name="code">CLOSE</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="kind">close</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="step_obj_notice" model="legal.procedure.step">
+            <field name="name">استلام التبليغ ودراسة التقدير</field>
+            <field name="code">NOTICE</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_notice"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">internal</field>
+            <field name="sequence">10</field>
+            <field name="target_days">5</field>
+            <field name="desk_title">تقديرات قيد الدراسة</field>
+            <field name="desk_hint">المهلة 21 يوماً من التبليغ - وهي لا تُمدَّد</field>
+            <field name="desk_empty">لا توجد تقديرات قيد الدراسة</field>
+        </record>
+
+        <record id="step_obj_pay" model="legal.procedure.step">
+            <field name="name">تسديد الضريبة المقدرة خلال مدة الاعتراض</field>
+            <field name="code">PAY</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_file"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">20</field>
+            <field name="target_days">21</field>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">بانتظار تسديد الضريبة المقدرة</field>
+            <field name="desk_hint">بدون التسديد لا يُسمع الاعتراض أصلاً</field>
+            <field name="desk_empty">لا توجد مبالغ مقدرة غير مسددة</field>
+        </record>
+
+        <record id="step_obj_file" model="legal.procedure.step">
+            <field name="name">تقديم لائحة الاعتراض إلى السلطة المالية</field>
+            <field name="code">FILE</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_file"/>
+            <field name="gov_body_id" ref="body_gct_legal"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">30</field>
+            <field name="target_days">21</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">اعتراضات بانتظار التقديم</field>
+            <field name="desk_hint">خلال 21 يوماً من التبليغ</field>
+            <field name="desk_empty">لا توجد اعتراضات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_obj_review" model="legal.procedure.step">
+            <field name="name">دراسة الاعتراض لدى السلطة المالية</field>
+            <field name="code">REVIEW</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_authority"/>
+            <field name="gov_body_id" ref="body_gct_legal"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">40</field>
+            <field name="target_days">30</field>
+            <field name="rotting_threshold_days">90</field>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">اعتراضات لدى السلطة المالية</field>
+            <field name="desk_hint">ثلاثة مخارج فقط: قبول، أو رفض يفتح الاستئناف، أو اتفاق يجعل التقدير قطعياً</field>
+            <field name="desk_empty">لا توجد اعتراضات قيد الدراسة</field>
+            <field name="desk_note_template">راجعنا القسم القانوني بشأن الاعتراض وأفادوا بأن</field>
+        </record>
+
+        <record id="step_obj_appeal" model="legal.procedure.step">
+            <field name="name">تقديم الاستئناف إلى لجنة الاستئناف</field>
+            <field name="code">APPEAL</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_appeal"/>
+            <field name="gov_body_id" ref="body_gct_appeal_committee"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">50</field>
+            <field name="target_days">21</field>
+            <field name="requires_letter" eval="True"/>
+            <field name="desk_title">استئنافات بانتظار التقديم</field>
+            <field name="desk_hint">خلال 21 يوماً من التبليغ برفض الاعتراض</field>
+            <field name="desk_empty">لا توجد استئنافات بانتظار التقديم</field>
+        </record>
+
+        <record id="step_obj_committee" model="legal.procedure.step">
+            <field name="name">نظر لجنة الاستئناف</field>
+            <field name="code">COMMITTEE</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_appeal"/>
+            <field name="gov_body_id" ref="body_gct_appeal_committee"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">60</field>
+            <field name="target_days">60</field>
+            <field name="rotting_threshold_days">180</field>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">لدى لجنة الاستئناف</field>
+            <field name="desk_hint">اللجنة لا تسير في الاستئناف إذا كانت الأقساط غير مسددة</field>
+            <field name="desk_empty">لا توجد ملفات لدى لجنة الاستئناف</field>
+        </record>
+
+        <record id="step_obj_cassation" model="legal.procedure.step">
+            <field name="name">الطعن التمييزي</field>
+            <field name="code">CASSATION</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_appeal"/>
+            <field name="gov_body_id" ref="body_gct_appeal_committee"/>
+            <field name="kind">at_body</field>
+            <field name="sequence">70</field>
+            <field name="target_days">30</field>
+            <field name="desk_title">طعون تمييزية</field>
+            <field name="desk_empty">لا توجد طعون تمييزية</field>
+        </record>
+
+        <record id="step_obj_accepted" model="legal.procedure.step">
+            <field name="name">قُبل الاعتراض وعُدِّل التقدير</field>
+            <field name="code">ACCEPTED</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_close"/>
+            <field name="gov_body_id" ref="body_gct_legal"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">granted</field>
+            <field name="sequence">80</field>
+            <field name="fold" eval="True"/>
+            <field name="desk_title">اعتراضات مقبولة</field>
+            <field name="desk_empty">لا توجد اعتراضات مقبولة</field>
+        </record>
+
+        <record id="step_obj_final" model="legal.procedure.step">
+            <field name="name">أصبح التقدير قطعياً</field>
+            <field name="code">FINAL</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="phase_id" ref="phase_obj_close"/>
+            <field name="gov_body_id" ref="body_gct"/>
+            <field name="kind">terminal</field>
+            <field name="outcome">rejected</field>
+            <field name="sequence">90</field>
+            <field name="fold" eval="True"/>
+            <field name="auto_next" eval="False"/>
+            <field name="desk_title">تقديرات قطعية</field>
+            <field name="desk_empty">لا توجد تقديرات قطعية</field>
+        </record>
+
+        <record id="trans_obj_submit" model="legal.procedure.transition">
+            <field name="name">تقديم الاعتراض (بعد التسديد)</field>
+            <field name="code">SUBMIT</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="from_step_id" ref="step_obj_pay"/>
+            <field name="to_step_id" ref="step_obj_file"/>
+            <field name="require_fees_paid" eval="True"/>
+            <field name="require_documents" eval="True"/>
+            <field name="sequence">10</field>
+            <field name="note">الحارس حقيقي وليس تذكيراً: الاعتراض لا يُسمع ما لم تُسدَّد الضريبة المقدرة خلال مدة الاعتراض، فمن يقدّم قبل التسديد يكون قد أضاع المهلة لا استعملها.</field>
+        </record>
+
+        <record id="trans_obj_accept" model="legal.procedure.transition">
+            <field name="name">قبول الاعتراض</field>
+            <field name="code">ACCEPT</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="from_step_id" ref="step_obj_review"/>
+            <field name="to_step_id" ref="step_obj_accepted"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="trans_obj_reject" model="legal.procedure.transition">
+            <field name="name">رفض الاعتراض - فتح مهلة الاستئناف</field>
+            <field name="code">REJECT</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="from_step_id" ref="step_obj_review"/>
+            <field name="to_step_id" ref="step_obj_appeal"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">30</field>
+            <field name="note">سجّل تاريخ التبليغ بالرفض: منه تبدأ مهلة الـ21 يوماً للاستئناف، لا من تاريخ القرار.</field>
+        </record>
+
+        <record id="trans_obj_settle" model="legal.procedure.transition">
+            <field name="name">الاتفاق - التقدير أصبح قطعياً</field>
+            <field name="code">SETTLE</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="from_step_id" ref="step_obj_review"/>
+            <field name="to_step_id" ref="step_obj_final"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="trans_obj_committee_accept" model="legal.procedure.transition">
+            <field name="name">قبول الاستئناف</field>
+            <field name="code">APPEAL-ACCEPT</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="from_step_id" ref="step_obj_committee"/>
+            <field name="to_step_id" ref="step_obj_accepted"/>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="trans_obj_committee_reject" model="legal.procedure.transition">
+            <field name="name">رد الاستئناف - الطعن التمييزي</field>
+            <field name="code">APPEAL-REJECT</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="from_step_id" ref="step_obj_committee"/>
+            <field name="to_step_id" ref="step_obj_cassation"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="trans_obj_committee_final" model="legal.procedure.transition">
+            <field name="name">قبول القرار - التقدير قطعي</field>
+            <field name="code">APPEAL-FINAL</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="from_step_id" ref="step_obj_committee"/>
+            <field name="to_step_id" ref="step_obj_final"/>
+            <field name="require_reason" eval="True"/>
+            <field name="sequence">70</field>
+        </record>
+
+        <record id="fee_obj_assessed_tax" model="legal.fee.rule">
+            <field name="name">الضريبة المقدرة المطلوب تسديدها لسماع الاعتراض</field>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="step_id" ref="step_obj_pay"/>
+            <field name="computation">fixed</field>
+            <field name="amount">0</field>
+            <field name="legal_basis">لا يُسمع الاعتراض ما لم تُسدَّد الضريبة المقدرة خلال مدة الاعتراض البالغة 21 يوماً</field>
+            <field name="last_verified_on">2026-08-30</field>
+            <field name="sequence">10</field>
+            <field name="note">المبلغ صفر عمداً: هو ليس رسماً مقرراً بل الضريبة المقدرة في إشعار التقدير، ويُملأ من الإشعار عند فتح المعاملة. وجود السطر هو ما يجعل حارس «تقديم الاعتراض بعد التسديد» يعمل فعلاً.</field>
+        </record>
+
+        <record id="req_obj_assessment" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_assessment_notice"/>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="step_id" ref="step_obj_file"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="req_obj_objection" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_tax_objection"/>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="step_id" ref="step_obj_file"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="req_obj_receipt" model="legal.doc.requirement">
+            <field name="document_type_id" ref="doctype_tax_payment_receipt"/>
+            <field name="procedure_type_id" ref="proc_objection"/>
+            <field name="step_id" ref="step_obj_file"/>
+            <field name="is_required" eval="True"/>
+            <field name="copies">1</field>
+            <field name="sequence">30</field>
+            <field name="note">وصل تسديد الضريبة المقدرة - بدونه لا يُسمع الاعتراض.</field>
+        </record>
+
+        <record id="doctype_annual_return" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_annual_return"/>
+        </record>
+
+        <record id="doctype_wht_annual_schedule" model="legal.document.type">
+            <field name="producer_procedure_type_id" ref="proc_wht_annual"/>
+        </record>
+
+    </data>
+</odoo>

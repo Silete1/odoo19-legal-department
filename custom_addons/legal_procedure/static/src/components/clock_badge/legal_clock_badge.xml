@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="legal_procedure.LegalClockBadge">
+        <!-- data-clock and data-clock-kind are stable technical hooks: a tour
+             or any automation targets the verdict through them rather than
+             through translated text, because the target deployment is an
+             Arabic-only database and a tour matching English strings fails on
+             it the day it is installed. -->
+        <div t-if="!isSilent" t-att-class="rootClass"
+             t-att-dir="payload.rtl ? 'rtl' : 'ltr'"
+             t-att-data-clock="payload.state"
+             t-att-data-clock-kind="payload.kind"
+             t-att-title="title">
+
+            <span class="o_legal_clock_chip">
+                <i t-attf-class="fa {{ payload.icon }}" role="img" aria-hidden="true"/>
+                <!-- Whose clock it is comes first and in words. The colour
+                     underneath it only repeats what this already says. -->
+                <span class="o_legal_clock_kind" t-esc="payload.kind_label"/>
+                <!-- dir="ltr": "6 working days" is reordered by the bidi
+                     algorithm inside an Arabic paragraph. -->
+                <span class="o_legal_clock_age o_legal_num" dir="ltr" t-if="payload.age"
+                      t-esc="payload.age"/>
+            </span>
+
+            <t t-if="!props.compact">
+                <div class="o_legal_clock_detail">
+                    <span class="o_legal_clock_state" t-esc="payload.state_label"/>
+                    <span class="o_legal_clock_target" t-if="payload.target_label"
+                          t-esc="payload.target_label"/>
+                    <span class="o_legal_clock_overdue" t-if="payload.overdue_label"
+                          t-esc="payload.overdue_label"/>
+                </div>
+
+                <div class="o_legal_clock_escalated" t-if="payload.escalation_label">
+                    <i class="fa fa-bell" role="img" aria-hidden="true"/>
+                    <t t-esc="payload.escalation_label"/>
+                </div>
+            </t>
+
+            <!-- The verdict in words for a reader who cannot see the tint, in
+                 compact mode where the detail row is not drawn. -->
+            <span class="visually-hidden" t-if="props.compact">
+                <t t-esc="label.clock"/>: <t t-esc="payload.state_label"/>
+            </span>
+        </div>
+    </t>
+
+</templates>

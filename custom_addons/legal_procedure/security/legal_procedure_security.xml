@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        This module deliberately defines NO new security group.
+
+        A procedure engine is where the temptation to invent groups is strongest -
+        one per ministry, one per procedure, one per step - and every one of them
+        would be a security object created by a content pack. That is precisely
+        the "forked, not configured" failure the product exists to avoid: a
+        customer whose Directorate of Civil Defence nobody anticipated would need
+        a developer to see their own files.
+
+        Everything a procedure needs is expressed against the five groups
+        legal_core already ships:
+
+        * WHO OWNS A STEP is data - legal.procedure.step.responsible_group_id
+          points at any res.groups the customer already has, including their own.
+        * WHO MAY PRESS A BUTTON is data - legal.procedure.transition.group_ids.
+        * WHO SEES WHICH BODY'S FILES is data - legal.gov.body.officer_ids,
+          traversed by the record rules in legal_procedure_rules.xml.
+
+        The one thing this file does add is a server action the deadline cron and
+        the obligation generator can be pointed at from the interface, so a
+        manager can run either by hand after editing a schedule rather than
+        waiting for the next scheduled pass.
+    -->
+
+    <record id="action_server_generate_obligations" model="ir.actions.server">
+        <field name="name">Generate Obligation Periods</field>
+        <field name="model_id" ref="model_legal_obligation_schedule"/>
+        <field name="binding_model_id" ref="model_legal_obligation_schedule"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_generate()</field>
+    </record>
+
+    <record id="action_server_validate_procedure" model="ir.actions.server">
+        <field name="name">Check The Procedure Graph</field>
+        <field name="model_id" ref="model_legal_procedure_type"/>
+        <field name="binding_model_id" ref="model_legal_procedure_type"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records[:1].action_validate()</field>
+    </record>
+
+</odoo>

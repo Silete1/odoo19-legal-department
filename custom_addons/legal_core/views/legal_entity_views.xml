@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_entity_list" model="ir.ui.view">
+        <field name="name">legal.entity.list</field>
+        <field name="model">legal.entity</field>
+        <field name="arch" type="xml">
+            <list string="Legal Entities">
+                <field name="name"/>
+                <field name="name_en" optional="show"/>
+                <field name="entity_form_id"/>
+                <field name="jurisdiction_id"/>
+                <field name="is_foreign_branch" optional="hide"/>
+                <field name="financial_year_end" optional="show"/>
+                <field name="document_count" string="Documents"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_entity_form" model="ir.ui.view">
+        <field name="name">legal.entity.form</field>
+        <field name="model">legal.entity</field>
+        <field name="arch" type="xml">
+            <form string="Legal Entity">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_documents" type="object" class="oe_stat_button" icon="fa-folder-open">
+                            <field name="document_count" widget="statinfo" string="Documents"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="شركة ... المحدودة"/></h1>
+                        <h3><field name="name_en" placeholder="Company name in English"/></h3>
+                    </div>
+                    <group>
+                        <group string="Registration">
+                            <field name="entity_form_id"/>
+                            <field name="jurisdiction_id"/>
+                            <field name="incorporation_date"/>
+                            <field name="capital"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Obligation Clocks">
+                            <field name="financial_year_end"/>
+                            <field name="is_foreign_branch"/>
+                            <field name="parent_company_name" invisible="not is_foreign_branch"/>
+                            <field name="partner_id"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert" invisible="not is_foreign_branch">
+                        A branch of a foreign company files audited accounts and an activity report
+                        with the Registrar within eight months of the year end, and notifies a change
+                        of branch manager within sixty working days
+                        (نظام فروع الشركات الأجنبية رقم 2 لسنة 2017، المادتان 7 و 8).
+                    </div>
+                    <notebook>
+                        <page string="Our Numbers At Each Body" name="identifiers">
+                            <p class="text-muted">
+                                The first thing a clerk is asked at any window. Every body issues its
+                                own number and they are not interchangeable.
+                            </p>
+                            <field name="identifier_ids">
+                                <list editable="bottom">
+                                    <field name="body_id"/>
+                                    <field name="kind_id"/>
+                                    <field name="value"/>
+                                    <field name="section"/>
+                                    <field name="issue_date" optional="hide"/>
+                                    <field name="document_id" optional="hide"/>
+                                    <field name="note" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Authorised Signatories" name="signatories">
+                            <field name="signatory_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="title"/>
+                                    <field name="valid_from"/>
+                                    <field name="valid_to"/>
+                                    <field name="is_default"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Activity &amp; Address" name="activity">
+                            <group>
+                                <field name="activity_description"/>
+                                <field name="address"/>
+                            </group>
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_entity" model="ir.actions.act_window">
+        <field name="name">Legal Entities</field>
+        <field name="res_model">legal.entity</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Register the legal persons you act for</p>
+            <p>
+                Not the same thing as a company in the accounting sense. A group may hold
+                an operating limited company, a branch of the foreign parent and an
+                individual enterprise used for one licence - three legal persons, three
+                sets of obligations, three sets of numbers at the ministries.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_legal_entity_form_list" model="ir.ui.view">
+        <field name="name">legal.entity.form.list</field>
+        <field name="model">legal.entity.form</field>
+        <field name="arch" type="xml">
+            <list string="Legal Forms" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="jurisdiction_id"/>
+                <field name="minimum_capital"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="requires_notarised_contract"/>
+                <field name="legal_basis" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_entity_form" model="ir.actions.act_window">
+        <field name="name">Legal Forms</field>
+        <field name="res_model">legal.entity.form</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="view_legal_entity_identifier_kind_list" model="ir.ui.view">
+        <field name="name">legal.entity.identifier.kind.list</field>
+        <field name="model">legal.entity.identifier.kind</field>
+        <field name="arch" type="xml">
+            <list string="Identifier Kinds" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_entity_identifier_kind" model="ir.actions.act_window">
+        <field name="name">Identifier Kinds</field>
+        <field name="res_model">legal.entity.identifier.kind</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

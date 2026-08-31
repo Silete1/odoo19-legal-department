@@ -14,6 +14,15 @@
 !/custom_addons/gov_hr_base/
 !/custom_addons/gov_hr_deputation/
 !/custom_addons/dma_accreditation/
+!/custom_addons/legal_core/
+!/custom_addons/legal_correspondence/
+!/custom_addons/legal_procedure/
+!/custom_addons/legal_iq_registrar/
+!/custom_addons/legal_iq_tax/
+!/custom_addons/legal_iq_chamber/
+!/custom_addons/legal_iq_social_security/
+!/custom_addons/legal_iq_residency/
+!/custom_addons/legal_iq_demo/
 
 /docs/*
 !/docs/access_schema_analysis.md
@@ -25,6 +34,8 @@
 !/docs/security_matrix.md
 !/docs/test_users.md
 !/docs/workflow.md
+!/docs/PROGRESS.md
+!/docs/ui-audit/
 
 /scripts/*
 !/scripts/setup_gov_hr_test_users.py

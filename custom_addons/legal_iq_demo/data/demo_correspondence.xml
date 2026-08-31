@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The register, written the way a Baghdad diwan writes it.
+
+        Four things in here are worth looking at rather than reading past.
+
+        **Two numbers, never one.** ``our_number`` is our number in our book;
+        ``their_number`` and ``their_date`` are theirs, copied exactly as they
+        wrote them. Every attempt to normalise the second into the first loses
+        the string the ministry will quote back down the telephone.
+
+        **The chase is not the submission.** Three تذكير entries sit against the
+        same submission. They are the kind that is repeatable and that does not
+        restart the clock, so the file shows one submission with three chases -
+        not four submissions.
+
+        **The return is not a rejection.** The Commission sent the return back to
+        have two supporting schedules completed. Recorded as إعادة للاستكمال it
+        increments the round; recorded as a rejection it would poison every
+        statistic the department is judged on.
+
+        **The telephone consumes no number.** The last entry against the tax file
+        is a contact note: no register, no ``our_number``, a named human, what he
+        said, and a promised date. It moves the reply clock and suppresses the
+        next chase, which is the difference between software that knows the
+        section head has already answered and software that keeps writing to a
+        man who told us to come back after the tenth.
+
+        And one incoming letter has **no case at all** - an assessment for 2024
+        that arrived unasked. That nullable link is why the mail room can be the
+        landing screen.
+    -->
+    <data noupdate="1">
+
+        <!-- ==============================================================
+             The 2025 corporate return, in six entries and one telephone call
+             ============================================================== -->
+
+        <record id="corr_return_submission" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0412</field>
+            <field name="our_date">2026-05-24</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="body_section">شعبة التقدير الثانية</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_annual_return"/>
+            <field name="subject">تقديم تصريح ضريبة الشركات عن السنة المالية 2025</field>
+            <field name="signatory_id" ref="signatory_managing_director"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="body_html" type="html">
+                <p>نرفق لكم طيّاً تصريح ضريبة الشركات عن السنة المالية المنتهية في 2025/12/31،
+                مرفقاً به البيانات المالية المدققة والجداول الساندة (أ - ي) والمستندات المؤيدة،
+                راجين التفضل بالاطلاع والإجراء اللازم... مع التقدير.</p>
+            </field>
+        </record>
+
+        <record id="corr_return_sent_back" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_in_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_return"/>
+            <field name="direction">in</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">و/2026/0188</field>
+            <field name="our_date">2026-06-11</field>
+            <field name="their_number">3/ش/2026/9944</field>
+            <field name="their_date">2026-06-09</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="body_section">شعبة التقدير الثانية</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_annual_return"/>
+            <field name="reply_to_id" ref="corr_return_submission"/>
+            <field name="subject">إعادة المعاملة لاستكمال الجدولين الساندين (ح) و(ط)</field>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="corr_return_resubmission" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0498</field>
+            <field name="our_date">2026-06-22</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="body_section">شعبة التقدير الثانية</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_annual_return"/>
+            <field name="reply_to_id" ref="corr_return_sent_back"/>
+            <field name="subject">إعادة تقديم التصريح مستكملاً بالجدولين (ح) و(ط)</field>
+            <field name="signatory_id" ref="signatory_managing_director"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="corr_return_chase_1" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_reminder"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0611</field>
+            <field name="our_date">2026-07-13</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_audit"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_annual_return"/>
+            <field name="reply_to_id" ref="corr_return_resubmission"/>
+            <field name="subject">تذكير بشأن إنجاز التقدير الضريبي لسنة 2025</field>
+            <field name="signatory_id" ref="signatory_managing_director"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="corr_return_chase_2" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_reminder"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0702</field>
+            <field name="our_date">2026-08-04</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_audit"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_annual_return"/>
+            <field name="reply_to_id" ref="corr_return_resubmission"/>
+            <field name="subject">تذكير ثانٍ بشأن إنجاز التقدير الضريبي لسنة 2025</field>
+            <field name="signatory_id" ref="signatory_managing_director"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="corr_return_chase_3" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_reminder"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0781</field>
+            <field name="our_date">2026-08-24</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_audit"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_annual_return"/>
+            <field name="reply_to_id" ref="corr_return_resubmission"/>
+            <field name="subject">تذكير ثالث بشأن إنجاز التقدير الضريبي لسنة 2025</field>
+            <field name="signatory_id" ref="signatory_managing_director"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="body_html" type="html">
+                <p>إشارة إلى كتابنا المرقم ق/2026/0498 في 2026/6/22 وتذكيرينا المرقمين
+                ق/2026/0611 و ق/2026/0702، نرجو التفضل بالإيعاز لمن يلزم بإنجاز التقدير، علماً
+                أن الشركة مدعوة إلى مناقصة تغلق في منتصف أيلول... مع التقدير.</p>
+            </field>
+        </record>
+
+        <!-- The telephone. No register, no number, and it is the entry that
+             stops the fourth reminder being written. -->
+        <record id="corr_return_phone_note" model="legal.correspondence">
+            <field name="kind_id" ref="legal_correspondence.kind_phone_note"/>
+            <field name="direction">internal</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_date">2026-08-27</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="body_section">شعبة التقدير الثانية</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_annual_return"/>
+            <field name="subject">اتصال هاتفي مع مدير الشعبة بشأن التقدير</field>
+            <field name="spoke_to">أبو أحمد - حيدر عبد الكريم، مدير شعبة التقدير الثانية</field>
+            <field name="said">أفاد بأن الإضبارة لدى المقدِّر وأن التقدير سيُنجز بعد عطلة نهاية الأسبوع، وطلب مراجعته يوم 2026/9/10 صباحاً قبل الحادية عشرة، وقال إن لا حاجة لكتاب تذكير رابع.</field>
+            <field name="promised_on">2026-09-10</field>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- ==============================================================
+             The entry-visa file
+             ============================================================== -->
+
+        <record id="corr_visa_request" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0655</field>
+            <field name="our_date">2026-07-26</field>
+            <field name="gov_body_id" ref="legal_iq_residency.body_sponsor_ministry"/>
+            <field name="body_section">قسم سمات الدخول</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_entry_visa"/>
+            <field name="subject">طلب منح سمات دخول لثلاثة خبراء أجانب لتشغيل وحدة المعالجة</field>
+            <field name="signatory_id" ref="signatory_managing_director"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="line_ids" eval="[
+                (5, 0, 0),
+                (0, 0, {'sequence': 10, 'name': 'أنطون دي فريس', 'reference': 'NL7723118', 'note': 'مهندس تشغيل أول'}),
+                (0, 0, {'sequence': 20, 'name': 'سيرجيو ماريني', 'reference': 'IT4409872', 'note': 'فني أجهزة سيطرة'}),
+                (0, 0, {'sequence': 30, 'name': 'كمال أوزتورك', 'reference': 'TR9911204', 'note': 'مشرف سلامة'}),
+            ]"/>
+            <field name="body_html" type="html">
+                <p>نظراً لحاجة العمل في مشروع وحدة المعالجة، نرجو التفضل بالموافقة على منح سمات
+                دخول للخبراء المدرجة أسماؤهم في الجدول أدناه لمدة تسعين يوماً، مع إحالة المعاملة
+                إلى مديرية شؤون الإقامة للإجراء اللازم... مع التقدير.</p>
+            </field>
+        </record>
+
+        <record id="corr_visa_ack" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_in_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_acknowledgement"/>
+            <field name="direction">in</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">و/2026/0241</field>
+            <field name="our_date">2026-07-28</field>
+            <field name="their_number">5401</field>
+            <field name="their_date">2026-07-27</field>
+            <field name="gov_body_id" ref="legal_iq_residency.body_sponsor_ministry"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_entry_visa"/>
+            <field name="reply_to_id" ref="corr_visa_request"/>
+            <field name="subject">وصل استلام كتابنا المرقم ق/2026/0655</field>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="body_reference">5401 في 2026/7/27</field>
+        </record>
+
+        <!-- ==============================================================
+             The Registrar and the two clearances
+             ============================================================== -->
+
+        <record id="corr_address_change" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0744</field>
+            <field name="our_date">2026-08-17</field>
+            <field name="gov_body_id" ref="legal_iq_registrar.body_mot_registrar_amendment"/>
+            <field name="body_section">شباك 3 - الطابق الأول</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_address_change"/>
+            <field name="subject">تبليغ بنقل مقر الشركة استناداً إلى المادة 200 من قانون الشركات</field>
+            <field name="signatory_id" ref="signatory_managing_director"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_clerk"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="corr_psso_request" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0166</field>
+            <field name="our_date">2026-03-09</field>
+            <field name="gov_body_id" ref="legal_iq_social_security.body_psso_clearance"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_psso_clearance"/>
+            <field name="subject">طلب براءة ذمة لغرض المشاركة في مناقصة محافظة بغداد 1/2026</field>
+            <field name="signatory_id" ref="signatory_deputy"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_clerk"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="body_html" type="html">
+                <p>نرفق طيّاً نسخة من إعلان المناقصة، راجين التفضل بمنحنا براءة ذمة تثبت وفاء
+                المشروع المرقم ب/119374 بالتزاماته... مع التقدير.</p>
+            </field>
+        </record>
+
+        <record id="corr_psso_clearance_in" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_in_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_issued_document"/>
+            <field name="direction">in</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">و/2026/0097</field>
+            <field name="our_date">2026-03-20</field>
+            <field name="their_number">س.م/2026/1188</field>
+            <field name="their_date">2026-03-20</field>
+            <field name="gov_body_id" ref="legal_iq_social_security.body_psso_clearance"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_psso_clearance"/>
+            <field name="reply_to_id" ref="corr_psso_request"/>
+            <field name="subject">براءة ذمة من الضمان الاجتماعي - سلامة الموقف</field>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_clerk"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="corr_residency_renewal" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_out_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_out_letter"/>
+            <field name="direction">out</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">ق/2026/0738</field>
+            <field name="our_date">2026-08-13</field>
+            <field name="gov_body_id" ref="legal_iq_residency.body_residency_baghdad"/>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="case_id" ref="case_residency_renewal"/>
+            <field name="subject">طلب تجديد إقامة المهندس محمد أنور خان</field>
+            <field name="signatory_id" ref="signatory_deputy"/>
+            <field name="channel">paper</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- ==============================================================
+             The unprompted letter. No case, because none existed when it
+             arrived - which is the whole reason case_id is nullable and the
+             mail room is the landing screen.
+             ============================================================== -->
+
+        <record id="corr_unprompted_assessment" model="legal.correspondence">
+            <field name="register_id" ref="legal_correspondence.register_in_general"/>
+            <field name="kind_id" ref="legal_correspondence.kind_in_letter"/>
+            <field name="direction">in</field>
+            <field name="secrecy">ordinary</field>
+            <field name="our_number">و/2026/0203</field>
+            <field name="our_date">2026-07-19</field>
+            <field name="their_number">ت/2026/7719</field>
+            <field name="their_date">2026-07-15</field>
+            <field name="gov_body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="body_section">شعبة التقدير الثانية</field>
+            <field name="entity_id" ref="entity_rafidain"/>
+            <field name="subject">إشعار تقدير ضريبي تكميلي عن السنة المالية 2024</field>
+            <field name="channel">paper</field>
+            <field name="reply_expected" eval="True"/>
+            <field name="reply_days">15</field>
+            <field name="user_id" ref="user_officer"/>
+            <field name="state">registered</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="body_html" type="html">
+                <p>ورد دون طلب سابق. مهلة الاعتراض 21 يوماً من تاريخ التبليغ، ولا يُسمع الاعتراض
+                ما لم تُسدَّد الضريبة المقدرة خلال المدة نفسها - وهذان تاريخان مختلفان يجب
+                تثبيتهما: تاريخ كتابهم 2026/7/15 وتاريخ التبليغ الفعلي 2026/7/19.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

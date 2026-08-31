@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_procedure_transition_list" model="ir.ui.view">
+        <field name="name">legal.procedure.transition.list</field>
+        <field name="model">legal.procedure.transition</field>
+        <field name="arch" type="xml">
+            <list string="Transitions" editable="bottom" decoration-warning="is_return">
+                <field name="sequence" widget="handle"/>
+                <field name="procedure_type_id"/>
+                <field name="name"/>
+                <field name="from_step_id"/>
+                <field name="to_step_id"/>
+                <field name="group_ids" widget="many2many_tags"/>
+                <field name="condition_domain" optional="show"/>
+                <field name="require_reason"/>
+                <field name="require_documents"/>
+                <field name="require_fees_paid" optional="hide"/>
+                <field name="require_valid_poa"/>
+                <field name="is_return"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_procedure_transition_form" model="ir.ui.view">
+        <field name="name">legal.procedure.transition.form</field>
+        <field name="model">legal.procedure.transition</field>
+        <field name="arch" type="xml">
+            <form string="Transition">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="The Button The Clerk Presses"/>
+                        <h1><field name="name" placeholder="تحويل المعاملة إلى دائرة الإقامة"/></h1>
+                    </div>
+                    <group>
+                        <group string="Where It Leads">
+                            <field name="procedure_type_id" options="{'no_create': True}"/>
+                            <field name="code"/>
+                            <field name="from_step_id"/>
+                            <field name="to_step_id"/>
+                            <field name="is_return"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group string="Who, And When">
+                            <field name="group_ids" widget="many2many_tags"/>
+                            <field name="condition_domain"
+                                   placeholder="[('subject_ids.nationality_id.code', '!=', 'IQ')]"/>
+                            <field name="require_reason"/>
+                            <field name="require_documents"/>
+                            <field name="require_fees_paid"/>
+                            <field name="require_valid_poa"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        A condition that can never be true is refused when this record is saved.
+                        It has no other symptom: the button simply never appears, and nobody
+                        reports a button they have never seen.
+                    </div>
+                    <field name="note" placeholder="Why this move exists, and what the counter calls it."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_legal_procedure_transition" model="ir.actions.act_window">
+        <field name="name">Transitions</field>
+        <field name="res_model">legal.procedure.transition</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Only the interesting moves belong here</p>
+            <p>
+                A strictly linear procedure needs no transition at all - the engine advances
+                by the step ordering. Add a row for a branch, a return, a rejection or a
+                referral, and write its name as the button a clerk would press.
+            </p>
+        </field>
+    </record>
+
+</odoo>

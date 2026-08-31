@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_legal_gov_body_list" model="ir.ui.view">
+        <field name="name">legal.gov.body.list</field>
+        <field name="model">legal.gov.body</field>
+        <field name="arch" type="xml">
+            <list string="Government Bodies">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="short_name" optional="show"/>
+                <field name="body_type_id"/>
+                <field name="jurisdiction_id"/>
+                <field name="channel" widget="badge"
+                       decoration-success="channel == 'online'"
+                       decoration-info="channel == 'hybrid'"/>
+                <field name="open_hours" optional="show"/>
+                <field name="default_user_id" optional="show" widget="many2one_avatar_user"/>
+                <field name="verification_status" widget="badge"
+                       decoration-success="verification_status == 'verified'"
+                       decoration-warning="verification_status == 'stale'"
+                       decoration-danger="verification_status == 'not_researched'"/>
+                <field name="last_verified_on" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_legal_gov_body_form" model="ir.ui.view">
+        <field name="name">legal.gov.body.form</field>
+        <field name="model">legal.gov.body</field>
+        <field name="arch" type="xml">
+            <form string="Government Body">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="الهيئة العامة للضرائب"/></h1>
+                        <h3><field name="short_name" placeholder="الضرائب"/></h3>
+                    </div>
+                    <group>
+                        <group string="Identity">
+                            <field name="code" placeholder="GCT"/>
+                            <field name="body_type_id"/>
+                            <field name="jurisdiction_id"/>
+                            <field name="parent_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="colour" widget="color_picker"/>
+                        </group>
+                        <group string="How We Deal With It">
+                            <field name="channel" widget="radio" options="{'horizontal': true}"/>
+                            <field name="portal_url" widget="url" invisible="channel == 'paper'"/>
+                            <field name="open_hours" placeholder="08:30 - 14:15، عطلة الجمعة والسبت"/>
+                            <field name="resource_calendar_id"/>
+                            <field name="default_user_id" widget="many2one_avatar_user"/>
+                            <field name="officer_ids" widget="many2many_avatar_user"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Correspondence" name="correspondence">
+                            <group>
+                                <group string="How A Letter To Them Is Addressed">
+                                    <field name="letterhead_recipient" nolabel="1" colspan="2"
+                                           placeholder="وزارة المالية&#10;الهيئة العامة للضرائب&#10;قسم الشركات"/>
+                                </group>
+                                <group string="Salutation">
+                                    <field name="salutation" nolabel="1" colspan="2"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Contacts" name="contacts">
+                            <p class="text-muted">
+                                Iraqi follow-up is personal. A name and a mobile number is worth more
+                                than an escalation rule, and it survives the clerk who knew them leaving.
+                            </p>
+                            <field name="contact_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="role"/>
+                                    <field name="section"/>
+                                    <field name="mobile"/>
+                                    <field name="phone" optional="hide"/>
+                                    <field name="email" optional="hide"/>
+                                    <field name="note" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Sections" name="sections">
+                            <field name="child_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="body_type_id"/>
+                                    <field name="open_hours"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes &amp; Provenance" name="notes">
+                            <group>
+                                <group string="Provenance">
+                                    <field name="verification_status"/>
+                                    <field name="last_verified_on"/>
+                                    <field name="legal_basis"/>
+                                    <field name="legal_basis_url" widget="url"/>
+                                </group>
+                                <group string="Address">
+                                    <field name="address" nolabel="1" colspan="2"/>
+                                    <field name="phone"/>
+                                    <field name="email" widget="email"/>
+                                </group>
+                            </group>
+                            <separator string="What The Counter Actually Wants"/>
+                            <field name="note" placeholder="Which floor, which window, how many photocopies, who to ask for."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_legal_gov_body_kanban" model="ir.ui.view">
+        <field name="name">legal.gov.body.kanban</field>
+        <field name="model">legal.gov.body</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="body_type_id">
+                <field name="colour"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="row">
+                            <div class="col-8">
+                                <strong><field name="name"/></strong>
+                                <div class="text-muted"><field name="jurisdiction_id"/></div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <field name="channel" widget="badge"/>
+                            </div>
+                        </div>
+                        <div class="mt-1 small text-muted">
+                            <field name="open_hours"/>
+                        </div>
+                        <div class="mt-1">
+                            <field name="officer_ids" widget="many2many_avatar_user"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_legal_gov_body_search" model="ir.ui.view">
+        <field name="name">legal.gov.body.search</field>
+        <field name="model">legal.gov.body</field>
+        <field name="arch" type="xml">
+            <search string="Government Bodies">
+                <field name="name" filter_domain="['|', '|', ('name', 'ilike', self), ('short_name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="body_type_id"/>
+                <field name="jurisdiction_id"/>
+                <field name="officer_ids"/>
+                <filter name="my_bodies" string="Bodies I Follow" domain="[('officer_ids', 'in', uid)]"/>
+                <separator/>
+                <filter name="online" string="Online Service" domain="[('channel', 'in', ['online', 'hybrid'])]"/>
+                <filter name="needs_recheck" string="Needs Re-check" domain="[('verification_status', '!=', 'verified')]"/>
+                <group>
+                    <filter name="group_type" string="Type" context="{'group_by': 'body_type_id'}"/>
+                    <filter name="group_jurisdiction" string="Jurisdiction" context="{'group_by': 'jurisdiction_id'}"/>
+                    <filter name="group_parent" string="Parent" context="{'group_by': 'parent_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_legal_gov_body" model="ir.actions.act_window">
+        <field name="name">Government Bodies</field>
+        <field name="res_model">legal.gov.body</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Add the bodies you deal with</p>
+            <p>
+                A body is anywhere a file has to go: a ministry, a directorate, the
+                Chamber of Commerce, a bank counter, the notary, the Bar Association,
+                even the newspaper that must publish a formation decision. Each one
+                carries its own working calendar, its opening hours and the block a
+                letter to it must print.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_legal_gov_body_type_list" model="ir.ui.view">
+        <field name="name">legal.gov.body.type.list</field>
+        <field name="model">legal.gov.body.type</field>
+        <field name="arch" type="xml">
+            <list string="Body Types" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_legal_gov_body_type" model="ir.actions.act_window">
+        <field name="name">Body Types</field>
+        <field name="res_model">legal.gov.body.type</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Five users, one per rung of the ladder, and not one group per ministry.
+
+        Per-body visibility is data: the officer is named on the ``officer_ids``
+        of the bodies she actually chases, and a record rule traverses it. That is
+        why installing a content pack creates no security object of any kind, and
+        why a customer with a body nobody anticipated does not need a developer.
+
+        Every user gets ar_001 and Asia/Baghdad, because a legal department that
+        opens the product in English and UTC is looking at a different product.
+
+        In Odoo 19 the field is ``group_ids``; ``groups_id`` is gone.
+    -->
+    <data noupdate="1">
+
+        <record id="user_clerk" model="res.users">
+            <field name="name">مصطفى وليد إبراهيم</field>
+            <field name="login">clerk@legal.iq</field>
+            <field name="password">Legal#2026</field>
+            <field name="email">clerk@legal.iq</field>
+            <field name="lang">ar_001</field>
+            <field name="tz">Asia/Baghdad</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('base.main_company')])]"/>
+            <field name="group_ids" eval="[(6, 0, [
+                ref('base.group_user'),
+                ref('legal_core.group_legal_clerk'),
+            ])]"/>
+        </record>
+
+        <record id="user_officer" model="res.users">
+            <field name="name">زينب عادل محمود الخفاجي</field>
+            <field name="login">officer@legal.iq</field>
+            <field name="password">Legal#2026</field>
+            <field name="email">officer@legal.iq</field>
+            <field name="lang">ar_001</field>
+            <field name="tz">Asia/Baghdad</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('base.main_company')])]"/>
+            <field name="group_ids" eval="[(6, 0, [
+                ref('base.group_user'),
+                ref('legal_core.group_legal_officer'),
+            ])]"/>
+        </record>
+
+        <record id="user_approver" model="res.users">
+            <field name="name">عمّار سعدي عبد الجبار الجنابي</field>
+            <field name="login">approver@legal.iq</field>
+            <field name="password">Legal#2026</field>
+            <field name="email">approver@legal.iq</field>
+            <field name="lang">ar_001</field>
+            <field name="tz">Asia/Baghdad</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('base.main_company')])]"/>
+            <field name="group_ids" eval="[(6, 0, [
+                ref('base.group_user'),
+                ref('legal_core.group_legal_approver'),
+            ])]"/>
+        </record>
+
+        <record id="user_manager" model="res.users">
+            <field name="name">هدى كاظم حسين العبيدي</field>
+            <field name="login">manager@legal.iq</field>
+            <field name="password">Legal#2026</field>
+            <field name="email">manager@legal.iq</field>
+            <field name="lang">ar_001</field>
+            <field name="tz">Asia/Baghdad</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('base.main_company')])]"/>
+            <field name="group_ids" eval="[(6, 0, [
+                ref('base.group_user'),
+                ref('legal_core.group_legal_manager'),
+            ])]"/>
+        </record>
+
+        <record id="user_auditor" model="res.users">
+            <field name="name">عبد الرحمن نوري الساعدي</field>
+            <field name="login">auditor@legal.iq</field>
+            <field name="password">Legal#2026</field>
+            <field name="email">auditor@legal.iq</field>
+            <field name="lang">ar_001</field>
+            <field name="tz">Asia/Baghdad</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('base.main_company')])]"/>
+            <field name="group_ids" eval="[(6, 0, [
+                ref('base.group_user'),
+                ref('legal_core.group_legal_auditor'),
+            ])]"/>
+        </record>
+
+        <!-- The signatories are people who also log in. Linking them is what lets
+             an approval and a signature block name the same human. -->
+
+        <record id="signatory_managing_director" model="legal.signatory">
+            <field name="user_id" ref="user_approver"/>
+        </record>
+
+        <record id="signatory_deputy" model="legal.signatory">
+            <field name="user_id" ref="user_manager"/>
+        </record>
+
+        <!-- ============================================================
+             Per-body visibility, as rows. Note that the same officer follows
+             Tax and Social Security - those two go together in every Iraqi
+             department, because the same clearance letters are demanded by the
+             same tenders - while the Registrar and the Chamber are the clerk's.
+             ============================================================ -->
+
+        <record id="legal_iq_tax.body_gct" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_officer"/>
+        </record>
+
+        <record id="legal_iq_tax.body_gct_companies" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_officer"/>
+        </record>
+
+        <record id="legal_iq_tax.body_gct_withholding" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_clerk')])]"/>
+            <field name="default_user_id" ref="user_clerk"/>
+        </record>
+
+        <record id="legal_iq_social_security.body_psso" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_officer"/>
+        </record>
+
+        <record id="legal_iq_social_security.body_psso_contributions" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_clerk')])]"/>
+            <field name="default_user_id" ref="user_clerk"/>
+        </record>
+
+        <record id="legal_iq_registrar.body_mot_registrar" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_clerk'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_clerk"/>
+        </record>
+
+        <record id="legal_iq_registrar.body_mot_registrar_amendment" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_clerk'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_clerk"/>
+        </record>
+
+        <record id="legal_iq_chamber.body_chamber_baghdad" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_clerk'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_clerk"/>
+        </record>
+
+        <record id="legal_iq_residency.body_residency" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_officer"/>
+        </record>
+
+        <record id="legal_iq_residency.body_residency_baghdad" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_officer"/>
+        </record>
+
+        <record id="legal_iq_residency.body_sponsor_ministry" model="legal.gov.body">
+            <field name="officer_ids" eval="[(6, 0, [ref('user_officer'), ref('user_manager')])]"/>
+            <field name="default_user_id" ref="user_officer"/>
+        </record>
+
+        <!-- Named humans at the counters. Knowing that Abu Ahmed answers his
+             mobile before eleven is worth more than any escalation rule, and it
+             is the first thing lost when the clerk who knew him leaves. -->
+
+        <record id="contact_gct_section_head" model="legal.gov.body.contact">
+            <field name="body_id" ref="legal_iq_tax.body_gct_companies"/>
+            <field name="name">أبو أحمد - حيدر عبد الكريم</field>
+            <field name="role">مدير شعبة التقدير الثانية</field>
+            <field name="section">شعبة التقدير الثانية - الطابق الثالث</field>
+            <field name="mobile">0770 000 0000</field>
+            <field name="note">يُراجَع قبل الحادية عشرة صباحاً. لا يجيب بعد الظهر.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="contact_gct_seizures" model="legal.gov.body.contact">
+            <field name="body_id" ref="legal_iq_tax.body_gct_seizures"/>
+            <field name="name">أم مصطفى - سناء جبار</field>
+            <field name="role">موظفة شباك الحجوزات</field>
+            <field name="section">شباك 7</field>
+            <field name="note">هي التي تختم الحجوزات. إن كانت في إجازة يتوقف الملف - اسأل عن البديل قبل الذهاب.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="contact_psso_inspection" model="legal.gov.body.contact">
+            <field name="body_id" ref="legal_iq_social_security.body_psso_inspection"/>
+            <field name="name">المفتش علي رحيم</field>
+            <field name="role">مفتش المنطقة</field>
+            <field name="mobile">0771 000 0000</field>
+            <field name="note">يحدد موعد الكشف هاتفياً، ويأتي إلى المقر لا إلى الدائرة.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="contact_registrar_window" model="legal.gov.body.contact">
+            <field name="body_id" ref="legal_iq_registrar.body_mot_registrar_amendment"/>
+            <field name="name">السيدة إيمان فاضل</field>
+            <field name="role">مسؤولة شباك التعديل</field>
+            <field name="section">الطابق الأول - شباك 3</field>
+            <field name="note">تطلب نسختين إضافيتين دائماً. أحضر خمس نسخ لا ثلاثاً.</field>
+            <field name="sequence">10</field>
+        </record>
+
+    </data>
+</odoo>
