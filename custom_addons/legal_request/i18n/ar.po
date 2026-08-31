@@ -1,484 +1,39 @@
-# Arabic translation for the legal_request module.
-# This file is distributed under the same license as the legal_request module.
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* legal_request
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: legal_request 19.0.1.0.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-31 09:30+0000\n"
+"PO-Revision-Date: 2026-08-31 09:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: legal_request
-msgid "Legal Request Category"
-msgstr "صنف طلب قانوني"
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_kanban
+msgid "<i class=\"fa fa-building-o me-1\" title=\"Requesting Department\"/>"
+msgstr "<i class=\"fa fa-building-o me-1\" title=\"القسم الطالب\"/>"
 
 #. module: legal_request
-msgid "Legal Department Request"
-msgstr "طلب إلى الشؤون القانونية"
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_kanban
+msgid "<span class=\"badge text-bg-danger\">Overdue</span>"
+msgstr "<span class=\"badge text-bg-danger\">متأخر</span>"
 
 #. module: legal_request
-msgid "Cancel A Legal Request"
-msgstr "إلغاء طلب قانوني"
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "<span class=\"o_stat_text\">Became</span>"
+msgstr "<span class=\"o_stat_text\">تحوّل إلى</span>"
 
 #. module: legal_request
-msgid "Return A Request For Rework"
-msgstr "إعادة طلب للتعديل"
-
-#. module: legal_request
-msgid "Approve A Legal Request"
-msgstr "مصادقة طلب قانوني"
-
-#. module: legal_request
-msgid "Age (days)"
-msgstr "العمر (أيام)"
-
-#. module: legal_request
-msgid "Approval Decision"
-msgstr "قرار المصادقة"
-
-#. module: legal_request
-msgid "Approved By"
-msgstr "صادق عليه"
-
-#. module: legal_request
-msgid "Approved On"
-msgstr "تاريخ المصادقة"
-
-#. module: legal_request
-msgid "Assigned Officer"
-msgstr "الموظف المكلّف"
-
-#. module: legal_request
-msgid "Became"
-msgstr "تحوّل إلى"
-
-#. module: legal_request
-msgid "Cancellation Reason"
-msgstr "سبب الإلغاء"
-
-#. module: legal_request
-msgid "Category"
-msgstr "الصنف"
-
-#. module: legal_request
-msgid "Conversion Target"
-msgstr "هدف التحويل"
-
-#. module: legal_request
-msgid "Decision Note"
-msgstr "ملاحظة القرار"
-
-#. module: legal_request
-msgid "Decision"
-msgstr "القرار"
-
-#. module: legal_request
-msgid "From Request"
-msgstr "من الطلب"
-
-#. module: legal_request
-msgid "Last Return Reason"
-msgstr "سبب الإعادة الأخير"
-
-#. module: legal_request
-msgid "Legal Entity"
-msgstr "الكيان القانوني"
-
-#. module: legal_request
-msgid "Note"
-msgstr "ملاحظة"
-
-#. module: legal_request
-msgid "Overdue"
-msgstr "متأخر"
-
-#. module: legal_request
-msgid "Reason"
-msgstr "السبب"
-
-#. module: legal_request
-msgid "Reference"
-msgstr "العدد"
-
-#. module: legal_request
-msgid "Related Party"
-msgstr "الطرف ذو العلاقة"
-
-#. module: legal_request
-msgid "Request Date"
-msgstr "تاريخ الطلب"
-
-#. module: legal_request
-msgid "Request Detail"
-msgstr "تفاصيل الطلب"
-
-#. module: legal_request
-msgid "Requested By"
-msgstr "مقدّم الطلب"
-
-#. module: legal_request
-msgid "Requesting Department"
-msgstr "القسم الطالب"
-
-#. module: legal_request
-msgid "Response / Outcome"
-msgstr "الرد / النتيجة"
-
-#. module: legal_request
-msgid "Responsible Manager"
-msgstr "المدير المسؤول"
-
-#. module: legal_request
-msgid "Target Response Date"
-msgstr "تاريخ الرد المستهدف"
-
-#. module: legal_request
-msgid "Usually Becomes"
-msgstr "يتحوّل عادة إلى"
-
-#. module: legal_request
-msgid "Confidentiality"
-msgstr "السرية"
-
-#. module: legal_request
-msgid "Urgency"
-msgstr "الاستعجال"
-
-#. module: legal_request
-msgid "Draft"
-msgstr "مسودة"
-
-#. module: legal_request
-msgid "Received"
-msgstr "مستلم"
-
-#. module: legal_request
-msgid "Under Triage"
-msgstr "قيد الفرز"
-
-#. module: legal_request
-msgid "Assigned"
-msgstr "مُسند"
-
-#. module: legal_request
-msgid "In Progress"
-msgstr "قيد المعالجة"
-
-#. module: legal_request
-msgid "Waiting On Requester"
-msgstr "بانتظار مقدّم الطلب"
-
-#. module: legal_request
-msgid "Waiting On External Body"
-msgstr "بانتظار جهة خارجية"
-
-#. module: legal_request
-msgid "Ready For Approval"
-msgstr "جاهز للمصادقة"
-
-#. module: legal_request
-msgid "Approved / Issued"
-msgstr "مصادق عليه / صادر"
-
-#. module: legal_request
-msgid "Closed"
-msgstr "مغلق"
-
-#. module: legal_request
-msgid "Cancelled"
-msgstr "ملغى"
-
-#. module: legal_request
-msgid "Low"
-msgstr "منخفضة"
-
-#. module: legal_request
-msgid "Normal"
-msgstr "عادية"
-
-#. module: legal_request
-msgid "High"
-msgstr "عالية"
-
-#. module: legal_request
-msgid "Urgent"
-msgstr "عاجلة"
-
-#. module: legal_request
-msgid "Restricted"
-msgstr "مقيّدة"
-
-#. module: legal_request
-msgid "Highly Restricted"
-msgstr "مقيّدة للغاية"
-
-#. module: legal_request
-msgid "Approved"
-msgstr "مصادق عليه"
-
-#. module: legal_request
-msgid "Approved With Conditions"
-msgstr "مصادق عليه بشروط"
-
-#. module: legal_request
-msgid "Legal Opinion"
-msgstr "رأي قانوني"
-
-#. module: legal_request
-msgid "Legal Consultation"
-msgstr "استشارة قانونية"
-
-#. module: legal_request
-msgid "Contract Review"
-msgstr "مراجعة عقد"
-
-#. module: legal_request
-msgid "Litigation File"
-msgstr "ملف دعوى"
-
-#. module: legal_request
-msgid "Claim"
-msgstr "مطالبة"
-
-#. module: legal_request
-msgid "Power Of Attorney"
-msgstr "وكالة"
-
-#. module: legal_request
-msgid "Official Letter"
-msgstr "كتاب رسمي"
-
-#. module: legal_request
-msgid "Compliance Matter"
-msgstr "مسألة امتثال"
-
-#. module: legal_request
-msgid "Property Matter"
-msgstr "مسألة ملكية"
-
-#. module: legal_request
-msgid "Other"
-msgstr "أخرى"
-
-#. module: legal_request
-msgid "Procedure File"
-msgstr "ملف معاملة"
-
-#. module: legal_request
-msgid "Registered Document"
-msgstr "مستند مُسجّل"
-
-#. module: legal_request
-msgid "Submit"
-msgstr "تقديم"
-
-#. module: legal_request
-msgid "Start Triage"
-msgstr "بدء الفرز"
-
-#. module: legal_request
-msgid "Assign"
-msgstr "إسناد"
-
-#. module: legal_request
-msgid "Start Work"
-msgstr "بدء المعالجة"
-
-#. module: legal_request
-msgid "Resume"
-msgstr "استئناف"
-
-#. module: legal_request
-msgid "Wait On Requester"
-msgstr "بانتظار مقدّم الطلب"
-
-#. module: legal_request
-msgid "Wait On External"
-msgstr "بانتظار جهة خارجية"
-
-#. module: legal_request
-msgid "Submit For Approval"
-msgstr "رفع للمصادقة"
-
-#. module: legal_request
-msgid "Approve"
-msgstr "مصادقة"
-
-#. module: legal_request
-msgid "Return For Rework"
-msgstr "إعادة للتعديل"
-
-#. module: legal_request
-msgid "Return"
-msgstr "إعادة"
-
-#. module: legal_request
-msgid "Close"
-msgstr "إغلاق"
-
-#. module: legal_request
-msgid "Convert"
-msgstr "تحويل"
-
-#. module: legal_request
-msgid "Cancel"
-msgstr "إلغاء"
-
-#. module: legal_request
-msgid "Reset To Draft"
-msgstr "إعادة إلى مسودة"
-
-#. module: legal_request
-msgid "Back"
-msgstr "رجوع"
-
-#. module: legal_request
-msgid "Legal Requests"
-msgstr "طلبات الشؤون القانونية"
-
-#. module: legal_request
-msgid "Requests"
-msgstr "الطلبات"
-
-#. module: legal_request
-msgid "My Requests"
-msgstr "طلباتي"
-
-#. module: legal_request
-msgid "Unassigned"
-msgstr "غير مُسندة"
-
-#. module: legal_request
-msgid "Awaiting Approval"
-msgstr "بانتظار المصادقة"
-
-#. module: legal_request
-msgid "Request Categories"
-msgstr "أصناف الطلبات"
-
-#. module: legal_request
-msgid "Request Category"
-msgstr "صنف الطلب"
-
-#. module: legal_request
-msgid "Legal Request"
-msgstr "طلب قانوني"
-
-#. module: legal_request
-msgid "Approve Request"
-msgstr "مصادقة الطلب"
-
-#. module: legal_request
-msgid "Cancel Request"
-msgstr "إلغاء الطلب"
-
-#. module: legal_request
-msgid "New Letter From Request"
-msgstr "كتاب جديد من الطلب"
-
-#. module: legal_request
-msgid "Letters"
-msgstr "الكتب"
-
-#. module: legal_request
-msgid "My Team"
-msgstr "فريقي"
-
-#. module: legal_request
-msgid "Open"
-msgstr "المفتوحة"
-
-#. module: legal_request
-msgid "Due This Week"
-msgstr "مستحقة هذا الأسبوع"
-
-#. module: legal_request
-msgid "High Priority"
-msgstr "أولوية عالية"
-
-#. module: legal_request
-msgid "Status"
-msgstr "الحالة"
-
-#. module: legal_request
-msgid "Department"
-msgstr "القسم"
-
-#. module: legal_request
-msgid "Officer"
-msgstr "الموظف"
-
-#. module: legal_request
-msgid "Archived"
-msgstr "مؤرشف"
-
-#. module: legal_request
-msgid "Identity"
-msgstr "الهوية"
-
-#. module: legal_request
-msgid "Triage"
-msgstr "الفرز"
-
-#. module: legal_request
-msgid "The Request"
-msgstr "الطلب"
-
-#. module: legal_request
-msgid "Request"
-msgstr "الطلب"
-
-#. module: legal_request
-msgid "Detail"
-msgstr "التفاصيل"
-
-#. module: legal_request
-msgid "Response"
-msgstr "الرد"
-
-#. module: legal_request
-msgid "Approval"
-msgstr "المصادقة"
-
-#. module: legal_request
-msgid "Conversion"
-msgstr "التحويل"
-
-#. module: legal_request
-msgid "Cancellation"
-msgstr "الإلغاء"
-
-#. module: legal_request
-msgid "CONSULT"
-msgstr "CONSULT"
-
-#. module: legal_request
-msgid "Review of the fuel supply contract"
-msgstr "مراجعة عقد تجهيز الوقود"
-
-#. module: legal_request
-msgid "The conditions attached, or why the answer is signed as it stands."
-msgstr "الشروط المرفقة، أو سبب توقيع الجواب كما هو."
-
-#. module: legal_request
-msgid "The full question, in the requester's own words."
-msgstr "السؤال كاملاً بكلمات مقدّم الطلب."
-
-#. module: legal_request
-msgid "What the approver wants changed, in their words."
-msgstr "ما يريد المصادِق تغييره بكلماته."
-
-#. module: legal_request
-msgid "What the department answered."
-msgstr "ما أجابت به الدائرة."
-
-#. module: legal_request
-msgid "Why the request is being dropped."
-msgstr "سبب إسقاط الطلب."
-
-#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/wizard/legal_request_cancel.py:0
 msgid ""
 "A cancellation needs a reason. Without it, a dropped request is "
 "indistinguishable from a mistake."
@@ -486,176 +41,41 @@ msgstr ""
 "الإلغاء يحتاج إلى سبب. فمن دونه لا يمكن تمييز الطلب المُسقَط عن الخطأ."
 
 #. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
 msgid "A cancelled request has nothing to convert."
 msgstr "لا يوجد في الطلب الملغى ما يُحوَّل."
 
 #. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_cancel_form
 msgid ""
-"A return needs a reason. Without it the officer reworking the request is "
-"guessing at what the approver wanted."
+"A cancelled request keeps its number and stays in the record. The reason is\n"
+"                    what tells the requester, the manager and the auditor that this was a decision\n"
+"                    and not a mistake."
 msgstr ""
-"الإعادة تحتاج إلى سبب. فمن دونه يبقى الموظف الذي يعيد معالجة الطلب يخمّن ما "
-"أراده المصادِق."
+"الطلب الملغى يحتفظ بعدده ويبقى في السجل. والسبب هو\n"
+"                    ما يخبر مقدّم الطلب والمدير والمدقّق بأن هذا كان قراراً\n"
+"                    لا خطأً."
 
 #. module: legal_request
-msgid "Approved (%s)."
-msgstr "تمت المصادقة (%s)."
-
-#. module: legal_request
-msgid "Assigned to %s."
-msgstr "أُسند إلى %s."
-
-#. module: legal_request
-msgid "Cancelled: %s"
-msgstr "أُلغي: %s"
-
-#. module: legal_request
-msgid "Converted into %s."
-msgstr "حُوّل إلى %s."
-
-#. module: legal_request
-msgid "Letter raised from this request: %s"
-msgstr "كتاب صادر عن هذا الطلب: %s"
-
-#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_category
 msgid ""
-"Name the officer who will work “%s” before assigning it. An assignment with "
-"no owner is a request nobody is watching."
+"A category is a row, not a hard-coded list. A department that starts receiving a\n"
+"                new class of request adds one here, tells the triage desk what it usually becomes,\n"
+"                and every board understands it at once."
 msgstr ""
-"حدّد الموظف الذي سيعالج «%s» قبل إسناده. فالإسناد بلا مالك طلبٌ لا يتابعه "
-"أحد."
+"الصنف سطرٌ يُضاف لا قائمة مثبتة في الشيفرة. فالقسم الذي يبدأ بتلقي\n"
+"                نوع جديد من الطلبات يضيف صنفاً هنا ويخبر مكتب الفرز بما يتحوّل إليه عادة،\n"
+"                فتفهمه كل اللوحات في الحال."
 
 #. module: legal_request
-msgid "New"
-msgstr "جديد"
-
-#. module: legal_request
-msgid "New Request"
-msgstr "طلب جديد"
-
-#. module: legal_request
-msgid ""
-"Only an approver or the legal manager may sign off a request. The officer "
-"prepares the answer; the approver stands behind it."
-msgstr ""
-"لا يصادق على الطلب إلا مصادِق أو المدير القانوني. الموظف يُعدّ الجواب، "
-"والمصادِق يقف خلفه."
-
-#. module: legal_request
-msgid "Overdue can only be searched for equality."
-msgstr "لا يمكن البحث في التأخر إلا بالمساواة."
-
-#. module: legal_request
-msgid "Request closed."
-msgstr "أُغلق الطلب."
-
-#. module: legal_request
-msgid "Request submitted to the legal department."
-msgstr "قُدّم الطلب إلى الشؤون القانونية."
-
-#. module: legal_request
-msgid "Returned for rework: %s"
-msgstr "أُعيد للتعديل: %s"
-
-#. module: legal_request
-msgid "Submitted for approval."
-msgstr "رُفع للمصادقة."
-
-#. module: legal_request
-msgid ""
-"The target response date cannot fall before the request was raised. The "
-"clock starts on the request date, not before it."
-msgstr ""
-"لا يجوز أن يسبق تاريخ الرد المستهدف تاريخ رفع الطلب. تبدأ المدة من تاريخ "
-"الطلب لا قبله."
-
-#. module: legal_request
-msgid ""
-"Triage and assignment are a legal officer's decision. A clerk registers what"
-" arrived; an officer decides who works it."
-msgstr ""
-"الفرز والإسناد من صلاحية الموظف القانوني. الكاتب يسجّل ما ورد، والموظف يقرّر"
-" من يعالجه."
-
-#. module: legal_request
-msgid "Waiting on an external body to respond."
-msgstr "بانتظار رد جهة خارجية."
-
-#. module: legal_request
-msgid "Waiting on the requester for further information."
-msgstr "بانتظار مقدّم الطلب لمزيد من المعلومات."
-
-#. module: legal_request
-msgid "“%(ref)s” is %(state)s, and cannot be %(action)s from there."
-msgstr "«%(ref)s» في حالة %(state)s، ولا يمكن %(action)s من هناك."
-
-#. module: legal_request
-msgid ""
-"“%s” has a register number and is part of the department's record. Cancel it"
-" with a reason instead of deleting it - a gap in the numbering is a question"
-" nobody can answer later."
-msgstr ""
-"«%s» يحمل عدداً في السجل وهو جزء من قيود الدائرة. ألغِه مع ذكر السبب بدلاً "
-"من حذفه — فالفجوة في الترقيم سؤال لا يستطيع أحد الإجابة عنه لاحقاً."
-
-#. module: legal_request
-msgid ""
-"“%s” has no response to approve. Write the department's answer before "
-"sending it up - an approver cannot sign a blank."
-msgstr ""
-"«%s» لا يتضمن رداً للمصادقة عليه. اكتب جواب الدائرة قبل رفعه — فالمصادِق لا "
-"يوقّع على فراغ."
-
-#. module: legal_request
-msgid "“%s” is already finished and cannot be cancelled."
-msgstr "«%s» منتهٍ أصلاً ولا يمكن إلغاؤه."
-
-#. module: legal_request
-msgid "approved"
-msgstr "المصادقة عليه"
-
-#. module: legal_request
-msgid "assigned"
-msgstr "إسناده"
-
-#. module: legal_request
-msgid "closed"
-msgstr "إغلاقه"
-
-#. module: legal_request
-msgid "put on hold"
-msgstr "تعليقه"
-
-#. module: legal_request
-msgid "reopened"
-msgstr "إعادة فتحه"
-
-#. module: legal_request
-msgid "returned"
-msgstr "إعادته"
-
-#. module: legal_request
-msgid "started"
-msgstr "بدء معالجته"
-
-#. module: legal_request
-msgid "submitted"
-msgstr "تقديمه"
-
-#. module: legal_request
-msgid "submitted for approval"
-msgstr "رفعه للمصادقة"
-
-#. module: legal_request
-msgid "triaged"
-msgstr "فرزه"
-
-#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__related_partner_id
 msgid ""
 "A counterparty the request concerns - a supplier, a claimant, an employee."
 msgstr "طرف مقابل يخص الطلب — مورّد أو مدّعٍ أو موظف."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__confidentiality
 msgid ""
 "A restricted request is hidden from clerks and officers who are not on it; "
 "only its requester, its assigned officer, its manager and the legal manager "
@@ -665,10 +85,420 @@ msgstr ""
 " والموظف المكلّف به ومديره والمدير القانوني."
 
 #. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/wizard/legal_request_return.py:0
+msgid ""
+"A return needs a reason. Without it the officer reworking the request is "
+"guessing at what the approver wanted."
+msgstr ""
+"الإعادة تحتاج إلى سبب. فمن دونه يبقى الموظف الذي يعيد معالجة الطلب يخمّن ما "
+"أراده المصادِق."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request_category__code
 msgid "A short, stable handle used in imports and reports, e.g. CONSULT."
 msgstr "معرّف قصير وثابت يُستخدم في الاستيراد والتقارير، مثل CONSULT."
 
 #. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__active
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__age
+msgid "Age (days)"
+msgstr "العمر (أيام)"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_awaiting
+msgid ""
+"Answers the officers have prepared and submitted, waiting for an approver to"
+" sign off."
+msgstr "أجوبة أعدّها الموظفون ورفعوها، تنتظر مصادِقاً يوقّعها."
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Approval"
+msgstr "المصادقة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__decision
+msgid "Approval Decision"
+msgstr "قرار المصادقة"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_approve_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Approve"
+msgstr "مصادقة"
+
+#. module: legal_request
+#: model:ir.model,name:legal_request.model_legal_request_approve
+msgid "Approve A Legal Request"
+msgstr "مصادقة طلب قانوني"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_approve_form
+msgid "Approve Request"
+msgstr "مصادقة الطلب"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__decision__approved
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_approve__decision__approved
+msgid "Approved"
+msgstr "مصادق عليه"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Approved (%s)."
+msgstr "تمت المصادقة (%s)."
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__approved
+msgid "Approved / Issued"
+msgstr "مصادق عليه / صادر"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__approved_by_id
+msgid "Approved By"
+msgstr "صادق عليه"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__approved_on
+msgid "Approved On"
+msgstr "تاريخ المصادقة"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__decision__approved_conditional
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_approve__decision__approved_conditional
+msgid "Approved With Conditions"
+msgstr "مصادق عليه بشروط"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_search
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Assign"
+msgstr "إسناد"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__assigned
+msgid "Assigned"
+msgstr "مُسند"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__assigned_officer_id
+msgid "Assigned Officer"
+msgstr "الموظف المكلّف"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Assigned to %s."
+msgstr "أُسند إلى %s."
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: legal_request
+#: model:ir.actions.act_window,name:legal_request.action_legal_request_awaiting
+#: model:ir.ui.menu,name:legal_request.menu_legal_request_awaiting
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Awaiting Approval"
+msgstr "بانتظار المصادقة"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_cancel_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_return_form
+msgid "Back"
+msgstr "رجوع"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__converted_ref
+msgid "Became"
+msgstr "تحوّل إلى"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_form
+msgid "CONSULT"
+msgstr "CONSULT"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_approve_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: legal_request
+#: model:ir.model,name:legal_request.model_legal_request_cancel
+msgid "Cancel A Legal Request"
+msgstr "إلغاء طلب قانوني"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_cancel_form
+msgid "Cancel Request"
+msgstr "إلغاء الطلب"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Cancellation"
+msgstr "الإلغاء"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__cancel_reason
+msgid "Cancellation Reason"
+msgstr "سبب الإلغاء"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__cancelled
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Cancelled: %s"
+msgstr "أُلغي: %s"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__category_id
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Category"
+msgstr "الصنف"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__claim
+#: model:legal.request.category,name:legal_request.category_claim
+msgid "Claim"
+msgstr "مطالبة"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__company_id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: legal_request
+#: model:legal.request.category,name:legal_request.category_compliance
+msgid "Compliance"
+msgstr "امتثال"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__compliance
+msgid "Compliance Matter"
+msgstr "مسألة امتثال"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__confidentiality
+msgid "Confidentiality"
+msgstr "السرية"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__contract
+#: model:legal.request.category,name:legal_request.category_contract_review
+msgid "Contract Review"
+msgstr "مراجعة عقد"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Conversion"
+msgstr "التحويل"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__converted_model
+msgid "Conversion Target"
+msgstr "هدف التحويل"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Convert"
+msgstr "تحويل"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid ""
+"Convert turns the request into what it called for. The base raises an\n"
+"                                official letter on the register; an integrator wires a case, a\n"
+"                                contract or an opinion onto the same button."
+msgstr ""
+"التحويل يجعل من الطلب ما دعا إليه. فالوحدة الأساس تُصدر\n"
+"                                كتاباً رسمياً في السجل؛ والوحدة المتكاملة تربط بالزر نفسه\n"
+"                                دعوى أو عقداً أو رأياً قانونياً."
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Converted into %s."
+msgstr "حُوّل إلى %s."
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__correspondence_count
+msgid "Correspondence Count"
+msgstr "عدد المراسلات"
+
+#. module: legal_request
+#: model:ir.model,name:legal_request.model_legal_correspondence
+msgid "Correspondence Entry"
+msgstr "قيد مراسلات"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__create_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__create_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__create_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__create_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__create_uid
+msgid "Created by"
+msgstr "أنشأه"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__create_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__create_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__create_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__create_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__decision
+msgid "Decision"
+msgstr "القرار"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__decision_note
+msgid "Decision Note"
+msgstr "ملاحظة القرار"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Department"
+msgstr "القسم"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Detail"
+msgstr "التفاصيل"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_correspondence__display_name
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__display_name
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__display_name
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__display_name
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__display_name
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: legal_request
+#: model:legal.request.category,name:legal_request.category_dispute
+msgid "Dispute"
+msgstr "نزاع"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Due This Week"
+msgstr "مستحقة هذا الأسبوع"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_correspondence__request_id
+msgid "From Request"
+msgstr "من الطلب"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__has_message
+msgid "Has Message"
+msgstr "لديه رسالة"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__urgency__high
+msgid "High"
+msgstr "عالية"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "High Priority"
+msgstr "أولوية عالية"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__confidentiality__highly_restricted
+msgid "Highly Restricted"
+msgstr "مقيّدة للغاية"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__age
 msgid ""
 "How many days the request has been open. Recomputed on read, never stored, "
 "because it changes every midnight."
@@ -677,16 +507,316 @@ msgstr ""
 "يتغيّر كل منتصف ليل."
 
 #. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_correspondence__id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة تدل على نشاط استثنائي."
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_form
+msgid "Identity"
+msgstr "الهوية"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "عند التأشير، توجد رسائل جديدة تتطلب انتباهك."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "عند التأشير، توجد رسائل تعذّر تسليمها."
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__in_progress
+msgid "In Progress"
+msgstr "قيد المعالجة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_is_follower
+msgid "Is Follower"
+msgstr "متابِع"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__return_reason
+msgid "Last Return Reason"
+msgstr "سبب الإعادة الأخير"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__write_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__write_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__write_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__write_uid
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__write_uid
+msgid "Last Updated by"
+msgstr "آخر من حدّثه"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__write_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__write_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__write_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__write_date
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__write_date
+msgid "Last Updated on"
+msgstr "تاريخ آخر تحديث"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request_category__company_id
 msgid "Leave empty to share the category across companies."
 msgstr "اتركه فارغاً لمشاركة الصنف بين الشركات."
 
 #. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__consultation
+#: model:legal.request.category,name:legal_request.category_legal_consultation
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_form
+msgid "Legal Consultation"
+msgstr "استشارة قانونية"
+
+#. module: legal_request
+#: model:ir.model,name:legal_request.model_legal_request
+msgid "Legal Department Request"
+msgstr "طلب إلى الشؤون القانونية"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__entity_id
+msgid "Legal Entity"
+msgstr "الكيان القانوني"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__opinion
+#: model:legal.request.category,name:legal_request.category_legal_opinion
+msgid "Legal Opinion"
+msgstr "رأي قانوني"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Legal Request"
+msgstr "طلب قانوني"
+
+#. module: legal_request
+#: model:ir.model,name:legal_request.model_legal_request_category
+msgid "Legal Request Category"
+msgstr "صنف طلب قانوني"
+
+#. module: legal_request
+#: model:ir.ui.menu,name:legal_request.menu_legal_request_root
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_list
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Legal Requests"
+msgstr "طلبات الشؤون القانونية"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_correspondence.py:0
+msgid "Letter raised from this request: %s"
+msgstr "كتاب صادر عن هذا الطلب: %s"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__correspondence_ids
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_list
+msgid "Letters"
+msgstr "الكتب"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__dispute
+msgid "Litigation File"
+msgstr "ملف دعوى"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request
+msgid "Log the first request"
+msgstr "سجّل أول طلب"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__urgency__low
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: legal_request
+#: model:ir.actions.act_window,name:legal_request.action_legal_request_my
+#: model:ir.ui.menu,name:legal_request.menu_legal_request_my
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "My Requests"
+msgstr "طلباتي"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "My Team"
+msgstr "فريقي"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_category
+msgid "Name the kinds of question the department fields"
+msgstr "سمِّ أنواع الأسئلة التي تتلقاها الدائرة"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid ""
+"Name the officer who will work “%s” before assigning it. An assignment with "
+"no owner is a request nobody is watching."
+msgstr ""
+"حدّد الموظف الذي سيعالج «%s» قبل إسناده. فالإسناد بلا مالك طلبٌ لا يتابعه "
+"أحد."
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "New"
+msgstr "جديد"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "New Letter From Request"
+msgstr "كتاب جديد من الطلب"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "New Request"
+msgstr "طلب جديد"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__confidentiality__normal
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__urgency__normal
+msgid "Normal"
+msgstr "عادية"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_overdue
+msgid "Nothing is late"
+msgstr "لا شيء متأخر"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_my
+msgid "Nothing on your desk"
+msgstr "لا شيء على مكتبك"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_awaiting
+msgid "Nothing waiting for a signature"
+msgstr "لا شيء ينتظر التوقيع"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراءً"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي تعذّر تسليمها"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Officer"
+msgstr "الموظف"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__letter
+#: model:legal.request.category,name:legal_request.category_official_letter
+msgid "Official Letter"
+msgstr "كتاب رسمي"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__subject
 msgid ""
 "One line naming what is being asked, e.g. Review of the fuel supply "
 "contract."
 msgstr "سطر واحد يسمّي المطلوب، مثل: مراجعة عقد تجهيز الوقود."
 
 #. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid ""
+"Only an approver or the legal manager may sign off a request. The officer "
+"prepares the answer; the approver stands behind it."
+msgstr ""
+"لا يصادق على الطلب إلا مصادِق أو المدير القانوني. الموظف يُعدّ الجواب، "
+"والمصادِق يقف خلفه."
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Open"
+msgstr "المفتوحة"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_overdue
+msgid "Open requests past the date the department undertook to respond."
+msgstr "طلبات مفتوحة تجاوزت الموعد الذي تعهّدت الدائرة بالرد فيه."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__is_overdue
 msgid ""
 "Open, and past its target response date. Read live, so it turns true at "
 "midnight with nobody writing to the record."
@@ -695,12 +825,305 @@ msgstr ""
 " دون أي كتابة على السجل."
 
 #. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__other
+#: model:legal.request.category,name:legal_request.category_other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: legal_request
+#: model:ir.actions.act_window,name:legal_request.action_legal_request_overdue
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__is_overdue
+#: model:ir.ui.menu,name:legal_request.menu_legal_request_overdue
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Overdue can only be searched for equality."
+msgstr "لا يمكن البحث في التأخر إلا بالمساواة."
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__poa
+#: model:legal.request.category,name:legal_request.category_power_of_attorney
+msgid "Power Of Attorney"
+msgstr "وكالة"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Procedure File"
+msgstr "ملف معاملة"
+
+#. module: legal_request
+#: model:legal.request.category,name:legal_request.category_property
+msgid "Property"
+msgstr "ملكية"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request_category__default_target_kind__property
+msgid "Property Matter"
+msgstr "مسألة ملكية"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__ready_for_approval
+msgid "Ready For Approval"
+msgstr "جاهز للمصادقة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__reason
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__received
+msgid "Received"
+msgstr "مستلم"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__reference
+msgid "Reference"
+msgstr "العدد"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Registered Document"
+msgstr "مستند مُسجّل"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__related_partner_id
+msgid "Related Party"
+msgstr "الطرف ذو العلاقة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_approve__request_id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_cancel__request_id
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_return__request_id
+msgid "Request"
+msgstr "الطلب"
+
+#. module: legal_request
+#: model:ir.actions.act_window,name:legal_request.action_legal_request_category
+#: model:ir.ui.menu,name:legal_request.menu_legal_config_request_category
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_list
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_search
+msgid "Request Categories"
+msgstr "أصناف الطلبات"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_form
+msgid "Request Category"
+msgstr "صنف الطلب"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__request_date
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__description
+msgid "Request Detail"
+msgstr "تفاصيل الطلب"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Request closed."
+msgstr "أُغلق الطلب."
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Request submitted to the legal department."
+msgstr "قُدّم الطلب إلى الشؤون القانونية."
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__requester_id
+msgid "Requested By"
+msgstr "مقدّم الطلب"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__requesting_department
+msgid "Requesting Department"
+msgstr "القسم الطالب"
+
+#. module: legal_request
+#: model:ir.actions.act_window,name:legal_request.action_legal_request
+#: model:ir.ui.menu,name:legal_request.menu_legal_config_request
+#: model:ir.ui.menu,name:legal_request.menu_legal_request_all
+msgid "Requests"
+msgstr "الطلبات"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_unassigned
+msgid ""
+"Requests that have arrived but nobody is yet working. Triage them onto an "
+"officer."
+msgstr "طلبات وردت ولم يعمل عليها أحد بعد. افرزها وأسندها إلى موظف."
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_my
+msgid "Requests you raised or were assigned appear here."
+msgstr "تظهر هنا الطلبات التي رفعتها أو أُسندت إليك."
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Reset To Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Response"
+msgstr "الرد"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__response
+msgid "Response / Outcome"
+msgstr "الرد / النتيجة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__manager_id
+msgid "Responsible Manager"
+msgstr "المدير المسؤول"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__confidentiality__restricted
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Restricted"
+msgstr "مقيّدة"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Resume"
+msgstr "استئناف"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_return_form
+msgid "Return"
+msgstr "إعادة"
+
+#. module: legal_request
+#: model:ir.model,name:legal_request.model_legal_request_return
+msgid "Return A Request For Rework"
+msgstr "إعادة طلب للتعديل"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_return_form
+msgid "Return For Rework"
+msgstr "إعادة للتعديل"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Returned for rework: %s"
+msgstr "أُعيد للتعديل: %s"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Review of the fuel supply contract"
+msgstr "مراجعة عقد تجهيز الوقود"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Start Triage"
+msgstr "بدء الفرز"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Start Work"
+msgstr "بدء المعالجة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بحسب الأنشطة\n"
+"متأخر: تجاوز تاريخ الاستحقاق\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط: أنشطة مستقبلية."
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__subject
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Submit"
+msgstr "تقديم"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Submit For Approval"
+msgstr "رفع للمصادقة"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Submitted for approval."
+msgstr "رُفع للمصادقة."
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__target_response_date
+msgid "Target Response Date"
+msgstr "تاريخ الرد المستهدف"
+
+#. module: legal_request
+#: model:ir.model.constraint,message:legal_request.constraint_legal_request_category_code_company_uniq
+msgid "That category code is already in use."
+msgstr "رمز الصنف هذا مستخدم أصلاً."
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "The Request"
+msgstr "الطلب"
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__decision_note
 msgid ""
 "The approver's words - the conditions attached, or why it was signed as it "
 "stands."
 msgstr "كلمات المصادِق — الشروط المرفقة، أو سبب التوقيع عليه كما هو."
 
 #. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_approve_form
+msgid "The conditions attached, or why the answer is signed as it stands."
+msgstr "الشروط المرفقة، أو سبب توقيع الجواب كما هو."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request_approve__note
 msgid ""
 "The conditions attached, or why the answer is signed as it stands. Required "
 "where the decision is conditional."
@@ -709,11 +1132,13 @@ msgstr ""
 "مشروطاً."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__request_date
 msgid ""
 "The day the request was raised. Age and lateness are counted from here."
 msgstr "يوم رفع الطلب. منه يُحتسب العمر والتأخر."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__reference
 msgid ""
 "The department's number for this request, REQ/YYYY/####. Allocated when the "
 "request leaves draft, so a discarded draft burns no number."
@@ -722,6 +1147,7 @@ msgstr ""
 "فلا تستهلك المسودة المهملة رقماً."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__converted_ref
 msgid ""
 "The downstream record this request turned into - an official letter, a "
 "registered document, a procedure file. Set by the conversion."
@@ -730,10 +1156,18 @@ msgstr ""
 "معاملة. يُضبط عند التحويل."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__description
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "The full question, in the requester's own words."
+msgstr "السؤال كاملاً بكلمات مقدّم الطلب."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__assigned_officer_id
 msgid "The legal officer who works the request. Set at triage."
 msgstr "الموظف القانوني الذي يعالج الطلب. يُحدَّد عند الفرز."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_correspondence__request_id
 msgid ""
 "The legal-department request this letter was raised to answer. Empty for the"
 " ordinary post that arrived without one."
@@ -742,10 +1176,12 @@ msgstr ""
 "الاعتيادي الذي ورد بلا طلب."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__manager_id
 msgid "The manager accountable for the answer."
 msgstr "المدير المسؤول عن الجواب."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__converted_model
 msgid ""
 "The model of the downstream record, kept alongside the reference so a report"
 " can group on it without dereferencing every row."
@@ -754,15 +1190,46 @@ msgstr ""
 "فكّ كل سطر."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__requester_id
 msgid "The person who asked. Defaults to whoever is logging the request."
 msgstr "الشخص الذي طلب. الافتراضي هو من يسجّل الطلب."
 
 #. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_return_form
+msgid ""
+"The request goes back to the officer in progress. The reason is what the rework\n"
+"                    is corrected against, so “redo it” is not an answer."
+msgstr ""
+"يعود الطلب إلى الموظف في حالة قيد المعالجة. والسبب هو ما\n"
+"                    يُصحَّح العمل المُعاد عليه، فـ«أعِده» ليست إجابة."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__requesting_department
 msgid ""
 "The section that raised this, e.g. Finance, Human Resources, Procurement."
 msgstr "القسم الذي رفع الطلب، مثل: المالية، الموارد البشرية، المشتريات."
 
 #. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_form
+msgid ""
+"The target kind is the triage desk's first guess at what a request of this\n"
+"                        category becomes. It pre-selects the conversion; it never forces it."
+msgstr ""
+"نوع الهدف هو تخمين مكتب الفرز الأول لما يتحوّل إليه طلب من هذا\n"
+"                        الصنف. يُرشِّح التحويل مسبقاً ولا يفرضه أبداً."
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid ""
+"The target response date cannot fall before the request was raised. The "
+"clock starts on the request date, not before it."
+msgstr ""
+"لا يجوز أن يسبق تاريخ الرد المستهدف تاريخ رفع الطلب. تبدأ المدة من تاريخ "
+"الطلب لا قبله."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request_category__default_target_kind
 msgid ""
 "The triage desk's first guess at what a request of this category turns into."
 " It pre-selects the conversion; it does not force it."
@@ -771,16 +1238,122 @@ msgstr ""
 "مسبقاً ولا يفرضه."
 
 #. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request_unassigned
+msgid "The triage queue is empty"
+msgstr "طابور الفرز فارغ"
+
+#. module: legal_request
+#: model_terms:ir.actions.act_window,help:legal_request.action_legal_request
+msgid ""
+"This is the department's front door. A department writes a question here - review\n"
+"                this contract, is this dismissal safe, what deed do we need - and the triage desk\n"
+"                turns it into whatever it takes to answer: a letter, an opinion, a file."
+msgstr ""
+"هذا هو باب الدائرة الأمامي. يكتب القسم سؤاله هنا — راجعوا\n"
+"                هذا العقد، هل هذا الفصل آمن، أي سند نحتاج — ويحوّله مكتب الفرز\n"
+"                إلى ما تقتضيه الإجابة: كتاب أو رأي قانوني أو ملف."
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_form
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Triage"
+msgstr "الفرز"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid ""
+"Triage and assignment are a legal officer's decision. A clerk registers what"
+" arrived; an officer decides who works it."
+msgstr ""
+"الفرز والإسناد من صلاحية الموظف القانوني. الكاتب يسجّل ما ورد، والموظف يقرّر"
+" من يعالجه."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي على السجل."
+
+#. module: legal_request
+#: model:ir.actions.act_window,name:legal_request.action_legal_request_unassigned
+#: model:ir.ui.menu,name:legal_request.menu_legal_request_unassigned
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Unassigned"
+msgstr "غير مُسندة"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__triage
+msgid "Under Triage"
+msgstr "قيد الفرز"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request__urgency
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_search
+msgid "Urgency"
+msgstr "الاستعجال"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__urgency__urgent
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: legal_request
+#: model:ir.model.fields,field_description:legal_request.field_legal_request_category__default_target_kind
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_category_search
+msgid "Usually Becomes"
+msgstr "يتحوّل عادة إلى"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Wait On External"
+msgstr "بانتظار جهة خارجية"
+
+#. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "Wait On Requester"
+msgstr "بانتظار مقدّم الطلب"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__waiting_external
+msgid "Waiting On External Body"
+msgstr "بانتظار جهة خارجية"
+
+#. module: legal_request
+#: model:ir.model.fields.selection,name:legal_request.selection__legal_request__state__waiting_requester
+msgid "Waiting On Requester"
+msgstr "بانتظار مقدّم الطلب"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Waiting on an external body to respond."
+msgstr "بانتظار رد جهة خارجية."
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "Waiting on the requester for further information."
+msgstr "بانتظار مقدّم الطلب لمزيد من المعلومات."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__category_id
 msgid ""
 "What class of request this is. Drives the triage desk's first guess at what "
 "it will become."
 msgstr "صنف هذا الطلب. يوجّه تخمين مكتب الفرز الأول لما سيتحوّل إليه."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__decision
 msgid "What the approver decided. Recorded by the approval dialog."
 msgstr "ما قرّره المصادِق. يُسجّله مربّع حوار المصادقة."
 
 #. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_return_form
+msgid "What the approver wants changed, in their words."
+msgstr "ما يريد المصادِق تغييره بكلماته."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request_return__reason
 msgid ""
 "What the approver wants changed, in their words. This is what the rework is "
 "corrected against, so “redo it” is not an answer."
@@ -789,127 +1362,154 @@ msgstr ""
 "إجابة."
 
 #. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_form
+msgid "What the department answered."
+msgstr "ما أجابت به الدائرة."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__response
 msgid ""
 "What the department answered. Filled in as the officer works and frozen at "
 "approval."
 msgstr "ما أجابت به الدائرة. يُكتب أثناء عمل الموظف ويُجمَّد عند المصادقة."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request_category__name
 msgid ""
 "What the department calls this class of request, e.g. Legal Consultation."
 msgstr "ما تسمّي به الدائرة هذا الصنف من الطلبات، مثل: استشارة قانونية."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__target_response_date
 msgid ""
 "When the department has undertaken to respond. Lateness is measured against "
 "this."
 msgstr "الموعد الذي تعهّدت الدائرة بالرد فيه. يُقاس التأخر عليه."
 
 #. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request__entity_id
 msgid "Which of the company's legal entities the request concerns."
 msgstr "أيّ الكيانات القانونية للشركة يخصّه الطلب."
 
 #. module: legal_request
+#: model_terms:ir.ui.view,arch_db:legal_request.view_legal_request_cancel_form
+msgid "Why the request is being dropped."
+msgstr "سبب إسقاط الطلب."
+
+#. module: legal_request
+#: model:ir.model.fields,help:legal_request.field_legal_request_cancel__reason
 msgid ""
 "Why the request is being dropped. The requester will ask, and so will the "
 "auditor."
 msgstr "سبب إسقاط الطلب. سيسأل مقدّمه، وسيسأل المدقّق."
 
 #. module: legal_request
-msgid "Name the kinds of question the department fields"
-msgstr "سمِّ أنواع الأسئلة التي تتلقاها الدائرة"
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "approved"
+msgstr "المصادقة عليه"
 
 #. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "assigned"
+msgstr "إسناده"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "closed"
+msgstr "إغلاقه"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "legal.case"
+msgstr "legal.case"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "legal.document"
+msgstr "legal.document"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "put on hold"
+msgstr "تعليقه"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "reopened"
+msgstr "إعادة فتحه"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "request_id"
+msgstr "request_id"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "returned"
+msgstr "إعادته"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "started"
+msgstr "بدء معالجته"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "submitted"
+msgstr "تقديمه"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "submitted for approval"
+msgstr "رفعه للمصادقة"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "triaged"
+msgstr "فرزه"
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "“%(ref)s” is %(state)s, and cannot be %(action)s from there."
+msgstr "«%(ref)s» في حالة %(state)s، ولا يمكن %(action)s من هناك."
+
+#. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
 msgid ""
-"A category is a row, not a hard-coded list. A department that starts "
-"receiving a new class of request adds one here, tells the triage desk what "
-"it usually becomes, and every board understands it at once."
+"“%s” has a register number and is part of the department's record. Cancel it"
+" with a reason instead of deleting it - a gap in the numbering is a question"
+" nobody can answer later."
 msgstr ""
-"الصنف سطرٌ لا قائمة مثبّتة في الشيفرة. الدائرة التي تبدأ بتلقّي نوع جديد من "
-"الطلبات تضيفه هنا، وتخبر مكتب الفرز بما يتحوّل إليه عادة، فتفهمه كل اللوحات "
-"في الحال."
+"«%s» يحمل عدداً في السجل وهو جزء من قيود الدائرة. ألغِه مع ذكر السبب بدلاً "
+"من حذفه — فالفجوة في الترقيم سؤال لا يستطيع أحد الإجابة عنه لاحقاً."
 
 #. module: legal_request
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
 msgid ""
-"The target kind is the triage desk's first guess at what a request of this "
-"category becomes. It pre-selects the conversion; it never forces it."
+"“%s” has no response to approve. Write the department's answer before "
+"sending it up - an approver cannot sign a blank."
 msgstr ""
-"النوع المستهدف هو تخمين مكتب الفرز الأول لما يتحوّل إليه طلب من هذا الصنف. "
-"يُرشِّح التحويل مسبقاً ولا يفرضه أبداً."
+"«%s» لا يتضمن رداً للمصادقة عليه. اكتب جواب الدائرة قبل رفعه — فالمصادِق لا "
+"يوقّع على فراغ."
 
 #. module: legal_request
-msgid ""
-"Convert turns the request into what it called for. The base raises an "
-"official letter on the register; an integrator wires a case, a contract or "
-"an opinion onto the same button."
-msgstr ""
-"التحويل يجعل الطلب ما دعا إليه. الأساس يُصدر كتاباً رسمياً في السجل؛ ويربط "
-"المُكامِل معاملةً أو عقداً أو رأياً بالزر نفسه."
-
-#. module: legal_request
-msgid ""
-"This is the department's front door. A department writes a question here - "
-"review this contract, is this dismissal safe, what deed do we need - and the"
-" triage desk turns it into whatever it takes to answer: a letter, an "
-"opinion, a file."
-msgstr ""
-"هذا هو باب الدائرة. يكتب قسمٌ سؤاله هنا — راجعوا هذا العقد، هل هذا الفصل "
-"آمن، أيّ وكالة نحتاج — فيحوّله مكتب الفرز إلى ما يلزم للإجابة: كتاب أو رأي "
-"أو ملف."
-
-#. module: legal_request
-msgid "Log the first request"
-msgstr "سجّل أول طلب"
-
-#. module: legal_request
-msgid "Nothing on your desk"
-msgstr "لا شيء على مكتبك"
-
-#. module: legal_request
-msgid "Requests you raised or were assigned appear here."
-msgstr "تظهر هنا الطلبات التي رفعتها أو أُسندت إليك."
-
-#. module: legal_request
-msgid "The triage queue is empty"
-msgstr "طابور الفرز فارغ"
-
-#. module: legal_request
-msgid ""
-"Requests that have arrived but nobody is yet working. Triage them onto an "
-"officer."
-msgstr "طلبات وردت ولم يعمل عليها أحد بعد. افرزها وأسندها إلى موظف."
-
-#. module: legal_request
-msgid "Nothing waiting for a signature"
-msgstr "لا شيء ينتظر التوقيع"
-
-#. module: legal_request
-msgid ""
-"Answers the officers have prepared and submitted, waiting for an approver to"
-" sign off."
-msgstr "أجوبة أعدّها الموظفون ورفعوها، تنتظر مصادِقاً يوقّعها."
-
-#. module: legal_request
-msgid "Nothing is late"
-msgstr "لا شيء متأخر"
-
-#. module: legal_request
-msgid "Open requests past the date the department undertook to respond."
-msgstr "طلبات مفتوحة تجاوزت الموعد الذي تعهّدت الدائرة بالرد فيه."
-
-#. module: legal_request
-msgid ""
-"A cancelled request keeps its number and stays in the record. The reason is "
-"what tells the requester, the manager and the auditor that this was a "
-"decision and not a mistake."
-msgstr ""
-"الطلب الملغى يحتفظ بعدده ويبقى في السجل. السبب هو ما يخبر مقدّم الطلب "
-"والمدير والمدقّق أن هذا قرار لا خطأ."
-
-#. module: legal_request
-msgid ""
-"The request goes back to the officer in progress. The reason is what the "
-"rework is corrected against, so “redo it” is not an answer."
-msgstr ""
-"يعود الطلب إلى الموظف قيد المعالجة. السبب هو ما يُصحَّح عليه العمل المُعاد، "
-"فـ«أعِده» ليست إجابة."
+#. odoo-python
+#: code:addons/legal_request/models/legal_request.py:0
+msgid "“%s” is already finished and cannot be cancelled."
+msgstr "«%s» منتهٍ أصلاً ولا يمكن إلغاؤه."

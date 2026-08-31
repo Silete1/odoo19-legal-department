@@ -1,921 +1,1328 @@
-# Arabic translation for the legal_litigation module.
-# This file is the single Arabic source shipped with the module.
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* legal_litigation
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: legal_litigation 19.0.1.0.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-31 09:30+0000\n"
+"PO-Revision-Date: 2026-08-31 09:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: legal_litigation
-# ==========================================================================
-# Model / menu / action names
-# ==========================================================================
-msgid "Litigation"
-msgstr "الدعاوى والقضايا"
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "<span>/</span>"
+msgstr "<span>/</span>"
 
 #. module: legal_litigation
-msgid "Lawsuits"
-msgstr "الدعاوى"
-
-#. module: legal_litigation
-msgid "My Lawsuits"
-msgstr "دعاواي"
-
-#. module: legal_litigation
-msgid "Courts"
-msgstr "المحاكم"
-
-#. module: legal_litigation
-msgid "Court"
-msgstr "المحكمة"
-
-#. module: legal_litigation
-msgid "Hearings"
-msgstr "الجلسات"
-
-#. module: legal_litigation
-msgid "Hearing"
-msgstr "الجلسة"
-
-#. module: legal_litigation
-msgid "Court Hearing"
-msgstr "جلسة المرافعة"
-
-#. module: legal_litigation
-msgid "Judgments"
-msgstr "الأحكام"
-
-#. module: legal_litigation
-msgid "Judgment"
-msgstr "الحكم"
-
-#. module: legal_litigation
-msgid "Lawsuit"
-msgstr "الدعوى"
-
-#. module: legal_litigation
-msgid "Lawsuit Party"
-msgstr "طرف في الدعوى"
-
-#. module: legal_litigation
-msgid "Lawsuit Reason"
-msgstr "سبب الإجراء"
-
-#. module: legal_litigation
-msgid "Appeal Window Rule"
-msgstr "قاعدة مدة الطعن"
-
-#. module: legal_litigation
-msgid "Appeal Window Rules"
-msgstr "قواعد مدد الطعن"
-
-#. module: legal_litigation
-msgid "Appeal Windows Closing"
-msgstr "مدد طعن على وشك الانتهاء"
-
-#. module: legal_litigation
-msgid "Power Of Attorney"
-msgstr "الوكالة"
-
-#. module: legal_litigation
-# ==========================================================================
-# Field labels
-# ==========================================================================
-msgid "Reference"
-msgstr "الإشارة"
-
-#. module: legal_litigation
-msgid "Advocate"
-msgstr "المحامي"
-
-#. module: legal_litigation
-msgid "Against"
-msgstr "ضد"
-
-#. module: legal_litigation
-msgid "Amount Awarded"
-msgstr "المبلغ المحكوم به"
-
-#. module: legal_litigation
-msgid "Appeal Case"
-msgstr "دعوى الطعن"
-
-#. module: legal_litigation
-msgid "Appeal Deadline"
-msgstr "الموعد النهائي للطعن"
-
-#. module: legal_litigation
-msgid "Appeal Rule"
-msgstr "قاعدة الطعن"
-
-#. module: legal_litigation
-msgid "Appeal Window"
-msgstr "مدة الطعن"
-
-#. module: legal_litigation
-msgid "Appeal Window Open"
-msgstr "مدة الطعن مفتوحة"
-
-#. module: legal_litigation
-msgid "Claim Amount"
-msgstr "مبلغ المطالبة"
-
-#. module: legal_litigation
-msgid "Closed"
-msgstr "مغلقة"
-
-#. module: legal_litigation
-msgid "Closed On"
-msgstr "تاريخ الإغلاق"
-
-#. module: legal_litigation
-msgid "Closing Notice (days)"
-msgstr "تنبيه قرب الانتهاء (أيام)"
-
-#. module: legal_litigation
-msgid "Closing Reason"
-msgstr "سبب الإغلاق"
-
-#. module: legal_litigation
-msgid "Colour"
-msgstr "اللون"
-
-#. module: legal_litigation
-msgid "Company"
-msgstr "الشركة"
-
-#. module: legal_litigation
-msgid "Court Body"
-msgstr "جهة المحكمة"
-
-#. module: legal_litigation
-msgid "Court Case No."
-msgstr "رقم الدعوى لدى المحكمة"
-
-#. module: legal_litigation
-msgid "Court Case Year"
-msgstr "سنة الدعوى لدى المحكمة"
-
-#. module: legal_litigation
-msgid "Court Degree"
-msgstr "درجة المحكمة"
-
-#. module: legal_litigation
-msgid "Court Of Appeal Above"
-msgstr "محكمة الاستئناف الأعلى"
-
-#. module: legal_litigation
-msgid "Courts Below"
-msgstr "المحاكم الأدنى"
-
-#. module: legal_litigation
-msgid "Days Allowed"
-msgstr "الأيام المسموح بها"
-
-#. module: legal_litigation
-msgid "Days Left"
-msgstr "الأيام المتبقية"
-
-#. module: legal_litigation
-msgid "Days To Challenge"
-msgstr "أيام الطعن"
-
-#. module: legal_litigation
-msgid "Deadline Activity"
-msgstr "نشاط الموعد النهائي"
-
-#. module: legal_litigation
-msgid "External Counsel"
-msgstr "محامٍ خارجي"
-
-#. module: legal_litigation
-msgid "Filed On"
-msgstr "تاريخ الإقامة"
-
-#. module: legal_litigation
-msgid "For"
-msgstr "لصالح"
-
-#. module: legal_litigation
-msgid "Government Body"
-msgstr "الجهة الحكومية"
-
-#. module: legal_litigation
-msgid "Governorate"
-msgstr "المحافظة"
-
-#. module: legal_litigation
-msgid "Held"
-msgstr "منعقدة"
-
-#. module: legal_litigation
-msgid "Judgment Date"
-msgstr "تاريخ الحكم"
-
-#. module: legal_litigation
-msgid "Jurisdiction"
-msgstr "الاختصاص"
-
-#. module: legal_litigation
-msgid "Latest Development"
-msgstr "آخر المستجدات"
-
-#. module: legal_litigation
-msgid "Letters"
-msgstr "المكاتبات"
-
-#. module: legal_litigation
-msgid "Minutes / Notes"
-msgstr "المحضر / الملاحظات"
-
-#. module: legal_litigation
-msgid "Next Deadline"
-msgstr "الموعد النهائي القادم"
-
-#. module: legal_litigation
-msgid "Next Hearing"
-msgstr "الجلسة القادمة"
-
-#. module: legal_litigation
-msgid "Next Hearing Set For"
-msgstr "الجلسة القادمة محددة في"
-
-#. module: legal_litigation
-msgid "Next Sitting"
-msgstr "الجلسة التالية"
-
-#. module: legal_litigation
-msgid "Next Step"
-msgstr "الخطوة التالية"
-
-#. module: legal_litigation
-msgid "Non-extendable"
-msgstr "غير قابلة للتمديد"
-
-#. module: legal_litigation
-msgid "Notification Date (التبليغ)"
-msgstr "تاريخ التبليغ"
-
-#. module: legal_litigation
-msgid "Opponents"
-msgstr "الخصوم"
-
-#. module: legal_litigation
-msgid "Outcome"
-msgstr "النتيجة"
-
-#. module: legal_litigation
-msgid "Parties"
-msgstr "الأطراف"
-
-#. module: legal_litigation
-msgid "Party"
-msgstr "الطرف"
-
-#. module: legal_litigation
-msgid "Reason"
-msgstr "السبب"
-
-#. module: legal_litigation
-msgid "Remedy"
-msgstr "طريق الطعن"
-
-#. module: legal_litigation
-msgid "Required Preparation"
-msgstr "التحضير المطلوب"
-
-#. module: legal_litigation
-msgid "Result"
-msgstr "النتيجة"
-
-#. module: legal_litigation
-msgid "Sitting Date"
-msgstr "تاريخ الانعقاد"
-
-#. module: legal_litigation
-msgid "Sub-courts"
-msgstr "المحاكم الفرعية"
-
-#. module: legal_litigation
-msgid "Challenge Lodged"
-msgstr "قُدّم الطعن"
-
-#. module: legal_litigation
-msgid "Window Lapsed"
-msgstr "انقضت المدة"
-
-#. module: legal_litigation
-msgid "Cases"
-msgstr "الدعاوى"
-
-#. module: legal_litigation
-msgid "Case"
-msgstr "الدعوى"
-
-#. module: legal_litigation
-msgid "Latest"
-msgstr "الأحدث"
-
-#. module: legal_litigation
-msgid "Our Capacity"
-msgstr "صفتنا"
-
-#. module: legal_litigation
-msgid "Purpose"
-msgstr "الغرض"
-
-#. module: legal_litigation
-msgid "Stage"
-msgstr "المرحلة"
-
-#. module: legal_litigation
-msgid "Subject"
-msgstr "الموضوع"
-
-#. module: legal_litigation
-msgid "Summary"
-msgstr "الملخص"
-
-#. module: legal_litigation
-msgid "Degree"
-msgstr "الدرجة"
-
-#. module: legal_litigation
-msgid "Legal Entity"
-msgstr "الكيان القانوني"
-
-#. module: legal_litigation
-# ==========================================================================
-# Selection values
-# ==========================================================================
-msgid "First Instance (بداءة)"
-msgstr "بداءة"
-
-#. module: legal_litigation
-msgid "Appeal (استئناف)"
-msgstr "استئناف"
-
-#. module: legal_litigation
-msgid "Cassation (تمييز)"
-msgstr "تمييز"
-
-#. module: legal_litigation
-msgid "Labour (عمل)"
-msgstr "عمل"
-
-#. module: legal_litigation
-msgid "Misdemeanour / Felony (جنح وجنايات)"
-msgstr "جنح وجنايات"
-
-#. module: legal_litigation
-msgid "Administrative Judiciary (قضاء إداري)"
-msgstr "قضاء إداري"
-
-#. module: legal_litigation
-msgid "Personal Status (أحوال شخصية)"
-msgstr "أحوال شخصية"
-
-#. module: legal_litigation
-msgid "Plaintiff (مدعي)"
-msgstr "مدعي"
-
-#. module: legal_litigation
-msgid "Defendant (مدعى عليه)"
-msgstr "مدعى عليه"
-
-#. module: legal_litigation
-msgid "Third Party (شخص ثالث)"
-msgstr "شخص ثالث"
-
-#. module: legal_litigation
-msgid "Appellant (طاعن / مستأنِف)"
-msgstr "طاعن / مستأنِف"
-
-#. module: legal_litigation
-msgid "Appellee (مطعون ضده / مستأنَف عليه)"
-msgstr "مطعون ضده / مستأنَف عليه"
-
-#. module: legal_litigation
-msgid "Assessment (تقييم)"
-msgstr "تقييم"
-
-#. module: legal_litigation
-msgid "Preparation (إعداد)"
-msgstr "إعداد"
-
-#. module: legal_litigation
-msgid "Filed (مقيدة)"
-msgstr "مقيدة"
-
-#. module: legal_litigation
-msgid "In Progress (قيد النظر)"
-msgstr "قيد النظر"
-
-#. module: legal_litigation
-msgid "Judgment (صدور الحكم)"
-msgstr "صدور الحكم"
-
-#. module: legal_litigation
-msgid "Under Appeal (طعن)"
-msgstr "طعن"
-
-#. module: legal_litigation
-msgid "Enforcement (تنفيذ)"
-msgstr "تنفيذ"
-
-#. module: legal_litigation
-msgid "Closed (مغلقة)"
-msgstr "مغلقة"
-
-#. module: legal_litigation
-msgid "Low (منخفض)"
-msgstr "منخفض"
-
-#. module: legal_litigation
-msgid "Medium (متوسط)"
-msgstr "متوسط"
-
-#. module: legal_litigation
-msgid "High (عالٍ)"
-msgstr "عالٍ"
-
-#. module: legal_litigation
-msgid "Opponent (خصم)"
-msgstr "خصم"
-
-#. module: legal_litigation
-msgid "On Our Side (طرف معنا)"
-msgstr "طرف معنا"
-
-#. module: legal_litigation
-msgid "Guarantor (كفيل / ضامن)"
-msgstr "كفيل / ضامن"
-
-#. module: legal_litigation
-msgid "Other"
-msgstr "أخرى"
-
-#. module: legal_litigation
-msgid "Pleading (مرافعة)"
-msgstr "مرافعة"
-
-#. module: legal_litigation
-msgid "Hearing Witnesses (استماع شهود)"
-msgstr "استماع شهود"
-
-#. module: legal_litigation
-msgid "Expert Report (خبرة)"
-msgstr "خبرة"
-
-#. module: legal_litigation
-msgid "Pronouncement Of Judgment (نطق بالحكم)"
-msgstr "نطق بالحكم"
-
-#. module: legal_litigation
-msgid "Postponed (تأجيل)"
-msgstr "تأجيل"
-
-#. module: legal_litigation
-msgid "We Attended (حضرنا)"
-msgstr "حضرنا"
-
-#. module: legal_litigation
-msgid "Opponent Absent (غياب الخصم)"
-msgstr "غياب الخصم"
-
-#. module: legal_litigation
-msgid "We Were Absent (تغيبنا)"
-msgstr "تغيبنا"
-
-#. module: legal_litigation
-msgid "Both Absent (غياب الطرفين)"
-msgstr "غياب الطرفين"
-
-#. module: legal_litigation
-msgid "Judgment (حكم)"
-msgstr "حكم"
-
-#. module: legal_litigation
-msgid "Decision (قرار)"
-msgstr "قرار"
-
-#. module: legal_litigation
-msgid "In Our Favour (لصالحنا)"
-msgstr "لصالحنا"
-
-#. module: legal_litigation
-msgid "Partly (جزئياً)"
-msgstr "جزئياً"
-
-#. module: legal_litigation
-msgid "Against Us (ضدنا)"
-msgstr "ضدنا"
-
-#. module: legal_litigation
-msgid "Not Decisive (غير محدد)"
-msgstr "غير محدد"
-
-#. module: legal_litigation
-msgid "Objection (اعتراض على حكم غيابي)"
-msgstr "اعتراض على حكم غيابي"
-
-#. module: legal_litigation
-msgid "Labour Remedy (طعن أمام محاكم العمل)"
-msgstr "طعن أمام محاكم العمل"
-
-#. module: legal_litigation
-msgid "No Window"
-msgstr "لا توجد مدة"
-
-#. module: legal_litigation
-msgid "Open"
-msgstr "مفتوحة"
-
-#. module: legal_litigation
-msgid "Closing Soon"
-msgstr "على وشك الانتهاء"
-
-#. module: legal_litigation
-msgid "Lapsed"
-msgstr "منقضية"
-
-#. module: legal_litigation
-msgid "Challenged"
-msgstr "مطعون فيها"
-
-#. module: legal_litigation
-msgid "Verified"
-msgstr "مُتحقَّق منها"
-
-#. module: legal_litigation
-msgid "Needs Re-check"
-msgstr "بحاجة لإعادة تحقّق"
-
-#. module: legal_litigation
-msgid "Not Researched"
-msgstr "لم تُبحث"
-
-#. module: legal_litigation
-msgid "Close Case"
-msgstr "إغلاق الدعوى"
-
-#. module: legal_litigation
-msgid "Lodge Challenge"
-msgstr "تقديم الطعن"
-
-#. module: legal_litigation
-# ==========================================================================
-# Buttons / form section titles
-# ==========================================================================
-msgid "Start Preparation"
-msgstr "بدء الإعداد"
-
-#. module: legal_litigation
-msgid "File At Court"
-msgstr "الإقامة لدى المحكمة"
-
-#. module: legal_litigation
-msgid "Now Being Heard"
-msgstr "قيد النظر الآن"
-
-#. module: legal_litigation
-msgid "Record Judgment"
-msgstr "تسجيل الحكم"
-
-#. module: legal_litigation
-msgid "Challenge (طعن)"
-msgstr "طعن"
-
-#. module: legal_litigation
-msgid "Move To Enforcement"
-msgstr "الإحالة إلى التنفيذ"
-
-#. module: legal_litigation
-msgid "Close"
-msgstr "إغلاق"
-
-#. module: legal_litigation
-msgid "Re-open"
-msgstr "إعادة فتح"
-
-#. module: legal_litigation
-msgid "Open Next Sitting"
-msgstr "فتح الجلسة التالية"
-
-#. module: legal_litigation
-msgid "Mark Challenged"
-msgstr "تأشير الطعن"
-
-#. module: legal_litigation
-msgid "Confirm"
-msgstr "تأكيد"
-
-#. module: legal_litigation
-msgid "Cancel"
-msgstr "إلغاء"
-
-#. module: legal_litigation
-msgid "The Case"
-msgstr "الدعوى"
-
-#. module: legal_litigation
-msgid "Who Is Running It"
-msgstr "من يتولاها"
-
-#. module: legal_litigation
-msgid "What Is Next"
-msgstr "ما هو التالي"
-
-#. module: legal_litigation
-msgid "The Sitting"
-msgstr "الجلسة"
-
-#. module: legal_litigation
-msgid "The Ruling"
-msgstr "الحكم"
-
-#. module: legal_litigation
-msgid "The Appeal Window"
-msgstr "مدة الطعن"
-
-#. module: legal_litigation
-msgid "The Period"
-msgstr "المدة"
-
-#. module: legal_litigation
-msgid "When It Applies"
-msgstr "متى تنطبق"
-
-#. module: legal_litigation
-msgid "What Kind Of Court"
-msgstr "نوع المحكمة"
-
-#. module: legal_litigation
-msgid "In The Register"
-msgstr "في السجل"
-
-#. module: legal_litigation
-msgid "Minutes"
-msgstr "المحضر"
-
-#. module: legal_litigation
-msgid "Result & Next Step"
-msgstr "النتيجة والخطوة التالية"
-
-#. module: legal_litigation
-msgid "Notes"
-msgstr "ملاحظات"
-
-#. module: legal_litigation
-# ==========================================================================
-# Search filters
-# ==========================================================================
-msgid "Upcoming"
-msgstr "قادمة"
-
-#. module: legal_litigation
-msgid "Upcoming Hearings"
-msgstr "الجلسات القادمة"
-
-#. module: legal_litigation
-msgid "My Hearings"
-msgstr "جلساتي"
-
-#. module: legal_litigation
-msgid "My Judgments"
-msgstr "أحكامي"
-
-#. module: legal_litigation
-msgid "Appeal Window Closing"
-msgstr "مدة طعن على وشك الانتهاء"
-
-#. module: legal_litigation
-msgid "Window Open"
-msgstr "المدة مفتوحة"
-
-#. module: legal_litigation
-msgid "Overdue"
-msgstr "متأخرة"
-
-#. module: legal_litigation
-msgid "Live"
-msgstr "قائمة"
-
-#. module: legal_litigation
-msgid "We Are Plaintiff"
-msgstr "نحن المدعي"
-
-#. module: legal_litigation
-msgid "We Are Defendant"
-msgstr "نحن المدعى عليه"
-
-#. module: legal_litigation
-msgid "High Risk"
-msgstr "مخاطرة عالية"
-
-#. module: legal_litigation
-msgid "Against Us"
-msgstr "ضدنا"
-
-#. module: legal_litigation
-msgid "First Instance"
-msgstr "بداءة"
-
-#. module: legal_litigation
-msgid "Appeal"
-msgstr "استئناف"
-
-#. module: legal_litigation
-msgid "Cassation"
-msgstr "تمييز"
-
-#. module: legal_litigation
-msgid "Labour"
-msgstr "عمل"
-
-#. module: legal_litigation
-msgid "Administrative"
-msgstr "قضاء إداري"
-
-#. module: legal_litigation
-msgid "Next Hearings"
-msgstr "الجلسات القادمة"
-
-#. module: legal_litigation
-# ==========================================================================
-# Messages and errors
-# ==========================================================================
-msgid "New"
-msgstr "جديدة"
-
-#. module: legal_litigation
-msgid "A court cannot sit in appeal over itself."
-msgstr "لا يمكن أن تكون المحكمة استئنافاً على نفسها."
-
-#. module: legal_litigation
-msgid "“%s” is past assessment."
-msgstr "«%s» تجاوزت مرحلة التقييم."
-
-#. module: legal_litigation
-msgid "Moved into preparation."
-msgstr "نُقلت إلى مرحلة الإعداد."
-
-#. module: legal_litigation
-msgid "“%s” has already been filed."
-msgstr "«%s» سبق أن أُقيمت."
-
-#. module: legal_litigation
-msgid "No court has been chosen. A case is filed at a court."
-msgstr "لم تُختَر محكمة. تُقام الدعوى لدى محكمة."
-
-#. module: legal_litigation
-msgid "Now being heard."
-msgstr "قيد النظر الآن."
-
-#. module: legal_litigation
-msgid "“%s” is not a filed case awaiting a hearing."
-msgstr "«%s» ليست دعوى مقيدة بانتظار جلسة."
-
-#. module: legal_litigation
-msgid "Judgment issued."
-msgstr "صدر الحكم."
-
-#. module: legal_litigation
-msgid "Moved to enforcement (تنفيذ)."
-msgstr "أُحيلت إلى التنفيذ."
-
-#. module: legal_litigation
-msgid "“%s” is already closed."
-msgstr "«%s» مغلقة بالفعل."
-
-#. module: legal_litigation
-msgid "“%s” is not closed."
-msgstr "«%s» ليست مغلقة."
-
-#. module: legal_litigation
-msgid "Re-opened."
-msgstr "أُعيد فتحها."
-
-#. module: legal_litigation
-msgid "A reason is required."
-msgstr "السبب مطلوب."
-
-#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "A claim amount cannot be negative."
 msgstr "لا يمكن أن يكون مبلغ المطالبة سالباً."
 
 #. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_court.py:0
+msgid "A court cannot sit in appeal over itself."
+msgstr "لا يمكن أن تكون المحكمة استئنافاً على نفسها."
+
+#. module: legal_litigation
+#: model:ir.model.constraint,message:legal_litigation.constraint_legal_court_code_company_uniq
+msgid "A court code must be unique per company."
+msgstr "يجب أن يكون رمز المحكمة فريداً لكل شركة."
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_court
 msgid ""
-"Only a legal approver or manager may close or re-open a case. The advocate "
-"who runs a file is not the one who declares it lost or settled."
+"A court's degree decides which challenge its judgments invite and how long there\n"
+"                is to bring it, and pointing a court at its body in the register gives it a\n"
+"                working calendar and named contacts for free."
 msgstr ""
-"لا يجوز إغلاق الدعوى أو إعادة فتحها إلا لمصدِّق قانوني أو مدير. فالمحامي "
-"الذي يتولى الملف ليس هو من يعلن خسارته أو تسويته."
+"درجة المحكمة تحدد طريق الطعن الذي تقبله أحكامها والمدة المتاحة لتقديمه،\n"
+"                وربط المحكمة بجهتها في السجل يمنحها تقويم دوام وجهات اتصال مسماة\n"
+"                دون أي عناء إضافي."
 
 #. module: legal_litigation
-msgid "Set the date the court fixed before opening the next sitting."
-msgstr "حدّد التاريخ الذي عيّنته المحكمة قبل فتح الجلسة التالية."
-
-#. module: legal_litigation
-msgid "Days left can only be compared with a whole number."
-msgstr "لا يمكن مقارنة الأيام المتبقية إلا بعدد صحيح."
-
-#. module: legal_litigation
-msgid "Unsupported comparison on days left."
-msgstr "مقارنة غير مدعومة على الأيام المتبقية."
-
-#. module: legal_litigation
-msgid "Challenge lodged; appeal window closed."
-msgstr "قُدّم الطعن؛ أُغلقت مدة الطعن."
-
-#. module: legal_litigation
-# ==========================================================================
-# Action / view help
-# ==========================================================================
-msgid "Open the department's first case"
-msgstr "افتح أول دعوى للدائرة"
-
-#. module: legal_litigation
-msgid "The court diary"
-msgstr "مفكرة الجلسات"
-
-#. module: legal_litigation
-msgid "Every ruling, and the clock it starts"
-msgstr "كل حكم، والمدة التي يبدؤها"
-
-#. module: legal_litigation
-msgid "Nothing is about to lapse"
-msgstr "لا شيء على وشك الانقضاء"
-
-#. module: legal_litigation
-msgid "Record the courts the department litigates in"
-msgstr "سجّل المحاكم التي تتقاضى الدائرة أمامها"
-
-#. module: legal_litigation
-msgid "State the statutory periods once, as data"
-msgstr "حدّد المدد القانونية مرة واحدة، كبيانات"
-
-#. module: legal_litigation
-# ==========================================================================
-# Late additions - remaining runtime messages
-# ==========================================================================
-msgid "Letter registered: %s"
-msgstr "قُيّدت المكاتبة: %s"
-
-#. module: legal_litigation
-msgid "Hearing on %(date)s - %(case)s"
-msgstr "جلسة بتاريخ %(date)s - %(case)s"
-
-#. module: legal_litigation
-msgid "Next sitting of the case."
-msgstr "الجلسة التالية للدعوى."
-
-#. module: legal_litigation
-msgid "unscheduled"
-msgstr "غير محددة"
-
-#. module: legal_litigation
-msgid "Judgment %(ref)s %(date)s"
-msgstr "حكم %(ref)s %(date)s"
-
-#. module: legal_litigation
-msgid "Non-extendable appeal deadline - %s"
-msgstr "موعد طعن غير قابل للتمديد - %s"
-
-#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__ruling_type
 msgid ""
-"The window to challenge this ruling closes on %(date)s and does not extend."
-msgstr "تنتهي مدة الطعن في هذا الحكم بتاريخ %(date)s وهي غير قابلة للتمديد."
+"A full judgment or an interlocutory decision. Cassation, above all, runs to "
+"a different clock for each."
+msgstr ""
+"حكم تام أو قرار صادر أثناء نظر الدعوى. والتمييز قبل غيره يجري لكل منهما بمدة"
+" مختلفة."
 
 #. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "A judgment is recorded on a case that is being heard, not on “%s”."
 msgstr "يُسجَّل الحكم على دعوى قيد النظر، لا على «%s»."
 
 #. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_lawsuit
+msgid ""
+"A lawsuit walks from assessment to closure on the buttons on its header, cannot\n"
+"                be filed on a وكالة that will not stand, and counts down every hearing and every\n"
+"                non-extendable appeal window it carries."
+msgstr ""
+"تسير الدعوى من التقييم إلى الإغلاق بأزرار ترويستها، ولا يمكن إقامتها\n"
+"                على وكالة لا تصمد، وتَعُدُّ تنازلياً كل جلسة وكل مدة طعن غير قابلة\n"
+"                للتمديد تحملها."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/wizard/legal_lawsuit_reason.py:0
+msgid "A reason is required."
+msgstr "السبب مطلوب."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_court__code
+msgid ""
+"A short stable key, so a content pack or an import can find the court "
+"without matching its Arabic name letter for letter."
+msgstr ""
+"مفتاح قصير ثابت، ليتمكن أي محتوى جاهز أو استيراد من إيجاد المحكمة دون مطابقة"
+" اسمها العربي حرفاً حرفاً."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__action_kind
+msgid "Action Kind"
+msgstr "نوع الإجراء"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_needaction
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_needaction
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__active
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__active
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__active
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__active
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_exception_decoration
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_exception_decoration
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "وسم استثناء النشاط"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_state
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_state
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_type_icon
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_type_icon
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__address
+msgid "Address"
+msgstr "العنوان"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "Administrative"
+msgstr "قضاء إداري"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_court__degree__administrative
+msgid "Administrative Judiciary (قضاء إداري)"
+msgstr "قضاء إداري"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__lawyer_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__lawyer_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__lawyer_id
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Advocate"
+msgstr "المحامي"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__ruling_type
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_search
+msgid "Against"
+msgstr "ضد"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "Against Us"
+msgstr "ضدنا"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__in_our_favour__against
+msgid "Against Us (ضدنا)"
+msgstr "ضدنا"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__non_extendable
+msgid ""
+"Almost always true: a statutory appeal period does not stretch because the "
+"office was shut. The flag is carried onto every deadline the rule produces "
+"so nobody treats it as a soft target."
+msgstr ""
+"صحيحة في الأغلب الأعم: فمدة الطعن القانونية لا تمتد لمجرد أن الدائرة كانت "
+"مغلقة. وتُحمَل هذه العلامة على كل موعد نهائي تنتجه القاعدة حتى لا يعامله أحد"
+" معاملة الموعد المرن."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__amount_awarded
+msgid "Amount Awarded"
+msgstr "المبلغ المحكوم به"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__external_counsel_id
+msgid "An outside advocate retained on the case, where one is."
+msgstr "محامٍ خارجي موكَّل في الدعوى، إن وُجد."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "Appeal"
+msgstr "استئناف"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__remedy__appeal
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_court__degree__appeal
+msgid "Appeal (استئناف)"
+msgstr "استئناف"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__appeal_lawsuit_id
+msgid "Appeal Case"
+msgstr "دعوى الطعن"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__appeal_deadline
+msgid "Appeal Deadline"
+msgstr "الموعد النهائي للطعن"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__appeal_rule_id
+msgid "Appeal Rule"
+msgstr "قاعدة الطعن"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__appeal_state
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "Appeal Window"
+msgstr "مدة الطعن"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Appeal Window Closing"
+msgstr "مدة طعن على وشك الانتهاء"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__appeal_window_open
+msgid "Appeal Window Open"
+msgstr "مدة الطعن مفتوحة"
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_appeal_rule
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_form
+msgid "Appeal Window Rule"
+msgstr "قاعدة مدة الطعن"
+
+#. module: legal_litigation
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_appeal_rule
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_config_appeal_rule
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_list
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_search
+msgid "Appeal Window Rules"
+msgstr "قواعد مدد الطعن"
+
+#. module: legal_litigation
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_judgment_closing
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_judgment_closing
+msgid "Appeal Windows Closing"
+msgstr "مدد طعن على وشك الانتهاء"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,name:legal_litigation.appeal_rule_appeal
+msgid "Appeal of a judgment"
+msgstr "مدة الاستئناف"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_kanban
+msgid "Appeal window open"
+msgstr "مدة الطعن مفتوحة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__our_capacity__appellant
+msgid "Appellant (طاعن / مستأنِف)"
+msgstr "طاعن / مستأنِف"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__our_capacity__appellee
+msgid "Appellee (مطعون ضده / مستأنَف عليه)"
+msgstr "مطعون ضده / مستأنَف عليه"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__assessment
+msgid "Assessment (تقييم)"
+msgstr "تقييم"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_attachment_count
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_attachment_count
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__attendance
+msgid "Attendance"
+msgstr "الحضور"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__attendance__both_absent
+msgid "Both Absent (غياب الطرفين)"
+msgstr "غياب الطرفين"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_reason_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__capacity
+msgid "Capacity"
+msgstr "الصفة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__non_extendable
+msgid ""
+"Carried from the rule. A statutory window does not stretch, and the flag is "
+"here so nobody treats the deadline as soft."
+msgstr ""
+"منقولة من القاعدة. فالمدة القانونية لا تمتد، والعلامة هنا حتى لا يعامل أحد "
+"الموعد النهائي معاملة الموعد المرن."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+msgid "Case"
+msgstr "الدعوى"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_form
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_list
+msgid "Cases"
+msgstr "الدعاوى"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "Cassation"
+msgstr "تمييز"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__remedy__cassation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_court__degree__cassation
+msgid "Cassation (تمييز)"
+msgstr "تمييز"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,name:legal_litigation.appeal_rule_cassation_decision
+msgid "Cassation of a decision"
+msgstr "مدة التمييز على القرارات"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,name:legal_litigation.appeal_rule_cassation_judgment
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_form
+msgid "Cassation of a judgment"
+msgstr "مدة التمييز على الأحكام"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Challenge (طعن)"
+msgstr "طعن"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__appeal_filed
+msgid "Challenge Lodged"
+msgstr "قُدّم الطعن"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_judgment.py:0
+msgid "Challenge lodged; appeal window closed."
+msgstr "قُدّم الطعن؛ أُغلقت مدة الطعن."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__appeal_state__filed
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "Challenged"
+msgstr "مطعون فيها"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__claim_amount
+msgid "Claim Amount"
+msgstr "مبلغ المطالبة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit_reason__action_kind__close
+msgid "Close Case"
+msgstr "إغلاق الدعوى"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__is_closed
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Closed"
+msgstr "مغلقة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__closed
+msgid "Closed (مغلقة)"
+msgstr "مغلقة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__date_closed
+msgid "Closed On"
+msgstr "تاريخ الإغلاق"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "Closed: %s"
 msgstr "أُغلقت: %s"
 
 #. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__closing_notice_days
+msgid "Closing Notice (days)"
+msgstr "تنبيه قرب الانتهاء (أيام)"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__close_reason
+msgid "Closing Reason"
+msgstr "سبب الإغلاق"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__appeal_state__closing_soon
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "Closing Soon"
+msgstr "على وشك الانتهاء"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_reason_form
+msgid ""
+"Closing a case is a separated duty. It is recorded against the reason given\n"
+"                    here, which is what anybody asking later how the matter ended will read."
+msgstr ""
+"إغلاق الدعوى صلاحية مفصولة، ويُقيَّد على السبب المذكور هنا،\n"
+"                    وهو ما سيقرؤه لاحقاً كل من يسأل كيف انتهت المسألة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__colour
+msgid "Colour"
+msgstr "اللون"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__company_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__company_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__company_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__company_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__confidential
+msgid "Confidential"
+msgstr "سرية"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_reason_form
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__correspondence_count
+msgid "Correspondence Count"
+msgstr "عدد المكاتبات"
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_correspondence
+msgid "Correspondence Entry"
+msgstr "قيد المراسلات"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__days
+msgid ""
+"Counted from the date of official notification (التبليغ), in calendar days -"
+" these statutory periods run over weekends and holidays."
+msgstr ""
+"تُحسب من تاريخ التبليغ الرسمي، بالأيام التقويمية - فهذه المدد القانونية تسري"
+" في العطل ونهايات الأسبوع أيضاً."
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_court
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__court_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__court_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__court_id
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_form
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Court"
+msgstr "المحكمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__court_body_id
+msgid "Court Body"
+msgstr "جهة المحكمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__court_case_number
+msgid "Court Case No."
+msgstr "رقم الدعوى لدى المحكمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__court_case_year
+msgid "Court Case Year"
+msgstr "سنة الدعوى لدى المحكمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__court_degree
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_search
+msgid "Court Degree"
+msgstr "درجة المحكمة"
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_hearing
+msgid "Court Hearing"
+msgstr "جلسة المرافعة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Court No."
+msgstr "العدد"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__parent_court_id
+msgid "Court Of Appeal Above"
+msgstr "محكمة الاستئناف الأعلى"
+
+#. module: legal_litigation
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_court
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_config_court
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_list
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "Courts"
+msgstr "المحاكم"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__child_court_ids
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_form
+msgid "Courts Below"
+msgstr "المحاكم الأدنى"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__create_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__create_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__create_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__create_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__create_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__create_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__create_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__create_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__create_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__create_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__create_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__create_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__priority__2
+msgid "Critical"
+msgstr "حرجة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__currency_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__appeal_days
+msgid "Days Allowed"
+msgstr "الأيام المسموح بها"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__days_left
+msgid "Days Left"
+msgstr "الأيام المتبقية"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__days
+msgid "Days To Challenge"
+msgstr "أيام الطعن"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_judgment.py:0
+msgid "Days left can only be compared with a whole number."
+msgstr "لا يمكن مقارنة الأيام المتبقية إلا بعدد صحيح."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__appeal_activity_id
+msgid "Deadline Activity"
+msgstr "نشاط الموعد النهائي"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__ruling_type__decision
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__ruling_type__decision
+msgid "Decision (قرار)"
+msgstr "قرار"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__our_capacity__defendant
+msgid "Defendant (مدعى عليه)"
+msgstr "مدعى عليه"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__degree
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "Degree"
+msgstr "الدرجة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__display_name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_correspondence__display_name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__display_name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__display_name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__display_name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__display_name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__display_name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__enforcement
+msgid "Enforcement (تنفيذ)"
+msgstr "تنفيذ"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "Enforcement follows a judgment; “%s” has not reached one."
 msgstr "التنفيذ يعقب الحكم؛ و«%s» لم تبلغ حكماً بعد."
 
 #. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_judgment
+msgid "Every ruling, and the clock it starts"
+msgstr "كل حكم، والمدة التي يبدؤها"
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_hearing
+msgid ""
+"Every sitting, past and fixed. Recording the date the court set for the next\n"
+"                one rolls that sitting forward on its own and puts it on the advocate's list."
+msgstr ""
+"كل جلسة، ما انعقد منها وما تحدد. وتسجيل التاريخ الذي عيّنته المحكمة\n"
+"                للجلسة التالية يرحّلها من تلقاء نفسه ويضعها على قائمة المحامي."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__purpose__expert
+msgid "Expert Report (خبرة)"
+msgstr "خبرة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__external_counsel_id
+msgid "External Counsel"
+msgstr "محامٍ خارجي"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "File At Court"
+msgstr "الإقامة لدى المحكمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__filed
+msgid "Filed (مقيدة)"
+msgstr "مقيدة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__date_filed
+msgid "Filed On"
+msgstr "تاريخ الإقامة"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "Filed at %(court)s as case %(number)s."
 msgstr "أُقيمت لدى %(court)s بالعدد %(number)s."
 
 #. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid ""
+"Filing needs a court, the court's own case number, and a valid\n"
+"                        وكالة بالمرافعة for the advocate. The court will not hear anybody who is\n"
+"                        not named on one, so the file is stopped here rather than at the counter."
+msgstr ""
+"الإقامة تحتاج إلى محكمة، وإلى عدد الدعوى لدى المحكمة، وإلى وكالة\n"
+"                        بالمرافعة نافذة للمحامي. فالمحكمة لا تقبل مرافعة من ليس مذكوراً\n"
+"                        في وكالة، ولهذا يوقَف الملف هنا لا عند الديوان."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "First Instance"
+msgstr "بداءة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_court__degree__first_instance
+msgid "First Instance (بداءة)"
+msgstr "بداءة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_follower_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_follower_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_partner_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_partner_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__activity_type_icon
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__activity_type_icon
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__entity_id
+msgid "For"
+msgstr "لصالح"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__gov_body_id
+msgid "Government Body"
+msgstr "الجهة الحكومية"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__governorate_id
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "Governorate"
+msgstr "المحافظة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit_party__role__guarantor
+msgid "Guarantor (كفيل / ضامن)"
+msgstr "كفيل / ضامن"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__has_message
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__has_message
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__has_message
+msgid "Has Message"
+msgstr "توجد رسالة"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_hearing.py:0
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "Hearing"
+msgstr "الجلسة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__hearing_count
+msgid "Hearing Count"
+msgstr "عدد الجلسات"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__purpose__witnesses
+msgid "Hearing Witnesses (استماع شهود)"
+msgstr "استماع شهود"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_hearing.py:0
+msgid "Hearing on %(date)s - %(case)s"
+msgstr "جلسة بتاريخ %(date)s - %(case)s"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_hearing
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__hearing_ids
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_hearing
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_calendar
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_list
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Hearings"
+msgstr "الجلسات"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__is_held
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+msgid "Held"
+msgstr "منعقدة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__risk__high
+msgid "High (عالٍ)"
+msgstr "عالٍ"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "High Risk"
+msgstr "مخاطرة عالية"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__days_left
+msgid ""
+"How long there is to challenge, recomputed on read because it changes every "
+"midnight."
+msgstr ""
+"المدة المتبقية للطعن، يُعاد احتسابها عند القراءة لأنها تتغير عند كل منتصف "
+"ليل."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__closing_notice_days
+msgid ""
+"How many days before the deadline the window starts showing as closing soon."
+msgstr ""
+"قبل كم يوم من الموعد النهائي تبدأ المدة بالظهور على أنها على وشك الانتهاء."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__in_our_favour
+msgid ""
+"How the ruling went for us. Read together with our capacity on the case to "
+"decide whether it is worth challenging."
+msgstr ""
+"كيف جاء الحكم بالنسبة إلينا. تُقرأ مع صفتنا في الدعوى لتقرير ما إذا كان "
+"الطعن فيه يستحق."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit_party__capacity
+msgid ""
+"How they appear - المدعى عليه الأول، بصفته الشخصية، بصفته مديراً مفوضاً. "
+"Printed on the letter, so it is recorded rather than assumed."
+msgstr ""
+"كيف يَرِدون في الدعوى - المدعى عليه الأول، بصفته الشخصية، بصفته مديراً "
+"مفوضاً. تُطبع على الكتاب الرسمي، فلذلك تُسجَّل ولا تُفترض."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_correspondence__id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_exception_icon
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_exception_icon
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__activity_exception_icon
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__activity_exception_icon
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة تدل على نشاط استثنائي."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__message_needaction
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__message_needaction
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "عند التأشير، توجد رسائل جديدة تتطلب انتباهك."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__message_has_error
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__message_has_error
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "عند التأشير، توجد رسائل تعذّر إيصالها."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__in_our_favour__favour
+msgid "In Our Favour (لصالحنا)"
+msgstr "لصالحنا"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__in_progress
+msgid "In Progress (قيد النظر)"
+msgstr "قيد النظر"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_form
+msgid "In The Register"
+msgstr "في السجل"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__verification_status
+msgid ""
+"Iraqi periods change by amendment. A rule nobody has re-read is a liability "
+"at the court, and saying so is more honest than a silent figure."
+msgstr ""
+"المدد في العراق تتغير بالتعديل التشريعي. والقاعدة التي لم يُعِد أحد قراءتها "
+"عبء أمام المحكمة، والإفصاح عن ذلك أصدق من رقم صامت."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_is_follower
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_is_follower
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_is_follower
+msgid "Is Follower"
+msgstr "متابِع"
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_judgment
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "Judgment"
+msgstr "الحكم"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_judgment.py:0
+msgid "Judgment %(ref)s %(date)s"
+msgstr "حكم %(ref)s %(date)s"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__ruling_type__judgment
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__ruling_type__judgment
+msgid "Judgment (حكم)"
+msgstr "حكم"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__judgment
+msgid "Judgment (صدور الحكم)"
+msgstr "صدور الحكم"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__judgment_count
+msgid "Judgment Count"
+msgstr "عدد الأحكام"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__judgment_date
+msgid "Judgment Date"
+msgstr "تاريخ الحكم"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "Judgment challenged (طعن): %s"
 msgstr "طُعن في الحكم: %s"
 
 #. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "Judgment issued."
+msgstr "صدر الحكم."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_judgment
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__judgment_ids
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_judgment
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_list
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Judgments"
+msgstr "الأحكام"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__jurisdiction_id
+msgid "Jurisdiction"
+msgstr "الاختصاص"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_search
+msgid "Labour"
+msgstr "عمل"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_court__degree__labor
+msgid "Labour (عمل)"
+msgstr "عمل"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__remedy__labor
+msgid "Labour Remedy (طعن أمام محاكم العمل)"
+msgstr "طعن أمام محاكم العمل"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,name:legal_litigation.appeal_rule_labor
+msgid "Labour court remedy"
+msgstr "مدة الطعن أمام محاكم العمل"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__appeal_state__closed
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "Lapsed"
+msgstr "منقضية"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__write_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__write_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__write_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__write_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__write_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__write_uid
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__write_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__write_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__write_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__write_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__write_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__write_date
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Latest"
+msgstr "الأحدث"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__latest_development
+msgid "Latest Development"
+msgstr "آخر المستجدات"
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_lawsuit
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_correspondence__lawsuit_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__lawsuit_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__lawsuit_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__lawsuit_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__lawsuit_id
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Lawsuit"
+msgstr "الدعوى"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__lawsuit_count
+msgid "Lawsuit Count"
+msgstr "عدد الدعاوى"
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_lawsuit_party
+msgid "Lawsuit Party"
+msgstr "طرف في الدعوى"
+
+#. module: legal_litigation
+#: model:ir.model,name:legal_litigation.model_legal_lawsuit_reason
+msgid "Lawsuit Reason"
+msgstr "سبب الإجراء"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_court.py:0
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_lawsuit
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_lawsuit_calendar
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_lawsuit
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_list
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Lawsuits"
+msgstr "الدعاوى"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_court__company_id
+msgid ""
+"Left empty, the court is shared by every company - which is almost always "
+"right, since a court is not owned by whoever litigates in it."
+msgstr ""
+"إن تُركت فارغة كانت المحكمة مشتركة بين الشركات كلها - وهو الصواب في الأغلب، "
+"فالمحكمة لا يملكها من يتقاضى أمامها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__legal_basis
+msgid "Legal Basis"
+msgstr "السند القانوني"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Legal Entity"
+msgstr "الكيان القانوني"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_correspondence.py:0
+msgid "Letter registered: %s"
+msgstr "قُيّدت المكاتبة: %s"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__correspondence_ids
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Letters"
+msgstr "المكاتبات"
+
+#. module: legal_litigation
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_config_litigation
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_litigation
+msgid "Litigation"
+msgstr "الدعاوى والقضايا"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Live"
+msgstr "قائمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__location
+msgid "Location"
+msgstr "المكان"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "Lodge Appeal / Challenge"
 msgstr "تقديم استئناف / طعن"
 
 #. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit_reason__action_kind__appeal
+msgid "Lodge Challenge"
+msgstr "تقديم الطعن"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_reason_form
+msgid ""
+"Lodging a challenge stops the appeal clock on every open judgment of this\n"
+"                    case. State the ground on which it is brought."
+msgstr ""
+"تقديم الطعن يوقف مدة الطعن في كل حكم مفتوح في هذه\n"
+"                    الدعوى. اذكر السبب الذي يُقام عليه الطعن."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__risk__low
+msgid "Low (منخفض)"
+msgstr "منخفض"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "Mark Challenged"
+msgstr "تأشير الطعن"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__risk__medium
+msgid "Medium (متوسط)"
+msgstr "متوسط"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_has_error
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_has_error
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في إيصال الرسالة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_ids
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "Minutes"
+msgstr "المحضر"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__minutes
+msgid "Minutes / Notes"
+msgstr "المحضر / الملاحظات"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_court__degree__misdemeanor_felony
+msgid "Misdemeanour / Felony (جنح وجنايات)"
+msgstr "جنح وجنايات"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Move To Enforcement"
+msgstr "الإحالة إلى التنفيذ"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "Moved into preparation."
+msgstr "نُقلت إلى مرحلة الإعداد."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "Moved to enforcement (تنفيذ)."
+msgstr "أُحيلت إلى التنفيذ."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__my_activity_date_deadline
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__my_activity_date_deadline
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+msgid "My Hearings"
+msgstr "جلساتي"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "My Judgments"
+msgstr "أحكامي"
+
+#. module: legal_litigation
+#: model:ir.actions.act_window,name:legal_litigation.action_legal_lawsuit_my
+#: model:ir.ui.menu,name:legal_litigation.menu_legal_lawsuit_my
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "My Lawsuits"
+msgstr "دعاواي"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__name
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__verification_status__stale
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_search
+msgid "Needs Re-check"
+msgstr "بحاجة لإعادة تحقّق"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "New"
+msgstr "جديدة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_date_deadline
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_date_deadline
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_summary
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_summary
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_type_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_type_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__next_deadline
+msgid "Next Deadline"
+msgstr "الموعد النهائي القادم"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__next_hearing_date
+msgid "Next Hearing"
+msgstr "الجلسة القادمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__next_hearing_date
+msgid "Next Hearing Set For"
+msgstr "الجلسة القادمة محددة في"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_calendar
+msgid "Next Hearings"
+msgstr "الجلسات القادمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__next_hearing_id
+msgid "Next Sitting"
+msgstr "الجلسة التالية"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__next_step
+msgid "Next Step"
+msgstr "الخطوة التالية"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_hearing.py:0
+msgid "Next sitting of the case."
+msgstr "الجلسة التالية للدعوى."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__appeal_state__na
+msgid "No Window"
+msgstr "لا توجد مدة"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "No court has been chosen. A case is filed at a court."
+msgstr "لم تُختَر محكمة. تُقام الدعوى لدى محكمة."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid ""
 "No وكالة بالمرافعة is on file for %s, and the court will not hear an "
 "advocate who is not named on one."
@@ -924,6 +1331,637 @@ msgstr ""
 "مذكور في وكالة."
 
 #. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__non_extendable
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__non_extendable
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_search
+msgid "Non-extendable"
+msgstr "غير قابلة للتمديد"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_judgment.py:0
+msgid "Non-extendable appeal deadline - %s"
+msgstr "موعد طعن غير قابل للتمديد - %s"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__priority__0
+msgid "Normal"
+msgstr "عادية"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__in_our_favour__na
+msgid "Not Decisive (غير محدد)"
+msgstr "غير محدد"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__verification_status__not_researched
+msgid "Not Researched"
+msgstr "لم تُبحث"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__note
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__note
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__note
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_form
+msgid "Notes on how this period is counted."
+msgstr "ملاحظات في كيفية احتساب هذه المدة."
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_judgment_closing
+msgid "Nothing is about to lapse"
+msgstr "لا شيء على وشك الانقضاء"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__tabligh_date
+msgid "Notification Date (التبليغ)"
+msgstr "تاريخ التبليغ"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__appeal_deadline
+msgid ""
+"Notification date plus the allowed days. The last day a challenge can be "
+"lodged - after it the right is gone."
+msgstr ""
+"تاريخ التبليغ مضافاً إليه الأيام المسموح بها. آخر يوم يمكن فيه تقديم الطعن -"
+" وبعده يسقط الحق."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Now Being Heard"
+msgstr "قيد النظر الآن"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "Now being heard."
+msgstr "قيد النظر الآن."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_needaction_counter
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_needaction_counter
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__message_has_error_counter
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__message_has_error_counter
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__message_needaction_counter
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__message_needaction_counter
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراءً"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__message_has_error_counter
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__message_has_error_counter
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي تعذّر إيصالها"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__remedy__objection
+msgid "Objection (اعتراض على حكم غيابي)"
+msgstr "اعتراض على حكم غيابي"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,name:legal_litigation.appeal_rule_objection
+msgid "Objection to an in-absentia judgment"
+msgstr "مدة الاعتراض على الحكم الغيابي"
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_appeal_rule
+msgid ""
+"Objection, appeal and cassation each run to their own non-extendable clock, and\n"
+"                cassation runs differently again for a decision than for a judgment. Holding\n"
+"                the day-counts here - readable, correctable, marked for verification - is what\n"
+"                keeps a missed period a configuration question rather than a hidden bug."
+msgstr ""
+"الاعتراض والاستئناف والتمييز يجري كل منها بمدته غير القابلة للتمديد،\n"
+"                والتمييز على القرار يجري بغير ما يجري به على الحكم. وإمساك عدد الأيام\n"
+"                هنا - مقروءاً، قابلاً للتصحيح، مؤشَّراً للتحقق - هو ما يجعل المدة الفائتة\n"
+"                مسألة إعدادات لا خللاً خفياً."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit_party__role__co_party
+msgid "On Our Side (طرف معنا)"
+msgstr "طرف معنا"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__latest_development
+msgid ""
+"One line on where the case stands, for the manager's list. The detail lives "
+"in the hearings and the letters."
+msgstr ""
+"سطر واحد عن موقف الدعوى، لقائمة المدير. أما التفصيل ففي الجلسات والمكاتبات."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid ""
+"Only a legal approver or manager may close or re-open a case. The advocate "
+"who runs a file is not the one who declares it lost or settled."
+msgstr ""
+"لا يجوز إغلاق الدعوى أو إعادة فتحها إلا لمصدِّق قانوني أو مدير. فالمحامي "
+"الذي يتولى الملف ليس هو من يعلن خسارته أو تسويته."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__appeal_state__open
+msgid "Open"
+msgstr "مفتوحة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "Open Next Sitting"
+msgstr "فتح الجلسة التالية"
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_lawsuit
+msgid "Open the department's first case"
+msgstr "افتح أول دعوى للدائرة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit_party__role__opponent
+msgid "Opponent (خصم)"
+msgstr "خصم"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__attendance__opponent_absent
+msgid "Opponent Absent (غياب الخصم)"
+msgstr "غياب الخصم"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__opponent_names
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_list
+msgid "Opponents"
+msgstr "الخصوم"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit_party__role__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__our_capacity
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Our Capacity"
+msgstr "صفتنا"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__reference
+msgid "Our own case number, from the litigation sequence: LAW/2026/0007."
+msgstr "رقم الدعوى لدينا، من تسلسل الدعاوى والقضايا: LAW/2026/0007."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__risk
+msgid ""
+"Our own reading of how the case is likely to go. Drives the manager's "
+"attention, not the workflow."
+msgstr "تقديرنا نحن لمآل الدعوى المرجح. يوجه انتباه المدير، لا سير العمل."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__in_our_favour
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "Outcome"
+msgstr "النتيجة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Overdue"
+msgstr "متأخرة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__party_ids
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Parties"
+msgstr "الأطراف"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_judgment__in_our_favour__partial
+msgid "Partly (جزئياً)"
+msgstr "جزئياً"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit_party.py:0
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__partner_id
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Party"
+msgstr "الطرف"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__party_count
+msgid "Party Count"
+msgstr "عدد الأطراف"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_court__degree__personal_status
+msgid "Personal Status (أحوال شخصية)"
+msgstr "أحوال شخصية"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__our_capacity__plaintiff
+msgid "Plaintiff (مدعي)"
+msgstr "مدعي"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__purpose__pleading
+msgid "Pleading (مرافعة)"
+msgstr "مرافعة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__purpose__postponed
+msgid "Postponed (تأجيل)"
+msgstr "تأجيل"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__poa_id
+msgid "Power Of Attorney"
+msgstr "الوكالة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "Preparation"
+msgstr "التحضير"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__preparation
+msgid "Preparation (إعداد)"
+msgstr "إعداد"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__purpose__verdict
+msgid "Pronouncement Of Judgment (نطق بالحكم)"
+msgstr "نطق بالحكم"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__purpose
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+msgid "Purpose"
+msgstr "الغرض"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Re-open"
+msgstr "إعادة فتح"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "Re-opened."
+msgstr "أُعيد فتحها."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_reason__reason
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_reason_form
+msgid "Reason"
+msgstr "السبب"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Record Judgment"
+msgstr "تسجيل الحكم"
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_court
+msgid "Record the courts the department litigates in"
+msgstr "سجّل المحاكم التي تتقاضى الدائرة أمامها"
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_judgment
+msgid ""
+"Record the notification date and the engine works out the non-extendable window\n"
+"                to challenge the ruling, counts it down, and puts it on the advocate's list\n"
+"                before it lapses."
+msgstr ""
+"سجّل تاريخ التبليغ ويتولى النظام احتساب المدة غير القابلة للتمديد\n"
+"                للطعن في الحكم، ويَعُدُّها تنازلياً، ويضعها على قائمة المحامي\n"
+"                قبل أن تنقضي."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__reference
+msgid "Reference"
+msgstr "الإشارة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__remedy
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__remedy
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_search
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "Remedy"
+msgstr "طريق الطعن"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__required_preparation
+msgid "Required Preparation"
+msgstr "التحضير المطلوب"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__activity_user_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__activity_user_id
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__jurisdiction_id
+msgid ""
+"Restrict the rule to Federal Iraq or the Region, whose periods can differ. "
+"Left empty, it applies to both."
+msgstr ""
+"حصر القاعدة بالعراق الاتحادي أو بالإقليم، وقد تختلف المدد بينهما. وإن تُركت "
+"فارغة انطبقت عليهما معاً."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__court_degree
+msgid ""
+"Restrict the rule to rulings from courts of this degree. Left empty, the "
+"rule answers for any court whose ruling invokes the remedy - which is how "
+"one cassation period can cover the whole system."
+msgstr ""
+"حصر القاعدة بالأحكام الصادرة عن محاكم هذه الدرجة. وإن تُركت فارغة أجابت "
+"القاعدة عن أي محكمة يستدعي حكمها طريق الطعن هذا - وبذلك يمكن لمدة تمييز "
+"واحدة أن تغطي المنظومة كلها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__confidential
+msgid ""
+"Restricts the case to the legal manager and the officers of its court. "
+"Litigation is privileged by default, so this is often set."
+msgstr ""
+"تقصر الدعوى على المدير القانوني والمكلفين بمحكمتها. فالتقاضي محاط بالسرية "
+"أصلاً، ولهذا كثيراً ما تُؤشَّر."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__result
+msgid "Result"
+msgstr "النتيجة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "Result & Next Step"
+msgstr "النتيجة والخطوة التالية"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__risk
+msgid "Risk"
+msgstr "المخاطرة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__role
+msgid "Role"
+msgstr "موقع الطرف"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__ruling_type
+msgid "Ruling Type"
+msgstr "نوع الحكم"
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_judgment_closing
+msgid "Rulings whose non-extendable challenge window is still open."
+msgstr "الأحكام التي ما تزال مدة الطعن فيها غير القابلة للتمديد مفتوحة."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid ""
+"Saving the date the court fixed opens the next sitting as its own\n"
+"                                row and puts it on the advocate's activity list - once."
+msgstr ""
+"حفظ التاريخ الذي عيّنته المحكمة يفتح الجلسة التالية سطراً مستقلاً\n"
+"                                ويضعها على قائمة أنشطة المحامي - مرة واحدة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__sequence
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__sequence
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit_party__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_hearing.py:0
+msgid "Set the date the court fixed before opening the next sitting."
+msgstr "حدّد التاريخ الذي عيّنته المحكمة قبل فتح الجلسة التالية."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__appeal_filed
+msgid ""
+"Set when a طعن has been brought against this ruling. It stops the clock and "
+"clears the deadline off the advocate's list."
+msgstr ""
+"تُؤشَّر عند تقديم طعن في هذا الحكم، فتوقف المدة وترفع الموعد النهائي عن "
+"قائمة المحامي."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_hearing__date
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+msgid "Sitting Date"
+msgstr "تاريخ الانعقاد"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Start Preparation"
+msgstr "بدء الإعداد"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_appeal_rule
+msgid "State the statutory periods once, as data"
+msgstr "حدّد المدد القانونية مرة واحدة، كبيانات"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__activity_state
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__activity_state
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة استناداً إلى الأنشطة\n"
+"متأخر: تجاوز تاريخ الاستحقاق بالفعل\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط: أنشطة مستقبلية."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_court__court_count
+msgid "Sub-courts"
+msgstr "المحاكم الفرعية"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__subject
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Subject"
+msgstr "الموضوع"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__summary
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "Summary"
+msgstr "الملخص"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "The Appeal Window"
+msgstr "مدة الطعن"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "The Case"
+msgstr "الدعوى"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_form
+msgid "The Period"
+msgstr "المدة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "The Ruling"
+msgstr "الحكم"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "The Sitting"
+msgstr "الجلسة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__legal_basis
+msgid ""
+"The article that fixes the period - e.g. المادة ١٧١ من قانون المرافعات "
+"المدنية - so a shipped number can be checked against the text."
+msgstr ""
+"المادة التي تحدد المدة - مثل: المادة ١٧١ من قانون المرافعات المدنية - حتى "
+"يمكن التحقق من الرقم الوارد جاهزاً بمقابلته بالنص."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__appeal_lawsuit_id
+msgid "The case opened to run the challenge, where one is."
+msgstr "الدعوى المفتوحة للسير في الطعن، إن وُجدت."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__remedy
+msgid "The challenge this period governs."
+msgstr "طريق الطعن الذي تحكمه هذه المدة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__remedy
+msgid ""
+"The challenge this ruling invites. Defaulted from the court's degree and "
+"editable - an in-absentia judgment is objected to before it is appealed."
+msgstr ""
+"طريق الطعن الذي يقبله هذا الحكم. يُقترح تلقائياً من درجة المحكمة وهو قابل "
+"للتعديل - فالحكم الغيابي يُعترض عليه قبل أن يُستأنف."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__location
+msgid "The chamber or hall, where it matters: القاعة رقم ٣ / الطابق الثاني."
+msgstr "القاعة أو الصالة، حيث يهم ذلك: القاعة رقم ٣ / الطابق الثاني."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__entity_id
+msgid "The company entity the case concerns."
+msgstr "كيان الشركة الذي تخصه الدعوى."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__appeal_rule_id
+msgid ""
+"The configurable rule whose day-count sets the window. Matched from the "
+"remedy, the ruling type and the court degree, and overridable where a case "
+"needs it."
+msgstr ""
+"القاعدة القابلة للإعداد التي يحدد عدد أيامها المدة. تُطابَق من طريق الطعن "
+"ونوع الحكم ودرجة المحكمة، ويمكن تجاوزها حيث تحتاج دعوى إلى ذلك."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_court__gov_body_id
+msgid ""
+"The court as a body in the register, so its working calendar, its contacts "
+"and its officers drive the same clocks and letters as every other counter. "
+"Optional - a court can be recorded without one."
+msgstr ""
+"المحكمة بوصفها جهة في السجل، ليقود تقويم دوامها وجهات اتصالها ومكلفوها المدد"
+" والمكاتبات ذاتها كأي دائرة أخرى. اختيارية - يمكن تسجيل محكمة من دونها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__court_body_id
+msgid ""
+"The court as a body, if it is registered as one - the handle the وكالة check"
+" and the letter register use."
+msgstr ""
+"المحكمة بوصفها جهة، إن كانت مسجلة كذلك - وهي ما يستند إليه فحص الوكالة وسجل "
+"المكاتبات."
+
+#. module: legal_litigation
+#: model_terms:ir.actions.act_window,help:legal_litigation.action_legal_hearing
+msgid "The court diary"
+msgstr "مفكرة الجلسات"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__court_id
+msgid ""
+"The court sitting. Defaults to the case's court; set it when a sitting is "
+"held elsewhere - a referral to an expert, say."
+msgstr ""
+"المحكمة التي تنعقد فيها الجلسة. الافتراضي محكمة الدعوى؛ حددها حين تنعقد "
+"الجلسة في مكان آخر - كالإحالة إلى خبير مثلاً."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__court_id
+msgid ""
+"The court that gave the ruling. Its degree decides which challenge the "
+"ruling invites and how long there is to bring it."
+msgstr ""
+"المحكمة التي أصدرت الحكم. درجتها تحدد طريق الطعن الذي يقبله الحكم والمدة "
+"المتاحة لتقديمه."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_court__parent_court_id
+msgid ""
+"The court that hears a challenge to this one's judgments - the court of "
+"appeal above a first-instance court. Used to suggest where an appeal is "
+"lodged."
+msgstr ""
+"المحكمة التي تنظر الطعن في أحكام هذه المحكمة - محكمة الاستئناف الأعلى من "
+"محكمة البداءة. تُستعمل لاقتراح المحكمة التي يقدَّم إليها الاستئناف."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid ""
 "The court's own case number has not been recorded. The case cannot be "
 "tracked at the counter without it."
@@ -931,14 +1969,754 @@ msgstr ""
 "لم يُسجَّل رقم الدعوى لدى المحكمة، ولا يمكن متابعتها في الديوان من دونه."
 
 #. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__next_hearing_date
+msgid ""
+"The date of the earliest sitting not yet held. Read off the hearings, so it "
+"moves forward on its own as sittings are minuted."
+msgstr ""
+"تاريخ أقرب جلسة لم تنعقد بعد. يُقرأ من الجلسات، فيتقدم من تلقاء نفسه كلما "
+"دُوِّنت محاضرها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__next_hearing_date
+msgid ""
+"The date the court fixed for the next sitting. Recording it opens that "
+"sitting as its own row and puts it on the advocate's activity list."
+msgstr ""
+"التاريخ الذي عيّنته المحكمة للجلسة التالية. تسجيله يفتح تلك الجلسة سطراً "
+"مستقلاً ويضعها على قائمة أنشطة المحامي."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__judgment_date
+msgid "The day the court pronounced the ruling."
+msgstr "اليوم الذي نطقت فيه المحكمة بالحكم."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__tabligh_date
+msgid ""
+"The day the ruling was officially served on us. The appeal window counts "
+"from this date, not from the day of judgment."
+msgstr ""
+"اليوم الذي بُلِّغنا فيه بالحكم رسمياً. فمدة الطعن تُحسب من هذا التاريخ، لا "
+"من يوم صدور الحكم."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__next_hearing_id
+msgid ""
+"The follow-up sitting this one bred, if any. Its existence is what stops the"
+" roll-forward happening twice."
+msgstr ""
+"الجلسة اللاحقة المتولدة عن هذه الجلسة، إن وُجدت. ووجودها هو ما يمنع تكرار "
+"الترحيل مرتين."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__lawyer_id
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__lawyer_id
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__lawyer_id
+msgid ""
+"The internal advocate running the case. Their name has to be on a valid "
+"وكالة بالمرافعة before the case can be filed."
+msgstr ""
+"المحامي الداخلي الذي يتولى الدعوى. يجب أن يكون اسمه مذكوراً في وكالة "
+"بالمرافعة نافذة قبل أن يمكن إقامة الدعوى."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__next_deadline
+msgid ""
+"The nearest thing the case is counting down to - the next hearing or an open"
+" appeal window - so the docket can be sorted by what is most urgent without "
+"opening a file."
+msgstr ""
+"أقرب ما تَعُدُّ الدعوى تنازلياً نحوه - الجلسة القادمة أو مدة طعن مفتوحة - "
+"حتى يمكن ترتيب جدول الدعاوى على الأكثر إلحاحاً دون فتح أي ملف."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__court_case_number
+msgid ""
+"The number the court itself put on the case. It belongs to the court, not to"
+" us, so the clerk types it in when the case is registered."
+msgstr ""
+"الرقم الذي وضعته المحكمة نفسها على الدعوى. فهو للمحكمة لا لنا، ولذلك يدخله "
+"الكاتب عند قيد الدعوى."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__opponent_names
+msgid ""
+"The opponents' names in one string, so a case list can show who we are "
+"against without opening the file."
+msgstr ""
+"أسماء الخصوم في نص واحد، حتى تعرض قائمة الدعاوى من نخاصم دون فتح الملف."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit_party__partner_id
+msgid ""
+"The person or company, held in the partner register so their details are "
+"entered once and reused across every case they touch."
+msgstr ""
+"الشخص أو الشركة، محفوظاً في سجل جهات الاتصال حتى تُدخل بياناته مرة واحدة "
+"ويعاد استعمالها في كل دعوى يكون طرفاً فيها."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_reason_form
+msgid "The reason, in the words the record should keep."
+msgstr "السبب، بالكلمات التي ينبغي أن يحفظها السجل."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__appeal_days
+msgid "The statutory period from the matched rule."
+msgstr "المدة القانونية من القاعدة المطابقة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__appeal_activity_id
+msgid ""
+"The to-do put on the advocate's list for the deadline. Held so it is kept in"
+" step rather than duplicated."
+msgstr ""
+"المهمة الموضوعة على قائمة المحامي للموعد النهائي. تُمسك هنا لتبقى متزامنة "
+"بدل أن تتكرر."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__is_overdue
+msgid ""
+"The window closed without a challenge being lodged. On an adverse ruling "
+"this is a forfeited right - the reason the clock is worth keeping."
+msgstr ""
+"أُغلقت المدة دون تقديم طعن. وفي الحكم الصادر ضدنا هذا حق ضائع - وهو ما يجعل "
+"إمساك هذه المدة جديراً بالعناء."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "The window to challenge this ruling closes on"
+msgstr "تنتهي مدة الطعن في هذا الحكم بتاريخ"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_judgment.py:0
+msgid ""
+"The window to challenge this ruling closes on %(date)s and does not extend."
+msgstr "تنتهي مدة الطعن في هذا الحكم بتاريخ %(date)s وهي غير قابلة للتمديد."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid ""
+"The window to challenge this ruling has lapsed. If it was adverse and\n"
+"                        unchallenged, the right of appeal is gone."
+msgstr ""
+"انقضت مدة الطعن في هذا الحكم. فإن كان صادراً ضدنا ولم يُطعن\n"
+"                        فيه، فقد سقط حق الطعن."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__court_case_year
+msgid ""
+"The year the court's number runs in: ٢٠٢٦. Quoted with the number at every "
+"counter, so it is a field of its own rather than buried in one."
+msgstr ""
+"السنة التي يجري بها عدد المحكمة: ٢٠٢٦. تُذكر مع العدد عند كل دائرة، فلذلك هي"
+" حقل مستقل لا رقم مدفون في حقل آخر."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_correspondence__lawsuit_id
+msgid ""
+"The الدعوى this letter belongs to. Empty for court post that arrived before "
+"a case was opened for it."
+msgstr ""
+"الدعوى التي تعود إليها هذه المكاتبة. تُترك فارغة لبريد المحكمة الوارد قبل أن"
+" تُفتح له دعوى."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__poa_id
+msgid ""
+"The وكالة بالمرافعة the advocate stands on. Left empty, filing looks for a "
+"valid litigation deed for the advocate; either way, the court will not hear "
+"anybody who is not on one."
+msgstr ""
+"الوكالة بالمرافعة التي يستند إليها المحامي. إن تُركت فارغة بحثت الإقامة عن "
+"وكالة مرافعة نافذة باسم المحامي؛ وفي الحالين، المحكمة لا تقبل مرافعة من ليس "
+"مذكوراً في وكالة."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "The وكالة “%s” is not a valid litigation deed for this court."
 msgstr "الوكالة «%s» ليست وكالة مرافعة نافذة أمام هذه المحكمة."
 
 #. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_form
+msgid ""
+"These periods are statutory and non-extendable. A shipped figure marked\n"
+"                        “Needs Re-check” must be confirmed against the current text before it is\n"
+"                        relied on at a court - missing an appeal period forfeits the right."
+msgstr ""
+"هذه المدد قانونية غير قابلة للتمديد. والرقم الوارد جاهزاً المؤشَّر\n"
+"                        «بحاجة لإعادة تحقّق» يجب تثبيته بمقابلته بالنص النافذ قبل الاعتماد\n"
+"                        عليه أمام محكمة - ففوات مدة الطعن يسقط الحق."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__our_capacity__third_party
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit_party__role__third_party
+msgid "Third Party (شخص ثالث)"
+msgstr "شخص ثالث"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_lawsuit__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__activity_exception_decoration
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__activity_exception_decoration
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي المسجل."
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__state__appeal
+msgid "Under Appeal (طعن)"
+msgstr "طعن"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_judgment.py:0
+msgid "Unsupported comparison on days left."
+msgstr "مقارنة غير مدعومة على الأيام المتبقية."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_search
+msgid "Upcoming"
+msgstr "قادمة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "Upcoming Hearings"
+msgstr "الجلسات القادمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_lawsuit__priority__1
+msgid "Urgent"
+msgstr "عاجلة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_appeal_rule__verification_status
+msgid "Verification Status"
+msgstr "حالة التحقق"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_appeal_rule__verification_status__verified
+msgid "Verified"
+msgstr "مُتحقَّق منها"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "We Are Defendant"
+msgstr "نحن المدعى عليه"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_search
+msgid "We Are Plaintiff"
+msgstr "نحن المدعي"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__attendance__we_attended
+msgid "We Attended (حضرنا)"
+msgstr "حضرنا"
+
+#. module: legal_litigation
+#: model:ir.model.fields.selection,name:legal_litigation.selection__legal_hearing__attendance__we_absent
+msgid "We Were Absent (تغيبنا)"
+msgstr "تغيبنا"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "What Is Next"
+msgstr "ما هو التالي"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_form
+msgid "What Kind Of Court"
+msgstr "نوع المحكمة"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__required_preparation
+msgid ""
+"What has to be ready for this sitting - a memo, a witness, a fee paid, an "
+"original produced."
+msgstr ""
+"ما يجب أن يكون جاهزاً لهذه الجلسة - لائحة، أو شاهد، أو رسم مدفوع، أو أصل "
+"مُبرَز."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__next_step
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "What has to happen before the next sitting."
+msgstr "ما يجب أن يحصل قبل الجلسة التالية."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__claim_amount
+msgid ""
+"What is being claimed, for us or against us. The department's exposure, and "
+"the number a manager sums across the docket."
+msgstr ""
+"ما يُطالَب به، لنا أو علينا. وهو انكشاف الدائرة، والرقم الذي يجمعه المدير "
+"عبر جدول الدعاوى."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid ""
+"What must be ready: a memo, a witness, an original produced, a fee paid."
+msgstr "ما يجب أن يكون جاهزاً: لائحة، أو شاهد، أو أصل مُبرَز، أو رسم مدفوع."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__subject
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "What the case is about, in the words it will be argued in."
+msgstr "موضوع الدعوى، بالكلمات التي ستجري بها المرافعة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_court__name
+msgid ""
+"What the court is called: محكمة بداءة الكرخ، محكمة استئناف بغداد/الرصافة."
+msgstr "اسم المحكمة: محكمة بداءة الكرخ، محكمة استئناف بغداد/الرصافة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__summary
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "What the court ruled, in our own words."
+msgstr "ما قضت به المحكمة، بكلماتنا نحن."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__title
+msgid "What the department calls the case: مطالبة الوركاء بأجور متأخرة."
+msgstr "ما تسمي به الدائرة الدعوى: مطالبة الوركاء بأجور متأخرة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__name
+msgid "What the rule is called: مدة الاستئناف، مدة التمييز على القرارات."
+msgstr "اسم القاعدة: مدة الاستئناف، مدة التمييز على القرارات."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__amount_awarded
+msgid "What the ruling ordered paid, for us or against us."
+msgstr "ما حكم به من مبالغ، لنا أو علينا."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__result
+msgid ""
+"What the sitting produced. Once this is recorded the sitting counts as held,"
+" and the case's “next hearing” rolls to the sitting after it."
+msgstr ""
+"ما أسفرت عنه الجلسة. متى سُجِّل عُدَّت الجلسة منعقدة، وانتقلت «الجلسة "
+"القادمة» للدعوى إلى الجلسة التي تليها."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "What the sitting produced. Recording it marks the sitting held."
+msgstr "ما أسفرت عنه الجلسة. وتسجيله يؤشر انعقادها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__minutes
+msgid "What was said and done, in our own note - not the court's record."
+msgstr "ما قيل وما جرى، بمذكرتنا نحن - لا بمحضر المحكمة."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_hearing_form
+msgid "What was said and done, in our own note."
+msgstr "ما قيل وما جرى، بمذكرتنا نحن."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_appeal_rule_form
+msgid "When It Applies"
+msgstr "متى تنطبق"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__date
+msgid "When the court sits. What the calendar and the activity are keyed on."
+msgstr "متى تنعقد المحكمة. وعليه يُبنى التقويم والنشاط."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__court_id
+msgid "Where the case is being heard. Required before it can be filed."
+msgstr "المحكمة التي تُنظر أمامها الدعوى. مطلوبة قبل أن يمكن إقامتها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__state
+msgid ""
+"Where the case is in its life. Moved by the buttons on the header, each of "
+"which checks server-side that the move is allowed."
+msgstr ""
+"أين بلغت الدعوى من مسارها. تُحرَّك بأزرار الترويسة، وكل زر يتحقق على الخادم "
+"من أن النقلة مسموح بها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_judgment__appeal_state
+msgid ""
+"Where the challenge period stands. What the docket groups and colours on."
+msgstr "أين تقف مدة الطعن. وعليها يجمِّع جدول الدعاوى ويلوِّن."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_court__governorate_id
+msgid ""
+"Where the court sits. A governorate under Federal Iraq or the Kurdistan "
+"Region, so a case list can be grouped by where it is being heard."
+msgstr ""
+"مقر انعقاد المحكمة. محافظة ضمن العراق الاتحادي أو إقليم كردستان، حتى يمكن "
+"تجميع قائمة الدعاوى بحسب مكان نظرها."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit_party__role
+msgid ""
+"Where this party stands in the case. Opponents are what a case list shows; "
+"the rest matter when the file is worked."
+msgstr ""
+"موقع هذا الطرف في الدعوى. فالخصوم هم ما تعرضه قائمة الدعاوى؛ والبقية يهمون "
+"عند العمل على الملف."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__appeal_window_open
+msgid ""
+"Whether a judgment on this case still has a live, non-extendable window to "
+"challenge it."
+msgstr "هل ما يزال لحكم في هذه الدعوى مدة طعن قائمة غير قابلة للتمديد."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_appeal_rule__ruling_type
+msgid ""
+"Whether the period is the one for challenging a full judgment or an "
+"interlocutory decision. Cassation, above all, differs between the two."
+msgstr ""
+"هل هذه مدة الطعن في حكم تام أم في قرار صادر أثناء نظر الدعوى. والتمييز قبل "
+"غيره يختلف بينهما."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_form
+msgid "Which hall, which counter, the clerk's name."
+msgstr "أي قاعة، وأي شباك، واسم الكاتب."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_court__degree
+msgid ""
+"Which rung of the court ladder this is. The appeal-window rules are keyed on"
+" it, so it decides how long there is to challenge a judgment."
+msgstr ""
+"أي درجة من سلم المحاكم هذه المحكمة. فقواعد مدد الطعن مبنية عليها، وهي التي "
+"تحدد المدة المتاحة للطعن في الحكم."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit__our_capacity
+msgid ""
+"Which side we are on. It decides who chases whom and how a judgment against "
+"the case is read."
+msgstr "في أي جانب نقف. وهي تحدد من يلاحق من، وكيف يُقرأ حكم صادر ضد الدعوى."
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Who Is Running It"
+msgstr "من يتولاها"
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__attendance
+msgid ""
+"Who was there. Absence is not a footnote in Iraqi procedure - it decides "
+"whether a judgment is in absentia and which challenge it invites."
+msgstr ""
+"من حضر. فالغياب في المرافعات العراقية ليس هامشاً - هو ما يقرر هل الحكم غيابي"
+" وأي طريق طعن يقبله."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_lawsuit_reason__reason
+msgid ""
+"Why the case is being closed, or on what ground it is challenged. Read "
+"afterwards by whoever asks how the matter ended."
+msgstr ""
+"لماذا تُغلق الدعوى، أو على أي سبب يُقام الطعن. يقرؤه لاحقاً كل من يسأل كيف "
+"انتهت المسألة."
+
+#. module: legal_litigation
+#: model:ir.model.fields,help:legal_litigation.field_legal_hearing__purpose
+msgid "Why the court is sitting. Drives what the advocate must prepare."
+msgstr "الغرض من انعقاد الجلسة. وعليه يُبنى ما يجب على المحامي تحضيره."
+
+#. module: legal_litigation
+#: model:ir.model.fields,field_description:legal_litigation.field_legal_judgment__is_overdue
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "Window Lapsed"
+msgstr "انقضت المدة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_search
+msgid "Window Open"
+msgstr "المدة مفتوحة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "Year"
+msgstr "السنة"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_judgment_form
+msgid "and is non-extendable. A to-do has been placed on the advocate's list."
+msgstr "وهي غير قابلة للتمديد. وقد وُضعت مهمة على قائمة المحامي."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_court.py:0
+msgid "court_id"
+msgstr "court_id"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "lawsuit_id"
+msgstr "lawsuit_id"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "the advocate"
 msgstr "المحامي"
 
 #. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_hearing.py:0
+msgid "unscheduled"
+msgstr "غير محددة"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_erbil
+msgid "أربيل"
+msgstr "أربيل"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_anbar
+msgid "الأنبار"
+msgstr "الأنبار"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_basra
+msgid "البصرة"
+msgstr "البصرة"
+
+#. module: legal_litigation
+#: model:legal.gov.body,short_name:legal_litigation.body_court_cassation
+msgid "التمييز الاتحادية"
+msgstr "التمييز الاتحادية"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_sulaymaniyah
+msgid "السليمانية"
+msgstr "السليمانية"
+
+#. module: legal_litigation
+#: model:legal.gov.body,salutation:legal_litigation.body_court_cassation
+msgid "السيد رئيس محكمة التمييز الاتحادية المحترم"
+msgstr "السيد رئيس محكمة التمييز الاتحادية المحترم"
+
+#. module: legal_litigation
+#: model:legal.gov.body,salutation:legal_litigation.body_court_basra
+msgid "السيد قاضي محكمة بداءة البصرة المحترم"
+msgstr "السيد قاضي محكمة بداءة البصرة المحترم"
+
+#. module: legal_litigation
+#: model:legal.gov.body,salutation:legal_litigation.body_court_rusafa
+msgid "السيد قاضي محكمة بداءة الرصافة المحترم"
+msgstr "السيد قاضي محكمة بداءة الرصافة المحترم"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_qadisiyah
+msgid "القادسية"
+msgstr "القادسية"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_muthanna
+msgid "المثنى"
+msgstr "المثنى"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_najaf
+msgid "النجف الأشرف"
+msgstr "النجف الأشرف"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_babil
+msgid "بابل"
+msgstr "بابل"
+
+#. module: legal_litigation
+#: model:legal.gov.body,short_name:legal_litigation.body_court_basra
+msgid "بداءة البصرة"
+msgstr "بداءة البصرة"
+
+#. module: legal_litigation
+#: model:legal.gov.body,short_name:legal_litigation.body_court_rusafa
+msgid "بداءة الرصافة"
+msgstr "بداءة الرصافة"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_baghdad
+msgid "بغداد"
+msgstr "بغداد"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_duhok
+msgid "دهوك"
+msgstr "دهوك"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_diyala
+msgid "ديالى"
+msgstr "ديالى"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_dhiqar
+msgid "ذي قار"
+msgstr "ذي قار"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_saladin
+msgid "صلاح الدين"
+msgstr "صلاح الدين"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_karbala
+msgid "كربلاء المقدسة"
+msgstr "كربلاء المقدسة"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_kirkuk
+msgid "كركوك"
+msgstr "كركوك"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_appeal_kurdistan
+msgid "محكمة استئناف أربيل"
+msgstr "محكمة استئناف أربيل"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_appeal_basra
+msgid "محكمة استئناف البصرة الاتحادية"
+msgstr "محكمة استئناف البصرة الاتحادية"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_appeal_najaf
+msgid "محكمة استئناف النجف الاتحادية"
+msgstr "محكمة استئناف النجف الاتحادية"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_appeal_rusafa
+msgid "محكمة استئناف بغداد/الرصافة الاتحادية"
+msgstr "محكمة استئناف بغداد/الرصافة الاتحادية"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_appeal_karkh
+msgid "محكمة استئناف بغداد/الكرخ الاتحادية"
+msgstr "محكمة استئناف بغداد/الكرخ الاتحادية"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_appeal_nineveh
+msgid "محكمة استئناف نينوى الاتحادية"
+msgstr "محكمة استئناف نينوى الاتحادية"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_cassation_federal
+#: model:legal.gov.body,name:legal_litigation.body_court_cassation
+msgid "محكمة التمييز الاتحادية"
+msgstr "محكمة التمييز الاتحادية"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_labor_baghdad
+msgid "محكمة العمل - بغداد"
+msgstr "محكمة العمل - بغداد"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_administrative_judiciary
+msgid "محكمة القضاء الإداري"
+msgstr "محكمة القضاء الإداري"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_bidaa_erbil
+msgid "محكمة بداءة أربيل"
+msgstr "محكمة بداءة أربيل"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_bidaa_basra
+#: model:legal.gov.body,name:legal_litigation.body_court_basra
+msgid "محكمة بداءة البصرة"
+msgstr "محكمة بداءة البصرة"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_bidaa_rusafa
+#: model:legal.gov.body,name:legal_litigation.body_court_rusafa
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_court_form
+msgid "محكمة بداءة الرصافة"
+msgstr "محكمة بداءة الرصافة"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_bidaa_karkh
+msgid "محكمة بداءة الكرخ"
+msgstr "محكمة بداءة الكرخ"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_bidaa_mosul
+msgid "محكمة بداءة الموصل"
+msgstr "محكمة بداءة الموصل"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_bidaa_najaf
+msgid "محكمة بداءة النجف"
+msgstr "محكمة بداءة النجف"
+
+#. module: legal_litigation
+#: model:legal.court,name:legal_litigation.court_civil_servants
+msgid "محكمة قضاء الموظفين"
+msgstr "محكمة قضاء الموظفين"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,legal_basis:legal_litigation.appeal_rule_objection
+msgid "مدة الاعتراض على الحكم الغيابي - قانون المرافعات المدنية"
+msgstr "مدة الاعتراض على الحكم الغيابي - قانون المرافعات المدنية"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,legal_basis:legal_litigation.appeal_rule_labor
+msgid "مدة الطعن أمام محاكم العمل - قانون العمل"
+msgstr "مدة الطعن أمام محاكم العمل - قانون العمل"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,legal_basis:legal_litigation.appeal_rule_appeal
+msgid "مدة الطعن استئنافاً - قانون المرافعات المدنية"
+msgstr "مدة الطعن استئنافاً - قانون المرافعات المدنية"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,legal_basis:legal_litigation.appeal_rule_cassation_judgment
+msgid "مدة الطعن تمييزاً على الأحكام - قانون المرافعات المدنية"
+msgstr "مدة الطعن تمييزاً على الأحكام - قانون المرافعات المدنية"
+
+#. module: legal_litigation
+#: model:legal.appeal.rule,legal_basis:legal_litigation.appeal_rule_cassation_decision
+msgid "مدة الطعن تمييزاً على القرارات - قانون المرافعات المدنية"
+msgstr "مدة الطعن تمييزاً على القرارات - قانون المرافعات المدنية"
+
+#. module: legal_litigation
+#: model_terms:ir.ui.view,arch_db:legal_litigation.view_legal_lawsuit_form
+msgid "مطالبة شركة الوركاء بأجور متأخرة"
+msgstr "مطالبة شركة الوركاء بأجور متأخرة"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_maysan
+msgid "ميسان"
+msgstr "ميسان"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_nineveh
+msgid "نينوى"
+msgstr "نينوى"
+
+#. module: legal_litigation
+#: model:legal.jurisdiction,name:legal_litigation.jurisdiction_gov_wasit
+msgid "واسط"
+msgstr "واسط"
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid ""
 "“%(case)s” cannot be filed yet:\n"
 "\n"
@@ -949,19 +2727,51 @@ msgstr ""
 "%(reasons)s"
 
 #. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "“%s” has already been filed."
+msgstr "«%s» سبق أن أُقيمت."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "“%s” is already closed."
+msgstr "«%s» مغلقة بالفعل."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "“%s” is not a filed case awaiting a hearing."
+msgstr "«%s» ليست دعوى مقيدة بانتظار جلسة."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "“%s” is not at a point where a judgment can be challenged."
 msgstr "«%s» ليست في مرحلة يمكن فيها الطعن في الحكم."
 
 #. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "“%s” is not closed."
+msgstr "«%s» ليست مغلقة."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
+msgid "“%s” is past assessment."
+msgstr "«%s» تجاوزت مرحلة التقييم."
+
+#. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid "“%s” is recorded as filed but carries no court case number."
 msgstr "«%s» مقيدة على أنها مقامة لكنها بلا رقم دعوى لدى المحكمة."
 
 #. module: legal_litigation
+#. odoo-python
+#: code:addons/legal_litigation/models/legal_lawsuit.py:0
 msgid ""
 "“%s” is recorded as filed but has no court. A filed case is filed somewhere."
 msgstr ""
 "«%s» مقيدة على أنها مقامة لكن بلا محكمة، والدعوى المقامة تقام لدى محكمة."
-
-#. module: legal_litigation
-msgid "Preparation"
-msgstr "التحضير"

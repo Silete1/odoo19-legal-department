@@ -1,0 +1,2774 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* legal_correspondence
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-31 09:30+0000\n"
+"PO-Revision-Date: 2026-08-31 09:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_contact_note_wizard.py:0
+msgid " Promised for %s."
+msgstr " ووعدوا بتاريخ %s."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid ""
+"%s cannot be deleted: it has a register number. Void it with a reason "
+"instead - the number stays in the book, struck through, so the register "
+"never has a hole in it."
+msgstr ""
+"لا يمكن حذف %s: له رقم مقيد في السجل. يُلغى مع بيان السبب بدلاً من الحذف - "
+"فالرقم يبقى في الدفتر مشطوباً عليه، كي لا تبقى في السجل ثغرة أبداً."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_sequence_mixin.py:0
+msgid "%s is not a stored field"
+msgstr "%s ليس حقلاً مخزوناً"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_contact_note_wizard.py:0
+msgid ""
+"'%s' is not a contact note, so recording it here would take a register "
+"number for a telephone call."
+msgstr ""
+"'%s' ليس تدوين اتصال، وتسجيله هنا يعني منح رقم من السجل لمكالمة هاتفية."
+
+#. module: legal_correspondence
+#: model:ir.actions.report,print_report_name:legal_correspondence.action_report_official_letter
+#: model:ir.actions.report,print_report_name:legal_correspondence.action_report_official_letter_drawn
+msgid "'كتاب %s' % (object.our_number or object.subject)"
+msgstr "'كتاب %s' % (object.our_number or object.subject)"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid ""
+"- not to\n"
+"                        the body that received the letter first."
+msgstr "- لا إلى الجهة التي تسلّمت الكتاب أولاً."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid ". الكتاب الرسمي لا يوجد قبل الرقم."
+msgstr ". الكتاب الرسمي لا يوجد قبل الرقم."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "<b>الإشارة:</b>"
+msgstr "<b>الإشارة:</b>"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "<b>التاريخ:</b>"
+msgstr "<b>التاريخ:</b>"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "<b>العدد:</b>"
+msgstr "<b>العدد:</b>"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "<b>في:</b>"
+msgstr "<b>في:</b>"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "<b>كتابكم المرقم:</b>"
+msgstr "<b>كتابكم المرقم:</b>"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "A body cannot refer a file to itself."
+msgstr "لا يمكن لجهة أن تحيل المعاملة إلى نفسها."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__is_reminder
+msgid ""
+"A chase. Does not restart the clock and does not count as a new submission."
+msgstr "ملاحقة لا غير: لا تعيد ضبط المهلة ولا تُحتسب معاملة جديدة."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__secrecy
+msgid ""
+"A confidential book is kept physically apart and its entries are visible "
+"only to the legal manager and the officers of the body concerned."
+msgstr "سري"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid ""
+"A contact note is only worth keeping if it says who was spoken to. That name"
+" is the most valuable field on the record."
+msgstr ""
+"لا قيمة لتدوين اتصال لا يذكر من جرى الحديث معه. فذلك الاسم هو أثمن حقل في "
+"القيد."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid ""
+"A contact note never touched the register, so it cannot carry a register "
+"number. Record the call as a note against the letter it concerns."
+msgstr ""
+"تدوين الاتصال لم يمر بالسجل أصلاً، فلا يجوز أن يحمل رقماً منه. دوّن المكالمة"
+" ملاحظةً على الكتاب الذي تخصه."
+
+#. module: legal_correspondence
+#: model:ir.model.constraint,message:legal_correspondence.constraint_legal_correspondence_kind_code_uniq
+msgid "A correspondence kind code must be unique."
+msgstr "رمز نوع المراسلة يجب أن يكون فريداً."
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_correspondence_kind
+msgid ""
+"A customer who needs إنذار قانوني adds a row and ticks \"expects a reply\" and\n"
+"                \"closes nothing\". Every clock, counter and board understands it immediately,\n"
+"                because the meaning is carried by the flags and not by the code."
+msgstr ""
+"من يحتاج إلى إنذار قانوني يضيف سطراً ويؤشّر \"يتوقع جواباً\" و\"لا يغلق "
+"شيئاً\". فتفهمه كل مهلة وكل عدّاد وكل لوحة فوراً، لأن المعنى تحمله المؤشرات "
+"لا الرمز."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__is_submission
+msgid ""
+"A filing at the counter that starts or advances something. This is what a "
+"cycle-time statistic counts from."
+msgstr ""
+"تقديم عند الشباك يبدأ معاملة أو يحركها. ومن هذا تُحتسب إحصاءات زمن الإنجاز."
+
+#. module: legal_correspondence
+#: model:ir.model.constraint,message:legal_correspondence.constraint_legal_letter_template_code_company_uniq
+msgid "A letter template code must be unique per company."
+msgstr "رمز قالب الكتاب يجب أن يكون فريداً في الشركة الواحدة."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid ""
+"A letter that concerns eleven engineers is <b>one</b> letter with\n"
+"                                eleven numbered rows, printed as the ت table - not eleven letters."
+msgstr ""
+"الكتاب الذي يخص أحد عشر مهندساً هو كتاب <b>واحد</b> بأحد عشر سطراً مرقماً، "
+"تُطبع جدولَ ت - لا أحد عشر كتاباً."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid ""
+"A receipt proves the letter was <b>received</b>. It closes nothing and answers\n"
+"                        nothing, and it must never stop the reply clock - otherwise the department\n"
+"                        reports a two-day turnaround at a body that has not yet opened the file."
+msgstr ""
+"الوصل يثبت أن الكتاب <b>استُلم</b> لا غير. لا يغلق شيئاً ولا يجيب عن شيء، "
+"ويجب ألا يوقف مهلة الرد أبداً - وإلا سجّلت الدائرة زمن إنجاز يومين لدى جهة "
+"لم تفتح الإضبارة بعد."
+
+#. module: legal_correspondence
+#: model:ir.model.constraint,message:legal_correspondence.constraint_legal_register_code_company_uniq
+msgid "A register code must be unique per company."
+msgstr "رمز السجل يجب أن يكون فريداً في الشركة الواحدة."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_sequence_mixin.py:0
+msgid ""
+"A register number must contain a digit group the software can increment, for"
+" example 1247, 2026/1247 or ق/2026/1247. '%(number)s' does not."
+msgstr ""
+"رقم السجل يجب أن يتضمن مجموعة أرقام يستطيع النظام زيادتها، مثل 1247 أو "
+"2026/1247 أو ق/2026/1247. '%(number)s' لا يتضمن ذلك."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__is_contact_note
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__is_contact_note
+msgid ""
+"A telephone call or a personal visit. It never touched the book, so it takes"
+" no number - but it is evidence, it moves the reply clock, and it suppresses"
+" the next chase when the counter has promised a date."
+msgstr "مراجعة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__correspondence_id
+msgid "About"
+msgstr "بشأن"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_contact_note_wizard_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Abu Ahmed - deputy head of the section"
+msgstr "أبو أحمد - معاون مدير القسم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_needaction
+msgid "Action Needed"
+msgstr "يتطلب إجراءً"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__active
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__active
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__active
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__active
+msgid "Active"
+msgstr "فعال"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__body_id
+msgid "Addressed To"
+msgstr "الجهة المخاطبة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "After greetings, ..."
+msgstr "تحية طيبة وبعد، ..."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Allocated at registration"
+msgstr "يُمنح عند التسجيل"
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_contact_note_log
+msgid ""
+"An Iraqi file moves because somebody rang the section head, not because a letter\n"
+"                was sent. None of that is correspondence - no number was taken - but all of it\n"
+"                is evidence, and it is what tells the software to stop chasing."
+msgstr ""
+"المعاملة في العراق تتحرك لأن أحداً هاتف مدير القسم، لا لأن كتاباً أُرسل. لا "
+"شيء من ذلك مراسلة - لم يؤخذ له رقم - لكنه كله دليل، وهو ما يخبر النظام أن "
+"يكف عن الملاحقة."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid ""
+"An entry of this kind takes <b>no register number</b>. It never touched the\n"
+"                        book - somebody picked up a telephone - but it is evidence, it moves the\n"
+"                        reply clock onto the date the counter promised, and it stops the next chase\n"
+"                        firing on a body that has already answered."
+msgstr ""
+"قيد من هذا النوع <b>لا يأخذ رقماً في السجل</b>. لم يمر بالدفتر أصلاً - أحدهم"
+" رفع سماعة الهاتف - لكنه دليل، ينقل مهلة الرد إلى التاريخ الذي وعد به "
+"الشباك، ويمنع انطلاق الملاحقة التالية على جهة أجابت فعلاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__reply_state__answered
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Answered"
+msgstr "مجاب"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__answer_ids
+msgid "Answers And Notes"
+msgstr "الأجوبة والتدوينات"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__is_substantive_reply
+msgid "Answers Its Parent"
+msgstr "يجيب عن الكتاب الأصل"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_search
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Attach Filed PDF"
+msgstr "إرفاق النسخة المحفوظة PDF"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد مرفقات الرسائل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__reply_state__awaiting
+msgid "Awaiting"
+msgstr "بانتظار الرد"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_correspondence_awaiting
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_correspondence_awaiting
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Awaiting Reply"
+msgstr "بانتظار الرد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__gov_body_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__body_template
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__body_id
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_search
+msgid "Body"
+msgstr "الجهة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__channel__hybrid
+msgid "Both"
+msgstr "كلاهما"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_contact_note_wizard_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_void_wizard_form
+msgid "Cancel"
+msgstr "تراجع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__carried_by_id
+msgid "Carried By"
+msgstr "المراجع / المعتمد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__channel
+msgid "Channel"
+msgstr "القناة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__closes_thread
+msgid "Closes The Thread"
+msgstr "يغلق الخيط"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__code
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__code
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__colour
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__colour
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__colour
+msgid "Colour"
+msgstr "اللون"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__company_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__company_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__entity_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__entity_id
+msgid "Concerns"
+msgstr "الكيان المعني"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__secrecy__secret
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_register_wizard__secrecy__secret
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_register__secrecy__secret
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_search
+msgid "Confidential"
+msgstr "سري"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_void_wizard_form
+msgid "Confirm Void"
+msgstr "تأكيد الإلغاء"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__is_contact_note
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__is_contact_note
+msgid "Consumes No Register Number"
+msgstr "لا يستهلك رقماً من السجل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__contact_date
+msgid "Contact Date"
+msgstr "تاريخ الاتصال"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+#: code:addons/legal_correspondence/wizard/legal_contact_note_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Contact Note"
+msgstr "التدوين"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_contact_note_log
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_correspondence_contact_notes
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Contact Notes"
+msgstr "تدوينات الاتصال"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_contact_note_wizard.py:0
+msgid "Contact note - %s"
+msgstr "تدوين اتصال - %s"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__cc_list
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Copies To"
+msgstr "نسخة منه إلى"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__correspondence_id
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_config_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Correspondence"
+msgstr "المراسلة"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_correspondence
+msgid "Correspondence Entry"
+msgstr "قيد المراسلات"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_correspondence_kind
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid "Correspondence Kind"
+msgstr "نوع المراسلة"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_correspondence_kind
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_config_correspondence_kind
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_list
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_search
+msgid "Correspondence Kinds"
+msgstr "أنواع المراسلات"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_register
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_correspondence_root
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_list
+msgid "Correspondence Register"
+msgstr "سجل الصادر والوارد"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_correspondence_line
+msgid "Correspondence Subject Line"
+msgstr "سطر جدول الموضوع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__default_reply_days
+msgid ""
+"Counted in the body's own working days through its calendar, so a target "
+"does not cry wolf every Friday and every Eid."
+msgstr ""
+"تُحتسب بأيام العمل الخاصة بالجهة ووفق تقويمها، كي لا يستنفر الموعد كل جمعة "
+"وكل عيد."
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_correspondence_awaiting
+msgid ""
+"Counted in the body's own working days, and moved by any promise recorded on the\n"
+"                telephone. A chase list that fires on a counter which already answered is a\n"
+"                chase list people switch off."
+msgstr ""
+"تُحتسب بأيام عمل الجهة نفسها، وينقلها أي وعد دُوّن على الهاتف. فقائمة "
+"الملاحقة التي تنطلق على شباك أجاب فعلاً هي قائمة يطفئها الناس."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__reply_days
+msgid ""
+"Counted through the body's own calendar, so a target does not fall due on a "
+"Friday the counter was never open on."
+msgstr ""
+"تُحتسب وفق تقويم الجهة نفسها، كي لا يحل الموعد يوم جمعة لم يُفتح فيه الشباك "
+"أصلاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__outbound_method__courier
+msgid "Courier"
+msgstr "بريد سريع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__create_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__create_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__create_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__create_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__create_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__create_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__create_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__create_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__create_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__create_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__create_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__create_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__create_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__create_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_list
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__direction
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__direction
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__direction
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_search
+msgid "Direction"
+msgstr "الاتجاه"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__display_name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_sequence_mixin__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__document_type_id
+msgid "Document Type"
+msgstr "نوع المستمسك"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__state__draft
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_letter_template__letterhead_variant__drawn
+msgid "Draw the emblem and the letterhead"
+msgstr "رسم الشعار والترويسة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_search
+msgid "Draws The Emblem"
+msgstr "يرسم الشعار"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_sequence_mixin
+msgid "Editable Register Numbering"
+msgstr "ترقيم السجل القابل للتعديل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__outbound_method__email
+msgid "Email"
+msgstr "بريد إلكتروني"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__verification_token
+msgid ""
+"Encoded in the QR on the printed letter, so a reader can check the number "
+"against the register. It is not a signature."
+msgstr ""
+"يُضمَّن في رمز QR على الكتاب المطبوع، ليتحقق القارئ من الرقم مقابل السجل. "
+"وهو ليس توقيعاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__show_qr
+msgid ""
+"Encodes the entry's verification token, so a reader can check the number "
+"against the register. It is not a signature."
+msgstr ""
+"يُضمِّن رمز التحقق الخاص بالقيد، ليتحقق القارئ من الرقم مقابل السجل. وهو ليس"
+" توقيعاً."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_list
+msgid "Entries"
+msgstr "القيود"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__correspondence_id
+msgid "Entry"
+msgstr "القيد"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid ""
+"Entry %(entry)s cannot go from %(old)s back to %(new)s. A register moves "
+"forward only: a mistake is voided with a reason, never un-registered."
+msgstr ""
+"القيد %(entry)s لا يمكن أن يعود من %(old)s إلى %(new)s. فالسجل يمضي إلى "
+"الأمام فقط: الخطأ يُلغى مع بيان السبب، ولا يُرفع تسجيله أبداً."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid ""
+"Entry %(entry)s is already in the register, so its %(fields)s cannot be "
+"changed. The ministry has this number in its own book. Void it with a reason"
+" and register a fresh entry - that is what a line drawn across a page means."
+msgstr ""
+"القيد %(entry)s مقيد في السجل فعلاً، فلا يمكن تغيير %(fields)s فيه. الوزارة "
+"لديها هذا الرقم في دفترها هي. ألغِه مع بيان السبب وسجّل قيداً جديداً - فهذا "
+"هو معنى السطر المشطوب في الصفحة."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "Entry '%s' needs a date. The number is allocated against it."
+msgstr "القيد '%s' يحتاج إلى تاريخ. فالرقم يُمنح استناداً إليه."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "Entry '%s' needs a register book before it can be numbered."
+msgstr "القيد '%s' يحتاج إلى دفتر سجل قبل أن يُمنح رقماً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__entry_count
+msgid "Entry Count"
+msgstr "عدد القيود"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__reply_expected
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__expects_reply
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_search
+msgid "Expects A Reply"
+msgstr "يتوقع جواباً"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__snapshot_html
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Filed Copy"
+msgstr "النسخة المحفوظة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__snapshot_attachment_id
+msgid "Filed PDF"
+msgstr "النسخة المحفوظة PDF"
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_correspondence_kind
+msgid "Flags, not a hard-coded list"
+msgstr "مؤشرات، لا قائمة جامدة في الشفرة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome مثل fa-tasks"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__document_action__for_action
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_register_wizard__document_action__for_action
+msgid "For Action"
+msgstr "للإجراء اللازم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__document_action__for_information
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_register_wizard__document_action__for_information
+msgid "For Information"
+msgstr "للتفضل بالاطلاع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__document_action__for_signature
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_register_wizard__document_action__for_signature
+msgid "For Signature"
+msgstr "للتوقيع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__their_number
+msgid ""
+"Free text on purpose. It follows their format, not ours, and every attempt "
+"to normalise it loses the string the counter will quote back."
+msgstr ""
+"نص حر عن قصد. يتبع صيغتهم لا صيغتنا، وكل محاولة لتوحيده تُفقد النص الذي "
+"سيقتبسه الشباك عند المراجعة."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__gov_body_id
+msgid "From Which Body"
+msgstr "من أي جهة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid "General Outgoing Register"
+msgstr "سجل الصادر العام"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__gov_body_id
+msgid "Government Body"
+msgstr "الجهة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__outbound_method__hand_carried
+msgid "Hand Carried"
+msgstr "تسليم باليد"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Hand-off"
+msgstr "الإحالة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__has_message
+msgid "Has Message"
+msgstr "لديه رسالة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_contact_note_wizard_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid ""
+"He said the file is with the legal adviser, and promised to look at it after"
+" Eid."
+msgstr "قال إن الإضبارة لدى المستشار القانوني، ووعد بمراجعتها بعد العيد."
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_letter_template
+msgid ""
+"Holding them here is how the salutation, the addressee block and the signature\n"
+"                block stay correct when the managing director changes - instead of being wrong\n"
+"                in fourteen saved Word files nobody will find."
+msgstr ""
+"حفظها هنا هو ما يبقي عبارة المخاطبة وكتلة المرسل إليه وكتلة التوقيع صحيحةً "
+"حين يتغير المدير المفوض - بدل أن تبقى خاطئة في أربعة عشر ملف Word محفوظاً لن"
+" يجده أحد."
+
+#. module: legal_correspondence
+#: model:res.groups,comment:legal_correspondence.group_legal_registrar
+msgid ""
+"Holds the correspondence register and allocates its numbers. A job, not a "
+"rank: point a register's Registrar Group at this to stop anybody else taking"
+" a number out of that book."
+msgstr ""
+"يمسك سجل المراسلات ويمنح أرقامه. وظيفة لا رتبة: وجّه مجموعة مسؤول السجل في "
+"السجل إلى هذه المجموعة لتمنع غيره من أخذ رقم من ذلك الدفتر."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__kind_id
+msgid "How"
+msgstr "نوع الاتصال"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "How It Prints"
+msgstr "كيف يُطبع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__retention_years
+msgid ""
+"How long the book must be kept. The Council of Ministers' document-retention"
+" instructions put outgoing and incoming registers at ten years; a department"
+" that archives them sooner has destroyed evidence it was obliged to hold."
+msgstr "صادر، وارد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__round
+msgid ""
+"How many times this matter has gone round. Incremented only by an entry "
+"whose kind is 'sent back for completion' - a reminder never increments it, "
+"and a receipt never increments it. This is the number that makes rework "
+"visible instead of hiding it inside a long first cycle."
+msgstr ""
+"كم دورة دارت هذه المعاملة. لا يزيده إلا قيد نوعه 'إعادة للاستكمال' - "
+"فالتذكير لا يزيده أبداً، والوصل لا يزيده أبداً. هذا هو الرقم الذي يُظهر "
+"إعادة العمل بدل أن يخفيها داخل دورة أولى طويلة."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_sequence_mixin__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة تدل على نشاط استثنائي."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid "Identity"
+msgstr "الهوية"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "عند التأشير، ثمة رسائل جديدة تتطلب انتباهك."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "عند التأشير، بعض الرسائل فيها خطأ في التسليم."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__reply_to_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__reply_to_id
+msgid "In Reply To"
+msgstr "جواباً على"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "In Thread"
+msgstr "في الخيط"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_correspondence_in
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__direction__in
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_kind__direction__in
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_register__direction__in
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_correspondence_in
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_search
+msgid "Incoming"
+msgstr "وارد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__direction__internal
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_kind__direction__internal
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_register__direction__internal
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Internal"
+msgstr "داخلي"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__is_acknowledgement
+msgid "Is A Receipt"
+msgstr "وصل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__is_reminder
+msgid "Is A Reminder"
+msgstr "تذكير"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__is_submission
+msgid "Is A Submission"
+msgstr "تقديم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__kind_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__kind_id
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Kind"
+msgstr "النوع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__write_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__write_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__write_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__write_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__write_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__write_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__write_uid
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__write_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__write_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__write_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__write_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__write_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__write_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__write_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__reply_state__late
+msgid "Late"
+msgstr "متأخر"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__signatory_id
+msgid "Leave empty to let the entry pick the signatory this body accepts."
+msgstr "اتركه فارغاً ليختار القيد المخول بالتوقيع الذي تقبله هذه الجهة."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__entity_id
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Legal Entity"
+msgstr "الكيان القانوني"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid ""
+"Legal Section\n"
+"Archives"
+msgstr ""
+"القسم القانوني\n"
+"الأرشيف"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Letter Template"
+msgstr "قالب الكتاب"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_letter_template
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_config_letter_template
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_list
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_search
+msgid "Letter Templates"
+msgstr "قوالب الكتب"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__body_html
+msgid "Letter Text"
+msgstr "نص الكتاب"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__letterhead_variant
+msgid "Letterhead Variant"
+msgstr "نمط الترويسة"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_correspondence_mail_room
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_correspondence_mail_room
+msgid "Mail Room"
+msgstr "شعبة الصادر والوارد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__document_action
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__document_action
+msgid "Marked"
+msgstr "التأشير"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__is_repeatable
+msgid "May Recur"
+msgstr "قابل للتكرار"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__is_repeatable
+msgid ""
+"May be entered many times against the same thread without corrupting any "
+"expectation count."
+msgstr "يمكن قيده مرات عدة على الخيط نفسه دون أن يفسد أي عدّاد للتوقعات."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Month"
+msgstr "الشهر"
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_register
+msgid ""
+"Most departments keep two - outgoing and incoming. A department answering to three\n"
+"                ministries keeps a book per ministry, and one holding classified files keeps a\n"
+"                confidential book with a different key holder. All three are rows here, never a\n"
+"                hard-coded list."
+msgstr ""
+"معظم الدوائر تمسك دفترين - صادر ووارد. والدائرة المرتبطة بثلاث وزارات تمسك "
+"دفتراً لكل وزارة، والتي لديها ملفات سرية تمسك دفتراً سرياً بيد أمين مفاتيح "
+"مختلف. الثلاثة كلها سطور هنا، لا قائمة جامدة في الشفرة أبداً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "My Entries"
+msgstr "قيودي"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__name
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__reply_state
+msgid ""
+"Never stored, because it changes at midnight without anybody writing to the "
+"record, and a board that is a day stale is a board people learn to ignore."
+msgstr ""
+"لا يُخزن أبداً، لأنه يتغير عند منتصف الليل دون أن يكتب أحد في القيد، واللوحة"
+" المتأخرة يوماً لوحةٌ يتعلم الناس تجاهلها."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "New Entry In This Thread"
+msgstr "قيد جديد في هذا الخيط"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Next In Thread"
+msgstr "التالي في الخيط"
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_contact_note_log
+msgid "No calls recorded"
+msgstr "لا اتصالات مدوّنة"
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_correspondence_awaiting
+msgid "Nobody owes us an answer"
+msgstr "لا أحد مدين لنا بجواب"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__note
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__note
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_correspondence_mail_room
+msgid "Nothing in the book yet"
+msgstr "لا شيء في الدفتر بعد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__sequence_id
+msgid "Number Format"
+msgstr "صيغة الرقم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراءً"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي فيها خطأ في التسليم"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Number or Subject"
+msgstr "الرقم أو الموضوع"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid "Numbering And Custody"
+msgstr "الترقيم والعهدة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Numbers And Dates"
+msgstr "الأرقام والتواريخ"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid "OUT"
+msgstr "OUT"
+
+#. module: legal_correspondence
+#: model:ir.actions.report,name:legal_correspondence.action_report_official_letter_drawn
+msgid "Official Letter (Emblem Drawn)"
+msgstr "كتاب رسمي - مع الترويسة"
+
+#. module: legal_correspondence
+#: model:ir.actions.report,name:legal_correspondence.action_report_official_letter
+msgid "Official Letter (Pre-printed Paper)"
+msgstr "كتاب رسمي - ورق مطبوع"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_letter_template
+msgid "Official Letter Template"
+msgstr "قالب الكتاب الرسمي"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__portal_ref
+msgid ""
+"On an online filing this is often the only handle that exists - there is no "
+"paper number to quote and no counter to walk to."
+msgstr ""
+"في التقديم الإلكتروني كثيراً ما يكون هذا هو المقبض الوحيد الموجود - فلا رقم "
+"ورقياً يُقتبس ولا شباك يُراجَع."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__cc_list
+msgid "One recipient per line, printed at the bottom left."
+msgstr "مرسل إليه واحد في كل سطر، يُطبع أسفل يسار الصفحة."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid ""
+"One recipient per line. Printed as نسخة منه إلى at the bottom left,\n"
+"                                where an Iraqi letter puts it."
+msgstr ""
+"مرسل إليه واحد في كل سطر. تُطبع بعنوان نسخة منه إلى أسفل يسار الصفحة، حيث "
+"يضعها الكتاب العراقي."
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_register
+msgid "One record per book you actually keep"
+msgstr "قيد واحد لكل دفتر تمسكه فعلاً"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__channel__online
+msgid "Online"
+msgstr "إلكتروني"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_register.py:0
+msgid ""
+"Only a member of '%(group)s' may allocate a number in the register "
+"'%(register)s'. In this department the book has one keeper; ask them to "
+"register the entry, or have the legal manager add you to the group."
+msgstr ""
+"لا يمنح رقماً في السجل '%(register)s' إلا عضو في '%(group)s'. في هذه الدائرة"
+" للدفتر أمين واحد؛ اطلب منه تسجيل القيد، أو اطلب من مدير الشؤون القانونية "
+"إضافتك إلى المجموعة."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__write_group_id
+msgid ""
+"Only a member of this group may allocate a number in this book. Leave empty "
+"to let anyone who can create an entry register it. Enforced in Python: "
+"ir.model.access can say who may create a row, but not who may take the next "
+"number out of the book."
+msgstr ""
+"لا يمنح رقماً في هذا الدفتر إلا عضو في هذه المجموعة. اتركه فارغاً ليسجل "
+"القيدَ كلُّ من يستطيع إنشاءه. يُفرض ذلك في Python: إذ يستطيع ir.model.access"
+" أن يحدد من ينشئ سطراً، لا من يأخذ الرقم التالي من الدفتر."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__body_id
+msgid ""
+"Optional. A department that answers to one ministry often keeps a book per "
+"ministry; a general book leaves this empty."
+msgstr ""
+"اختياري. الدائرة المرتبطة بوزارة واحدة كثيراً ما تمسك دفتراً لكل وزارة؛ "
+"والدفتر العام يترك هذا فارغاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__body_id
+msgid ""
+"Optional. A template written for one counter carries its salutation and its "
+"filed signature; a general template leaves this empty."
+msgstr ""
+"اختياري. القالب المكتوب لشباك واحد يحمل عبارة مخاطبته وتوقيعه المحفوظ؛ "
+"والقالب العام يترك هذا فارغاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_void_wizard__replacement_id
+msgid ""
+"Optional. The entry that was issued in its place, so the trail leads "
+"somewhere instead of stopping at a struck-through line."
+msgstr ""
+"اختياري. القيد الذي صدر بدلاً منه، كي يقود الأثر إلى موضع ما بدل أن يتوقف "
+"عند سطر مشطوب."
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__secrecy__ordinary
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_register_wizard__secrecy__ordinary
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_register__secrecy__ordinary
+msgid "Ordinary"
+msgstr "عادي"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__our_date
+msgid "Our Date"
+msgstr "تاريخ الصادر"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+msgid "Our Entry"
+msgstr "قيدنا"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__our_number
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__our_number
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_list
+msgid "Our Number"
+msgstr "رقم الصادر"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Our Register"
+msgstr "سجلنا"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_register_wizard__reply_to_id
+msgid ""
+"Our letter this one answers, if we know it. Setting it stops the reply clock"
+" on that letter, which is the whole reason the clock exists."
+msgstr ""
+"كتابنا الذي يجيب عنه هذا الكتاب، إن عرفناه. تحديده يوقف مهلة الرد على ذلك "
+"الكتاب، وهذا هو سبب وجود المهلة أصلاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__our_number
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_void_wizard__our_number
+msgid ""
+"Our number in our book. Editable while the entry is a draft, so a department"
+" migrating in October types 1,247 and the chain continues from there. Once "
+"registered it is part of the record."
+msgstr ""
+"رقمنا في دفترنا. قابل للتعديل ما دام القيد مسودة، فالدائرة المنتقلة في تشرين"
+" الأول تكتب 1,247 وتستمر السلسلة منه. ومتى سُجّل صار جزءاً من القيد الرسمي."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__outbound_method
+msgid "Outbound Method"
+msgstr "طريقة الإرسال"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_correspondence_out
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__direction__out
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_kind__direction__out
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_register__direction__out
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_correspondence_out
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_search
+msgid "Outgoing"
+msgstr "صادر"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__channel__paper
+msgid "Paper"
+msgstr "ورقي"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Parties"
+msgstr "الأطراف"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__partner_id
+msgid "Person"
+msgstr "الشخص"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_letter_template.py:0
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Placeholders"
+msgstr "المتغيرات"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__reply_due_on
+msgid ""
+"Planned through the body's working calendar. A contact note with a promised "
+"date moves it: when the section head says 'after Eid', the clock follows "
+"him."
+msgstr ""
+"تُحتسب وفق تقويم عمل الجهة. وتدوين الاتصال الذي فيه تاريخ موعود ينقلها: حين "
+"يقول مدير القسم 'بعد العيد'، تتبعه المهلة."
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__outbound_method__portal
+msgid "Portal"
+msgstr "بوابة إلكترونية"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__portal_url
+msgid "Portal Link"
+msgstr "رابط البوابة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__portal_ref
+msgid "Portal Reference"
+msgstr "مرجع البوابة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_search
+msgid "Pre-printed Paper"
+msgstr "ورق مطبوع مسبقاً"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_letter_template__letterhead_variant__preprinted
+msgid "Pre-printed paper (leave the head blank)"
+msgstr "ورق مطبوع مسبقاً (يُترك رأس الصفحة فارغاً)"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__letterhead_variant
+msgid ""
+"Pre-printed paper already carries the emblem, so drawing it again produces a"
+" letter with two. Each variant prints on its own paper format."
+msgstr ""
+"الورق المطبوع مسبقاً يحمل الشعار أصلاً، ورسمه مرة أخرى يُخرج كتاباً بشعارين."
+" وكل نمط يُطبع على قياس ورقه الخاص."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__prefix
+msgid "Prefix"
+msgstr "البادئة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Print Letter"
+msgstr "طباعة الكتاب"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__show_subject_table
+msgid "Print The Numbered Table"
+msgstr "طباعة الجدول المرقم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__show_qr
+msgid "Print Verification QR"
+msgstr "طباعة رمز التحقق QR"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__subject_template
+msgid ""
+"Printed after م/ as the bold subject line. May use the placeholders listed "
+"on the Placeholders tab."
+msgstr ""
+"يُطبع بعد م/ سطرَ الموضوع بالخط الداكن. ويجوز أن يستعمل المتغيرات المدرجة في"
+" تبويب المتغيرات."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__is_issued_document
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid "Produces A Document"
+msgstr "يُنتج مستمسكاً"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Promised A Date"
+msgstr "وُعد بتاريخ"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__promised_on
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__promised_on
+msgid "Promised For"
+msgstr "وعد بـ"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__is_acknowledgement
+msgid ""
+"Proves the letter was received. Closes nothing, answers nothing, and must "
+"never be counted as a reply."
+msgstr ""
+"يثبت أن الكتاب استُلم. لا يغلق شيئاً ولا يجيب عن شيء، ويجب ألا يُحتسب جواباً"
+" أبداً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__sequence_id
+msgid ""
+"Provisioned automatically. It holds the padding and the prefix where an Odoo"
+" administrator expects to find them; the allocation itself goes through the "
+"editable chain on the entry, because a counter's number must remain typeable"
+" by the clerk."
+msgstr ""
+"يُهيأ تلقائياً. يحفظ الحشو والبادئة حيث يتوقع مدير نظام Odoo أن يجدهما؛ أما "
+"المنح نفسه فيمر عبر السلسلة القابلة للتعديل على القيد، لأن رقم الشباك يجب أن"
+" يبقى قابلاً للكتابة بيد الكاتب."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid "RETURN"
+msgstr "RETURN"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__reason
+msgid "Reason"
+msgstr "سبب الإلغاء"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__void_reason
+msgid "Reason For Voiding"
+msgstr "سبب الإلغاء"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__our_date
+msgid "Received On"
+msgstr "تاريخ التسجيل"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_contact_note_wizard
+msgid "Record A Call Or A Personal Visit"
+msgstr "تدوين اتصال أو مراجعة شخصية"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_contact_note_wizard
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_contact_note_wizard_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Record Contact Note"
+msgstr "تدوين اتصال"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__reference
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__document_action__referred
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence_register_wizard__document_action__referred
+msgid "Referred"
+msgstr "أحيلت"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__referral_date
+msgid "Referred On"
+msgstr "تاريخ الإحالة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__referred_to_body_id
+msgid "Referred To"
+msgstr "أحيلت إلى"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__register_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__register_id
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_calendar
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid "Register"
+msgstr "تسجيل"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_correspondence_register_wizard
+msgid "Register An Incoming Letter"
+msgstr "تسجيل كتاب وارد"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+msgid "Register And Allocate Number"
+msgstr "تسجيل ومنح الرقم"
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_correspondence_register_wizard
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_correspondence_register_wizard
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+msgid "Register Incoming Letter"
+msgstr "تسجيل كتاب وارد"
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_correspondence_mail_room
+msgid ""
+"Register the letter that arrived this morning. It does not need a file, a case\n"
+"                or a procedure - an unprompted tax assessment arrives before anybody has opened\n"
+"                one, and a register that refuses it until somebody does is a register that\n"
+"                loses letters."
+msgstr ""
+"سجّل الكتاب الذي وصل هذا الصباح. لا يحتاج إلى إضبارة ولا دعوى ولا إجراء - "
+"فالتقدير الضريبي يصل دون طلب سابق قبل أن يفتح أحد شيئاً من ذلك، والسجل الذي "
+"يرفضه حتى يُفتح له ملف هو سجل يضيّع الكتب."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_register.py:0
+msgid "Register: %s"
+msgstr "السجل: %s"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__state__registered
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Registered"
+msgstr "مسجل"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_correspondence_register_wizard.py:0
+msgid "Registered Entry"
+msgstr "القيد المسجل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__outbound_method__registered_post
+msgid "Registered Post"
+msgstr "بريد مسجل"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "Registered as %(number)s on %(date)s."
+msgstr "سُجّل برقم %(number)s بتاريخ %(date)s."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__is_issued_document
+msgid ""
+"Registering an entry of this kind files a record in the company's permanent "
+"document register, so a licence that arrives as an incoming letter does not "
+"have to be typed twice."
+msgstr ""
+"تسجيل قيد من هذا النوع يقيّد سجلاً في سجل مستمسكات الشركة الدائم، فالإجازة "
+"التي تصل ككتاب وارد لا تحتاج إلى أن تُطبع مرتين."
+
+#. module: legal_correspondence
+#: model:ir.actions.act_window,name:legal_correspondence.action_legal_register
+#: model:ir.ui.menu,name:legal_correspondence.menu_legal_config_register
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_list
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_search
+msgid "Registers"
+msgstr "السجلات"
+
+#. module: legal_correspondence
+#: model:res.groups,name:legal_correspondence.group_legal_registrar
+msgid "Registrar (مسؤول السجل)"
+msgstr "مسؤول السجل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__write_group_id
+msgid "Registrar Group"
+msgstr "مجموعة مسؤول السجل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__note
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__note
+msgid "Remark"
+msgstr "ملاحظة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+msgid "Remark on receipt"
+msgstr "ملاحظة عند التسلّم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__replacement_id
+msgid "Replaced By"
+msgstr "حل محله"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__reply_state
+msgid "Reply"
+msgstr "الرد"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Reply Clock"
+msgstr "المهلة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__reply_due_on
+msgid "Reply Due"
+msgstr "الموعد النهائي للرد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__default_reply_days
+msgid "Reply Expected Within (working days)"
+msgstr "يُتوقع الجواب خلال (أيام عمل)"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Reply Overdue"
+msgstr "متأخر عن الرد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__reply_days
+msgid "Reply Within (working days)"
+msgstr "الرد خلال (أيام عمل)"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "Reply state can only be compared for equality."
+msgstr "حالة الرد لا يمكن مقارنتها إلا بالتساوي."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Request for a tax clearance certificate"
+msgstr "طلب براءة ذمة ضريبية"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Request for a tax clearance certificate for {today}"
+msgstr "طلب براءة ذمة ضريبية لسنة {today}"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__user_id
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__retention_years
+msgid "Retention (years)"
+msgstr "مدة الحفظ (سنوات)"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__round
+msgid "Round"
+msgstr "الدورة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_contact_note_wizard_form
+msgid "Save Note"
+msgstr "حفظ التدوين"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__attachment_count
+msgid "Scan Count"
+msgstr "عدد المرفقات"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__attachment_ids
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__attachment_ids
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+msgid "Scans"
+msgstr "المرفقات"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__secrecy
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__secrecy
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__secrecy
+msgid "Secrecy"
+msgstr "السرية"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__body_section
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__body_section
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__body_section
+msgid "Section / Window"
+msgstr "القسم / الشباك"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__is_return
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Sent Back For Completion"
+msgstr "إعادة للاستكمال"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid "Sent back for completion"
+msgstr "إعادة للاستكمال"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_kind__sequence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__sequence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__sequence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_register__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__sequence_number
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_sequence_mixin__sequence_number
+msgid "Sequence Number"
+msgstr "الرقم التسلسلي"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__sequence_prefix
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_sequence_mixin__sequence_prefix
+msgid "Sequence Prefix"
+msgstr "بادئة التسلسل"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Show Placeholders"
+msgstr "عرض المتغيرات"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__signatory_id
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__signatory_id
+msgid "Signed By"
+msgstr "الموقّع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__spoke_to
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__spoke_to
+msgid "Spoke To"
+msgstr "مع من"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_contact_note_wizard.py:0
+msgid "Spoke to %(who)s at %(body)s: %(said)s%(promise)s"
+msgstr "جرى الحديث مع %(who)s في %(body)s: %(said)s%(promise)s"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__code
+msgid ""
+"Stable key used by content packs and by wizards, e.g. OUT, IN, SECRET-OUT."
+msgstr "مفتاح ثابت تستعمله حزم المحتوى والمعالجات، مثل OUT وIN وSECRET-OUT."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__code
+msgid "Stable key used by content packs and wizards."
+msgstr "مفتاح ثابت تستعمله حزم المحتوى والمعالجات."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__code
+msgid "Stable key used by content packs."
+msgstr "مفتاح ثابت تستعمله حزم المحتوى."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__expects_reply
+msgid ""
+"Starts the reply clock. What follows is chased until an answer is registered"
+" against it."
+msgstr "يبدأ مهلة الرد. وما يليه يُلاحَق حتى يُسجَّل جواب عليه."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة استناداً إلى الأنشطة\n"
+"متأخر: تجاوز الموعد النهائي\n"
+"اليوم: موعد النشاط هو اليوم\n"
+"مخطط: أنشطة مستقبلية."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_correspondence_void_wizard.py:0
+msgid ""
+"Striking a numbered entry out of the register is reserved for the follow-up "
+"officer and above. The clerk who typed a wrong entry asks their officer to "
+"void it."
+msgstr ""
+"شطب قيد مرقم من السجل محصور بمسؤول المتابعة فما فوق. والكاتب الذي أدخل قيداً"
+" خاطئاً يطلب من مسؤوله إلغاءه."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__subject
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__subject
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__subject
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_void_wizard__subject
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_letter_template__subject_template
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Subject"
+msgstr "م/ الموضوع"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_line__name
+msgid "Subject / Name"
+msgstr "الموضوع / الاسم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__line_ids
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Subject Table"
+msgstr "جدول الموضوع"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid ""
+"Substituted at issue and then <b>frozen onto the entry</b>. A reprint\n"
+"                                returns the filed copy, not a re-render against today's template -\n"
+"                                because the template will have changed and the copy in the ministry's\n"
+"                                file will not have. An unknown placeholder is left as written, so a\n"
+"                                typo is visible on the draft instead of vanishing."
+msgstr ""
+"تُستبدل عند الإصدار ثم <b>تُثبَّت على القيد</b>. إعادة الطباعة تعيد النسخة "
+"المحفوظة، لا إخراجاً جديداً على قالب اليوم - لأن القالب سيكون قد تغير "
+"والنسخة التي في إضبارة الوزارة لن تتغير. والمتغير المجهول يُترك كما كُتب، "
+"فيظهر الخطأ المطبعي على المسودة بدل أن يختفي."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "TAX-CLEARANCE-REQ"
+msgstr "TAX-CLEARANCE-REQ"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__reply_expected
+msgid "Taken from the kind, and overridable per entry."
+msgstr "يؤخذ من النوع، ويمكن تجاوزه في كل قيد."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_search
+msgid "Takes No Number"
+msgstr "لا يأخذ رقماً"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+msgid "Tax assessment for 2025"
+msgstr "تقدير ضريبي لسنة ٢٠٢٥"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Tax clearance request to the General Commission for Taxes"
+msgstr "طلب براءة ذمة من الهيئة العامة للضرائب"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__letter_template_id
+msgid "Template"
+msgstr "القالب"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_correspondence_void_wizard.py:0
+msgid "That entry is already void."
+msgstr "هذا القيد ملغى فعلاً."
+
+#. module: legal_correspondence
+#: model:ir.model.constraint,message:legal_correspondence.constraint_legal_correspondence_number_register_company_uniq
+msgid ""
+"That number already exists in this register. A register has no repeated "
+"numbers, and a mistaken entry is voided rather than renumbered."
+msgstr ""
+"هذا الرقم موجود في هذا السجل فعلاً. فالسجل لا تتكرر أرقامه، والقيد الخاطئ "
+"يُلغى ولا يُعاد ترقيمه."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_sequence_mixin.py:0
+msgid ""
+"The %(date_field)s (%(date)s) does not agree with the register number "
+"%(sequence)s. Either the date or the number is wrong; clear the number to "
+"have one allocated."
+msgstr ""
+"%(date_field)s (%(date)s) لا يتفق مع رقم السجل %(sequence)s. إما التاريخ "
+"خاطئ أو الرقم؛ امسح الرقم ليُمنح رقم جديد."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "The Body"
+msgstr "الجهة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid "The Book"
+msgstr "الدفتر"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "The Letter"
+msgstr "الكتاب"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid ""
+"The PDF could not be produced on this server (%s). The filed copy is still "
+"kept as HTML on the entry."
+msgstr ""
+"تعذر إنتاج ملف PDF على هذا الخادم (%s). النسخة المحفوظة ما تزال محفوظة بصيغة"
+" HTML على القيد."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid "The Reply Clock"
+msgstr "مهلة الرد"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__promised_on
+msgid ""
+"The date the counter promised. It moves the reply clock and suppresses the "
+"next chase, so the software stops chasing a body that has already answered."
+msgstr ""
+"التاريخ الذي وعد به الشباك. ينقل مهلة الرد ويمنع الملاحقة التالية، فيكف "
+"النظام عن ملاحقة جهة أجابت فعلاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_contact_note_wizard__promised_on
+msgid ""
+"The date they gave. It moves the reply clock and suppresses the next chase, "
+"so we stop ringing a body that has already answered."
+msgstr ""
+"التاريخ الذي أعطوه. ينقل مهلة الرد ويمنع الملاحقة التالية، فنكف عن مهاتفة "
+"جهة أجابت فعلاً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_register_wizard__our_date
+msgid "The day it reached us. The register number is allocated against it."
+msgstr "يوم وصوله إلينا. رقم السجل يُمنح استناداً إليه."
+
+#. module: legal_correspondence
+#: model_terms:ir.actions.act_window,help:legal_correspondence.action_legal_letter_template
+msgid "The eight letters you write all year"
+msgstr "الكتب الثمانية التي تكتبها طوال السنة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__reply_to_id
+msgid "The entry this one answers, chases or returns."
+msgstr "القيد الذي يجيب عنه هذا القيد أو يلاحقه أو يعيده."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid ""
+"The file has been handed on. A referral is an edge between two bodies, so\n"
+"                        the reply clock and every chase from here belong to"
+msgstr ""
+"أُحيلت المعاملة. الإحالة رابط بين جهتين، ولذلك فإن مهلة الرد وكل ملاحقة من "
+"الآن فصاعداً تعود إلى"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__referred_to_body_id
+msgid ""
+"The hand-off. When the Ministry of Oil refers the file to Residency, that is"
+" an edge between two bodies and it belongs here - not as an extra date field"
+" bolted onto the first body's block, which is where an unmodelled hand-off "
+"always ends up and where it becomes unsearchable."
+msgstr ""
+"الإحالة. حين تحيل وزارة النفط المعاملة إلى الإقامة فذلك رابط بين جهتين "
+"ومكانه هنا - لا حقل تاريخ إضافياً مثبتاً على كتلة الجهة الأولى، وهو المآل "
+"الدائم لكل إحالة لم تُنمذج، وحيث تصبح غير قابلة للبحث."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__body_reference
+msgid ""
+"The internal file number the body gave us. The only handle some counters "
+"will answer to on the telephone."
+msgstr ""
+"رقم الإضبارة الداخلي الذي أعطتنا إياه الجهة. وهو المقبض الوحيد الذي تجيب عنه"
+" بعض الشبابيك على الهاتف."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__snapshot_html
+msgid ""
+"The letter as it was rendered at the moment it was registered. A reprint "
+"returns this, not a re-render against today's template, because the template"
+" will have changed and the copy in the ministry's file will not have."
+msgstr ""
+"الكتاب كما أُخرج لحظة تسجيله. إعادة الطباعة تعيد هذا، لا إخراجاً جديداً على "
+"قالب اليوم، لأن القالب سيكون قد تغير والنسخة التي في إضبارة الوزارة لن "
+"تتغير."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_contact_note_wizard__correspondence_id
+msgid ""
+"The letter this call was about. Leave empty for a call that concerns nothing"
+" we have written yet."
+msgstr ""
+"الكتاب الذي كان الاتصال بشأنه. يُترك فارغاً لاتصال لا يخص شيئاً كتبناه بعد."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__closes_thread
+msgid ""
+"The matter is settled by this entry. A receipt does not do this; an approval"
+" or a final refusal does."
+msgstr ""
+"هذا القيد يحسم الموضوع. الوصل لا يفعل ذلك؛ أما الموافقة أو الرفض النهائي "
+"فيفعلانه."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_contact_note_wizard__spoke_to
+msgid ""
+"The name, and the section if you have it. In Iraqi follow-up this is worth "
+"more than any escalation rule."
+msgstr ""
+"الاسم، والقسم إن عرفته. في المتابعة العراقية هذا أثمن من أي قاعدة تصعيد."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_void_wizard_form
+msgid ""
+"The number stays in the book and is never reused. A voided entry keeps its\n"
+"                    place exactly as a struck-through line keeps its place in the paper register -\n"
+"                    otherwise the book has a gap nobody can explain years later."
+msgstr ""
+"الرقم يبقى في الدفتر ولا يُعاد استعماله. القيد الملغى يحتفظ بموضعه تماماً "
+"كما يبقى السطر المشطوب في السجل الورقي، وإلا صار في الدفتر ثغرة لا يستطيع "
+"أحد تفسيرها بعد سنوات."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid ""
+"The number stays in the book. A voided entry keeps its place exactly\n"
+"                                as a clerk keeps the page: the line is drawn, ملغى is written beside\n"
+"                                it, and the next letter takes the next number. That is the only way\n"
+"                                the register can answer \"there is no 148 in your book - what\n"
+"                                happened to it?\"."
+msgstr ""
+"الرقم يبقى في الدفتر. القيد الملغى يحتفظ بموضعه تماماً كما يحفظ الكاتب "
+"الصفحة: يُشطب السطر، وتُكتب ملغى بجانبه، ويأخذ الكتاب التالي الرقم التالي. "
+"وهذا هو السبيل الوحيد ليجيب السجل عن سؤال \"لا يوجد 148 في دفتركم - ماذا جرى"
+" له؟\"."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "The official letter report is not installed."
+msgstr "تقرير الكتاب الرسمي غير منصّب."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__carried_by_id
+msgid ""
+"The person who physically walked the letter to the counter. This is a "
+"documented role, not a courtesy note: the Registrar wants his authorisation "
+"letter and a colour scan of his identity card before it will hand him "
+"anything back."
+msgstr ""
+"الشخص الذي أوصل الكتاب بنفسه إلى الشباك. هذا دور موثق لا مجرد ملاحظة مجاملة:"
+" فدائرة التسجيل تطلب كتاب تخويله ومسحاً ملوناً لبطاقة هويته قبل أن تسلمه أي "
+"شيء."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid ""
+"The prefix is used only while the book is empty. After that the next number\n"
+"                        is deduced from the last one written, so a department that migrates in\n"
+"                        October types <b>1247</b> on its first entry and the chain continues from\n"
+"                        there instead of restarting at one."
+msgstr ""
+"البادئة لا تُستعمل إلا ما دام الدفتر فارغاً. بعد ذلك يُستنتج الرقم التالي من"
+" آخر رقم مكتوب، فالدائرة المنتقلة في تشرين الأول تكتب <b>1247</b> في قيدها "
+"الأول وتستمر السلسلة منه بدل أن تبدأ من واحد."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_void_wizard_form
+msgid "The reason: a duplicate letter, refused at the window, or never sent."
+msgstr "سبب الإلغاء: كتاب مكرر، أو رُفض عند الشباك، أو لم يُرسل."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_register.py:0
+msgid ""
+"The register '%s' already has entries in it. Archive it instead - the "
+"numbers it allocated are quoted in letters that have already left the "
+"building."
+msgstr ""
+"السجل '%s' فيه قيود فعلاً. أرشفه بدلاً من ذلك - فالأرقام التي منحها مقتبسة "
+"في كتب غادرت البناية فعلاً."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "The register '%s' belongs to another company."
+msgstr "السجل '%s' يعود إلى شركة أخرى."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__body_section
+msgid ""
+"The section or the subdivision: which counter inside the body actually holds"
+" it."
+msgstr "القسم أو الشعبة"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__body_template
+msgid ""
+"The text of the letter. Placeholders in braces are substituted at issue and "
+"the result is frozen onto the entry, so a reprint returns the filed copy "
+"rather than a re-render against today's template."
+msgstr ""
+"نص الكتاب. المتغيرات بين الأقواس تُستبدل عند الإصدار وتُثبَّت النتيجة على "
+"القيد، فإعادة الطباعة تعيد النسخة المحفوظة لا إخراجاً جديداً على قالب اليوم."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_letter_template__show_subject_table
+msgid ""
+"The ت table. This is where the several people covered by one letter go - a "
+"visa request for eleven engineers is one letter and eleven rows, not eleven "
+"letters."
+msgstr ""
+"جدول ت. هنا يوضع الأشخاص المتعددون الذين يشملهم كتاب واحد - فطلب سمات الدخول"
+" لأحد عشر مهندساً كتاب واحد وأحد عشر سطراً، لا أحد عشر كتاباً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__their_date
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__their_date
+msgid "Their Date"
+msgstr "تاريخ كتابهم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__body_reference
+msgid "Their File Number"
+msgstr "رقم إضبارتهم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__their_number
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence_register_wizard__their_number
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_list
+msgid "Their Number"
+msgstr "رقم كتابهم"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Their Reference"
+msgstr "كتابهم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_line__reference
+msgid ""
+"Their identifier for this row: a passport number, a national ID, a plot "
+"number, an invoice number."
+msgstr ""
+"معرّفهم لهذا السطر: رقم جواز، أو بطاقة وطنية، أو رقم قطعة، أو رقم قائمة."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid "Their internal file number"
+msgstr "رقم الإضبارة لديهم"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__is_return
+msgid ""
+"They returned it for correction. Increments the round counter, which is the "
+"only way rework shows up in the statistics instead of hiding inside a long "
+"first cycle."
+msgstr ""
+"أعادوها للتصحيح. يزيد عدّاد الدورات، وهو السبيل الوحيد لظهور إعادة العمل في "
+"الإحصاءات بدل اختبائها داخل دورة أولى طويلة."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "This Year"
+msgstr "هذه السنة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid ""
+"This entry takes <b>no register number</b> - nothing entered the book.\n"
+"                                A date in <b>Promised For</b> moves the reply clock onto it and suppresses\n"
+"                                the next chase, so we stop ringing a body that has already answered."
+msgstr ""
+"هذا القيد <b>لا يأخذ رقماً في السجل</b> - لم يدخل الدفتر شيء. والتاريخ في "
+"<b>وعد بـ</b> ينقل مهلة الرد إليه ويمنع الملاحقة التالية، فنكف عن مهاتفة جهة"
+" أجابت فعلاً."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+msgid ""
+"This is the letter as it was rendered on the day it left. A reprint\n"
+"                                returns this rather than a re-render against today's template,\n"
+"                                because the template will have changed and the copy in the\n"
+"                                ministry's file will not have."
+msgstr ""
+"هذا هو الكتاب كما أُخرج يوم خروجه. إعادة الطباعة تعيد هذا لا إخراجاً جديداً "
+"على قالب اليوم، لأن القالب سيكون قد تغير والنسخة التي في إضبارة الوزارة لن "
+"تتغير."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_contact_note_wizard_form
+msgid ""
+"This note takes no register number - it never went through the book at all.\n"
+"                    But the promised date moves the reply deadline onto it and stops the next\n"
+"                    chase, so the system does not keep chasing a body that has already answered."
+msgstr ""
+"هذا التدوين لا يأخذ رقماً في السجل - لم يمر بالدفتر أصلاً. لكن التاريخ "
+"الموعود ينقل مهلة الرد إليه ويوقف الملاحقة التالية، فلا يلاحق النظام جهةً "
+"أجابت فعلاً."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "Thread"
+msgstr "الخيط"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__thread_count
+msgid "Thread Count"
+msgstr "عدد قيود الخيط"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__is_substantive_reply
+msgid ""
+"True for an entry that actually answers the one it hangs off. A receipt, a "
+"contact note and our own reminder are all excluded, because a receipt proves"
+" the letter was received and closes nothing - and a system that counts a "
+"receipt as an answer reports a two-day turnaround at a body that has not yet"
+" read the file. Stored so that the reply board can be searched with one "
+"subquery instead of five that need not agree on which answer they matched."
+msgstr "وصل"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في القيد."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_kind__document_type_id
+msgid ""
+"Used when this kind produces a document. Left empty, the clerk is asked "
+"which type it is."
+msgstr ""
+"يُستعمل حين يُنتج هذا النوع مستمسكاً. وإذا تُرك فارغاً سُئل الكاتب عن نوعه."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_contact_note_wizard__said
+msgid ""
+"Verbatim where possible. 'The file is with the legal adviser' and 'the file "
+"is missing' need different next steps."
+msgstr ""
+"بالنص الحرفي ما أمكن. 'الإضبارة لدى المستشار القانوني' و'الإضبارة مفقودة' "
+"تحتاجان إلى خطوتين تاليتين مختلفتين."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__verification_token
+msgid "Verification Token"
+msgstr "رمز التحقق"
+
+#. module: legal_correspondence
+#: model:ir.model.fields.selection,name:legal_correspondence.selection__legal_correspondence__state__void
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_search
+msgid "Void"
+msgstr "الإلغاء"
+
+#. module: legal_correspondence
+#: model:ir.model,name:legal_correspondence.model_legal_correspondence_void_wizard
+msgid "Void A Register Entry"
+msgstr "إلغاء قيد في السجل"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_void_wizard_form
+msgid "Void Entry"
+msgstr "إلغاء قيد"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_correspondence_void_wizard.py:0
+msgid "Voided: %(reason)s. Replaced by %(replacement)s."
+msgstr "أُلغي: %(reason)s. حل محله %(replacement)s."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/wizard/legal_correspondence_void_wizard.py:0
+msgid "Voided: %s"
+msgstr "أُلغي: %s"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid ""
+"Voiding an entry needs a reason. The number stays in the book for ever and "
+"somebody will ask, years from now, why there is a line drawn across it."
+msgstr ""
+"إلغاء قيد يحتاج إلى سبب. فالرقم يبقى في الدفتر إلى الأبد، وسيسأل أحدهم بعد "
+"سنوات لماذا شُطب عليه."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_contact_note_wizard__said
+#: model:ir.model.fields,field_description:legal_correspondence.field_legal_correspondence__said
+msgid "What They Said"
+msgstr "ماذا قالوا"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_kind_form
+msgid "What This Kind Means To The Engine"
+msgstr "ما يعنيه هذا النوع للمحرك"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__prefix
+msgid ""
+"What the department already writes in front of the counter, e.g. ق or ص. "
+"Used only when a book has no numbers in it yet - after that, the next number"
+" is deduced from the last one, so changing this does not silently renumber a"
+" book in progress."
+msgstr ""
+"ما تكتبه الدائرة أصلاً قبل الرقم، مثل ق أو ص. لا يُستعمل إلا ما دام الدفتر "
+"بلا أرقام بعد - وبعدها يُستنتج الرقم التالي من آخر رقم، فتغيير هذا لا يعيد "
+"ترقيم دفتر جارٍ بصمت."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__document_action
+msgid "What the manager wrote across the top when the letter was minuted."
+msgstr "ما أشّره المدير أعلى الكتاب عند عرضه عليه."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence_void_wizard__reason
+msgid ""
+"What went wrong: wrong body, duplicate of an earlier number, the letter was "
+"never sent, the counter refused it at the window."
+msgstr ""
+"ما الذي حدث: جهة خاطئة، أو تكرار لرقم سابق، أو كتاب لم يُرسل أصلاً، أو رفضه "
+"الشباك عند النافذة."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__note
+msgid ""
+"Where the physical book is kept, who holds the key, how the numbers were "
+"written before the system arrived."
+msgstr ""
+"أين يُحفظ الدفتر الورقي، ومن يمسك المفتاح، وكيف كانت الأرقام تُكتب قبل مجيء "
+"النظام."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__register_id
+msgid ""
+"Which book the number comes out of. Empty only for a contact note, which "
+"takes no number."
+msgstr ""
+"من أي دفتر يخرج الرقم. لا يكون فارغاً إلا لتدوين اتصال، فهو لا يأخذ رقماً."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__entity_id
+msgid "Which of our registered persons this letter is written for."
+msgstr "لأي من أشخاصنا المسجلين كُتب هذا الكتاب."
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_register__direction
+msgid ""
+"Which of the two books this is. A department keeping one combined book still"
+" keeps two directions in it, so this is on the book and repeated on the "
+"entry."
+msgstr ""
+"أي الدفترين هذا. الدائرة التي تمسك دفتراً موحداً تبقي فيه اتجاهين، ولذلك "
+"يوضع هذا على الدفتر ويتكرر على القيد."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "Who It Is For"
+msgstr "لمن يُكتب"
+
+#. module: legal_correspondence
+#: model:ir.model.fields,help:legal_correspondence.field_legal_correspondence__spoke_to
+msgid ""
+"Who answered. In Iraqi follow-up this is the single most valuable field on "
+"the record."
+msgstr "من الذي أجاب. في المتابعة العراقية هذا أثمن حقل في القيد على الإطلاق."
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "a contact note (no number)"
+msgstr "تدوين اتصال (بلا رقم)"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "draft"
+msgstr "مسودة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_form
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_correspondence_register_wizard_form
+msgid "e.g. K/M/1234"
+msgstr "ك/م/١٢٣٤"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_register_form
+msgid "e.g. ق"
+msgstr "ق"
+
+#. module: legal_correspondence
+#. odoo-python
+#: code:addons/legal_correspondence/models/legal_correspondence.py:0
+msgid "reply_to_id"
+msgstr "reply_to_id"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{body_reference} - Their File Number"
+msgstr "رقم إضبارتهم"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{body_section} - The Section"
+msgstr "القسم"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{body} - The Body"
+msgstr "الجهة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{entity} / {entity_en} - Company Name"
+msgstr "اسم الشركة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{our_date} - Our Date"
+msgstr "تاريخ الصادر"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{our_number} - Our Number"
+msgstr "رقم الصادر"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{salutation} - The Salutation"
+msgstr "عبارة المخاطبة"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{signatory} / {signatory_title} - Signatory And Title"
+msgstr "الموقّع وصفته"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{subject} - Subject"
+msgstr "الموضوع"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{their_date} - Their Date"
+msgstr "تاريخ كتابهم"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{their_number} - Their Number"
+msgstr "رقم كتابهم"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.view_legal_letter_template_form
+msgid "{today} - Today's Date"
+msgstr "تاريخ اليوم"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_return
+msgid "إعادة للاستكمال"
+msgstr "إعادة للاستكمال"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_issued_document
+msgid ""
+"الإجازة أو التأييد الذي يصل ككتاب وارد. تسجيله هنا يقيّده مرة واحدة في سجل "
+"مستمسكات الشركة، بدل أن يُطبع مرتين فيختلف السجلان."
+msgstr ""
+"الإجازة أو التأييد الذي يصل ككتاب وارد. تسجيله هنا يقيّده مرة واحدة في سجل "
+"مستمسكات الشركة، بدل أن يُطبع مرتين فيختلف السجلان."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "التوقيع"
+msgstr "التوقيع"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_return
+msgid ""
+"الجهة أعادت المعاملة لنقص أو خطأ. هذه هي إشارة إعادة العمل: بدونها تبدو "
+"معاملة دارت أربع دورات وكأنها معاملة واحدة استغرقت تسعين يوماً."
+msgstr ""
+"الجهة أعادت المعاملة لنقص أو خطأ. هذه هي إشارة إعادة العمل: بدونها تبدو "
+"معاملة دارت أربع دورات وكأنها معاملة واحدة استغرقت تسعين يوماً."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_approval
+msgid ""
+"الجواب الذي يُنهي الموضوع بالإيجاب. هذا - لا الوصل - هو ما يوقف عدّاد "
+"الانتظار."
+msgstr ""
+"الجواب الذي يُنهي الموضوع بالإيجاب. هذا - لا الوصل - هو ما يوقف عدّاد "
+"الانتظار."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "الختم"
+msgstr "الختم"
+
+#. module: legal_correspondence
+#: model_terms:legal.register,note:legal_correspondence.register_out_general
+msgid ""
+"الدفتر الورقي محفوظ لدى مسؤول السجل. الرقم يُمنح عند خروج الكتاب لا عند كتابته،\n"
+"                لأن الرقم الذي يُمنح لمسودة لم تُوقّع يترك ثغرة في الدفتر لا يستطيع أحد تفسيرها."
+msgstr ""
+"الدفتر الورقي محفوظ لدى مسؤول السجل. الرقم يُمنح عند خروج الكتاب لا عند كتابته،\n"
+"                لأن الرقم الذي يُمنح لمسودة لم تُوقّع يترك ثغرة في الدفتر لا يستطيع أحد تفسيرها."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_rejection
+msgid ""
+"الرفض جواب أيضاً، ويغلق الخيط. الفرق بينه وبين الإعادة للاستكمال هو الفرق "
+"بين \"لا\" و\"أكمل الناقص\"."
+msgstr ""
+"الرفض جواب أيضاً، ويغلق الخيط. الفرق بينه وبين الإعادة للاستكمال هو الفرق "
+"بين \"لا\" و\"أكمل الناقص\"."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "الرقم / الإشارة"
+msgstr "الرقم / الإشارة"
+
+#. module: legal_correspondence
+#: model_terms:legal.register,note:legal_correspondence.register_out_general
+msgid ""
+"الصيغة الافتراضية <b>ق/السنة/التسلسل</b>، وتُستنتج بعدها من آخر رقم مكتوب،\n"
+"                فمن انتقل إلى النظام في تشرين الأول يكتب رقمه الحالي ويستمر السجل منه."
+msgstr ""
+"الصيغة الافتراضية <b>ق/السنة/التسلسل</b>، وتُستنتج بعدها من آخر رقم مكتوب،\n"
+"                فمن انتقل إلى النظام في تشرين الأول يكتب رقمه الحالي ويستمر السجل منه."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_out_letter
+msgid ""
+"الكتاب الرسمي الذي يخرج من الدائرة القانونية بتوقيع المدير المفوض وبختم "
+"الشركة."
+msgstr ""
+"الكتاب الرسمي الذي يخرج من الدائرة القانونية بتوقيع المدير المفوض وبختم "
+"الشركة."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "الموضوع / الاسم"
+msgstr "الموضوع / الاسم"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_acknowledgement
+msgid ""
+"الوصل يثبت التسلّم ولا يغلق شيئاً. من يحتسبه جواباً يقيس زمن إنجاز يومين لدى"
+" جهة لم تفتح الإضبارة بعد."
+msgstr ""
+"الوصل يثبت التسلّم ولا يغلق شيئاً. من يحتسبه جواباً يقيس زمن إنجاز يومين لدى"
+" جهة لم تفتح الإضبارة بعد."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_internal_memo
+msgid ""
+"بين أقسام الشركة نفسها: عرض على المدير المفوض، أو إحالة إلى الحسابات لتهيئة "
+"مبلغ."
+msgstr ""
+"بين أقسام الشركة نفسها: عرض على المدير المفوض، أو إحالة إلى الحسابات لتهيئة "
+"مبلغ."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "تحية طيبة وبعد،"
+msgstr "تحية طيبة وبعد،"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_phone_note
+msgid "تدوين اتصال هاتفي"
+msgstr "تدوين اتصال هاتفي"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_reminder
+msgid "تذكير"
+msgstr "تذكير"
+
+#. module: legal_correspondence
+#: model_terms:legal.register,note:legal_correspondence.register_in_general
+msgid ""
+"رقم الوارد رقمنا نحن، ويُمنح يوم وصول الكتاب. أما رقم الجهة وتاريخها فيُدوّنان\n"
+"                كما هما في كتابهم: صيغتهم لا صيغتنا، وكل محاولة لتوحيدها تُفقد النص الذي\n"
+"                ستقتبسه الجهة عند المراجعة."
+msgstr ""
+"رقم الوارد رقمنا نحن، ويُمنح يوم وصول الكتاب. أما رقم الجهة وتاريخها فيُدوّنان\n"
+"                كما هما في كتابهم: صيغتهم لا صيغتنا، وكل محاولة لتوحيدها تُفقد النص الذي\n"
+"                ستقتبسه الجهة عند المراجعة."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "رمز التحقق"
+msgstr "رمز التحقق"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "رمز التحقق من السجل"
+msgstr "رمز التحقق من السجل"
+
+#. module: legal_correspondence
+#: model:legal.register,name:legal_correspondence.register_out_general
+msgid "سجل الصادر العام"
+msgstr "سجل الصادر العام"
+
+#. module: legal_correspondence
+#: model:legal.register,name:legal_correspondence.register_in_general
+msgid "سجل الوارد العام"
+msgstr "سجل الوارد العام"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "سُلّم بيد المعتمد:"
+msgstr "سُلّم بيد المعتمد:"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "صفحة <span class=\"page\"/> من <span class=\"topage\"/>"
+msgstr "صفحة <span class=\"page\"/> من <span class=\"topage\"/>"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_rejection
+msgid "كتاب رفض"
+msgstr "كتاب رفض"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_out_letter
+msgid "كتاب صادر"
+msgstr "كتاب صادر"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_approval
+msgid "كتاب موافقة"
+msgstr "كتاب موافقة"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_in_letter
+msgid "كتاب وارد"
+msgstr "كتاب وارد"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_in_letter
+msgid ""
+"كل ما يرد إلى الشركة من جهة رسمية، بما في ذلك ما يصل دون طلب سابق - كالتقدير"
+" الضريبي والتبليغ القضائي."
+msgstr ""
+"كل ما يرد إلى الشركة من جهة رسمية، بما في ذلك ما يصل دون طلب سابق - كالتقدير"
+" الضريبي والتبليغ القضائي."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_phone_note
+msgid ""
+"لا يأخذ رقماً في السجل لأنه لم يمر بالسجل أصلاً. لكنه دليل، وهو ما ينقل موعد"
+" الرد ويمنع الملاحقة بعد أن أجابت الجهة."
+msgstr ""
+"لا يأخذ رقماً في السجل لأنه لم يمر بالسجل أصلاً. لكنه دليل، وهو ما ينقل موعد"
+" الرد ويمنع الملاحقة بعد أن أجابت الجهة."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_reminder
+msgid ""
+"لا يُحتسب معاملة جديدة ولا يعيد ضبط المهلة. ثلاثة تذكيرات هي متابعة واحدة "
+"متعثرة، وليست ثلاث معاملات."
+msgstr ""
+"لا يُحتسب معاملة جديدة ولا يعيد ضبط المهلة. ثلاثة تذكيرات هي متابعة واحدة "
+"متعثرة، وليست ثلاث معاملات."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_internal_memo
+msgid "مذكرة داخلية"
+msgstr "مذكرة داخلية"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,note:legal_correspondence.kind_visit_note
+msgid ""
+"مراجعة المعتمد للدائرة: من قابل، وماذا قيل عند الشباك، وبأي تاريخ وعدوا."
+msgstr ""
+"مراجعة المعتمد للدائرة: من قابل، وماذا قيل عند الشباك، وبأي تاريخ وعدوا."
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_visit_note
+msgid "مراجعة شخصية"
+msgstr "مراجعة شخصية"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "مسودة - غير مقيدة في السجل"
+msgstr "مسودة - غير مقيدة في السجل"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "مع فائق الاحترام والتقدير."
+msgstr "مع فائق الاحترام والتقدير."
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "ملاحظات"
+msgstr "ملاحظات"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "نسخة منه إلى:"
+msgstr "نسخة منه إلى:"
+
+#. module: legal_correspondence
+#: model_terms:ir.ui.view,arch_db:legal_correspondence.report_official_letter_document
+msgid "هذه المسودة لم تُسجَّل بعد ولم يُمنح لها رقم صادر، وحالتها الحالية:"
+msgstr "هذه المسودة لم تُسجَّل بعد ولم يُمنح لها رقم صادر، وحالتها الحالية:"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_issued_document
+msgid "وثيقة واردة تُقيّد في سجل المستمسكات"
+msgstr "وثيقة واردة تُقيّد في سجل المستمسكات"
+
+#. module: legal_correspondence
+#: model:legal.correspondence.kind,name:legal_correspondence.kind_acknowledgement
+msgid "وصل استلام"
+msgstr "وصل استلام"

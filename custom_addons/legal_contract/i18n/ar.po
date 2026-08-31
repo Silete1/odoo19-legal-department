@@ -1,159 +1,1980 @@
-# Arabic translation of the legal_contract module.
-# This file ships the complete Arabic rendering of every user-facing English
-# string in the module. English is the single source language; Arabic lives here.
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* legal_contract
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: legal_contract 19.0.1.0.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Language-Team: Arabic\n"
+"POT-Creation-Date: 2026-08-31 09:30+0000\n"
+"PO-Revision-Date: 2026-08-31 09:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: legal_contract
-# ==========================================================================
-# Model descriptions
-# ==========================================================================
-msgid "Contract Type"
-msgstr "نوع العقد"
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_obligation.py:0
+msgid "%s occurrence(s) added."
+msgstr "أُضيف %s استحقاق."
 
 #. module: legal_contract
-msgid "Responsible Department"
-msgstr "القسم المسؤول"
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid ""
+"-\n"
+"                        it expires on"
+msgstr ""
+"-\n"
+"                        ينتهي في"
 
 #. module: legal_contract
-msgid "Contract Party"
-msgstr "طرف العقد"
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_kanban
+msgid "<i class=\"fa fa-handshake-o me-1\" title=\"Counterparty\"/>"
+msgstr "<i class=\"fa fa-handshake-o me-1\" title=\"الطرف الثاني\"/>"
 
 #. module: legal_contract
-msgid "Contract"
-msgstr "العقد"
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "<span class=\"o_stat_text\">Signed Document</span>"
+msgstr "<span class=\"o_stat_text\">المستند الموقّع</span>"
 
 #. module: legal_contract
-msgid "Contract Obligation"
-msgstr "التزام تعاقدي"
+#: model:ir.model.constraint,message:legal_contract.constraint_legal_contract_type_code_company_uniq
+msgid "A contract type code must be unique per company."
+msgstr "يجب أن يكون رمز نوع العقد فريداً لكل شركة."
 
 #. module: legal_contract
-msgid "Contract Obligation Occurrence"
-msgstr "استحقاق التزام تعاقدي"
+#: model:ir.model.constraint,message:legal_contract.constraint_legal_contract_value_positive
+msgid "A contract value cannot be negative."
+msgstr "لا يمكن أن تكون قيمة العقد سالبة."
 
 #. module: legal_contract
-msgid "Contract Amendment"
-msgstr "ملحق العقد"
+#: model:ir.model.constraint,message:legal_contract.constraint_legal_contract_department_code_company_uniq
+msgid "A department code must be unique per company."
+msgstr "يجب أن يكون رمز القسم فريداً لكل شركة."
 
 #. module: legal_contract
-msgid "File Signed Contract"
-msgstr "إيداع العقد الموقّع"
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__is_overdue
+msgid ""
+"A one-off obligation that is still pending after its due date. Read live "
+"rather than stored, because it becomes true at midnight with nobody writing "
+"to the record."
+msgstr ""
+"التزام لمرة واحدة ما زال قيد الإنجاز بعد تاريخ استحقاقه. يُقرأ لحظياً لا "
+"مخزّناً، لأنه يصبح صحيحاً عند منتصف الليل دون أن يكتب أحد إلى السجل."
 
 #. module: legal_contract
-# ==========================================================================
-# Common field labels
-# ==========================================================================
-msgid "Name"
-msgstr "الاسم"
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__name
+msgid "A short label: 'Monthly rent', 'Annual audit delivery'."
+msgstr "تسمية مختصرة: «الإيجار الشهري»، «تسليم التدقيق السنوي»."
 
 #. module: legal_contract
-msgid "Code"
-msgstr "الرمز"
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract_type
+msgid ""
+"A type carries what is true of every contract of its kind: which internal\n"
+"                group reviews it and how far ahead its renewal is chased."
+msgstr ""
+"يحمل النوع ما يصدق على كل عقد من جنسه: أي مجموعة داخلية\n"
+"                تراجعه، وإلى أي مدى قبل الانتهاء يُتابَع تجديده."
 
 #. module: legal_contract
-msgid "Sequence"
-msgstr "التسلسل"
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_needaction
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_needaction
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_needaction
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
 
 #. module: legal_contract
-msgid "Company"
-msgstr "الشركة"
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Activate"
+msgstr "تفعيل"
 
 #. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__active
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__active
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__active
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__active
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__active
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__active
 msgid "Active"
 msgstr "نشط"
 
 #. module: legal_contract
-msgid "Note"
-msgstr "ملاحظة"
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_ids
+msgid "Activities"
+msgstr "الأنشطة"
 
 #. module: legal_contract
-msgid "Reference"
-msgstr "رقم العقد"
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_exception_decoration
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_exception_decoration
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_exception_decoration
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "وسم استثناء النشاط"
 
 #. module: legal_contract
-msgid "Title"
-msgstr "العنوان"
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_state
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_state
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_state
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
 
 #. module: legal_contract
-msgid "Type"
-msgstr "النوع"
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_type_icon
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_type_icon
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_type_icon
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "أيقونة نوع النشاط"
 
 #. module: legal_contract
-msgid "Status"
-msgstr "الحالة"
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract_department
+msgid "Add an owning department"
+msgstr "إضافة قسم مالك"
 
 #. module: legal_contract
-msgid "State"
-msgstr "الحالة"
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_form
+msgid "Addendum 1"
+msgstr "الملحق 1"
 
 #. module: legal_contract
-msgid "Description"
-msgstr "الوصف"
+#: model:legal.contract.department,name:legal_contract.dept_admin
+msgid "Administration"
+msgstr "الإدارة"
 
 #. module: legal_contract
+#: model:legal.contract.type,name:legal_contract.type_agency
+msgid "Agency Agreement"
+msgstr "اتفاقية وكالة تجارية"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__name
+msgid "Allocated CON/YYYY/#### the moment the contract is created."
+msgstr "يُخصَّص CON/YYYY/#### لحظة إنشاء العقد."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_form
+msgid "Amendment"
+msgstr "الملحق"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_modification.py:0
+msgid "Amendment %(number)s applied: %(description)s"
+msgstr "طُبِّق الملحق %(number)s: %(description)s"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__date
+msgid "Amendment Date"
+msgstr "تاريخ الملحق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__number
+msgid "Amendment No."
+msgstr "رقم الملحق"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_modification
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__modification_ids
+#: model:ir.ui.menu,name:legal_contract.menu_legal_contract_modification
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_list
+msgid "Amendments"
+msgstr "الملاحق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__amount
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__amount
 msgid "Amount"
 msgstr "المبلغ"
 
 #. module: legal_contract
-msgid "Frequency"
-msgstr "التكرار"
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_form
+msgid ""
+"An amendment never edits the contract in place. The original value and\n"
+"                        term stay exactly as signed; applying this amendment adds its value\n"
+"                        change to the current value and, where a new expiry is named, extends\n"
+"                        the term."
+msgstr ""
+"الملحق لا يعدّل العقد في موضعه أبداً. تبقى القيمة الأصلية\n"
+"                        والمدة كما وُقِّعتا تماماً؛ فتطبيق هذا الملحق يضيف تغيّر\n"
+"                        قيمته إلى القيمة الحالية، وحيث يُسمّى تاريخ انتهاء جديد،\n"
+"                        يمدّد المدة."
 
 #. module: legal_contract
-msgid "Due Date"
-msgstr "تاريخ الاستحقاق"
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__frequency__annual
+msgid "Annual"
+msgstr "سنوي"
 
 #. module: legal_contract
-msgid "Signature Date"
-msgstr "تاريخ التوقيع"
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_modification__state__applied
+msgid "Applied"
+msgstr "مُطبَّق"
 
 #. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_list
+msgid "Apply"
+msgstr "تطبيق"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_form
+msgid "Apply Amendment"
+msgstr "تطبيق الملحق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_attachment_count
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_attachment_count
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_attachment_count
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Auto-renewing"
+msgstr "يتجدد تلقائياً"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__auto_renew
+msgid "Auto-renews"
+msgstr "يتجدد تلقائياً"
+
+#. module: legal_contract
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_awaiting_approval
+#: model:ir.ui.menu,name:legal_contract.menu_legal_contract_awaiting_approval
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Awaiting Approval"
+msgstr "بانتظار المصادقة"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "Awaiting internal approval."
+msgstr "بانتظار المصادقة الداخلية."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Back To Review"
+msgstr "إعادة للمراجعة"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_party__role__beneficiary
+msgid "Beneficiary"
+msgstr "المستفيد"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_sign_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__clause_reference
+msgid "Clause"
+msgstr "البند"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__code
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__commencement_date
+msgid "Commencement Date"
+msgstr "تاريخ المباشرة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__company_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__company_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__company_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__company_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__company_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__company_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__completion_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__completion_date
 msgid "Completion Date"
 msgstr "تاريخ الإنجاز"
 
 #. module: legal_contract
-msgid "Remark"
-msgstr "ملاحظة"
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__confidential
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Confidential"
+msgstr "سري"
 
 #. module: legal_contract
-# ==========================================================================
-# Contract type
-# ==========================================================================
-msgid "Reviewed By"
-msgstr "جهة المراجعة"
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract_type
+msgid "Configure a contract type"
+msgstr "إعداد نوع عقد"
 
 #. module: legal_contract
-msgid "Legal Officer"
-msgstr "مسؤول قانوني"
+#: model:legal.contract.type,name:legal_contract.type_construction
+msgid "Construction Contract"
+msgstr "عقد مقاولة"
 
 #. module: legal_contract
-msgid "Legal Approver"
-msgstr "مُصادِق قانوني"
+#: model:ir.model,name:legal_contract.model_legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__contract_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__contract_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__contract_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__contract_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__contract_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_correspondence__contract_id
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Contract"
+msgstr "العقد"
 
 #. module: legal_contract
-msgid "Legal Manager"
-msgstr "المدير القانوني"
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "Contract %(title)s cannot %(action)s from its current state."
+msgstr "لا يمكن للعقد %(title)s أن %(action)s من حالته الراهنة."
 
 #. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid ""
+"Contract %s has no counterparty, so there is nothing to approve. Add the "
+"other party before requesting approval."
+msgstr ""
+"العقد %s ليس له طرف ثانٍ، فلا شيء للمصادقة عليه. أضِف الطرف الآخر قبل طلب "
+"المصادقة."
+
+#. module: legal_contract
+#: model:ir.model,name:legal_contract.model_legal_contract_modification
+msgid "Contract Amendment"
+msgstr "ملحق العقد"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__contract_count
+msgid "Contract Count"
+msgstr "عدد العقود"
+
+#. module: legal_contract
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_obligation_instance
+#: model:ir.ui.menu,name:legal_contract.menu_legal_contract_obligation_instance
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_calendar
+msgid "Contract Deadlines"
+msgstr "مواعيد العقود"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_calendar
+msgid "Contract Expiry"
+msgstr "انتهاء العقود"
+
+#. module: legal_contract
+#: model:ir.model,name:legal_contract.model_legal_contract_obligation
+msgid "Contract Obligation"
+msgstr "التزام تعاقدي"
+
+#. module: legal_contract
+#: model:ir.model,name:legal_contract.model_legal_contract_obligation_instance
+msgid "Contract Obligation Occurrence"
+msgstr "استحقاق التزام تعاقدي"
+
+#. module: legal_contract
+#: model:ir.model,name:legal_contract.model_legal_contract_party
+msgid "Contract Party"
+msgstr "طرف العقد"
+
+#. module: legal_contract
+#: model:ir.model,name:legal_contract.model_legal_contract_type
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_type_form
+msgid "Contract Type"
+msgstr "نوع العقد"
+
+#. module: legal_contract
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_type
+#: model:ir.ui.menu,name:legal_contract.menu_legal_config_contract_type
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_type_list
+msgid "Contract Types"
+msgstr "أنواع العقود"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__value
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_graph
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_pivot
+msgid "Contract Value"
+msgstr "قيمة العقد"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "Contract terminated."
+msgstr "فُسِخ العقد."
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_type.py:0
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract
+#: model:ir.ui.menu,name:legal_contract.menu_legal_config_contracts
+#: model:ir.ui.menu,name:legal_contract.menu_legal_contract
+#: model:ir.ui.menu,name:legal_contract.menu_legal_contract_root
+#: model:legal.document.kind,name:legal_contract.doc_kind_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_list
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_type_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_type_list
+msgid "Contracts"
+msgstr "العقود"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__correspondence_count
+msgid "Correspondence Count"
+msgstr "عدد المكاتبات"
+
+#. module: legal_contract
+#: model:ir.model,name:legal_contract.model_legal_correspondence
+msgid "Correspondence Entry"
+msgstr "قيد المراسلات"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__counterparty_id
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_party__role__counterparty
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Counterparty"
+msgstr "الطرف الثاني"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__create_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__create_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__create_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__create_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__create_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__create_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__create_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__create_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__create_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__create_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__create_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__create_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__create_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__create_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__currency_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__currency_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__currency_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__current_value
+msgid "Current Value"
+msgstr "القيمة الحالية"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Dates"
+msgstr "التواريخ"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__days_to_expiry
+msgid "Days Remaining"
+msgstr "الأيام المتبقية"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__default_notice_days
 msgid "Default Notice (days)"
 msgstr "مدة الإشعار الافتراضية (أيام)"
 
 #. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Department"
+msgstr "القسم"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_department_list
+msgid "Departments"
+msgstr "الأقسام"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__display_name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_correspondence__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__status__done
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation_instance__state__done
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_list
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_list
+msgid "Done"
+msgstr "منجز"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_modification__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__due_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__due_date
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+msgid "Due Month"
+msgstr "شهر الاستحقاق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__effective_date
+msgid "Effective Date"
+msgstr "تاريخ النفاذ"
+
+#. module: legal_contract
+#: model:legal.contract.type,name:legal_contract.type_employment
+msgid "Employment Contract"
+msgstr "عقد عمل"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__frequency__semiannual
+msgid "Every 6 Months"
+msgstr "كل ٦ أشهر"
+
+#. module: legal_contract
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract
+msgid ""
+"Every contract walks a gated lifecycle - reviewed, negotiated, approved,\n"
+"                signed, in force - and its renewal is chased on the same board as every\n"
+"                other dated artefact the company holds."
+msgstr ""
+"يسير كل عقد في دورة حياة ذات بوابات - يُراجَع، يُفاوَض عليه، يُصادَق\n"
+"                عليه، يُوقَّع، يصبح نافذاً - ويُتابَع تجديده على اللوحة ذاتها\n"
+"                كسائر المستمسكات المؤرّخة التي تحوزها الشركة."
+
+#. module: legal_contract
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract_obligation_instance
+msgid ""
+"Every recurring obligation is a dated row with a state, generated ahead of\n"
+"                time, so an empty screen means somebody has looked and done the work rather\n"
+"                than that nobody has looked."
+msgstr ""
+"كل التزام متكرر هو سطر مؤرَّخ له حالة، يُولَّد مقدّماً، بحيث\n"
+"                تعني الشاشة الفارغة أن أحداً قد نظر وأنجز العمل، لا أن\n"
+"                أحداً لم ينظر أصلاً."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__evidence_document_id
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+msgid "Evidence"
+msgstr "الإثبات"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__expired
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Expired"
+msgstr "منتهٍ"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "Expired on %(date)s."
+msgstr "انتهى في %(date)s."
+
+#. module: legal_contract
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_expiring
+#: model:ir.ui.menu,name:legal_contract.menu_legal_contract_expiring
+msgid "Expiring Contracts"
+msgstr "عقود قاربت الانتهاء"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Expiring Soon"
+msgstr "قارب الانتهاء"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__expiry_date
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__start_by_date
+msgid ""
+"Expiry minus the renewal lead time - the date the renewal must begin to be "
+"safe."
+msgstr ""
+"تاريخ الانتهاء مطروحاً منه مهلة التجديد - التاريخ الذي يجب أن يبدأ فيه "
+"التجديد ليكون في مأمن."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_sign_form
+msgid "File Document"
+msgstr "إيداع المستند"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__attachment_name
+msgid "File Name"
+msgstr "اسم الملف"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_sign
+#: model:ir.model,name:legal_contract.model_legal_contract_sign
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_sign_form
+msgid "File Signed Contract"
+msgstr "إيداع العقد الموقّع"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "File Signed Document"
+msgstr "إيداع المستند الموقّع"
+
+#. module: legal_contract
+#: model:legal.contract.department,name:legal_contract.dept_finance
+msgid "Finance"
+msgstr "المالية"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__start_date
+msgid "First Due"
+msgstr "أول استحقاق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_follower_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_follower_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_follower_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_partner_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_partner_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_partner_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__activity_type_icon
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__activity_type_icon
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__activity_type_icon
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "أيقونة Font Awesome، مثل fa-tasks"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__due_date
+msgid "For a one-off obligation, the single date it is due."
+msgstr "بالنسبة لالتزام لمرة واحدة، تاريخ استحقاقه الوحيد."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__start_date
+msgid ""
+"For a recurring obligation, the date of the first occurrence. The generator "
+"steps forward from here."
+msgstr ""
+"بالنسبة لالتزام متكرر، تاريخ أول استحقاق. يتقدّم المولّد انطلاقاً من هنا."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__frequency
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Frequency"
+msgstr "التكرار"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__signature_status__fully_signed
+msgid "Fully Signed"
+msgstr "موقّع من الطرفين"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+msgid "Generate Occurrences"
+msgstr "توليد الاستحقاقات"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__governing_law
+msgid "Governing Law"
+msgstr "القانون الحاكم"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Grant Approval"
+msgstr "منح المصادقة"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_party__role__guarantor
+msgid "Guarantor"
+msgstr "الكفيل"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__has_message
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__has_message
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__has_message
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__has_message
+msgid "Has Message"
+msgstr "توجد رسالة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__manager_id
+msgid "Head Of Department"
+msgstr "رئيس القسم"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Head office lease, Karrada"
+msgstr "إيجار المقر الرئيسي، الكرادة"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__risk__high
+msgid "High"
+msgstr "عالية"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_type__default_notice_days
+msgid ""
+"How far ahead of expiry a contract of this type starts appearing on the "
+"renewal board, copied onto a new contract as its default."
+msgstr ""
+"كم من الوقت قبل الانتهاء يبدأ عقد من هذا النوع بالظهور على لوحة التجديد، "
+"يُنسخ إلى العقد الجديد كقيمة افتراضية."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__notice_period_days
+msgid ""
+"How long before expiry notice must be served to stop an automatic renewal, "
+"or to end the contract at term."
+msgstr ""
+"كم من الوقت قبل الانتهاء يجب توجيه الإشعار لوقف التجديد التلقائي أو لإنهاء "
+"العقد عند انتهاء مدته."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__notice_days
+msgid "How long before expiry this begins to appear on the renewal board."
+msgstr "كم من الوقت قبل الانتهاء يبدأ هذا بالظهور على لوحة التجديد."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__renewal_lead_days
+msgid ""
+"How long the renewal takes at the body, so the board can say when to start "
+"rather than when it ends."
+msgstr ""
+"كم من الوقت يستغرقه التجديد لدى الجهة، بحيث تستطيع اللوحة أن تقول متى يبدأ "
+"لا متى ينتهي."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__reminder_lead_days
+msgid "How many days before the due date to raise an activity to chase it."
+msgstr "عدد الأيام قبل تاريخ الاستحقاق لإنشاء نشاط للمتابعة."
+
+#. module: legal_contract
+#: model:legal.contract.department,name:legal_contract.dept_hr
+msgid "Human Resources"
+msgstr "الموارد البشرية"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_correspondence__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_exception_icon
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_exception_icon
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_exception_icon
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_exception_icon
+msgid "Icon"
+msgstr "الأيقونة"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__activity_exception_icon
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__activity_exception_icon
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__activity_exception_icon
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة تدل على نشاط استثنائي."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__message_needaction
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__message_needaction
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__message_needaction
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "عند التأشير، توجد رسائل جديدة تتطلب انتباهك."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__message_has_error
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__message_has_error
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__message_has_error
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "عند التأشير، توجد رسائل تعذّر إيصالها."
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__active
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "In Force"
+msgstr "نافذ"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "In Review"
+msgstr "قيد المراجعة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__instance_count
+msgid "Instance Count"
+msgstr "عدد الاستحقاقات"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__internal_approval
+msgid "Internal Approval"
+msgstr "مصادقة داخلية"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__internal_owner_id
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Internal Owner"
+msgstr "المالك الداخلي"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "Internally approved and sent to the counterparty."
+msgstr "صودِق عليه داخلياً وأُرسل إلى الطرف الآخر."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__is_closed
+msgid "Is Closed"
+msgstr "مغلق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_is_follower
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_is_follower
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_is_follower
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_is_follower
+msgid "Is Follower"
+msgstr "متابِع"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "It renews automatically unless notice is served"
+msgstr "يتجدد تلقائياً ما لم يُوجَّه إشعار قبل انتهائه بـ"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__write_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__write_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__write_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__write_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__write_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__write_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__write_uid
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__write_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__write_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__write_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__write_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__write_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__write_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__write_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation_instance__state__late
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+msgid "Late"
+msgstr "متأخر"
+
+#. module: legal_contract
+#: model:legal.contract.type,name:legal_contract.type_lease
+msgid "Lease Agreement"
+msgstr "عقد إيجار"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_sign__fully_signed
+msgid ""
+"Leave unset if only we have signed so far; the contract is then marked "
+"'signed by us' until the counter-signed copy is in."
+msgstr ""
+"اتركه غير محدَّد إن كنّا وحدنا من وقّع حتى الآن؛ عندئذٍ يُؤشَّر العقد «موقّع"
+" من طرفنا» إلى حين ورود النسخة الموقّعة من الطرف الآخر."
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_type__default_review_group__approver
+msgid "Legal Approver"
+msgstr "مُصادِق قانوني"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_type__default_review_group__manager
+msgid "Legal Manager"
+msgstr "المدير القانوني"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__legal_officer_id
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_type__default_review_group__officer
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Legal Officer"
+msgstr "مسؤول قانوني"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__legal_review
+msgid "Legal Review"
+msgstr "مراجعة قانونية"
+
+#. module: legal_contract
+#: model:ir.actions.server,name:legal_contract.cron_legal_contract_expire_ir_actions_server
+msgid "Legal: expire contracts past term"
+msgstr "الشؤون القانونية: إنهاء العقود التي تجاوزت مدتها"
+
+#. module: legal_contract
+#: model:ir.actions.server,name:legal_contract.cron_legal_contract_obligation_generate_ir_actions_server
+msgid "Legal: generate contract obligation occurrences"
+msgstr "الشؤون القانونية: توليد استحقاقات الالتزامات التعاقدية"
+
+#. module: legal_contract
+#: model:ir.actions.server,name:legal_contract.cron_legal_contract_obligation_late_ir_actions_server
+msgid "Legal: mark contract obligations late"
+msgstr "الشؤون القانونية: تأشير الالتزامات التعاقدية المتأخرة"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_correspondence.py:0
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__correspondence_ids
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Letters"
+msgstr "المكاتبات"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__risk__low
+msgid "Low"
+msgstr "منخفضة"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_form
+msgid "Mark Done"
+msgstr "تأشير الإنجاز"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Mark Signed"
+msgstr "تأشير موقّع"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__risk__medium
+msgid "Medium"
+msgstr "متوسطة"
+
+#. module: legal_contract
+#: model:legal.contract.type,name:legal_contract.type_mou
+msgid "Memorandum of Understanding"
+msgstr "مذكرة تفاهم"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_has_error
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_has_error
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_has_error
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في إيصال الرسالة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_ids
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+msgid "Mine"
+msgstr "استحقاقاتي"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__modification_count
+msgid "Modification Count"
+msgstr "عدد الملاحق"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__frequency__monthly
+msgid "Monthly"
+msgstr "شهري"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+msgid "Monthly rent"
+msgstr "الإيجار الشهري"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__my_activity_date_deadline
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__my_activity_date_deadline
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__my_activity_date_deadline
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "My Contracts"
+msgstr "عقودي"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "My Obligations"
+msgstr "التزاماتي"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__negotiation
+msgid "Negotiation"
+msgstr "تفاوض"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Net Change"
+msgstr "صافي التغيّر"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_list
+msgid "Net Value Change"
+msgstr "صافي التغيّر في القيمة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__new_expiry_date
+msgid "New Expiry"
+msgstr "تاريخ الانتهاء الجديد"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_date_deadline
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_date_deadline
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_date_deadline
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_summary
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_summary
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_summary
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_type_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_type_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_type_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: legal_contract
+#: model:legal.contract.type,name:legal_contract.type_nda
+msgid "Non-Disclosure Agreement"
+msgstr "اتفاقية عدم إفشاء"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__note
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__note
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_type_form
+msgid "Notes on how this type is handled."
+msgstr "ملاحظات حول كيفية التعامل مع هذا النوع."
+
+#. module: legal_contract
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract_obligation_instance
+msgid "Nothing outstanding"
+msgstr "لا شيء معلّق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__notice_days
+msgid "Notice Period (days)"
+msgstr "مدة الإشعار (أيام)"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_needaction_counter
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_needaction_counter
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_needaction_counter
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__message_has_error_counter
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__message_has_error_counter
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__message_has_error_counter
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__message_needaction_counter
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__message_needaction_counter
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__message_needaction_counter
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراءً"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__message_has_error_counter
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__message_has_error_counter
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__message_has_error_counter
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي تعذّر إيصالها"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__name
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__obligation_id
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+msgid "Obligation"
+msgstr "الالتزام"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__obligation_count
+msgid "Obligation Count"
+msgstr "عدد الالتزامات"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__obligation_overdue_count
+msgid "Obligation Overdue Count"
+msgstr "عدد الالتزامات المتأخرة"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_obligation
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__obligation_ids
+#: model:ir.ui.menu,name:legal_contract.menu_legal_contract_obligation
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_list
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Obligations"
+msgstr "الالتزامات"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_form
+msgid "Occurrence"
+msgstr "الاستحقاق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__instance_ids
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_list
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_list
+msgid "Occurrences"
+msgstr "الاستحقاقات"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_obligation.py:0
+msgid "Occurrences generated"
+msgstr "تم توليد الاستحقاقات"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__frequency__one_off
+msgid "One-off"
+msgstr "لمرة واحدة"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_modification.py:0
+msgid "Only an approver or the legal manager may apply an amendment."
+msgstr "لا يجوز تطبيق ملحق إلا لمُصادِق أو للمدير القانوني."
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/wizard/legal_contract_sign.py:0
+msgid "Only an approver or the legal manager may file a signed contract."
+msgstr "لا يجوز إيداع عقد موقّع إلا لمُصادِق أو للمدير القانوني."
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_obligation.py:0
+msgid "Only the legal manager may waive a contractual obligation."
+msgstr "المدير القانوني وحده من يجوز له إسقاط التزام تعاقدي."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Open"
+msgstr "مفتوح"
+
+#. module: legal_contract
+#: model:legal.contract.department,name:legal_contract.dept_operations
+msgid "Operations"
+msgstr "العمليات"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__end_date
+msgid ""
+"Optional. When empty, the generator plans a rolling twelve months ahead."
+msgstr ""
+"اختياري. عند تركه فارغاً يخطّط المولّد لاثني عشر شهراً متجدّدة مقدماً."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__entity_id
+msgid "Our Party"
+msgstr "طرفنا"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+msgid "Outstanding"
+msgstr "معلّق"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__is_overdue
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_obligation.py:0
+msgid "Overdue can only be tested for true or false."
+msgstr "لا يمكن اختبار «متأخر» إلا بصح أو خطأ."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__responsible_party
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__responsible_party
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Owed By"
+msgstr "الجهة الملزمة"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Owed By Them"
+msgstr "بذمتهم"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Owed By Us"
+msgstr "بذمتنا"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Owners & Value"
+msgstr "الملكية والقيمة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__party_ids
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Parties"
+msgstr "الأطراف"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__partner_id
+msgid "Party"
+msgstr "الطرف"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__party_count
+msgid "Party Count"
+msgstr "عدد الأطراف"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_obligation.py:0
+msgid "Past due on %(date)s."
+msgstr "تجاوز موعده في %(date)s."
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__status__pending
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation_instance__state__pending
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Pending"
+msgstr "قيد الإنجاز"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__period_key
+msgid "Period Key"
+msgstr "مفتاح الفترة"
+
+#. module: legal_contract
+#: model:legal.contract.department,name:legal_contract.dept_procurement
+msgid "Procurement"
+msgstr "المشتريات"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__frequency__quarterly
+msgid "Quarterly"
+msgstr "فصلي"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__to_sign
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Ready To Sign"
+msgstr "جاهز للتوقيع"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__received
+msgid "Received"
+msgstr "وارد"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__days_to_expiry
+msgid "Recomputed on read, never stored, because it changes every midnight."
+msgstr ""
+"يُعاد حسابه عند القراءة ولا يُخزَّن أبداً، لأنه يتغيّر عند كل منتصف ليل."
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "Recorded as signed."
+msgstr "سُجِّل موقّعاً."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__end_date
+msgid "Recurs Until"
+msgstr "يتكرر حتى"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__name
+msgid "Reference"
+msgstr "رقم العقد"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Reference / Title"
+msgstr "رقم العقد / العنوان"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__document_type_id
+msgid "Register As"
+msgstr "يُسجَّل كـ"
+
+#. module: legal_contract
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract
+msgid "Register a contract"
+msgstr "تسجيل عقد"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__note
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__note
+msgid "Remark"
+msgstr "ملاحظة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__reminder_lead_days
+msgid "Remind (days before)"
+msgstr "التذكير (أيام قبل)"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__renewal_lead_days
+msgid "Renewal Lead Time (days)"
+msgstr "مهلة التجديد (أيام)"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__notice_period_days
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Renewal Notice (days)"
+msgstr "إشعار التجديد (أيام)"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__default_auto_renew
 msgid "Renews Automatically By Default"
 msgstr "يتجدد تلقائياً بشكل افتراضي"
 
 #. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Request Approval"
+msgstr "طلب المصادقة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__responsible_user_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__responsible_user_id
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: legal_contract
+#: model:ir.model,name:legal_contract.model_legal_contract_department
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__responsible_department_id
+msgid "Responsible Department"
+msgstr "القسم المسؤول"
+
+#. module: legal_contract
+#: model:ir.actions.act_window,name:legal_contract.action_legal_contract_department
+#: model:ir.ui.menu,name:legal_contract.menu_legal_config_contract_department
+msgid "Responsible Departments"
+msgstr "الأقسام المسؤولة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__activity_user_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__activity_user_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__activity_user_id
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__confidential
+msgid ""
+"Restricts the contract to its owner, its legal officer and the legal "
+"manager. Used for anything commercially or personally sensitive."
+msgstr ""
+"يقصر الاطّلاع على العقد على مالكه ومسؤوله القانوني والمدير القانوني. يُستخدم"
+" لكل ما هو حساس تجارياً أو شخصياً."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__default_review_group
+msgid "Reviewed By"
+msgstr "جهة المراجعة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__risk
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Risk"
+msgstr "المخاطر"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__role
+msgid "Role"
+msgstr "الصفة"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__auto_renew
+msgid ""
+"Rolls over for a further term unless notice is served within the notice "
+"period below."
+msgstr "يتجدد لمدة أخرى ما لم يُوجَّه إشعار خلال مدة الإشعار المبيّنة أدناه."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_type_form
+msgid "SERVICE"
+msgstr "SERVICE"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_department__sequence
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__sequence
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_type__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: legal_contract
+#: model:legal.contract.type,name:legal_contract.type_service
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_type_form
+msgid "Service Agreement"
+msgstr "اتفاقية خدمات"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Signature"
+msgstr "التوقيع"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__signature_date
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__signature_date
+msgid "Signature Date"
+msgstr "تاريخ التوقيع"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__signature_status
+msgid "Signature Status"
+msgstr "حالة التوقيع"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__signed
+msgid "Signed"
+msgstr "موقّع"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__fully_signed
+msgid "Signed By Both Sides"
+msgstr "موقّع من الطرفين"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__signature_status__ours_signed
+msgid "Signed By Us"
+msgstr "موقّع من طرفنا"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__signed_document_id
+msgid "Signed Document"
+msgstr "المستند الموقّع"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__signatory_name
+msgid "Signed For Them By"
+msgstr "وقّع عنهم"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_sign__attachment
+msgid "Signed PDF"
+msgstr "ملف العقد الموقّع"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/wizard/legal_contract_sign.py:0
+msgid "Signed contract filed in the register as %s."
+msgstr "أُودِع العقد الموقّع في السجل باسم %s."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_department__code
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_type__code
 msgid "Stable key used by content packs and demo data."
 msgstr "مفتاح ثابت تستخدمه حزم المحتوى وبيانات العرض."
 
 #. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Start Negotiation"
+msgstr "بدء التفاوض"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__start_by_date
+msgid "Start Renewal By"
+msgstr "آخر موعد لبدء التجديد"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__state
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__state
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation_instance__state
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "State"
+msgstr "الحالة"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_obligation__status
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_search
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__activity_state
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__activity_state
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__activity_state
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة استناداً إلى الأنشطة\n"
+"متأخر: تجاوز تاريخ الاستحقاق بالفعل\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط: أنشطة مستقبلية."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Submit For Review"
+msgstr "إحالة للمراجعة"
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "Submitted for legal review."
+msgstr "أُحيل للمراجعة القانونية."
+
+#. module: legal_contract
+#: model:legal.contract.type,name:legal_contract.type_supply
+msgid "Supply Contract"
+msgstr "عقد تجهيز"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Terminate"
+msgstr "فسخ"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "Terminate this contract? This is reserved for the legal manager."
+msgstr "هل تريد فسخ هذا العقد؟ هذا الإجراء مقصور على المدير القانوني."
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__terminated
+msgid "Terminated"
+msgstr "مفسوخ"
+
+#. module: legal_contract
+#: model:ir.model.constraint,message:legal_contract.constraint_legal_contract_modification_number_contract_uniq
+msgid "That amendment number already exists on this contract."
+msgstr "رقم الملحق ذاك موجود أصلاً على هذا العقد."
+
+#. module: legal_contract
+#: model:ir.model.constraint,message:legal_contract.constraint_legal_contract_obligation_instance_obligation_period_c_2dda42aa
+msgid "That occurrence of that obligation already exists."
+msgstr "ذلك الاستحقاق لذلك الالتزام موجود أصلاً."
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__responsible_party__theirs
+msgid "The Counterparty"
+msgstr "الطرف الثاني"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__number
+msgid "The amendment's own number, e.g. 'Addendum 1'."
+msgstr "رقم الملحق الخاص به، مثل «الملحق 1»."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__internal_owner_id
+msgid "The business owner the contract belongs to internally."
+msgstr "الجهة صاحبة العلاقة داخلياً التي يعود إليها العقد."
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "The contract is now in force."
+msgstr "أصبح العقد نافذاً."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_correspondence__contract_id
+msgid ""
+"The contract this letter belongs to, if any. Empty for a letter that arrived"
+" before anybody opened a contract file for it."
+msgstr ""
+"العقد الذي يعود إليه هذا الكتاب، إن وُجد. يُترك فارغاً لكتاب ورد قبل أن يفتح"
+" أحد ملف عقد له."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__commencement_date
+msgid ""
+"The date performance actually begins, which is not always the signature "
+"date."
+msgstr "تاريخ بدء التنفيذ الفعلي، وهو ليس دائماً تاريخ التوقيع."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__expiry_date
+msgid ""
+"The date the artefact ceases to be in force. Empty means it does not expire."
+msgstr ""
+"التاريخ الذي يكفّ فيه المستمسك عن النفاذ. تركه فارغاً يعني أنه لا ينتهي."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__effective_date
+msgid "The date the contract is agreed to take effect from."
+msgstr "التاريخ المتفق على أن يبدأ نفاذ العقد منه."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_sign__document_type_id
+msgid "The document type the signed contract is filed under in the register."
+msgstr "نوع المستمسك الذي يُودَع تحته العقد الموقّع في السجل."
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid ""
+"The expiry date of contract %(title)s is before its effective date. A "
+"contract cannot end before it begins."
+msgstr ""
+"تاريخ انتهاء العقد %(title)s سابق لتاريخ نفاذه. لا يمكن أن ينتهي العقد قبل "
+"أن يبدأ."
+
+#. module: legal_contract
+#: model_terms:ir.actions.act_window,help:legal_contract.action_legal_contract_department
+msgid ""
+"The internal units that own contracts. A small list of the legal\n"
+"                department's own, so the HR application is never a prerequisite."
+msgstr ""
+"الوحدات الداخلية التي تملك العقود. قائمة صغيرة خاصة بالقسم\n"
+"                القانوني ذاته، كي لا يكون تطبيق الموارد البشرية شرطاً مسبقاً أبداً."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__governing_law
+msgid "The law the contract is governed by, e.g. 'Iraqi Civil Code'."
+msgstr "القانون الذي يحكم العقد، مثل «القانون المدني العراقي»."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__legal_officer_id
+msgid "The lawyer handling the review and negotiation."
+msgstr "المحامي القائم على المراجعة والتفاوض."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__entity_id
+msgid "The legal person of ours that is party to the contract."
+msgstr "الشخص الاعتباري التابع لنا والطرف في العقد."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_party__signatory_name
+msgid "The named individual who signs for this party."
+msgstr "الشخص المسمّى الذي يوقّع نيابةً عن هذا الطرف."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__current_value
+msgid "The original value plus the value change of every applied amendment."
+msgstr "القيمة الأصلية مضافاً إليها التغيّر في قيمة كل ملحق مُطبَّق."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__counterparty_id
+msgid ""
+"The primary counterparty, lifted from the parties table so a list and a "
+"board can show and group on it without opening the file."
+msgstr ""
+"الطرف الثاني الرئيسي، مأخوذ من جدول الأطراف بحيث تستطيع القائمة واللوحة عرضه"
+" والتجميع عليه دون فتح الملف."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__evidence_document_id
+msgid "The register entry that evidences performance, where there is one."
+msgstr "قيد السجل الذي يثبت التنفيذ، إن وُجد."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__signed_document_id
+msgid ""
+"The signed PDF, filed once in the company's permanent document register so "
+"its expiry is chased on the same board as every other artefact."
+msgstr ""
+"ملف PDF الموقّع، يُودَع مرة واحدة في سجل مستمسكات الشركة الدائم بحيث يُتابَع"
+" انتهاؤه على اللوحة ذاتها كسائر المستمسكات."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__value_change
+msgid ""
+"The signed change to the contract value. Positive for an increase, negative "
+"for a reduction. Added to the original value only once applied."
+msgstr ""
+"التغيّر في قيمة العقد بإشارته. موجب للزيادة وسالب للنقصان. لا يُضاف إلى "
+"القيمة الأصلية إلا بعد تطبيقه."
+
+#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/wizard/legal_contract_sign.py:0
+msgid ""
+"The signed contract is already filed as %s. Supersede that register entry "
+"rather than filing a second one."
+msgstr ""
+"العقد الموقّع مُودَع أصلاً باسم %s. استبدِل قيد السجل ذاك بدل إيداع قيد "
+"ثانٍ."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_sign_form
+msgid ""
+"The signed contract is filed once in the company's permanent document\n"
+"                    register, so its expiry is chased on the same renewal board as every\n"
+"                    licence and identity the company holds."
+msgstr ""
+"يُودَع العقد الموقّع مرة واحدة في سجل مستمسكات الشركة الدائم،\n"
+"                    بحيث يُتابَع انتهاؤه على لوحة التجديد ذاتها كسائر الإجازات\n"
+"                    والهويات التي تحوزها الشركة."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__value
+msgid ""
+"The value as originally agreed. Amendments do not overwrite it; the current "
+"value is computed as this plus the applied amendments."
+msgstr ""
+"القيمة كما اتُّفق عليها أصلاً. لا تلغيها الملاحق؛ إذ تُحسب القيمة الحالية "
+"بجمع هذه القيمة مع الملاحق المُطبَّقة."
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_party__reference
+msgid "Their Reference"
+msgstr "رقمهم المرجعي"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_party__reference
+msgid "Their identifier for the contract, if they gave it one."
+msgstr "معرّفهم للعقد، إن وُجد."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "This contract is"
+msgstr "هذا العقد"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_list
+msgid "Total Value"
+msgstr "القيمة الإجمالية"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__type_id
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Type"
+msgstr "النوع"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__activity_exception_decoration
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__activity_exception_decoration
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__activity_exception_decoration
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي المسجل."
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__signature_status__unsigned
+msgid "Unsigned"
+msgstr "غير موقّع"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__responsible_party__ours
+msgid "Us"
+msgstr "نحن"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract__expiry_state
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_search
+msgid "Validity"
+msgstr "النفاذ"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__value_change
+msgid "Value Change"
+msgstr "التغيّر في القيمة"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_instance_form
+msgid "Waive"
+msgstr "إسقاط"
+
+#. module: legal_contract
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation__status__waived
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_obligation_instance__state__waived
+msgid "Waived"
+msgstr "مُسقَط"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+msgid "What"
+msgstr "الموضوع"
+
+#. module: legal_contract
+#: model:ir.model.fields,field_description:legal_contract.field_legal_contract_modification__description
+msgid "What Changed"
+msgstr "موضوع التعديل"
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+msgid "What must be done."
+msgstr "ما الذي يجب إنجازه."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract__title
+msgid "What the contract is, in a line: 'Head office lease, Karrada'."
+msgstr "ماهية العقد في سطر واحد: «إيجار المقر الرئيسي، الكرادة»."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__description
+msgid "What this amendment changes, in words."
+msgstr "ما يغيّره هذا الملحق، بالكلمات."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_modification_form
+msgid "What this amendment changes."
+msgstr "ما يغيّره هذا الملحق."
+
+#. module: legal_contract
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_obligation_form
+msgid "When"
+msgstr "التوقيت"
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_modification__new_expiry_date
+msgid ""
+"Where the amendment extends the term, the new expiry date. Applied onto the "
+"contract when the amendment is applied."
+msgstr ""
+"حيث يمدّد الملحق المدة، تاريخ الانتهاء الجديد. يُطبَّق على العقد عند تطبيق "
+"الملحق."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_type__default_auto_renew
+msgid ""
+"Whether contracts of this type usually roll over unless notice is served. "
+"Copied onto a new contract, where it can be overridden."
+msgstr ""
+"ما إذا كانت عقود هذا النوع تتجدد عادةً ما لم يُوجَّه إشعار. تُنسخ إلى العقد "
+"الجديد حيث يمكن تجاوزها."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__clause_reference
+msgid "Which clause of the contract this obligation comes from, e.g. '7.2'."
+msgstr "البند من العقد الذي ينشأ عنه هذا الالتزام، مثل «7.2»."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__period_key
+msgid ""
+"Which occurrence this row is (the ISO due date). The key the unique index is"
+" built on, so re-running the generator creates nothing."
+msgstr ""
+"أيّ استحقاق يمثّله هذا السطر (تاريخ الاستحقاق بصيغة ISO). المفتاح الذي يُبنى"
+" عليه الفهرس الفريد، بحيث لا يُنشئ تشغيل المولّد مرة أخرى أي شيء."
+
+#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_type__default_review_group
 msgid ""
 "Which rung of the ladder reviews a contract of this type by default. It is a"
 " hint the form fills in, not a lock: the internal-approval gate is always "
@@ -164,877 +1985,137 @@ msgstr ""
 "كان هذا الحقل."
 
 #. module: legal_contract
-msgid ""
-"How far ahead of expiry a contract of this type starts appearing on the "
-"renewal board, copied onto a new contract as its default."
-msgstr ""
-"كم من الوقت قبل الانتهاء يبدأ عقد من هذا النوع بالظهور على لوحة التجديد، "
-"يُنسخ إلى العقد الجديد كقيمة افتراضية."
-
-#. module: legal_contract
-msgid ""
-"Whether contracts of this type usually roll over unless notice is served. "
-"Copied onto a new contract, where it can be overridden."
-msgstr ""
-"ما إذا كانت عقود هذا النوع تتجدد عادةً ما لم يُوجَّه إشعار. تُنسخ إلى العقد "
-"الجديد حيث يمكن تجاوزها."
-
-#. module: legal_contract
-msgid "Head Of Department"
-msgstr "رئيس القسم"
-
-#. module: legal_contract
-# ==========================================================================
-# Party
-# ==========================================================================
-msgid "Party"
-msgstr "الطرف"
-
-#. module: legal_contract
-msgid "Counterparty"
-msgstr "الطرف الثاني"
-
-#. module: legal_contract
-msgid "Guarantor"
-msgstr "الكفيل"
-
-#. module: legal_contract
-msgid "Beneficiary"
-msgstr "المستفيد"
-
-#. module: legal_contract
-msgid "Witness"
-msgstr "الشاهد"
-
-#. module: legal_contract
-msgid "Their Reference"
-msgstr "رقمهم المرجعي"
-
-#. module: legal_contract
-msgid "Their identifier for the contract, if they gave it one."
-msgstr "معرّفهم للعقد، إن وُجد."
-
-#. module: legal_contract
-msgid "Signed For Them By"
-msgstr "وقّع عنهم"
-
-#. module: legal_contract
-msgid "The named individual who signs for this party."
-msgstr "الشخص المسمّى الذي يوقّع نيابةً عن هذا الطرف."
-
-#. module: legal_contract
-# ==========================================================================
-# Contract - fields & help
-# ==========================================================================
-msgid "Allocated CON/YYYY/#### the moment the contract is created."
-msgstr "يُخصَّص CON/YYYY/#### لحظة إنشاء العقد."
-
-#. module: legal_contract
-msgid "What the contract is, in a line: 'Head office lease, Karrada'."
-msgstr "ماهية العقد في سطر واحد: «إيجار المقر الرئيسي، الكرادة»."
-
-#. module: legal_contract
-msgid "Our Party"
-msgstr "طرفنا"
-
-#. module: legal_contract
-msgid "The legal person of ours that is party to the contract."
-msgstr "الشخص الاعتباري التابع لنا والطرف في العقد."
-
-#. module: legal_contract
-msgid ""
-"The primary counterparty, lifted from the parties table so a list and a "
-"board can show and group on it without opening the file."
-msgstr ""
-"الطرف الثاني الرئيسي، مأخوذ من جدول الأطراف بحيث تستطيع القائمة واللوحة عرضه"
-" والتجميع عليه دون فتح الملف."
-
-#. module: legal_contract
-msgid "Internal Owner"
-msgstr "المالك الداخلي"
-
-#. module: legal_contract
-msgid "The business owner the contract belongs to internally."
-msgstr "الجهة صاحبة العلاقة داخلياً التي يعود إليها العقد."
-
-#. module: legal_contract
-msgid "The lawyer handling the review and negotiation."
-msgstr "المحامي القائم على المراجعة والتفاوض."
-
-#. module: legal_contract
-msgid "Contract Value"
-msgstr "قيمة العقد"
-
-#. module: legal_contract
-msgid ""
-"The value as originally agreed. Amendments do not overwrite it; the current "
-"value is computed as this plus the applied amendments."
-msgstr ""
-"القيمة كما اتُّفق عليها أصلاً. لا تلغيها الملاحق؛ إذ تُحسب القيمة الحالية "
-"بجمع هذه القيمة مع الملاحق المُطبَّقة."
-
-#. module: legal_contract
-msgid "Current Value"
-msgstr "القيمة الحالية"
-
-#. module: legal_contract
-msgid "The original value plus the value change of every applied amendment."
-msgstr "القيمة الأصلية مضافاً إليها التغيّر في قيمة كل ملحق مُطبَّق."
-
-#. module: legal_contract
-msgid "Effective Date"
-msgstr "تاريخ النفاذ"
-
-#. module: legal_contract
-msgid "The date the contract is agreed to take effect from."
-msgstr "التاريخ المتفق على أن يبدأ نفاذ العقد منه."
-
-#. module: legal_contract
-msgid "Commencement Date"
-msgstr "تاريخ المباشرة"
-
-#. module: legal_contract
-msgid ""
-"The date performance actually begins, which is not always the signature "
-"date."
-msgstr "تاريخ بدء التنفيذ الفعلي، وهو ليس دائماً تاريخ التوقيع."
-
-#. module: legal_contract
-msgid "Auto-renews"
-msgstr "يتجدد تلقائياً"
-
-#. module: legal_contract
-msgid ""
-"Rolls over for a further term unless notice is served within the notice "
-"period below."
-msgstr "يتجدد لمدة أخرى ما لم يُوجَّه إشعار خلال مدة الإشعار المبيّنة أدناه."
-
-#. module: legal_contract
-msgid "Notice Period (days)"
-msgstr "مدة الإشعار (أيام)"
-
-#. module: legal_contract
-msgid ""
-"How long before expiry notice must be served to stop an automatic renewal, "
-"or to end the contract at term."
-msgstr ""
-"كم من الوقت قبل الانتهاء يجب توجيه الإشعار لوقف التجديد التلقائي أو لإنهاء "
-"العقد عند انتهاء مدته."
-
-#. module: legal_contract
-msgid "Governing Law"
-msgstr "القانون الحاكم"
-
-#. module: legal_contract
-msgid "The law the contract is governed by, e.g. 'Iraqi Civil Code'."
-msgstr "القانون الذي يحكم العقد، مثل «القانون المدني العراقي»."
-
-#. module: legal_contract
-msgid "Confidential"
-msgstr "سري"
-
-#. module: legal_contract
-msgid ""
-"Restricts the contract to its owner, its legal officer and the legal "
-"manager. Used for anything commercially or personally sensitive."
-msgstr ""
-"يقصر الاطّلاع على العقد على مالكه ومسؤوله القانوني والمدير القانوني. يُستخدم"
-" لكل ما هو حساس تجارياً أو شخصياً."
-
-#. module: legal_contract
-msgid "Risk"
-msgstr "المخاطر"
-
-#. module: legal_contract
-msgid "Low"
-msgstr "منخفضة"
-
-#. module: legal_contract
-msgid "Medium"
-msgstr "متوسطة"
-
-#. module: legal_contract
-msgid "High"
-msgstr "عالية"
-
-#. module: legal_contract
-msgid "Signature Status"
-msgstr "حالة التوقيع"
-
-#. module: legal_contract
-msgid "Unsigned"
-msgstr "غير موقّع"
-
-#. module: legal_contract
-msgid "Signed By Us"
-msgstr "موقّع من طرفنا"
-
-#. module: legal_contract
-msgid "Fully Signed"
-msgstr "موقّع من الطرفين"
-
-#. module: legal_contract
-msgid "Signed Document"
-msgstr "المستند الموقّع"
-
-#. module: legal_contract
-msgid ""
-"The signed PDF, filed once in the company's permanent document register so "
-"its expiry is chased on the same board as every other artefact."
-msgstr ""
-"ملف PDF الموقّع، يُودَع مرة واحدة في سجل مستمسكات الشركة الدائم بحيث يُتابَع"
-" انتهاؤه على اللوحة ذاتها كسائر المستمسكات."
-
-#. module: legal_contract
-# Lifecycle states
-msgid "Received"
-msgstr "وارد"
-
-#. module: legal_contract
-msgid "Legal Review"
-msgstr "مراجعة قانونية"
-
-#. module: legal_contract
-msgid "Negotiation"
-msgstr "تفاوض"
-
-#. module: legal_contract
-msgid "Internal Approval"
-msgstr "مصادقة داخلية"
-
-#. module: legal_contract
-msgid "With Counterparty"
-msgstr "لدى الطرف الآخر"
-
-#. module: legal_contract
-msgid "Ready To Sign"
-msgstr "جاهز للتوقيع"
-
-#. module: legal_contract
-msgid "Signed"
-msgstr "موقّع"
-
-#. module: legal_contract
-msgid "In Force"
-msgstr "نافذ"
-
-#. module: legal_contract
-msgid "Expired"
-msgstr "منتهٍ"
-
-#. module: legal_contract
-msgid "Terminated"
-msgstr "مفسوخ"
-
-#. module: legal_contract
-msgid "Closed"
-msgstr "مغلق"
-
-#. module: legal_contract
-msgid "Renewal Notice (days)"
-msgstr "إشعار التجديد (أيام)"
-
-#. module: legal_contract
-# ==========================================================================
-# Obligation
-# ==========================================================================
-msgid "Obligation"
-msgstr "الالتزام"
-
-#. module: legal_contract
-msgid "A short label: 'Monthly rent', 'Annual audit delivery'."
-msgstr "تسمية مختصرة: «الإيجار الشهري»، «تسليم التدقيق السنوي»."
-
-#. module: legal_contract
-msgid "Clause"
-msgstr "البند"
-
-#. module: legal_contract
-msgid "Which clause of the contract this obligation comes from, e.g. '7.2'."
-msgstr "البند من العقد الذي ينشأ عنه هذا الالتزام، مثل «7.2»."
-
-#. module: legal_contract
-msgid "Owed By"
-msgstr "الجهة الملزمة"
-
-#. module: legal_contract
-msgid "Us"
-msgstr "نحن"
-
-#. module: legal_contract
-msgid "The Counterparty"
-msgstr "الطرف الثاني"
-
-#. module: legal_contract
-msgid "Responsible"
-msgstr "المسؤول"
-
-#. module: legal_contract
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation__responsible_user_id
+#: model:ir.model.fields,help:legal_contract.field_legal_contract_obligation_instance__responsible_user_id
 msgid "Who on our side chases or performs this obligation."
 msgstr "من يتابع أو ينفّذ هذا الالتزام من جانبنا."
 
 #. module: legal_contract
-msgid "One-off"
-msgstr "لمرة واحدة"
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract__state__counterparty_review
+msgid "With Counterparty"
+msgstr "لدى الطرف الآخر"
 
 #. module: legal_contract
-msgid "Monthly"
-msgstr "شهري"
+#: model:ir.model.fields.selection,name:legal_contract.selection__legal_contract_party__role__witness
+msgid "Witness"
+msgstr "الشاهد"
 
 #. module: legal_contract
-msgid "Quarterly"
-msgstr "فصلي"
-
-#. module: legal_contract
-msgid "Every 6 Months"
-msgstr "كل ٦ أشهر"
-
-#. module: legal_contract
-msgid "Annual"
-msgstr "سنوي"
-
-#. module: legal_contract
-msgid "For a one-off obligation, the single date it is due."
-msgstr "بالنسبة لالتزام لمرة واحدة، تاريخ استحقاقه الوحيد."
-
-#. module: legal_contract
-msgid "First Due"
-msgstr "أول استحقاق"
-
-#. module: legal_contract
-msgid ""
-"For a recurring obligation, the date of the first occurrence. The generator "
-"steps forward from here."
-msgstr ""
-"بالنسبة لالتزام متكرر، تاريخ أول استحقاق. يتقدّم المولّد انطلاقاً من هنا."
-
-#. module: legal_contract
-msgid "Recurs Until"
-msgstr "يتكرر حتى"
-
-#. module: legal_contract
-msgid ""
-"Optional. When empty, the generator plans a rolling twelve months ahead."
-msgstr ""
-"اختياري. عند تركه فارغاً يخطّط المولّد لاثني عشر شهراً متجدّدة مقدماً."
-
-#. module: legal_contract
-msgid "Pending"
-msgstr "قيد الإنجاز"
-
-#. module: legal_contract
-msgid "Done"
-msgstr "منجز"
-
-#. module: legal_contract
-msgid "Waived"
-msgstr "مُسقَط"
-
-#. module: legal_contract
-msgid "Late"
-msgstr "متأخر"
-
-#. module: legal_contract
-msgid "Overdue"
-msgstr "متأخر"
-
-#. module: legal_contract
-msgid ""
-"A one-off obligation that is still pending after its due date. Read live "
-"rather than stored, because it becomes true at midnight with nobody writing "
-"to the record."
-msgstr ""
-"التزام لمرة واحدة ما زال قيد الإنجاز بعد تاريخ استحقاقه. يُقرأ لحظياً لا "
-"مخزّناً، لأنه يصبح صحيحاً عند منتصف الليل دون أن يكتب أحد إلى السجل."
-
-#. module: legal_contract
-msgid "Evidence"
-msgstr "الإثبات"
-
-#. module: legal_contract
-msgid "The register entry that evidences performance, where there is one."
-msgstr "قيد السجل الذي يثبت التنفيذ، إن وُجد."
-
-#. module: legal_contract
-msgid "Remind (days before)"
-msgstr "التذكير (أيام قبل)"
-
-#. module: legal_contract
-msgid "How many days before the due date to raise an activity to chase it."
-msgstr "عدد الأيام قبل تاريخ الاستحقاق لإنشاء نشاط للمتابعة."
-
-#. module: legal_contract
-msgid "Occurrences"
-msgstr "الاستحقاقات"
-
-#. module: legal_contract
-msgid ""
-"Which occurrence this row is (the ISO due date). The key the unique index is"
-" built on, so re-running the generator creates nothing."
-msgstr ""
-"أيّ استحقاق يمثّله هذا السطر (تاريخ الاستحقاق بصيغة ISO). المفتاح الذي يُبنى"
-" عليه الفهرس الفريد، بحيث لا يُنشئ تشغيل المولّد مرة أخرى أي شيء."
-
-#. module: legal_contract
-# ==========================================================================
-# Modification
-# ==========================================================================
-msgid "Amendment No."
-msgstr "رقم الملحق"
-
-#. module: legal_contract
-msgid "The amendment's own number, e.g. 'Addendum 1'."
-msgstr "رقم الملحق الخاص به، مثل «الملحق 1»."
-
-#. module: legal_contract
-msgid "Amendment Date"
-msgstr "تاريخ الملحق"
-
-#. module: legal_contract
-msgid "What Changed"
-msgstr "موضوع التعديل"
-
-#. module: legal_contract
-msgid "What this amendment changes, in words."
-msgstr "ما يغيّره هذا الملحق، بالكلمات."
-
-#. module: legal_contract
-msgid "Value Change"
-msgstr "التغيّر في القيمة"
-
-#. module: legal_contract
-msgid ""
-"The signed change to the contract value. Positive for an increase, negative "
-"for a reduction. Added to the original value only once applied."
-msgstr ""
-"التغيّر في قيمة العقد بإشارته. موجب للزيادة وسالب للنقصان. لا يُضاف إلى "
-"القيمة الأصلية إلا بعد تطبيقه."
-
-#. module: legal_contract
-msgid "New Expiry"
-msgstr "تاريخ الانتهاء الجديد"
-
-#. module: legal_contract
-msgid ""
-"Where the amendment extends the term, the new expiry date. Applied onto the "
-"contract when the amendment is applied."
-msgstr ""
-"حيث يمدّد الملحق المدة، تاريخ الانتهاء الجديد. يُطبَّق على العقد عند تطبيق "
-"الملحق."
-
-#. module: legal_contract
-msgid "Draft"
-msgstr "مسودة"
-
-#. module: legal_contract
-msgid "Applied"
-msgstr "مُطبَّق"
-
-#. module: legal_contract
-# ==========================================================================
-# Sign wizard
-# ==========================================================================
-msgid "Register As"
-msgstr "يُسجَّل كـ"
-
-#. module: legal_contract
-msgid "The document type the signed contract is filed under in the register."
-msgstr "نوع المستمسك الذي يُودَع تحته العقد الموقّع في السجل."
-
-#. module: legal_contract
-msgid "Signed By Both Sides"
-msgstr "موقّع من الطرفين"
-
-#. module: legal_contract
-msgid ""
-"Leave unset if only we have signed so far; the contract is then marked "
-"'signed by us' until the counter-signed copy is in."
-msgstr ""
-"اتركه غير محدَّد إن كنّا وحدنا من وقّع حتى الآن؛ عندئذٍ يُؤشَّر العقد «موقّع"
-" من طرفنا» إلى حين ورود النسخة الموقّعة من الطرف الآخر."
-
-#. module: legal_contract
-msgid "Signed PDF"
-msgstr "ملف العقد الموقّع"
-
-#. module: legal_contract
-msgid "File Name"
-msgstr "اسم الملف"
-
-#. module: legal_contract
-# ==========================================================================
-# Correspondence edge
-# ==========================================================================
-msgid ""
-"The contract this letter belongs to, if any. Empty for a letter that arrived"
-" before anybody opened a contract file for it."
-msgstr ""
-"العقد الذي يعود إليه هذا الكتاب، إن وُجد. يُترك فارغاً لكتاب ورد قبل أن يفتح"
-" أحد ملف عقد له."
-
-#. module: legal_contract
-# ==========================================================================
-# Buttons (views)
-# ==========================================================================
-msgid "Submit For Review"
-msgstr "إحالة للمراجعة"
-
-#. module: legal_contract
-msgid "Start Negotiation"
-msgstr "بدء التفاوض"
-
-#. module: legal_contract
-msgid "Request Approval"
-msgstr "طلب المصادقة"
-
-#. module: legal_contract
-msgid "Grant Approval"
-msgstr "منح المصادقة"
-
-#. module: legal_contract
-msgid "Mark Signed"
-msgstr "تأشير موقّع"
-
-#. module: legal_contract
-msgid "File Signed Document"
-msgstr "إيداع المستند الموقّع"
-
-#. module: legal_contract
-msgid "Activate"
-msgstr "تفعيل"
-
-#. module: legal_contract
-msgid "Close"
-msgstr "إغلاق"
-
-#. module: legal_contract
-msgid "Terminate"
-msgstr "فسخ"
-
-#. module: legal_contract
-msgid "Back To Review"
-msgstr "إعادة للمراجعة"
-
-#. module: legal_contract
-msgid "Terminate this contract? This is reserved for the legal manager."
-msgstr "هل تريد فسخ هذا العقد؟ هذا الإجراء مقصور على المدير القانوني."
-
-#. module: legal_contract
-msgid "Generate Occurrences"
-msgstr "توليد الاستحقاقات"
-
-#. module: legal_contract
-msgid "Mark Done"
-msgstr "تأشير الإنجاز"
-
-#. module: legal_contract
-msgid "Waive"
-msgstr "إسقاط"
-
-#. module: legal_contract
-msgid "Apply"
-msgstr "تطبيق"
-
-#. module: legal_contract
-msgid "Apply Amendment"
-msgstr "تطبيق الملحق"
-
-#. module: legal_contract
-msgid "File Document"
-msgstr "إيداع المستند"
-
-#. module: legal_contract
-msgid "Cancel"
-msgstr "إلغاء"
-
-#. module: legal_contract
-msgid "Contracts"
-msgstr "العقود"
-
-#. module: legal_contract
-msgid "Obligations"
-msgstr "الالتزامات"
-
-#. module: legal_contract
-msgid "Amendments"
-msgstr "الملاحق"
-
-#. module: legal_contract
-msgid "Letters"
-msgstr "المكاتبات"
-
-#. module: legal_contract
-msgid ""
-"An amendment never edits the contract in place. The original value and term "
-"stay exactly as signed; applying this amendment adds its value change to the"
-" current value and, where a new expiry is named, extends the term."
-msgstr ""
-"لا يعدّل الملحق العقد في مكانه أبداً. تبقى القيمة والمدة الأصليتان كما "
-"وُقِّعتا تماماً؛ ويضيف تطبيق هذا الملحق تغيّره في القيمة إلى القيمة الحالية،"
-" ويمدّد المدة حيثما ذُكر تاريخ انتهاء جديد."
-
-#. module: legal_contract
-msgid ""
-"The signed contract is filed once in the company's permanent document "
-"register, so its expiry is chased on the same renewal board as every licence"
-" and identity the company holds."
-msgstr ""
-"يُودَع العقد الموقّع مرة واحدة في سجل مستمسكات الشركة الدائم، بحيث يُتابَع "
-"انتهاؤه على لوحة التجديد ذاتها كسائر الإجازات والهويات التي تملكها الشركة."
-
-#. module: legal_contract
-# ==========================================================================
-# Menus
-# ==========================================================================
-msgid "Awaiting Approval"
-msgstr "بانتظار المصادقة"
-
-#. module: legal_contract
-msgid "Expiring Contracts"
-msgstr "عقود قاربت الانتهاء"
-
-#. module: legal_contract
-msgid "Contract Deadlines"
-msgstr "مواعيد العقود"
-
-#. module: legal_contract
-msgid "Contract Types"
-msgstr "أنواع العقود"
-
-#. module: legal_contract
-msgid "Responsible Departments"
-msgstr "الأقسام المسؤولة"
-
-#. module: legal_contract
-# ==========================================================================
-# Actions - names & nocontent help
-# ==========================================================================
-msgid "Configure a contract type"
-msgstr "إعداد نوع عقد"
-
-#. module: legal_contract
-msgid ""
-"A type carries what is true of every contract of its kind: which internal "
-"group reviews it and how far ahead its renewal is chased."
-msgstr ""
-"يحمل النوع ما يصدق على كل عقد من صنفه: أي مجموعة داخلية تراجعه ومتى تبدأ "
-"متابعة تجديده."
-
-#. module: legal_contract
-msgid "Add an owning department"
-msgstr "إضافة قسم مالك"
-
-#. module: legal_contract
-msgid ""
-"The internal units that own contracts. A small list of the legal "
-"department's own, so the HR application is never a prerequisite."
-msgstr ""
-"الوحدات الداخلية التي تملك العقود. قائمة صغيرة خاصة بالدائرة القانونية، بحيث"
-" لا يكون تطبيق الموارد البشرية شرطاً أبداً."
-
-#. module: legal_contract
-msgid "Register a contract"
-msgstr "تسجيل عقد"
-
-#. module: legal_contract
-msgid ""
-"Every contract walks a gated lifecycle - reviewed, negotiated, approved, "
-"signed, in force - and its renewal is chased on the same board as every "
-"other dated artefact the company holds."
-msgstr ""
-"يسير كل عقد في دورة حياة مُحكَمة البوابات - مراجعة، تفاوض، مصادقة، توقيع، "
-"نفاذ - ويُتابَع تجديده على اللوحة ذاتها كسائر المستمسكات المؤرَّخة التي "
-"تملكها الشركة."
-
-#. module: legal_contract
-msgid "Nothing outstanding"
-msgstr "لا شيء معلّق"
-
-#. module: legal_contract
-msgid ""
-"Every recurring obligation is a dated row with a state, generated ahead of "
-"time, so an empty screen means somebody has looked and done the work rather "
-"than that nobody has looked."
-msgstr ""
-"كل التزام متكرر هو سطر مؤرَّخ له حالة، يُولَّد مسبقاً، بحيث تعني الشاشة "
-"الفارغة أن أحداً قد راجع وأنجز العمل لا أن أحداً لم ينظر."
-
-#. module: legal_contract
-# ==========================================================================
-# Server messages: errors, validations, log entries, notifications
-# ==========================================================================
-msgid ""
-"The expiry date of contract %(title)s is before its effective date. A "
-"contract cannot end before it begins."
-msgstr ""
-"تاريخ انتهاء العقد %(title)s سابق لتاريخ نفاذه. لا يمكن أن ينتهي العقد قبل "
-"أن يبدأ."
-
-#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
 msgid ""
 "You do not have the authority to %(action)s. This is reserved for a more "
 "senior role."
 msgstr "لا تملك صلاحية %(action)s. هذا الإجراء مقصور على دور أعلى."
 
 #. module: legal_contract
-msgid "Contract %(title)s cannot %(action)s from its current state."
-msgstr "لا يمكن للعقد %(title)s أن %(action)s من حالته الراهنة."
-
-#. module: legal_contract
-msgid "be submitted for review"
-msgstr "يُحال للمراجعة"
-
-#. module: legal_contract
-msgid "move to negotiation"
-msgstr "ينتقل إلى التفاوض"
-
-#. module: legal_contract
-msgid "be sent for internal approval"
-msgstr "يُرسَل للمصادقة الداخلية"
-
-#. module: legal_contract
-msgid "grant internal approval"
-msgstr "منح المصادقة الداخلية"
-
-#. module: legal_contract
-msgid "be approved"
-msgstr "يُصادَق عليه"
-
-#. module: legal_contract
-msgid "be marked ready to sign"
-msgstr "يُؤشَّر جاهزاً للتوقيع"
-
-#. module: legal_contract
-msgid "record a signature"
-msgstr "تسجيل توقيع"
-
-#. module: legal_contract
-msgid "be signed"
-msgstr "يُوقَّع"
-
-#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
 msgid "be activated"
 msgstr "يُفعَّل"
 
 #. module: legal_contract
-msgid "terminate a contract"
-msgstr "فسخ عقد"
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "be approved"
+msgstr "يُصادَق عليه"
 
 #. module: legal_contract
-msgid "be terminated"
-msgstr "يُفسَخ"
-
-#. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
 msgid "be closed"
 msgstr "يُغلَق"
 
 #. module: legal_contract
-msgid "reopen a contract for review"
-msgstr "إعادة فتح عقد للمراجعة"
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "be marked ready to sign"
+msgstr "يُؤشَّر جاهزاً للتوقيع"
 
 #. module: legal_contract
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
 msgid "be sent back to review"
 msgstr "يُعاد للمراجعة"
 
 #. module: legal_contract
-msgid "Submitted for legal review."
-msgstr "أُحيل للمراجعة القانونية."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "be sent for internal approval"
+msgstr "يُرسَل للمصادقة الداخلية"
 
 #. module: legal_contract
-msgid "Awaiting internal approval."
-msgstr "بانتظار المصادقة الداخلية."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "be signed"
+msgstr "يُوقَّع"
 
 #. module: legal_contract
-msgid "Internally approved and sent to the counterparty."
-msgstr "صودِق عليه داخلياً وأُرسل إلى الطرف الآخر."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "be submitted for review"
+msgstr "يُحال للمراجعة"
 
 #. module: legal_contract
-msgid "Recorded as signed."
-msgstr "سُجِّل موقّعاً."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "be terminated"
+msgstr "يُفسَخ"
 
 #. module: legal_contract
-msgid "The contract is now in force."
-msgstr "أصبح العقد نافذاً."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+#: code:addons/legal_contract/models/legal_correspondence.py:0
+msgid "contract_id"
+msgstr "contract_id"
 
 #. module: legal_contract
-msgid "Contract terminated."
-msgstr "فُسِخ العقد."
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "days before."
+msgstr "يوماً."
 
 #. module: legal_contract
-msgid ""
-"Contract %s has no counterparty, so there is nothing to approve. Add the "
-"other party before requesting approval."
-msgstr ""
-"العقد %s ليس له طرف ثانٍ، فلا شيء للمصادقة عليه. أضِف الطرف الآخر قبل طلب "
-"المصادقة."
+#: model_terms:ir.ui.view,arch_db:legal_contract.view_legal_contract_form
+msgid "days)."
+msgstr "يوماً)."
 
 #. module: legal_contract
-msgid "Expired on %(date)s."
-msgstr "انتهى في %(date)s."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "grant internal approval"
+msgstr "منح المصادقة الداخلية"
 
 #. module: legal_contract
-msgid "Occurrences generated"
-msgstr "تم توليد الاستحقاقات"
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "move to negotiation"
+msgstr "ينتقل إلى التفاوض"
 
 #. module: legal_contract
-msgid "%s occurrence(s) added."
-msgstr "أُضيف %s استحقاق."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "record a signature"
+msgstr "تسجيل توقيع"
 
 #. module: legal_contract
-msgid "Past due on %(date)s."
-msgstr "تجاوز موعده في %(date)s."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "reopen a contract for review"
+msgstr "إعادة فتح عقد للمراجعة"
 
 #. module: legal_contract
-msgid "Only the legal manager may waive a contractual obligation."
-msgstr "المدير القانوني وحده من يجوز له إسقاط التزام تعاقدي."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract.py:0
+msgid "terminate a contract"
+msgstr "فسخ عقد"
 
 #. module: legal_contract
-msgid "Overdue can only be tested for true or false."
-msgstr "لا يمكن اختبار «متأخر» إلا بصح أو خطأ."
+#. odoo-python
+#: code:addons/legal_contract/models/legal_contract_type.py:0
+msgid "type_id"
+msgstr "type_id"
 
 #. module: legal_contract
-msgid "Only an approver or the legal manager may apply an amendment."
-msgstr "لا يجوز تطبيق ملحق إلا لمُصادِق أو للمدير القانوني."
-
-#. module: legal_contract
-msgid "Amendment %(number)s applied: %(description)s"
-msgstr "طُبِّق الملحق %(number)s: %(description)s"
-
-#. module: legal_contract
-msgid "Only an approver or the legal manager may file a signed contract."
-msgstr "لا يجوز إيداع عقد موقّع إلا لمُصادِق أو للمدير القانوني."
-
-#. module: legal_contract
-msgid ""
-"The signed contract is already filed as %s. Supersede that register entry "
-"rather than filing a second one."
-msgstr ""
-"العقد الموقّع مُودَع أصلاً باسم %s. استبدِل قيد السجل ذاك بدل إيداع قيد "
-"ثانٍ."
-
-#. module: legal_contract
-msgid "Signed contract filed in the register as %s."
-msgstr "أُودِع العقد الموقّع في السجل باسم %s."
-
-#. module: legal_contract
-# ==========================================================================
-# Constraints
-# ==========================================================================
-msgid "A contract type code must be unique per company."
-msgstr "يجب أن يكون رمز نوع العقد فريداً لكل شركة."
-
-#. module: legal_contract
-msgid "A department code must be unique per company."
-msgstr "يجب أن يكون رمز القسم فريداً لكل شركة."
-
-#. module: legal_contract
-msgid "A contract value cannot be negative."
-msgstr "لا يمكن أن تكون قيمة العقد سالبة."
-
-#. module: legal_contract
-msgid "That occurrence of that obligation already exists."
-msgstr "ذلك الاستحقاق لذلك الالتزام موجود أصلاً."
-
-#. module: legal_contract
-msgid "That amendment number already exists on this contract."
-msgstr "رقم الملحق ذاك موجود أصلاً على هذا العقد."
+#: model:legal.document.type,name:legal_contract.doctype_signed_contract
+msgid "عقد موقّع"
+msgstr "عقد موقّع"
