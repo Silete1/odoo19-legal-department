@@ -223,12 +223,35 @@ class LegalDocument(models.Model):
                 ("superseded_by_id", "=", False),
                 ("company_id", "=", document.company_id.id),
             ]
-            if document.entity_id:
-                domain.append(("entity_id", "=", document.entity_id.id))
-            if document.partner_id:
-                domain.append(("partner_id", "=", document.partner_id.id))
+            # Owner-strict on purpose: an ownerless record must not retire an
+            # entity's document (False matches only False).
+            domain.append(("entity_id", "=", document.entity_id.id))
+            domain.append(("partner_id", "=", document.partner_id.id))
             previous = self.search(domain)
             if not previous:
+                continue
+            if self.env.context.get("legal_no_supersede"):
+                # Import opt-out: a migration loading years of history must not
+                # have each row retire the one loaded a second earlier.
+                continue
+            newer = previous.filtered(
+                lambda other: other.issue_date
+                and document.issue_date
+                and other.issue_date > document.issue_date
+            )
+            if newer:
+                # Back-entry of an older paper: it files as history under the
+                # newest instance instead of retiring it.
+                newest = newer.sorted(key=lambda other: other.issue_date)[-1]
+                document.write({"state": "superseded", "superseded_by_id": newest.id})
+                document.message_post(
+                    body=_(
+                        "Recorded as a historical instance: %(name)s issued on "
+                        "%(date)s is newer and stays current.",
+                        name=newest.name,
+                        date=newest.issue_date,
+                    )
+                )
                 continue
             previous.write({"state": "superseded", "superseded_by_id": document.id})
             document.supersedes_id = previous[:1].id
@@ -240,6 +263,32 @@ class LegalDocument(models.Model):
                         date=document.issue_date or _("an unrecorded date"),
                     )
                 )
+
+    @api.model
+    def _cron_refresh_expiry_states(self):
+        """Nightly re-bucketing of every expiring artefact in the suite.
+
+        ``expiry_state`` is stored so boards can group on it, but its inputs
+        include "today", which the ORM cannot watch. Without this cron a card
+        that expired at midnight still reads Valid until somebody happens to
+        write to it. The gates stay honest either way (they call
+        ``_is_expired`` live); this keeps the *boards* honest too.
+        """
+        mixin = self.pool["legal.expiry.mixin"]
+        for name, cls in self.pool.items():
+            if name == "legal.expiry.mixin" or not issubclass(cls, mixin):
+                continue
+            model = self.env[name]
+            if model._abstract or model._transient:
+                continue
+            records = model.sudo().with_context(active_test=False).search(
+                [("expiry_date", "!=", False)]
+            )
+            if not records:
+                continue
+            self.env.add_to_compute(model._fields["expiry_state"], records)
+            model.flush_model(["expiry_state", "start_by_date"])
+        return True
 
     def unlink(self):
         """A document that was real is archived, never deleted.

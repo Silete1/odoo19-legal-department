@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Where each seat lands after login.
+
+        Without a home action every role lands in Discuss - an empty chat - and
+        the product's first impression is somebody else's module. The clerk's
+        day starts in the Mail Room (what arrived, what is unanswered); every
+        other seat starts at My Desk, whose payload is already composed per
+        role server-side.
+
+        <function> calls rather than <record> overrides because the user rows
+        belong to other modules' noupdate data and must still be reachable on a
+        plain upgrade of this pack.
+    -->
+    <data>
+        <function model="res.users" name="write">
+            <value eval="[ref('legal_iq_demo.user_clerk')]"/>
+            <value eval="{'action_id': ref('legal_procedure.action_legal_mail_room')}"/>
+        </function>
+        <function model="res.users" name="write">
+            <value eval="[ref('legal_iq_demo.user_officer'), ref('legal_iq_demo.user_approver'),
+                          ref('legal_iq_demo.user_manager'), ref('legal_iq_demo.user_auditor'),
+                          ref('base.user_admin')]"/>
+            <value eval="{'action_id': ref('legal_procedure.action_legal_desk')}"/>
+        </function>
+    </data>
+</odoo>

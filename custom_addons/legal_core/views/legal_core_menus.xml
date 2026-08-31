@@ -14,10 +14,12 @@
               web_icon="legal_core,static/description/icon.png"
               sequence="45"/>
 
+    <!-- Sequence 40: the domain menus (Requests 15, Contracts 20, Litigation
+         25, Opinions 30, Deadlines 35) come before the reference registers. -->
     <menuitem id="menu_legal_registers"
               name="Registers"
               parent="menu_legal_root"
-              sequence="30"/>
+              sequence="40"/>
 
     <menuitem id="menu_legal_document"
               name="Company Documents"
@@ -56,12 +58,11 @@
               parent="menu_legal_config"
               sequence="10"/>
 
-    <menuitem id="menu_legal_config_body"
-              name="Bodies"
-              parent="menu_legal_config_bodies"
-              action="action_legal_gov_body"
-              sequence="10"/>
-
+    <!-- No "Bodies" item here: the register menu already mounts
+         action_legal_gov_body, and two menu entries opening the same action
+         produce ambiguous breadcrumbs and duplicate command-palette hits.
+         Configuration keeps what is genuinely configuration: types and
+         jurisdictions. -->
     <menuitem id="menu_legal_config_body_type"
               name="Body Types"
               parent="menu_legal_config_bodies"

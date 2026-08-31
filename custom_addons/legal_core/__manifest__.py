@@ -48,6 +48,7 @@ procedures at another, so they must live in one register that every module reads
         "data/legal_jurisdiction_data.xml",
         "data/legal_gov_body_type_data.xml",
         "data/legal_document_kind_data.xml",
+        "data/legal_core_cron.xml",
         "views/legal_jurisdiction_views.xml",
         "views/legal_gov_body_views.xml",
         "views/legal_entity_views.xml",

@@ -43,7 +43,9 @@ class LegalExpiryMixin(models.AbstractModel):
     expiry_date = fields.Date(
         string="Expiry Date",
         index=True,
-        help="The date the artefact ceases to be in force. Empty means it does not expire.",
+        tracking=True,
+        help="The date the artefact ceases to be in force. Empty means it does not expire. "
+        "Tracked: quietly moving an expiry date is how a lapsed licence hides.",
     )
     #: Days before expiry at which this artefact starts being chased. Defaults
     #: from the type where the inheriting model provides one.

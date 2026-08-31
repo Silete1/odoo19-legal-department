@@ -114,20 +114,10 @@
             <field name="state">registered</field>
         </record>
 
-        <!-- Step 3: issue and freeze the opinion, pointing it at its register line. -->
-        <record id="opinion_issued" model="legal.opinion">
-            <field name="state">issued</field>
-            <field name="issued_date">2025-11-10</field>
-            <field name="register_correspondence_id" ref="opinion_issued_letter"/>
-            <field name="snapshot_html">&lt;h3&gt;التحليل القانوني&lt;/h3&gt;
-                &lt;p&gt;الشرط الجزائي تقدير اتفاقي مسبق للتعويض يُعفي الدائن من إثبات مقدار الضرر،
-                غير أن للمحكمة تخفيضه إذا كان مبالغاً فيه أو نُفّذ الالتزام جزئياً. ثبوت المخالفة الجوهرية
-                يكفي لاستحقاق الشرط من حيث المبدأ.&lt;/p&gt;
-                &lt;h3&gt;الرأي / الخلاصة&lt;/h3&gt;
-                &lt;p&gt;يحق للشركة إعمال الشرط الجزائي عند ثبوت المخالفة الجوهرية دون إثبات الضرر،
-                مع مراعاة أن للمورّد الطعن أمام القضاء طلباً للتخفيض. يوصى بتوثيق المخالفة بمحضر فني
-                رسمي قبل المطالبة.&lt;/p&gt;</field>
-        </record>
+        <!-- Step 3 (issue + freeze) lives in the updatable block at the end of
+             this file: a second <record> touch on an existing xmlid is skipped
+             inside a noupdate block when the pack is upgraded rather than
+             freshly installed, which left these opinions stuck at approval. -->
 
         <!-- ===================================================== CLOSED -->
         <!-- Step 1: create awaiting approval. -->
@@ -165,7 +155,30 @@
             <field name="state">registered</field>
         </record>
 
-        <!-- Step 3: issue, freeze, then close. -->
+    </data>
+
+    <!--
+        The finalize writes. Updatable on purpose (see the note above): they
+        re-apply the same values on every upgrade, which is idempotent because
+        none of these fields is in the opinion's frozen set - the freeze guard
+        protects the legal text (question/analysis/conclusion...), and those
+        were written once in the creates above.
+    -->
+    <data>
+        <record id="opinion_issued" model="legal.opinion">
+            <field name="state">issued</field>
+            <field name="issued_date">2025-11-10</field>
+            <field name="register_correspondence_id" ref="opinion_issued_letter"/>
+            <field name="snapshot_html">&lt;h3&gt;التحليل القانوني&lt;/h3&gt;
+                &lt;p&gt;الشرط الجزائي تقدير اتفاقي مسبق للتعويض يُعفي الدائن من إثبات مقدار الضرر،
+                غير أن للمحكمة تخفيضه إذا كان مبالغاً فيه أو نُفّذ الالتزام جزئياً. ثبوت المخالفة الجوهرية
+                يكفي لاستحقاق الشرط من حيث المبدأ.&lt;/p&gt;
+                &lt;h3&gt;الرأي / الخلاصة&lt;/h3&gt;
+                &lt;p&gt;يحق للشركة إعمال الشرط الجزائي عند ثبوت المخالفة الجوهرية دون إثبات الضرر,
+                مع مراعاة أن للمورّد الطعن أمام القضاء طلباً للتخفيض. يوصى بتوثيق المخالفة بمحضر فني
+                رسمي قبل المطالبة.&lt;/p&gt;</field>
+        </record>
+
         <record id="opinion_closed" model="legal.opinion">
             <field name="state">closed</field>
             <field name="issued_date">2025-06-01</field>

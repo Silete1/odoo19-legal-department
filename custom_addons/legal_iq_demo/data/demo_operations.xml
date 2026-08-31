@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The operational fabric the audit found empty: service-level targets so
+        the desk's clocks actually tick, fees so the fee ledger has rows, and a
+        second power of attorney that is EXPIRING - because a renewal board on
+        which nothing is ever about to lapse demonstrates nothing.
+
+        All fictional; amounts in whole Iraqi dinars.
+    -->
+    <data noupdate="1">
+
+        <!-- ================================================ SERVICE LEVELS -->
+        <record id="sla_tax_examination" model="legal.sla.rule">
+            <field name="name">Tax examination window</field>
+            <field name="procedure_type_id" ref="legal_iq_tax.proc_annual_return"/>
+            <field name="step_id" ref="legal_iq_tax.step_ret_examination"/>
+            <field name="target_days">20</field>
+            <field name="warning_days">5</field>
+            <field name="escalation_days">10</field>
+            <field name="escalate_to_group_id" ref="legal_core.group_legal_manager"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sla_tax_default" model="legal.sla.rule">
+            <field name="name">Annual return - any step</field>
+            <field name="procedure_type_id" ref="legal_iq_tax.proc_annual_return"/>
+            <field name="target_days">10</field>
+            <field name="warning_days">3</field>
+            <field name="escalation_days">7</field>
+            <field name="escalate_to_group_id" ref="legal_core.group_legal_manager"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ======================================================== FEES -->
+        <record id="fee_annual_return_stamp" model="legal.fee">
+            <field name="case_id" ref="legal_iq_demo.case_annual_return"/>
+            <field name="name">طابع مالي - تقديم الإقرار السنوي</field>
+            <field name="amount">25000</field>
+            <field name="amount_paid">25000</field>
+            <field name="state">paid</field>
+            <field name="is_stamp_duty" eval="True"/>
+            <field name="paid_on">2026-02-12</field>
+            <field name="receipt_number">وصل/2026/18344</field>
+            <field name="paid_by_id" ref="legal_iq_demo.user_clerk"/>
+        </record>
+
+        <record id="fee_residency_due" model="legal.fee">
+            <field name="case_id" ref="legal_iq_demo.case_residency_renewal"/>
+            <field name="name">رسم تجديد الإقامة - عامل أجنبي</field>
+            <field name="amount">150000</field>
+            <field name="state">due</field>
+        </record>
+
+        <!-- ============================================== EXPIRING POA -->
+        <record id="partner_agent_karim" model="res.partner">
+            <field name="name">كريم عبد الله جاسم المعموري</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="poa_expiring_tax" model="legal.poa">
+            <field name="name">وكالة خاصة لدى الهيئة العامة للضرائب - كريم المعموري</field>
+            <field name="number">عام/2024/31877</field>
+            <field name="entity_id" ref="legal_iq_demo.entity_rafidain"/>
+            <field name="agent_partner_id" ref="partner_agent_karim"/>
+            <field name="scope">specific</field>
+            <field name="body_ids" eval="[(6, 0, [ref('legal_iq_tax.body_gct_companies')])]"/>
+            <field name="notary_office">كاتب عدل الكرادة</field>
+            <field name="issue_date">2024-09-20</field>
+            <field name="expiry_date" eval="(DateTime.now() + timedelta(days=12)).strftime('%Y-%m-%d')"/>
+            <field name="notice_days">30</field>
+            <field name="state">active</field>
+            <field name="note">&lt;p&gt;تنتهي قريباً؛ يلزم تجديدها قبل موعد تقديم الاعتراض الضريبي.&lt;/p&gt;</field>
+        </record>
+
+    </data>
+</odoo>
