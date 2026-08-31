@@ -27,7 +27,7 @@
                     <div class="oe_title">
                         <label for="name"/>
                         <h1><field name="name"/></h1>
-                        <h3><field name="title" placeholder="المدير المفوض"/></h3>
+                        <h3><field name="title" placeholder="Managing Director"/></h3>
                     </div>
                     <group>
                         <group string="Who">
@@ -49,7 +49,7 @@
                     <separator string="Signature And Seal"/>
                     <div class="alert alert-info" role="alert">
                         An Iraqi official letter is constituted by the letterhead, the signature
-                        and the ختم printed together. A letter without the seal is a draft, and
+                        and the seal printed together. A letter without the seal is a draft, and
                         the counter will say so.
                     </div>
                     <group>
@@ -57,7 +57,7 @@
                             <field name="specimen_signature" widget="image" nolabel="1"
                                    options="{'size': [220, 110]}"/>
                         </group>
-                        <group string="Official Seal (الختم)">
+                        <group string="Official Seal">
                             <field name="stamp_image" widget="image" nolabel="1"
                                    options="{'size': [180, 180]}"/>
                         </group>

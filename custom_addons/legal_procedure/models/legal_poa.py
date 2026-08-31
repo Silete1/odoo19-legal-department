@@ -34,13 +34,13 @@ class LegalPoa(models.Model):
         required=True,
         index="trigram",
         tracking=True,
-        help="What the department calls it: وكالة عامة للسيد أحمد لدى الضرائب.",
+        help="What the department calls it, e.g. “General power of attorney for Mr Ahmed at the Tax Commission”.",
     )
     number = fields.Char(
         string="Deed Number",
         index="trigram",
         tracking=True,
-        help="The number الكاتب العدل put on it. Quoted at the counter, so it is "
+        help="The number the notary put on it. Quoted at the counter, so it is "
         "searchable rather than buried in a scan.",
     )
     entity_id = fields.Many2one(
@@ -52,7 +52,7 @@ class LegalPoa(models.Model):
     )
     agent_partner_id = fields.Many2one(
         "res.partner",
-        string="Agent (الوكيل)",
+        string="Agent",
         required=True,
         ondelete="restrict",
         index=True,
@@ -68,25 +68,25 @@ class LegalPoa(models.Model):
     )
     agent_is_lawyer = fields.Boolean(
         string="Advocate",
-        help="An advocate's وكالة is registered with the Bar Association and some "
+        help="An advocate's power of attorney is registered with the Bar Association and some "
         "counters - the courts above all - will accept nothing else.",
     )
     bar_association_id = fields.Many2one(
         "legal.gov.body",
         string="Bar Association",
         ondelete="restrict",
-        help="Which branch of نقابة المحامين registered it.",
+        help="Which branch of the Bar Association registered it.",
     )
     bar_registration_number = fields.Char(string="Advocate's Registration")
     scope = fields.Selection(
         [
-            ("general", "General (عامة)"),
-            ("specific", "Specific (خاصة)"),
-            ("litigation", "Litigation (بالمرافعة)"),
+            ("general", "General"),
+            ("specific", "Specific"),
+            ("litigation", "Litigation"),
         ],
         default="general",
         required=True,
-        help="A specific وكالة names the transaction it covers, and a counter "
+        help="A specific power of attorney names the transaction it covers, and a counter "
         "reads it narrowly. Recording the scope is what lets the gate refuse a "
         "general errand presented on a litigation deed.",
     )
@@ -102,7 +102,7 @@ class LegalPoa(models.Model):
         "anywhere - but most Iraqi bodies want to see themselves named.",
     )
     notary_office = fields.Char(
-        string="Notary (الكاتب العدل)",
+        string="Notary",
         translate=True,
         help="Which notary office issued it. Asked for whenever a copy is needed.",
     )
@@ -112,7 +112,7 @@ class LegalPoa(models.Model):
         [
             ("draft", "Being Prepared"),
             ("active", "In Force"),
-            ("revoked", "Revoked (معزولة)"),
+            ("revoked", "Revoked"),
             ("expired", "Lapsed"),
         ],
         default="draft",
@@ -165,7 +165,7 @@ class LegalPoa(models.Model):
             if poa.state == "revoked" and not poa.revocation_reason:
                 raise ValidationError(
                     _(
-                        "A revoked وكالة needs a reason. The agent will ask, the counter "
+                        "A revoked power of attorney needs a reason. The agent will ask, the counter "
                         "will ask, and in six months so will the auditor."
                     )
                 )
@@ -197,18 +197,18 @@ class LegalPoa(models.Model):
         self.ensure_one()
         on_date = on_date or fields.Date.context_today(self)
         if self.state == "revoked":
-            return _("The وكالة “%s” has been revoked.", self.display_name)
+            return _("The power of attorney “%s” has been revoked.", self.display_name)
         if self.state == "draft":
-            return _("The وكالة “%s” has not been registered yet.", self.display_name)
+            return _("The power of attorney “%s” has not been registered yet.", self.display_name)
         if self._is_expired(on_date):
             return _(
-                "The وكالة “%(name)s” lapsed on %(date)s.",
+                "The power of attorney “%(name)s” lapsed on %(date)s.",
                 name=self.display_name,
                 date=self.expiry_date,
             )
         if body and self.body_ids and body not in self.body_ids:
             return _(
-                "The وكالة “%(name)s” is not registered at %(body)s, and the counter "
+                "The power of attorney “%(name)s” is not registered at %(body)s, and the counter "
                 "will not accept it.",
                 name=self.display_name,
                 body=body.display_name,
@@ -239,7 +239,7 @@ class LegalPoa(models.Model):
     def unlink(self):
         raise UserError(
             _(
-                "A وكالة that was in force cannot be deleted - files were presented "
+                "A power of attorney that was in force cannot be deleted - files were presented "
                 "under it. Revoke it with a reason, or archive it."
             )
         )

@@ -82,7 +82,7 @@ class LegalCase(models.Model):
         "was required to do.",
     )
     subject = fields.Char(
-        string="Subject (الموضوع)",
+        string="Subject",
         translate=True,
         help="What the file is about, in the words that will print on the letter.",
     )
@@ -212,7 +212,7 @@ class LegalCase(models.Model):
         string="Power Of Attorney",
         ondelete="restrict",
         index=True,
-        help="The وكالة the runner is presenting. The counter checks the name on "
+        help="The power of attorney the runner is presenting. The counter checks the name on "
         "it against the card in their hand, so a file with the wrong one is a "
         "wasted morning.",
     )
@@ -233,7 +233,7 @@ class LegalCase(models.Model):
         string="Fees Are", related="procedure_type_id.has_fee", readonly=True
     )
     poa_usage = fields.Selection(
-        string="The وكالة Is", related="procedure_type_id.has_poa", readonly=True
+        string="The Power Of Attorney Is", related="procedure_type_id.has_poa", readonly=True
     )
     letter_usage = fields.Selection(
         string="A Letter Is", related="procedure_type_id.has_outgoing_letter", readonly=True
@@ -845,7 +845,7 @@ class LegalCase(models.Model):
             if not self.poa_id:
                 reasons.append(
                     _(
-                        "No وكالة is attached, and %s will not deal with anybody who is "
+                        "No power of attorney is attached, and %s will not deal with anybody who is "
                         "not named on one.",
                         body.display_name or _("the counter"),
                     )

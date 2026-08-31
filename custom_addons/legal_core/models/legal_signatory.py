@@ -28,7 +28,7 @@ class LegalSignatory(models.Model):
     title = fields.Char(
         string="Title (Arabic)",
         required=True,
-        help="المدير المفوض، المدير العام، معاون المدير العام - printed under the signature.",
+        help="Managing Director, Director General, Deputy Director General - printed under the signature.",
     )
     title_en = fields.Char(string="Title (English)")
 
@@ -57,7 +57,7 @@ class LegalSignatory(models.Model):
         help="Scanned or drawn. Printed on the letter where the template asks for it.",
     )
     stamp_image = fields.Binary(
-        string="Official Seal (الختم)",
+        string="Official Seal",
         attachment=True,
         help="The department seal, printed over or beside the signature block.",
     )
@@ -80,7 +80,7 @@ class LegalSignatory(models.Model):
     appointment_document_id = fields.Many2one(
         "legal.document",
         string="Appointment Document",
-        help="The محضر or Registrar ratification that appointed them.",
+        help="The minutes of meeting or Registrar ratification that appointed them.",
     )
     sequence = fields.Integer(default=10)
     note = fields.Text(translate=True)

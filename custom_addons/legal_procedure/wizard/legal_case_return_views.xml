@@ -13,7 +13,7 @@
                 </group>
                 <separator string="What The Counter Said"/>
                 <field name="reason" required="1"
-                       placeholder="نقص في المستمسكات: يطلبون تأييد براءة ذمة حديث وصورة مصدقة من عقد الإيجار"/>
+                       placeholder="Missing documents: they want a recent clearance certificate and a certified copy of the lease contract"/>
                 <separator string="Documents They Refused"/>
                 <field name="document_line_ids" widget="many2many">
                     <list create="false">

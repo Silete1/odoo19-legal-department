@@ -10,15 +10,15 @@
                   decoration-info="state == 'draft'"
                   decoration-danger="reply_state == 'late'"
                   decoration-bf="reply_state == 'late'">
-                <field name="our_number" string="رقم الصادر"/>
-                <field name="our_date" string="التاريخ"/>
+                <field name="our_number" string="Our Number"/>
+                <field name="our_date" string="Date"/>
                 <field name="direction" optional="show"/>
                 <field name="kind_id"/>
                 <field name="gov_body_id"/>
                 <field name="body_section" optional="hide"/>
                 <field name="referred_to_body_id" optional="hide"/>
                 <field name="subject"/>
-                <field name="their_number" optional="show" string="رقم كتابهم"/>
+                <field name="their_number" optional="show" string="Their Number"/>
                 <field name="their_date" optional="hide"/>
                 <field name="entity_id" optional="hide"/>
                 <field name="carried_by_id" optional="hide"/>
@@ -48,16 +48,16 @@
         <field name="arch" type="xml">
             <form string="Correspondence">
                 <header>
-                    <button name="action_register" type="object" string="تسجيل - Register"
+                    <button name="action_register" type="object" string="Register"
                             class="btn-primary" invisible="state != 'draft'"/>
-                    <button name="action_print_letter" type="object" string="طباعة الكتاب"
+                    <button name="action_print_letter" type="object" string="Print Letter"
                             class="btn-primary"
                             invisible="state != 'registered' or direction == 'in' or is_contact_note"/>
-                    <button name="action_open_contact_note" type="object" string="تدوين اتصال"
+                    <button name="action_open_contact_note" type="object" string="Record Contact Note"
                             class="btn-secondary" invisible="state != 'registered'"/>
                     <button name="action_reply" type="object" string="Next In Thread"
                             class="btn-secondary" invisible="state != 'registered'"/>
-                    <button name="action_void" type="object" string="إلغاء - Void"
+                    <button name="action_void" type="object" string="Void"
                             class="btn-secondary" invisible="state != 'registered'"/>
                     <button name="action_snapshot_pdf" type="object" string="Attach Filed PDF"
                             class="btn-secondary"
@@ -70,45 +70,45 @@
                             <field name="thread_count" widget="statinfo" string="In Thread"/>
                         </button>
                     </div>
-                    <widget name="web_ribbon" title="ملغى - Void" bg_color="text-bg-danger"
+                    <widget name="web_ribbon" title="Void" bg_color="text-bg-danger"
                             invisible="state != 'void'"/>
-                    <widget name="web_ribbon" title="سري - Confidential" bg_color="text-bg-warning"
+                    <widget name="web_ribbon" title="Confidential" bg_color="text-bg-warning"
                             invisible="secrecy != 'secret' or state == 'void'"/>
                     <field name="is_contact_note" invisible="1"/>
                     <field name="active" invisible="1"/>
                     <div class="oe_title">
-                        <label for="subject" string="م/ الموضوع"/>
-                        <h1><field name="subject" placeholder="طلب براءة ذمة ضريبية"/></h1>
+                        <label for="subject" string="Subject"/>
+                        <h1><field name="subject" placeholder="Request for a tax clearance certificate"/></h1>
                     </div>
                     <group>
-                        <group string="سجلنا - Our Register">
+                        <group string="Our Register">
                             <field name="kind_id"/>
                             <field name="register_id" readonly="state != 'draft'"
                                    invisible="is_contact_note" required="not is_contact_note"/>
                             <field name="our_number" readonly="state != 'draft'"
-                                   invisible="is_contact_note" placeholder="يُمنح عند التسجيل"/>
+                                   invisible="is_contact_note" placeholder="Allocated at registration"/>
                             <field name="our_date" readonly="state != 'draft'"/>
                             <field name="direction" readonly="state != 'draft'"
                                    invisible="is_contact_note"/>
                             <field name="secrecy"/>
                         </group>
-                        <group string="كتابهم - Their Reference" invisible="is_contact_note">
-                            <field name="their_number" placeholder="ك/م/١٢٣٤"/>
+                        <group string="Their Reference" invisible="is_contact_note">
+                            <field name="their_number" placeholder="e.g. K/M/1234"/>
                             <field name="their_date"/>
-                            <field name="body_reference" placeholder="رقم الإضبارة لديهم"/>
+                            <field name="body_reference" placeholder="Their internal file number"/>
                             <field name="reply_to_id"/>
                             <field name="round"/>
                         </group>
                     </group>
                     <group>
-                        <group string="الجهة - The Body">
+                        <group string="The Body">
                             <field name="gov_body_id"/>
                             <field name="body_section"/>
                             <field name="entity_id"/>
                             <field name="user_id" widget="many2one_avatar_user"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
-                        <group string="الإحالة - Hand-off">
+                        <group string="Hand-off">
                             <field name="referred_to_body_id"/>
                             <field name="referral_date" invisible="not referred_to_body_id"
                                    required="referred_to_body_id"/>
@@ -122,7 +122,7 @@
                         the body that received the letter first.
                     </div>
                     <notebook>
-                        <page string="الكتاب - The Letter" name="letter" invisible="is_contact_note">
+                        <page string="The Letter" name="letter" invisible="is_contact_note">
                             <group>
                                 <group>
                                     <field name="letter_template_id"/>
@@ -137,9 +137,9 @@
                                     <field name="portal_url" widget="url" invisible="channel == 'paper'"/>
                                 </group>
                             </group>
-                            <field name="body_html" placeholder="تحية طيبة وبعد، ..."/>
+                            <field name="body_html" placeholder="After greetings, ..."/>
                         </page>
-                        <page string="جدول الموضوع" name="lines" invisible="is_contact_note">
+                        <page string="Subject Table" name="lines" invisible="is_contact_note">
                             <field name="line_ids">
                                 <list editable="bottom">
                                     <field name="sequence" widget="handle"/>
@@ -154,19 +154,19 @@
                                 eleven numbered rows, printed as the ت table - not eleven letters.
                             </div>
                         </page>
-                        <page string="التدوين - Contact Note" name="contact" invisible="not is_contact_note">
+                        <page string="Contact Note" name="contact" invisible="not is_contact_note">
                             <group>
-                                <field name="spoke_to" placeholder="أبو أحمد - معاون مدير القسم"/>
+                                <field name="spoke_to" placeholder="Abu Ahmed - deputy head of the section"/>
                                 <field name="promised_on"/>
                             </group>
-                            <field name="said" placeholder="قال إن الإضبارة لدى المستشار القانوني، ووعد بمراجعتها بعد العيد."/>
+                            <field name="said" placeholder="He said the file is with the legal adviser, and promised to look at it after Eid."/>
                             <div class="alert alert-info" role="alert">
                                 This entry takes <b>no register number</b> - nothing entered the book.
-                                A date in <b>وعد بـ</b> moves the reply clock onto it and suppresses
+                                A date in <b>Promised For</b> moves the reply clock onto it and suppresses
                                 the next chase, so we stop ringing a body that has already answered.
                             </div>
                         </page>
-                        <page string="المهلة - Reply Clock" name="reply">
+                        <page string="Reply Clock" name="reply">
                             <group>
                                 <group>
                                     <field name="reply_expected"/>
@@ -190,10 +190,10 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="المرفقات - Scans" name="attachments">
+                        <page string="Scans" name="attachments">
                             <field name="attachment_ids" widget="many2many_binary"/>
                         </page>
-                        <page string="النسخة المحفوظة - Filed Copy" name="snapshot"
+                        <page string="Filed Copy" name="snapshot"
                               invisible="not snapshot_html and not snapshot_attachment_id">
                             <group>
                                 <field name="snapshot_attachment_id" readonly="1"/>
@@ -207,7 +207,7 @@
                                 ministry's file will not have.
                             </div>
                         </page>
-                        <page string="الإلغاء - Void" name="void" invisible="state != 'void'">
+                        <page string="Void" name="void" invisible="state != 'void'">
                             <group>
                                 <field name="void_reason" readonly="1"/>
                             </group>
@@ -239,23 +239,23 @@
                 <field name="kind_id"/>
                 <field name="carried_by_id"/>
                 <field name="spoke_to"/>
-                <filter name="outgoing" string="صادر" domain="[('direction', '=', 'out')]"/>
-                <filter name="incoming" string="وارد" domain="[('direction', '=', 'in')]"/>
-                <filter name="internal" string="داخلي" domain="[('direction', '=', 'internal')]"/>
+                <filter name="outgoing" string="Outgoing" domain="[('direction', '=', 'out')]"/>
+                <filter name="incoming" string="Incoming" domain="[('direction', '=', 'in')]"/>
+                <filter name="internal" string="Internal" domain="[('direction', '=', 'internal')]"/>
                 <separator/>
                 <filter name="registered" string="Registered" domain="[('state', '=', 'registered')]"/>
                 <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
                 <filter name="void" string="Void" domain="[('state', '=', 'void')]"/>
                 <separator/>
-                <filter name="awaiting" string="بانتظار الرد" domain="[('reply_state', '=', 'awaiting')]"/>
-                <filter name="late" string="متأخر عن الرد" domain="[('reply_state', '=', 'late')]"/>
-                <filter name="answered" string="مجاب" domain="[('reply_state', '=', 'answered')]"/>
+                <filter name="awaiting" string="Awaiting Reply" domain="[('reply_state', '=', 'awaiting')]"/>
+                <filter name="late" string="Reply Overdue" domain="[('reply_state', '=', 'late')]"/>
+                <filter name="answered" string="Answered" domain="[('reply_state', '=', 'answered')]"/>
                 <separator/>
                 <filter name="promised" string="Promised A Date" domain="[('promised_on', '!=', False)]"/>
                 <filter name="contact_notes" string="Contact Notes" domain="[('is_contact_note', '=', True)]"/>
                 <filter name="returns" string="Sent Back For Completion" domain="[('kind_id.is_return', '=', True)]"/>
                 <separator/>
-                <filter name="secret" string="سري" domain="[('secrecy', '=', 'secret')]"/>
+                <filter name="secret" string="Confidential" domain="[('secrecy', '=', 'secret')]"/>
                 <filter name="mine" string="My Entries" domain="[('user_id', '=', uid)]"/>
                 <separator/>
                 <filter name="this_year" string="This Year"
@@ -336,7 +336,7 @@
     </record>
 
     <record id="action_legal_correspondence_out" model="ir.actions.act_window">
-        <field name="name">صادر - Outgoing</field>
+        <field name="name">Outgoing</field>
         <field name="res_model">legal.correspondence</field>
         <field name="view_mode">list,form,calendar</field>
         <field name="domain">[('direction', '=', 'out')]</field>
@@ -344,7 +344,7 @@
     </record>
 
     <record id="action_legal_correspondence_in" model="ir.actions.act_window">
-        <field name="name">وارد - Incoming</field>
+        <field name="name">Incoming</field>
         <field name="res_model">legal.correspondence</field>
         <field name="view_mode">list,form,calendar</field>
         <field name="domain">[('direction', '=', 'in')]</field>

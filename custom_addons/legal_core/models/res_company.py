@@ -29,7 +29,7 @@ class ResCompany(models.Model):
         string="Letterhead Line 3", translate=True, help="The company itself."
     )
     legal_letterhead_line4 = fields.Char(
-        string="Letterhead Line 4", translate=True, help="The department: القسم القانوني."
+        string="Letterhead Line 4", translate=True, help="The department, e.g. the Legal Department."
     )
     legal_letterhead_logo = fields.Binary(string="Letterhead Emblem", attachment=True)
     legal_numeral_system = fields.Selection(
@@ -44,5 +44,5 @@ class ResCompany(models.Model):
         string="Print Hijri Dates",
         help="Adds the Hijri date beside the Gregorian one on letters. The research "
         "found no rule requiring dual dating on Iraqi correspondence - the Registrar's "
-        "own bulletin and الوقائع العراقية use Gregorian alone - so this is off by default.",
+        "own bulletin and the Iraqi Official Gazette use Gregorian alone - so this is off by default.",
     )

@@ -31,7 +31,7 @@
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="طلب براءة ذمة من الهيئة العامة للضرائب"/></h1>
+                        <h1><field name="name" placeholder="Tax clearance request to the General Commission for Taxes"/></h1>
                     </div>
                     <group>
                         <group string="Who It Is For">
@@ -50,12 +50,12 @@
                     <notebook>
                         <page string="The Letter" name="letter">
                             <group>
-                                <field name="subject_template" placeholder="طلب براءة ذمة ضريبية لسنة {today}"/>
+                                <field name="subject_template" placeholder="Request for a tax clearance certificate for {today}"/>
                             </group>
-                            <field name="body_template" placeholder="تحية طيبة وبعد، ..."/>
+                            <field name="body_template" placeholder="After greetings, ..."/>
                         </page>
                         <page string="Copies To" name="cc">
-                            <field name="cc_list" placeholder="القسم القانوني&#10;الأرشيف"/>
+                            <field name="cc_list" placeholder="Legal Section&#10;Archives"/>
                             <div class="text-muted">
                                 One recipient per line. Printed as نسخة منه إلى at the bottom left,
                                 where an Iraqi letter puts it.
@@ -71,20 +71,20 @@
                             </div>
                             <group>
                                 <group string="Numbers And Dates">
-                                    <div>{our_number} - رقم الصادر</div>
-                                    <div>{our_date} - تاريخ الصادر</div>
-                                    <div>{their_number} - رقم كتابهم</div>
-                                    <div>{their_date} - تاريخ كتابهم</div>
-                                    <div>{today} - تاريخ اليوم</div>
+                                    <div>{our_number} - Our Number</div>
+                                    <div>{our_date} - Our Date</div>
+                                    <div>{their_number} - Their Number</div>
+                                    <div>{their_date} - Their Date</div>
+                                    <div>{today} - Today's Date</div>
                                 </group>
                                 <group string="Parties">
-                                    <div>{body} - الجهة</div>
-                                    <div>{body_section} - القسم</div>
-                                    <div>{body_reference} - رقم إضبارتهم</div>
-                                    <div>{salutation} - عبارة المخاطبة</div>
-                                    <div>{entity} / {entity_en} - اسم الشركة</div>
-                                    <div>{signatory} / {signatory_title} - الموقّع وصفته</div>
-                                    <div>{subject} - الموضوع</div>
+                                    <div>{body} - The Body</div>
+                                    <div>{body_section} - The Section</div>
+                                    <div>{body_reference} - Their File Number</div>
+                                    <div>{salutation} - The Salutation</div>
+                                    <div>{entity} / {entity_en} - Company Name</div>
+                                    <div>{signatory} / {signatory_title} - Signatory And Title</div>
+                                    <div>{subject} - Subject</div>
                                 </group>
                             </group>
                         </page>

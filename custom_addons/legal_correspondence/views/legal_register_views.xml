@@ -35,7 +35,7 @@
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="سجل الصادر العام"/></h1>
+                        <h1><field name="name" placeholder="General Outgoing Register"/></h1>
                     </div>
                     <group>
                         <group string="The Book">
@@ -47,7 +47,7 @@
                             <field name="active" invisible="1"/>
                         </group>
                         <group string="Numbering And Custody">
-                            <field name="prefix" placeholder="ق"/>
+                            <field name="prefix" placeholder="e.g. ق"/>
                             <field name="sequence_id" readonly="1"/>
                             <field name="write_group_id"/>
                             <field name="retention_years"/>
@@ -76,8 +76,8 @@
             <search string="Registers">
                 <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
                 <field name="body_id"/>
-                <filter name="outgoing" string="صادر" domain="[('direction', '=', 'out')]"/>
-                <filter name="incoming" string="وارد" domain="[('direction', '=', 'in')]"/>
+                <filter name="outgoing" string="Outgoing" domain="[('direction', '=', 'out')]"/>
+                <filter name="incoming" string="Incoming" domain="[('direction', '=', 'in')]"/>
                 <separator/>
                 <filter name="secret" string="Confidential" domain="[('secrecy', '=', 'secret')]"/>
                 <separator/>
@@ -97,9 +97,9 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiley_face">One record per book you actually keep</p>
             <p>
-                Most departments keep two - صادر and وارد. A department answering to three
+                Most departments keep two - outgoing and incoming. A department answering to three
                 ministries keeps a book per ministry, and one holding classified files keeps a
-                سري book with a different key holder. All three are rows here, never a
+                confidential book with a different key holder. All three are rows here, never a
                 hard-coded list.
             </p>
         </field>

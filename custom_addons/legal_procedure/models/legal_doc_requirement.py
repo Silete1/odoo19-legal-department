@@ -103,7 +103,7 @@ class LegalDocRequirement(models.Model):
         string="One Per Person",
         help="A passport is per person, a commercial registration is per company. "
         "The checklist expands a per-subject requirement into one line for every "
-        "name on the ت list.",
+        "name on the file's numbered list of persons.",
     )
     applicability_domain = fields.Char(
         string="Only When",
@@ -116,7 +116,7 @@ class LegalDocRequirement(models.Model):
         ondelete="restrict",
         domain="[('document_type_id', '=', document_type_id)]",
         help="A tender does not merely demand a Chamber identity, it demands "
-        "صنف ممتاز. A grade requirement is satisfied by any grade at least as senior.",
+        "the Excellent grade. A grade requirement is satisfied by any grade at least as senior.",
     )
     copies = fields.Integer(
         string="Copies",

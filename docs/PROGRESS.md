@@ -58,14 +58,31 @@ corporate Legal Affairs suite. A fresh session resumes from here.
 
 - [x] Scout repo, find module suite, mock app, server, DB, users
 - [x] Safety baseline: branch `audit-redesign`, filestore backup, DB dump
-- [ ] Baseline git commit of untouched legal suite (+ .gitignore whitelist)
-- [ ] Deep audit workflow (static code, security, i18n, OWL, packs, mock,
-      browser-per-role with BEFORE screenshots, research) → docs/ui-audit/
-- [ ] Synthesis: docs/ui-audit/AUDIT.md severity table + P0–P4 plan
-- [ ] Decide target architecture (module layout, menus, new models)
-- [ ] P0 fixes
-- [ ] P1 core legal workflow (requests, contracts, litigation, opinions,
-      deadlines, correspondence, role workflow)
+- [x] Baseline git commit of untouched legal suite (+ .gitignore whitelist) — 0a8af9b
+- [x] Deep audit workflow (17 agents, ~830 BEFORE shots) → docs/ui-audit/ — 223c9c9
+- [x] Synthesis: docs/ui-audit/AUDIT.md severity table + P0–P4 plan
+- [x] Decide target architecture (4 new modules + deadline + reports; keep the 9)
+- [x] **P0 fixes — commit b2c71f9, all verified:**
+      - Case kanban un-broken (sla_state progressbar dropped; was non-stored → SQL raise)
+      - Write-guard bypass closed: process-local engine marker replaces the
+        RPC-forgeable `legal_workflow`/`legal_allocating_number` context flags
+        (verified: clerk with spoofed context still blocked)
+      - procedure_type_id locked after intake; correspondence locked to
+        draft→registered→void (verified: un-register blocked)
+      - Seal/signature/identifier/contact scoped to company + rules (cross-company leak closed)
+      - legal.document.entity_id cascade→restrict (permanent register)
+      - IQD activated as company currency, whole-dinar rounding
+      - wkhtmltopdf found at "C:\Program Files\Odoo 19.0.20260525\thirdparty" —
+        server relaunched with it on PATH (see scratchpad/cycle.ps1)
+      - Auditor still read-only + can read for oversight (verified)
+- [x] P1 security: SoD (terminal transitions need approver+, reopen officer+,
+      waive approver+, void officer+), admin→Legal Manager, IQD via <function>
+      (noupdate lesson: base.* records need function calls on upgrade)
+- [~] P1 core legal workflow: 4 new modules BUILT by agents
+      (legal_request/contract/opinion complete; litigation finishing via
+      completion agent) — NOT yet installed; next: lint→install→fix cycle
+- [ ] P1 remaining: unified deadlines, dashboards/role home, OWL wiring,
+      correspondence origin links smart buttons, menu rebuild
 - [ ] P2 operational UX (dashboard, queues, lists, search, forms)
 - [ ] P3 corporate legal coverage (records, licensing, POA, optional domains)
 - [ ] P4 polish (spacing, icons, empty states, reports, responsive)

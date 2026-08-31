@@ -58,7 +58,7 @@
                     <div class="oe_title">
                         <label for="name"/>
                         <h1><field name="name" readonly="1"/></h1>
-                        <h3><field name="subject" placeholder="طلب إجازة تأسيس شركة محدودة"/></h3>
+                        <h3><field name="subject" placeholder="Application for a limited company incorporation licence"/></h3>
                     </div>
                     <div class="alert alert-warning" role="alert" invisible="ready_to_advance or is_closed">
                         <field name="blocker_summary" nolabel="1" readonly="1"/>
@@ -78,7 +78,7 @@
                         <group string="Who And When">
                             <field name="user_id" widget="many2one_avatar_user"/>
                             <field name="runner_partner_id"
-                                   placeholder="من يحمل المعاملة اليوم"/>
+                                   placeholder="Who carries the file today"/>
                             <field name="pending_group_id" readonly="1"/>
                             <field name="poa_id"
                                    domain="[('state', '=', 'active')]"
@@ -170,7 +170,7 @@
                         <page string="People" name="subjects" invisible="subject_usage == 'no'">
                             <field name="subject_usage" invisible="1"/>
                             <p class="text-muted">
-                                The numbered ت table the letter prints. The Arabic name is what the
+                                The numbered table of persons the letter prints. The Arabic name is what the
                                 ministry files and the Latin name is what the passport says - both are
                                 printed on the same page, so both are stored.
                             </p>
@@ -455,7 +455,7 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiley_face">Open a file</p>
             <p>
-                A المعاملة walks a procedure whose steps are configuration, not code.
+                A file walks a procedure whose steps are configuration, not code.
                 Configure the procedure once and every file after it knows which counter
                 is next, what the counter will demand and when to start chasing.
             </p>

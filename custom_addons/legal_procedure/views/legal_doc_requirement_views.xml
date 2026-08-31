@@ -51,7 +51,7 @@
                            placeholder="[('subject_ids.nationality_id.code', '!=', 'IQ')]"/>
                     <separator string="What The Counter Actually Wants"/>
                     <field name="note"
-                           placeholder="Stamped طبق الأصل, two copies, in the applicant's own folder."/>
+                           placeholder="Stamped certified true copy, two copies, in the applicant's own folder."/>
                 </sheet>
             </form>
         </field>

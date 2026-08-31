@@ -1,6 +1,6 @@
 {
     "name": "Legal Department - Correspondence Register",
-    "summary": "سجل الصادر والوارد - the outgoing/incoming register, the official letter and the reply clock",
+    "summary": "The outgoing/incoming register, the official letter and the reply clock",
     "description": """
 Legal Department - Correspondence (سجل الصادر والوارد)
 =======================================================

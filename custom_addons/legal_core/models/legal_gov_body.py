@@ -51,7 +51,7 @@ class LegalGovBodyContact(models.Model):
         "res.company", related="body_id.company_id", store=True, index=True
     )
     name = fields.Char(required=True, translate=True)
-    role = fields.Char(translate=True, help="مدير القسم، معاون، موظف الاستعلامات")
+    role = fields.Char(translate=True, help="Section head, deputy, enquiries clerk.")
     section = fields.Char(translate=True, help="The section or window inside the body.")
     phone = fields.Char()
     mobile = fields.Char()
@@ -92,7 +92,7 @@ class LegalGovBody(models.Model):
 
     name = fields.Char(required=True, translate=True, index="trigram", tracking=True)
     short_name = fields.Char(
-        translate=True, help="What a clerk actually calls it: الضرائب، الإقامة، الغرفة."
+        translate=True, help="What a clerk actually calls it: the Taxes, the Residency, the Chamber."
     )
     code = fields.Char(
         required=True,
@@ -124,8 +124,8 @@ class LegalGovBody(models.Model):
     letterhead_recipient = fields.Text(
         string="Addressee Block",
         translate=True,
-        help="Printed verbatim as الجهة الموجه إليها, for example:\n"
-        "وزارة النفط / دائرة الدراسات والتخطيط والمتابعة / قسم سمات الدخول",
+        help="Printed verbatim as the addressee block, for example:\n"
+        "Ministry of Oil / Studies, Planning and Follow-up Directorate / Entry Visas Section",
     )
     salutation = fields.Char(translate=True, default="السيد المدير العام المحترم")
 
@@ -134,7 +134,7 @@ class LegalGovBody(models.Model):
     # ------------------------------------------------------------------
     address = fields.Text(translate=True)
     open_hours = fields.Char(
-        translate=True, help="For example: 08:30 - 14:15، عطلة الجمعة والسبت"
+        translate=True, help="For example: 08:30 - 14:15, closed Friday and Saturday"
     )
     phone = fields.Char()
     email = fields.Char()

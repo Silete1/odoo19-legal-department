@@ -47,7 +47,7 @@
                             invisible="expiry_state != 'expired' or state != 'active'"/>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="هوية غرفة تجارة بغداد 2026"/></h1>
+                        <h1><field name="name" placeholder="Baghdad Chamber of Commerce Identity 2026"/></h1>
                     </div>
                     <group>
                         <group string="What It Is">

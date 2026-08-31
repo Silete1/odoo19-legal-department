@@ -135,19 +135,19 @@ class LegalDocumentType(models.Model):
     # Authenticity - the Iraqi certification ladder
     # ------------------------------------------------------------------
     requires_certified_copy = fields.Boolean(
-        string="Certified Copy (مصدقة)",
-        help="A photocopy stamped طبق الأصل by the issuing body or a consulate.",
+        string="Certified Copy",
+        help="A photocopy stamped as a true copy by the issuing body or a consulate.",
     )
     requires_notarisation = fields.Boolean(
-        string="Notarised (الكاتب العدل)",
+        string="Notarised",
         help="Law 33 of 1998. A simple company's formation contract, and most "
         "instruments intended for use abroad.",
     )
     requires_legalisation = fields.Boolean(
-        string="Consular Legalisation (التصديقات)",
+        string="Consular Legalisation",
         help="Iraq has no apostille. A foreign document must be certified by the "
         "issuing country's foreign ministry, then by the Iraqi mission there, then "
-        "by دائرة التصديقات at the Iraqi Ministry of Foreign Affairs (Law 52 of 1970).",
+        "by the Legalisation Department at the Iraqi Ministry of Foreign Affairs (Law 52 of 1970).",
     )
     requires_translation = fields.Boolean(
         string="Arabic Translation",

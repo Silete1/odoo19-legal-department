@@ -37,17 +37,17 @@ class LegalCorrespondenceRegisterWizard(models.TransientModel):
     )
     gov_body_id = fields.Many2one("legal.gov.body", string="From Which Body", required=True)
     body_section = fields.Char(string="Section / Window")
-    their_number = fields.Char(string="رقم كتابهم - Their Number")
+    their_number = fields.Char(string="Their Number")
     their_date = fields.Date(
-        string="تاريخ كتابهم - Their Date", default=fields.Date.context_today
+        string="Their Date", default=fields.Date.context_today
     )
     our_date = fields.Date(
-        string="تاريخ التسجيل - Received On",
+        string="Received On",
         required=True,
         default=fields.Date.context_today,
         help="The day it reached us. The register number is allocated against it.",
     )
-    subject = fields.Char(string="م/ الموضوع", required=True)
+    subject = fields.Char(string="Subject", required=True)
     entity_id = fields.Many2one(
         "legal.entity",
         string="Concerns",
@@ -61,16 +61,16 @@ class LegalCorrespondenceRegisterWizard(models.TransientModel):
     )
     document_action = fields.Selection(
         [
-            ("for_information", "للتفضل بالاطلاع - For Information"),
-            ("for_action", "للإجراء اللازم - For Action"),
-            ("for_signature", "للتوقيع - For Signature"),
-            ("referred", "أحيلت - Referred"),
+            ("for_information", "For Information"),
+            ("for_action", "For Action"),
+            ("for_signature", "For Signature"),
+            ("referred", "Referred"),
         ],
         string="Marked",
         default="for_action",
     )
     secrecy = fields.Selection(
-        [("ordinary", "عادي - Ordinary"), ("secret", "سري - Confidential")],
+        [("ordinary", "Ordinary"), ("secret", "Confidential")],
         default="ordinary",
         required=True,
     )

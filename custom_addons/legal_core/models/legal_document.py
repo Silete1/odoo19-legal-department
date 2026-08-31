@@ -67,7 +67,7 @@ class LegalDocument(models.Model):
         string="Grade / Class",
         ondelete="restrict",
         domain="[('document_type_id', '=', document_type_id)]",
-        help="The Chamber's صنف or the Ministry of Planning's درجة. A tender may "
+        help="The Chamber's class or the Ministry of Planning's grade. A tender may "
         "demand a specific class, not merely a valid card.",
     )
     issue_date = fields.Date(tracking=True)

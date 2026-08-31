@@ -25,7 +25,7 @@ class LegalCorrespondence(models.Model):
         string="File",
         ondelete="set null",
         index=True,
-        help="The المعاملة this entry belongs to. Empty for a letter that arrived "
+        help="The file this entry belongs to. Empty for a letter that arrived "
         "before anybody opened a file for it - which is most of the interesting "
         "post.",
     )
@@ -152,7 +152,7 @@ class LegalProcedureTypeLetter(models.Model):
         "legal.letter.template",
         string="Letter Template",
         ondelete="set null",
-        help="The default كتاب رسمي this procedure sends. A step may override it "
+        help="The default official letter this procedure sends. A step may override it "
         "where the walk writes to more than one body.",
     )
 

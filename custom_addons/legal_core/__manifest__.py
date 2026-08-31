@@ -2,8 +2,8 @@
     "name": "Legal Department - Core",
     "summary": "Government bodies, legal entities, signatories and the company's document register",
     "description": """
-Legal Department - Core (الدائرة القانونية - الأساس)
-=====================================================
+Legal Department - Core
+=======================
 
 The shared foundation every other Legal Department module builds on. On its own
 it already answers three questions an Iraqi legal department is asked daily:

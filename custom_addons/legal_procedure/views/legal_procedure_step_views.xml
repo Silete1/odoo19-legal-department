@@ -9,7 +9,7 @@
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="تقديم الطلب إلى شعبة التسجيل"/></h1>
+                        <h1><field name="name" placeholder="Submit the application to the registration section"/></h1>
                     </div>
                     <group>
                         <group string="Where It Happens">
@@ -42,18 +42,18 @@
                                 writing properly: say what would appear here and what to do about it.
                             </p>
                             <group>
-                                <field name="desk_title" placeholder="بانتظار التسجيل"/>
-                                <field name="desk_hint" placeholder="الملفات المقدمة والتي لم تُسجل بعد"/>
-                                <field name="desk_empty" placeholder="لا توجد معاملات بانتظار التسجيل - كل ما قُدم قد سُجل"/>
+                                <field name="desk_title" placeholder="Awaiting registration"/>
+                                <field name="desk_hint" placeholder="Files submitted but not yet registered"/>
+                                <field name="desk_empty" placeholder="No files are awaiting registration - everything submitted has been registered"/>
                                 <field name="desk_note_template"
-                                       placeholder="راجعنا الشعبة وأفادوا بأن المعاملة قيد التدقيق"/>
+                                       placeholder="We followed up with the section and they advised the file is under review"/>
                             </group>
                         </page>
                         <page string="Counter Walk" name="checks">
                             <p class="text-muted">
-                                A براءة ذمة is twenty-two windows inside one step. Listing them here
+                                A clearance certificate is twenty-two windows inside one step. Listing them here
                                 is what turns “the file is at the Tax Commission” into “it is at
-                                window 7 waiting for ختم الحجوزات الضريبية”.
+                                window 7 waiting for the tax-liens stamp”.
                             </p>
                             <field name="check_ids">
                                 <list editable="bottom">

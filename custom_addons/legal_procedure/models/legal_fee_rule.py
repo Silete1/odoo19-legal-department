@@ -24,7 +24,7 @@ class LegalFeeRule(models.Model):
     name = fields.Char(
         required=True,
         translate=True,
-        help="What the counter calls it: رسم التسجيل، طابع، أجور نشر.",
+        help="What the counter calls it: registration fee, stamp duty, publication charges.",
     )
     procedure_type_id = fields.Many2one(
         "legal.procedure.type",
@@ -70,7 +70,7 @@ class LegalFeeRule(models.Model):
         required=True,
     )
     is_stamp_duty = fields.Boolean(
-        string="Stamp Duty (طابع)",
+        string="Stamp Duty",
         help="Stamps are bought rather than paid, are receipted differently and "
         "are reported separately, so they are flagged rather than merged into the fee.",
     )

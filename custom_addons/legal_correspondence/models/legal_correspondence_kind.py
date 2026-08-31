@@ -37,9 +37,9 @@ class LegalCorrespondenceKind(models.Model):
     code = fields.Char(required=True, help="Stable key used by content packs and wizards.")
     direction = fields.Selection(
         [
-            ("out", "صادر - Outgoing"),
-            ("in", "وارد - Incoming"),
-            ("internal", "داخلي - Internal"),
+            ("out", "Outgoing"),
+            ("in", "Incoming"),
+            ("internal", "Internal"),
         ],
         required=True,
         default="out",
@@ -54,7 +54,7 @@ class LegalCorrespondenceKind(models.Model):
         "what a cycle-time statistic counts from.",
     )
     is_acknowledgement = fields.Boolean(
-        string="Is A Receipt (وصل)",
+        string="Is A Receipt",
         help="Proves the letter was received. Closes nothing, answers nothing, "
         "and must never be counted as a reply.",
     )
@@ -65,7 +65,7 @@ class LegalCorrespondenceKind(models.Model):
         "hiding inside a long first cycle.",
     )
     is_reminder = fields.Boolean(
-        string="Is A Reminder (تذكير)",
+        string="Is A Reminder",
         help="A chase. Does not restart the clock and does not count as a new "
         "submission.",
     )
@@ -105,7 +105,7 @@ class LegalCorrespondenceKind(models.Model):
     )
     is_contact_note = fields.Boolean(
         string="Consumes No Register Number",
-        help="A telephone call or a personal مراجعة. It never touched the book, so "
+        help="A telephone call or a personal visit. It never touched the book, so "
         "it takes no number - but it is evidence, it moves the reply clock, and "
         "it suppresses the next chase when the counter has promised a date.",
     )

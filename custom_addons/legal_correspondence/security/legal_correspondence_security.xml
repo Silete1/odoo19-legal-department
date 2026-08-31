@@ -21,7 +21,7 @@
         -->
 
         <record id="group_legal_registrar" model="res.groups">
-            <field name="name">Registrar (مسؤول السجل)</field>
+            <field name="name">Registrar</field>
             <field name="sequence">25</field>
             <field name="privilege_id" ref="legal_core.res_groups_privilege_legal"/>
             <field name="implied_ids" eval="[(4, ref('legal_core.group_legal_clerk'))]"/>

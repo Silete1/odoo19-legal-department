@@ -34,8 +34,8 @@
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="الهيئة العامة للضرائب"/></h1>
-                        <h3><field name="short_name" placeholder="الضرائب"/></h3>
+                        <h1><field name="name" placeholder="General Commission for Taxes"/></h1>
+                        <h3><field name="short_name" placeholder="Taxes"/></h3>
                     </div>
                     <group>
                         <group string="Identity">
@@ -49,7 +49,7 @@
                         <group string="How We Deal With It">
                             <field name="channel" widget="radio" options="{'horizontal': true}"/>
                             <field name="portal_url" widget="url" invisible="channel == 'paper'"/>
-                            <field name="open_hours" placeholder="08:30 - 14:15، عطلة الجمعة والسبت"/>
+                            <field name="open_hours" placeholder="08:30 - 14:15, closed Friday and Saturday"/>
                             <field name="resource_calendar_id"/>
                             <field name="default_user_id" widget="many2one_avatar_user"/>
                             <field name="officer_ids" widget="many2many_avatar_user"/>
@@ -60,7 +60,7 @@
                             <group>
                                 <group string="How A Letter To Them Is Addressed">
                                     <field name="letterhead_recipient" nolabel="1" colspan="2"
-                                           placeholder="وزارة المالية&#10;الهيئة العامة للضرائب&#10;قسم الشركات"/>
+                                           placeholder="Ministry of Finance&#10;General Commission for Taxes&#10;Companies Section"/>
                                 </group>
                                 <group string="Salutation">
                                     <field name="salutation" nolabel="1" colspan="2"/>

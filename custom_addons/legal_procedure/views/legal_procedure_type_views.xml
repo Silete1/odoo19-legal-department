@@ -33,7 +33,7 @@
                             invisible="not superseded_by_id"/>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="تأسيس شركة محدودة"/></h1>
+                        <h1><field name="name" placeholder="Limited company incorporation"/></h1>
                     </div>
                     <group>
                         <group string="Where And For Whom">
@@ -127,7 +127,7 @@
                         <page string="Transitions" name="transitions">
                             <p class="text-muted">
                                 The name of a transition is the button the clerk presses, so write it
-                                in their words - “تحويل المعاملة إلى دائرة الإقامة”, not “Approve”.
+                                in their words - “Transfer the file to the Residency Directorate”, not “Approve”.
                             </p>
                             <field name="transition_ids" context="{'default_procedure_type_id': id}">
                                 <list editable="bottom" decoration-warning="is_return">

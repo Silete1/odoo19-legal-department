@@ -31,7 +31,7 @@
                     </div>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="شركة ... المحدودة"/></h1>
+                        <h1><field name="name" placeholder="... Company Ltd."/></h1>
                         <h3><field name="name_en" placeholder="Company name in English"/></h3>
                     </div>
                     <group>
@@ -54,7 +54,7 @@
                         A branch of a foreign company files audited accounts and an activity report
                         with the Registrar within eight months of the year end, and notifies a change
                         of branch manager within sixty working days
-                        (نظام فروع الشركات الأجنبية رقم 2 لسنة 2017، المادتان 7 و 8).
+                        (Foreign Companies Branches Regulation 2 of 2017, Articles 7 and 8).
                     </div>
                     <notebook>
                         <page string="Our Numbers At Each Body" name="identifiers">

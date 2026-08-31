@@ -57,12 +57,12 @@ class LegalFee(models.Model):
         required=True,
         index=True,
     )
-    is_stamp_duty = fields.Boolean(string="Stamp Duty (طابع)")
+    is_stamp_duty = fields.Boolean(string="Stamp Duty")
     is_optional = fields.Boolean()
     paid_on = fields.Date()
     receipt_number = fields.Char(
         index="trigram",
-        help="The وصل number. Quoted back at every subsequent counter, so it is a "
+        help="The receipt number. Quoted back at every subsequent counter, so it is a "
         "column of its own and part of the file's search index.",
     )
     paid_by_id = fields.Many2one("res.users", string="Paid By")

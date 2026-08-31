@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="action_report_official_letter" model="ir.actions.report">
-        <field name="name">كتاب رسمي - ورق مطبوع / Official Letter (pre-printed paper)</field>
+        <field name="name">Official Letter (Pre-printed Paper)</field>
         <field name="model">legal.correspondence</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">legal_correspondence.report_official_letter</field>
@@ -14,7 +14,7 @@
     </record>
 
     <record id="action_report_official_letter_drawn" model="ir.actions.report">
-        <field name="name">كتاب رسمي - مع الترويسة / Official Letter (emblem drawn)</field>
+        <field name="name">Official Letter (Emblem Drawn)</field>
         <field name="model">legal.correspondence</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">legal_correspondence.report_official_letter_drawn</field>

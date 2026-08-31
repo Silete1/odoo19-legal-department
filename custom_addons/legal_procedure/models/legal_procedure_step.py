@@ -131,7 +131,7 @@ class LegalProcedureStep(models.Model):
 
     requires_letter = fields.Boolean(
         string="Needs An Official Letter",
-        help="A step that cannot be taken without a signed and stamped كتاب رسمي.",
+        help="A step that cannot be taken without a signed and stamped official letter.",
     )
     auto_next = fields.Boolean(
         string="Advance Automatically",
@@ -168,7 +168,7 @@ class LegalProcedureStep(models.Model):
     desk_note_template = fields.Char(
         translate=True,
         help="The sentence pre-filled into the contact note when a call is logged "
-        "from this step, e.g. 'راجعنا الشعبة وأفادوا بأن المعاملة قيد التدقيق'.",
+        "from this step, e.g. 'We followed up with the section and they advised the file is under review'.",
     )
 
     colour = fields.Integer(string="Colour")
@@ -288,7 +288,7 @@ class LegalProcedureStepCheck(models.Model):
         string="Stamp Produced",
         translate=True,
         help="The endorsement itself, in the words the counter uses: "
-        "ختم الحجوزات الضريبية، تأييد عدم الممانعة.",
+        "the tax-liens stamp, the no-objection confirmation.",
     )
     counter = fields.Char(
         string="Window",

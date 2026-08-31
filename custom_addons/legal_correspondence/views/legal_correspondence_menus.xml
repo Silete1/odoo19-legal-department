@@ -12,7 +12,7 @@
     -->
 
     <menuitem id="menu_legal_correspondence_root"
-              name="سجل الصادر والوارد / Correspondence Register"
+              name="Correspondence Register"
               parent="legal_core.menu_legal_registers"
               sequence="5"/>
 
@@ -23,19 +23,19 @@
               sequence="10"/>
 
     <menuitem id="menu_legal_correspondence_register_wizard"
-              name="تسجيل كتاب وارد"
+              name="Register Incoming Letter"
               parent="menu_legal_correspondence_root"
               action="action_legal_correspondence_register_wizard"
               sequence="20"/>
 
     <menuitem id="menu_legal_correspondence_out"
-              name="صادر - Outgoing"
+              name="Outgoing"
               parent="menu_legal_correspondence_root"
               action="action_legal_correspondence_out"
               sequence="30"/>
 
     <menuitem id="menu_legal_correspondence_in"
-              name="وارد - Incoming"
+              name="Incoming"
               parent="menu_legal_correspondence_root"
               action="action_legal_correspondence_in"
               sequence="40"/>

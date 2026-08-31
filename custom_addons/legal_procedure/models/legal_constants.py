@@ -47,20 +47,21 @@ OUTCOME_SELECTION = [
     ("expired", "Lapsed"),
 ]
 
-#: The six-word checklist vocabulary, in Arabic, closed for ever.
+#: The closed checklist vocabulary. The keys are closed for ever; the
+#: labels are English source strings, translated in i18n/ar.po.
 #:
 #: Every surface that speaks about a required document - the blocking gate, the
 #: readiness meter, the phase rail and the desk row - reads exactly this list.
 #: They cannot disagree about what "ready" means because there is only one
 #: sentence they are all allowed to say.
 DOCUMENT_LINE_STATUS_SELECTION = [
-    ("not_required", "غير مطلوب"),
-    ("missing", "لم يُقدَّم"),
-    ("provided", "مُقدَّم"),
-    ("under_review", "قيد التدقيق"),
-    ("accepted", "مقبول"),
-    ("rejected", "مرفوض"),
-    ("expired", "منتهي الصلاحية"),
+    ("not_required", "Not Required"),
+    ("missing", "Not Provided"),
+    ("provided", "Provided"),
+    ("under_review", "Under Review"),
+    ("accepted", "Accepted"),
+    ("rejected", "Rejected"),
+    ("expired", "Expired"),
 ]
 
 #: Line states that satisfy a requirement. ``provided`` deliberately does not:

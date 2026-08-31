@@ -32,7 +32,7 @@ class LegalEntityForm(models.Model):
         default=lambda self: self.env.ref("base.IQD", raise_if_not_found=False),
     )
     requires_notarised_contract = fields.Boolean(
-        help="A شركة بسيطة must have its formation contract notarised at الكاتب العدل.",
+        help="A simple company must have its formation contract notarised at the Notary Public.",
     )
     legal_basis = fields.Char(translate=True)
     sequence = fields.Integer(default=10)
@@ -115,7 +115,8 @@ class LegalEntity(models.Model):
         default=lambda self: self.env.ref("base.IQD", raise_if_not_found=False),
     )
     activity_description = fields.Text(
-        string="Registered Activity", translate=True, help="النشاط المسجل"
+        string="Registered Activity", translate=True,
+        help="The registered activity as recorded with the Registrar."
     )
     address = fields.Text(translate=True)
 
@@ -223,8 +224,8 @@ class LegalEntityIdentifier(models.Model):
     value = fields.Char(required=True, index="trigram", help="The number itself.")
     section = fields.Char(
         translate=True,
-        help="The section inside the body that holds this file, e.g. قسم الشركات، "
-        "قسم كبار مكلفي الدخل. Clerks are routed by section, not by body.",
+        help="The section inside the body that holds this file, e.g. the Companies "
+        "Section or the Large Taxpayers Section. Clerks are routed by section, not by body.",
     )
     issue_date = fields.Date()
     document_id = fields.Many2one(

@@ -24,7 +24,7 @@ class LegalCorrespondenceVoidWizard(models.TransientModel):
     our_number = fields.Char(related="correspondence_id.our_number", readonly=True)
     subject = fields.Char(related="correspondence_id.subject", readonly=True)
     reason = fields.Text(
-        string="سبب الإلغاء - Reason",
+        string="Reason",
         required=True,
         help="What went wrong: wrong body, duplicate of an earlier number, the "
         "letter was never sent, the counter refused it at the window.",

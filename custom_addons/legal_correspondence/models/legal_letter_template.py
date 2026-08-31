@@ -62,7 +62,7 @@ class LegalLetterTemplate(models.Model):
         "and its filed signature; a general template leaves this empty.",
     )
     subject_template = fields.Char(
-        string="Subject (م/)",
+        string="Subject",
         translate=True,
         help="Printed after م/ as the bold subject line. May use the placeholders "
         "listed on the Placeholders tab.",
@@ -104,7 +104,7 @@ class LegalLetterTemplate(models.Model):
         "not eleven letters.",
     )
     cc_list = fields.Text(
-        string="Copies To (نسخة منه إلى)",
+        string="Copies To",
         translate=True,
         help="One recipient per line, printed at the bottom left.",
     )

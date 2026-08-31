@@ -33,7 +33,8 @@ class LegalProcedureTransition(models.Model):
         required=True,
         translate=True,
         help="The button the clerk presses, in their words: "
-        "“تحويل المعاملة إلى دائرة الإقامة”, “إعادة للتصحيح”, “قبول مشروط”.",
+        "“Transfer the file to the Residency Directorate”, “Return for correction”, "
+        "“Conditional approval”.",
     )
     code = fields.Char(help="Stable key, snapshotted onto the immutable log.")
     procedure_type_id = fields.Many2one(
@@ -78,7 +79,7 @@ class LegalProcedureTransition(models.Model):
     )
     require_valid_poa = fields.Boolean(
         string="Needs A Valid Power Of Attorney",
-        help="Blocks the move outright when no وكالة on the file is in force for "
+        help="Blocks the move outright when no power of attorney on the file is in force for "
         "this body. The counter will refuse it, so pretending otherwise only moves "
         "the failure to the pavement outside the ministry.",
     )

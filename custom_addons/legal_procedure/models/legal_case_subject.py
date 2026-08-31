@@ -29,7 +29,7 @@ class LegalCaseSubject(models.Model):
     )
     sequence = fields.Integer(
         default=10,
-        help="The ت number. It is quoted back by the counter, so it has to be "
+        help="The row number on the letter's numbered list. It is quoted back by the counter, so it has to be "
         "stable and it has to be visible.",
     )
     name_ar = fields.Char(

@@ -100,9 +100,9 @@ class LegalCorrespondence(models.Model):
     )
     direction = fields.Selection(
         [
-            ("out", "صادر - Outgoing"),
-            ("in", "وارد - Incoming"),
-            ("internal", "داخلي - Internal"),
+            ("out", "Outgoing"),
+            ("in", "Incoming"),
+            ("internal", "Internal"),
         ],
         required=True,
         default="out",
@@ -110,7 +110,7 @@ class LegalCorrespondence(models.Model):
         tracking=True,
     )
     secrecy = fields.Selection(
-        [("ordinary", "عادي - Ordinary"), ("secret", "سري - Confidential")],
+        [("ordinary", "Ordinary"), ("secret", "Confidential")],
         required=True,
         default="ordinary",
         index=True,
@@ -124,7 +124,7 @@ class LegalCorrespondence(models.Model):
     # The two numbers. They are not the same field and never will be.
     # ------------------------------------------------------------------
     our_number = fields.Char(
-        string="رقم الصادر - Our Number",
+        string="Our Number",
         copy=False,
         index="trigram",
         tracking=True,
@@ -133,34 +133,34 @@ class LegalCorrespondence(models.Model):
         "from there. Once registered it is part of the record.",
     )
     our_date = fields.Date(
-        string="تاريخ الصادر - Our Date",
+        string="Our Date",
         default=fields.Date.context_today,
         copy=False,
         index=True,
         tracking=True,
     )
     their_number = fields.Char(
-        string="رقم كتابهم - Their Number",
+        string="Their Number",
         index="trigram",
         tracking=True,
         help="Free text on purpose. It follows their format, not ours, and every "
         "attempt to normalise it loses the string the counter will quote back.",
     )
-    their_date = fields.Date(string="تاريخ كتابهم - Their Date", tracking=True)
+    their_date = fields.Date(string="Their Date", tracking=True)
 
     # ------------------------------------------------------------------
     # Who it is with
     # ------------------------------------------------------------------
     gov_body_id = fields.Many2one(
         "legal.gov.body",
-        string="الجهة - Government Body",
+        string="Government Body",
         ondelete="restrict",
         index=True,
         tracking=True,
     )
     body_section = fields.Char(
         string="Section / Window",
-        help="القسم أو الشعبة: which counter inside the body actually holds it.",
+        help="The section or the subdivision: which counter inside the body actually holds it.",
     )
     referred_to_body_id = fields.Many2one(
         "legal.gov.body",
@@ -192,9 +192,9 @@ class LegalCorrespondence(models.Model):
     # What it says
     # ------------------------------------------------------------------
     subject = fields.Char(
-        string="م/ الموضوع", required=True, translate=True, index="trigram", tracking=True
+        string="Subject", required=True, translate=True, index="trigram", tracking=True
     )
-    body_html = fields.Html(string="نص الكتاب - Letter Text", sanitize=False)
+    body_html = fields.Html(string="Letter Text", sanitize=False)
     line_ids = fields.One2many(
         "legal.correspondence.line", "correspondence_id", string="Subject Table"
     )
@@ -206,10 +206,10 @@ class LegalCorrespondence(models.Model):
     )
     document_action = fields.Selection(
         [
-            ("for_information", "للتفضل بالاطلاع - For Information"),
-            ("for_action", "للإجراء اللازم - For Action"),
-            ("for_signature", "للتوقيع - For Signature"),
-            ("referred", "أحيلت - Referred"),
+            ("for_information", "For Information"),
+            ("for_action", "For Action"),
+            ("for_signature", "For Signature"),
+            ("referred", "Referred"),
         ],
         string="Marked",
         default="for_action",
@@ -242,17 +242,17 @@ class LegalCorrespondence(models.Model):
     # ------------------------------------------------------------------
     outbound_method = fields.Selection(
         [
-            ("hand_carried", "تسليم باليد - Hand Carried"),
-            ("courier", "بريد سريع - Courier"),
-            ("email", "بريد إلكتروني - Email"),
-            ("portal", "بوابة إلكترونية - Portal"),
-            ("registered_post", "بريد مسجل - Registered Post"),
+            ("hand_carried", "Hand Carried"),
+            ("courier", "Courier"),
+            ("email", "Email"),
+            ("portal", "Portal"),
+            ("registered_post", "Registered Post"),
         ],
         default="hand_carried",
     )
     carried_by_id = fields.Many2one(
         "res.partner",
-        string="المراجع / المعتمد - Carried By",
+        string="Carried By",
         index=True,
         help="The person who physically walked the letter to the counter. This is "
         "a documented role, not a courtesy note: the Registrar wants his "
@@ -260,7 +260,7 @@ class LegalCorrespondence(models.Model):
         "will hand him anything back.",
     )
     channel = fields.Selection(
-        [("paper", "ورقي - Paper"), ("online", "إلكتروني - Online"), ("hybrid", "كلاهما - Both")],
+        [("paper", "Paper"), ("online", "Online"), ("hybrid", "Both")],
         default="paper",
         required=True,
     )
@@ -305,9 +305,9 @@ class LegalCorrespondence(models.Model):
     )
     reply_state = fields.Selection(
         [
-            ("awaiting", "بانتظار الرد - Awaiting"),
-            ("answered", "مجاب - Answered"),
-            ("late", "متأخر - Late"),
+            ("awaiting", "Awaiting"),
+            ("answered", "Answered"),
+            ("late", "Late"),
         ],
         string="Reply",
         compute="_compute_reply_state",
@@ -333,7 +333,7 @@ class LegalCorrespondence(models.Model):
         index=True,
         help="True for an entry that actually answers the one it hangs off. A "
         "receipt, a contact note and our own reminder are all excluded, because a "
-        "وصل proves the letter was received and closes nothing - and a system "
+        "receipt proves the letter was received and closes nothing - and a system "
         "that counts a receipt as an answer reports a two-day turnaround at a "
         "body that has not yet read the file. Stored so that the reply board can "
         "be searched with one subquery instead of five that need not agree on "
@@ -373,9 +373,9 @@ class LegalCorrespondence(models.Model):
     # ------------------------------------------------------------------
     state = fields.Selection(
         [
-            ("draft", "مسودة - Draft"),
-            ("registered", "مسجل - Registered"),
-            ("void", "ملغى - Void"),
+            ("draft", "Draft"),
+            ("registered", "Registered"),
+            ("void", "Void"),
         ],
         default="draft",
         required=True,

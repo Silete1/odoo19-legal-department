@@ -70,7 +70,7 @@
         <field name="sequence">50</field>
         <field name="privilege_id" ref="res_groups_privilege_legal"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        <field name="comment">Reads everything and changes nothing. For the internal auditor, ديوان الرقابة المالية, or an external reviewer.</field>
+        <field name="comment">Reads everything and changes nothing. For the internal auditor, the Federal Board of Supreme Audit, or an external reviewer.</field>
     </record>
 
 </odoo>

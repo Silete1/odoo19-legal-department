@@ -154,7 +154,7 @@ class LegalProcedureType(models.Model):
         default="none",
         required=True,
         help="One entry-visa letter routinely covers eight experts on a numbered "
-        "ت list, so the people are rows on the file rather than one field - and a "
+        "list, so the people are rows on the file rather than one field - and a "
         "procedure that is about the company has no such list at all.",
     )
     result_document_type_id = fields.Many2one(
@@ -248,7 +248,7 @@ class LegalProcedureType(models.Model):
         default="optional",
         required=True,
         help="Required where the counter will not deal with anyone who is not on "
-        "the وكالة - which is most counters, most of the time.",
+        "the power of attorney - which is most counters, most of the time.",
     )
     requires_documents = fields.Selection(
         USAGE_SELECTION, string="Document Checklist", default="required", required=True

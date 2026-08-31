@@ -39,9 +39,9 @@ class LegalRegister(models.Model):
     )
     direction = fields.Selection(
         [
-            ("out", "صادر - Outgoing"),
-            ("in", "وارد - Incoming"),
-            ("internal", "داخلي - Internal"),
+            ("out", "Outgoing"),
+            ("in", "Incoming"),
+            ("internal", "Internal"),
         ],
         required=True,
         default="out",
@@ -50,10 +50,10 @@ class LegalRegister(models.Model):
         "repeated on the entry.",
     )
     secrecy = fields.Selection(
-        [("ordinary", "عادي - Ordinary"), ("secret", "سري - Confidential")],
+        [("ordinary", "Ordinary"), ("secret", "Confidential")],
         required=True,
         default="ordinary",
-        help="A سري book is kept physically apart and its entries are visible only "
+        help="A confidential book is kept physically apart and its entries are visible only "
         "to the legal manager and the officers of the body concerned.",
     )
     body_id = fields.Many2one(
@@ -88,7 +88,7 @@ class LegalRegister(models.Model):
         string="Retention (years)",
         default=10,
         help="How long the book must be kept. The Council of Ministers' "
-        "document-retention instructions put صادر and وارد registers at ten "
+        "document-retention instructions put outgoing and incoming registers at ten "
         "years; a department that archives them sooner has destroyed evidence "
         "it was obliged to hold.",
     )

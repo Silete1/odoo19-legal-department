@@ -39,22 +39,22 @@ class LegalContactNoteWizard(models.TransientModel):
     gov_body_id = fields.Many2one("legal.gov.body", string="Body", required=True)
     body_section = fields.Char(string="Section / Window")
     contact_date = fields.Date(
-        string="تاريخ الاتصال - When", required=True, default=fields.Date.context_today
+        string="Contact Date", required=True, default=fields.Date.context_today
     )
     spoke_to = fields.Char(
-        string="مع من - Spoke To",
+        string="Spoke To",
         required=True,
         help="The name, and the section if you have it. In Iraqi follow-up this is "
         "worth more than any escalation rule.",
     )
     said = fields.Text(
-        string="ماذا قالوا - What They Said",
+        string="What They Said",
         required=True,
         help="Verbatim where possible. 'The file is with the legal adviser' and "
         "'the file is missing' need different next steps.",
     )
     promised_on = fields.Date(
-        string="وعد بـ - Promised For",
+        string="Promised For",
         help="The date they gave. It moves the reply clock and suppresses the "
         "next chase, so we stop ringing a body that has already answered.",
     )
@@ -63,7 +63,7 @@ class LegalContactNoteWizard(models.TransientModel):
         string="Concerns",
         default=lambda self: self.env.company.legal_entity_id.id,
     )
-    subject = fields.Char(string="م/ الموضوع")
+    subject = fields.Char(string="Subject")
 
     @api.onchange("correspondence_id")
     def _onchange_correspondence_id(self):

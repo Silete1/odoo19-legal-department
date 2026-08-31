@@ -32,7 +32,7 @@
                 <sheet>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="إعادة للاستكمال"/></h1>
+                        <h1><field name="name" placeholder="Sent back for completion"/></h1>
                     </div>
                     <group>
                         <group string="Identity">
@@ -71,7 +71,7 @@
                         firing on a body that has already answered.
                     </div>
                     <div class="alert alert-warning" role="alert" invisible="not is_acknowledgement">
-                        A وصل proves the letter was <b>received</b>. It closes nothing and answers
+                        A receipt proves the letter was <b>received</b>. It closes nothing and answers
                         nothing, and it must never stop the reply clock - otherwise the department
                         reports a two-day turnaround at a body that has not yet opened the file.
                     </div>
@@ -91,8 +91,8 @@
         <field name="arch" type="xml">
             <search string="Correspondence Kinds">
                 <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
-                <filter name="outgoing" string="صادر" domain="[('direction', '=', 'out')]"/>
-                <filter name="incoming" string="وارد" domain="[('direction', '=', 'in')]"/>
+                <filter name="outgoing" string="Outgoing" domain="[('direction', '=', 'out')]"/>
+                <filter name="incoming" string="Incoming" domain="[('direction', '=', 'in')]"/>
                 <separator/>
                 <filter name="contact_notes" string="Takes No Number" domain="[('is_contact_note', '=', True)]"/>
                 <filter name="expects_reply" string="Expects A Reply" domain="[('expects_reply', '=', True)]"/>
